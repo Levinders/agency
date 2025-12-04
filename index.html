@@ -3,469 +3,391 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Agency - Custom ops, CRM & systems on Google Sheets</title>
-  <meta name="description" content="We build custom CRMs, ops tooling, and automations using Google Sheets & Google Apps Script — fast prototypes to production." />
-  <meta name="theme-color" content="#4f46e5" />
+  <title>[Agency Name] — Sheets + Apps Script Automation</title>
+  <meta name="description" content="Custom CRMs, automations and ops tooling built on Google Sheets & Apps Script — fast, secure, and designed for ops teams." />
+  <meta name="theme-color" content="#0F172A" />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="[Agency Name] — Custom ops, CRM & systems on Google Sheets" />
-  <meta property="og:description" content="We build custom CRMs, ops tooling, and automations using Google Sheets & Google Apps Script — fast prototypes to production." />
-  <meta property="og:image" content="https://images.unsplash.com/photo-1508830524289-0adcbe822b40?q=80&w=1200&auto=format&fit=crop&s=placeholder" />
-  <meta property="og:type" content="website" />
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="[Agency Name] — Custom ops, CRM & systems on Google Sheets" />
-  <meta name="twitter:description" content="We build custom CRMs, ops tooling, and automations using Google Sheets & Google Apps Script — fast prototypes to production." />
-
-  <!-- Tailwind CDN -->
+  <!-- Tailwind CDN (production snippet) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: { 50:'#eef2ff', 100:'#e0e7ff', 500:'#6366f1', 600:'#4f46e5' } },
+          boxShadow: { 'soft-lg': '0 10px 30px rgba(15,23,42,0.12)' }
+        }
+      }
+    }
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Favicon (small inline SVG) -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%234f46e5'/%3E%3Ctext x='50' y='58' font-size='48' text-anchor='middle' fill='%23fff' font-family='Arial, sans-serif'%3E%5B%5D%3C/text%3E%3C/svg%3E">
-
   <style>
-    /* small visual tweaks beyond Tailwind */
-    .reveal { opacity: 0; transform: translateY(10px); transition: opacity .6s ease, transform .6s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    /* ensure large hero image stays crisp */
-    .hero-img { object-fit: cover; height: 420px; width: 100%; border-radius: 16px; }
-    /* skeleton focus outline */
-    .focus-ring:focus { outline: 3px solid rgba(79,70,229,0.18); outline-offset: 2px; }
+    /* Visual polish */
+    :root { --accent: #4f46e5; --muted: #64748b; --glass: rgba(255,255,255,0.06); }
+    html,body { background: radial-gradient(1200px 600px at 10% 10%, rgba(79,70,229,0.06), transparent), #0f172a; }
+    .hero-gradient {
+      background: linear-gradient(135deg, rgba(79,70,229,0.12), rgba(99,102,241,0.08) 40%, rgba(99,102,241,0.02));
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+    }
+    .glass { background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.04); }
+    .card-hover { transition: transform .36s cubic-bezier(.2,.9,.3,1), box-shadow .36s; will-change: transform; }
+    .card-hover:hover { transform: translateY(-10px) scale(1.01); box-shadow: 0 20px 40px rgba(2,6,23,0.45); }
+    .reveal { opacity: 0; transform: translateY(12px) scale(.995); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.9,.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
+    .blob { position: absolute; filter: blur(60px); opacity: .55; pointer-events: none; mix-blend-mode: screen; }
+    .typewriter { display:inline-block; border-right: 2px solid rgba(255,255,255,0.12); padding-right:6px; animation: blink .9s infinite; }
+    @keyframes blink { 0%,100% { border-color: rgba(255,255,255,0.12) } 50% { border-color: transparent } }
+    /* small responsive tweaks */
+    @media (max-width: 640px) { .hero-img { border-radius: 12px; height: 240px; } }
   </style>
-
-  <!-- Structured data -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"ProfessionalService",
-    "name":"[Agency Name]",
-    "url":"https://levinders.github.io/agency/",
-    "logo":"https://levinders.github.io/agency/favicon.ico",
-    "description":"Custom CRMs, workflow automations, and integrations built on Google Sheets and Apps Script."
-  }
-  </script>
 </head>
-<body class="antialiased text-slate-900 bg-white">
+<body class="antialiased text-slate-100">
 
-  <!--
-    CONFIG block: edit these values to customize the site.
-    Replace [Agency Name], heroImage, contactEmail etc.
-  -->
-  <script>
-    window._AGENCY = {
-      name: "[Agency Name]",
-      short: "[Agency]",
-      tagline: "Custom ops, CRM & systems built on Google Sheets + Apps Script",
-      heroHeadline: "Ship automation and internal tools — fast, reliable, Google-first.",
-      heroSub: "We build custom CRMs, workflow automations, and integrations using Google Sheets and Apps Script. From prototype to production with monitoring and support.",
-      heroImage: "https://images.unsplash.com/photo-1508830524289-0adcbe822b40?q=80&w=1400&auto=format&fit=crop&s=placeholder",
-      contactEmail: "hello@example.com",
-      officeLocation: "Remote",
-      primaryCta: "Book a free consult",
-      secondaryCta: "Request a case study"
-    };
-  </script>
+<!-- CONFIG: edit values here -->
+<script>
+  window._CFG = {
+    name: "[Agency Name]",
+    short: "AGENCY",
+    tagline: "Sheets + Apps Script — Ops & CRM automation",
+    heroLines: ["Automate ops.", "Build custom CRMs.", "Ship in days, not months."],
+    heroImage: "https://images.unsplash.com/photo-1508830524289-0adcbe822b40?q=80&w=1400&auto=format&fit=crop&s=placeholder",
+    email: "hello@example.com",
+    primaryCta: "Book a free consult",
+    secondaryCta: "See case studies"
+  };
+</script>
 
-  <!-- NAV -->
-  <header class="border-b">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="#" class="flex items-center gap-3">
-        <div class="h-10 w-10 rounded-lg bg-gradient-to-tr from-indigo-600 to-purple-500 flex items-center justify-center text-white font-bold">
-          <span id="logo-text">[LOGO]</span>
-        </div>
-        <div>
-          <div id="site-name" class="font-semibold text-lg">[Agency Name]</div>
-          <div class="text-xs text-slate-500 -mt-0.5" id="site-tagline">Custom ops, CRM & systems</div>
-        </div>
+<!-- Sticky header -->
+<header class="sticky top-0 z-40 backdrop-blur-sm">
+  <div class="max-w-7xl mx-auto px-5 py-3 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-3 select-none">
+      <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-brand-600 to-brand-500 flex items-center justify-center text-white font-semibold shadow-sm">
+        <span id="logoText">AG</span>
+      </div>
+      <div class="hidden sm:block">
+        <div id="brandName" class="font-semibold text-white">[Agency]</div>
+        <div id="brandTag" class="text-xs text-slate-400">Sheets + Apps Script</div>
+      </div>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-6">
+      <a href="#services" class="text-sm text-slate-200 hover:text-white">Services</a>
+      <a href="#process" class="text-sm text-slate-200 hover:text-white">Process</a>
+      <a href="#cases" class="text-sm text-slate-200 hover:text-white">Cases</a>
+      <a id="emailLink" href="#" class="ml-4 inline-flex items-center px-4 py-2 rounded-md bg-white/6 hover:bg-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 12H3m3 4H3m5-8H3M21 8v8a2 2 0 01-2 2H8" /></svg>
+        Contact
       </a>
+    </nav>
 
-      <nav class="hidden md:flex items-center gap-6">
-        <a href="#services" class="text-sm hover:text-slate-900">Services</a>
-        <a href="#process" class="text-sm hover:text-slate-900">Process</a>
-        <a href="#cases" class="text-sm hover:text-slate-900">Cases</a>
-        <a href="#contact" class="text-sm hover:text-slate-900">Contact</a>
-        <a id="email-link" href="#" class="ml-4 inline-flex items-center px-4 py-2 rounded-md border text-sm focus-ring">Contact</a>
-      </nav>
-
-      <!-- mobile menu button -->
-      <div class="md:hidden">
-        <button id="mobile-btn" aria-label="Open menu" class="p-2 rounded-md focus-ring">
-          <svg id="menu-open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-          <svg id="menu-close" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-      </div>
+    <!-- mobile -->
+    <div class="md:hidden">
+      <button id="mobileBtn" aria-label="open menu" class="p-2 rounded-md bg-white/6">
+        <svg id="mbOpen" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="mbClose" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hidden text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
     </div>
+  </div>
 
-    <!-- mobile nav -->
-    <div id="mobile-nav" class="md:hidden hidden border-t">
-      <div class="px-6 py-4 flex flex-col gap-3">
-        <a href="#services" class="py-2">Services</a>
-        <a href="#process" class="py-2">Process</a>
-        <a href="#cases" class="py-2">Cases</a>
-        <a href="#contact" class="py-2">Contact</a>
-        <a id="mobile-email-link" href="#" class="py-2 border rounded-md text-center">Contact</a>
-      </div>
+  <!-- mobile menu -->
+  <div id="mobileNav" class="md:hidden hidden border-t border-white/6">
+    <div class="px-5 py-4 flex flex-col gap-3">
+      <a href="#services" class="py-2">Services</a>
+      <a href="#process" class="py-2">Process</a>
+      <a href="#cases" class="py-2">Cases</a>
+      <a id="mobileEmail" href="#" class="py-2 rounded-md bg-white/6 text-center">Contact</a>
     </div>
-  </header>
+  </div>
+</header>
 
-  <main>
+<!-- HERO -->
+<section class="relative overflow-hidden pt-10">
+  <!-- decorative blobs -->
+  <div class="blob" style="width:420px;height:420px;left:-60px;top:-120px;background:radial-gradient(circle at 30% 30%, rgba(79,70,229,0.75), rgba(99,102,241,0.4), transparent)"></div>
+  <div class="blob" style="width:360px;height:360px;right:-80px;bottom:-40px;background:radial-gradient(circle at 70% 60%, rgba(14,165,233,0.20), rgba(99,102,241,0.1), transparent)"></div>
 
-    <!-- HERO -->
-    <section class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-      <div>
-        <div class="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 text-sm font-medium mb-4">Google Sheets + Apps Script</div>
-        <h1 id="hero-headline" class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight">
-          Ship automation and internal tools — fast, reliable, Google-first.
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div class="relative z-10">
+        <div class="inline-flex items-center px-3 py-1 rounded-full bg-white/6 text-sm text-white/90 mb-6">Google Sheets · Apps Script</div>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+          <span id="typeStatic" class="block">We build</span>
+          <span id="typeTarget" class="typewriter text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-200 text-3xl sm:text-4xl font-bold"></span>
         </h1>
-        <p id="hero-sub" class="mt-4 text-lg text-slate-600 max-w-xl">We build custom CRMs, workflow automations, and integrations using Google Sheets and Apps Script. From prototype to production with monitoring and support.</p>
 
-        <ul class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-xl">
-          <li class="flex items-start gap-3">
-            <div class="w-8 h-8 rounded-md bg-slate-100 flex items-center justify-center font-semibold">1</div>
-            <div class="text-sm">Custom CRMs on Google Sheets</div>
-          </li>
-          <li class="flex items-start gap-3">
-            <div class="w-8 h-8 rounded-md bg-slate-100 flex items-center justify-center font-semibold">2</div>
-            <div class="text-sm">Automated ops & scheduled scripts</div>
-          </li>
-          <li class="flex items-start gap-3">
-            <div class="w-8 h-8 rounded-md bg-slate-100 flex items-center justify-center font-semibold">3</div>
-            <div class="text-sm">Integrations: Slack, Gmail, APIs</div>
-          </li>
-        </ul>
+        <p class="mt-6 text-slate-300 max-w-xl">
+          Custom CRMs, workflow automations and integrations — launched quickly, hardened for production, and maintained for ops teams.
+        </p>
 
-        <div class="mt-8 flex items-center gap-3">
-          <a id="cta-primary" href="#contact" class="px-5 py-3 bg-indigo-600 text-white rounded-md shadow hover:shadow-lg focus-ring">Book a free consult</a>
-          <a id="cta-secondary" href="#cases" class="px-4 py-3 border rounded-md text-sm focus-ring">See case studies</a>
+        <div class="mt-8 flex items-center gap-4">
+          <a id="primaryCta" href="#contact" class="inline-flex items-center gap-3 px-5 py-3 rounded-lg bg-white text-slate-900 font-semibold shadow-lg transform transition hover:-translate-y-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 5v14M5 12h14"/></svg>
+            <span id="primaryCtaText">Book a free consult</span>
+          </a>
+
+          <a id="secondaryCta" href="#cases" class="text-sm text-slate-200 px-4 py-3 rounded-lg border border-white/6 hover:bg-white/5">See case studies</a>
         </div>
 
-        <div class="mt-4 text-xs text-slate-400">Free 20-minute discovery call • NDA available</div>
+        <div class="mt-6 text-xs text-slate-400">Free 20-min discovery call • NDA available</div>
       </div>
 
-      <div class="hidden lg:block">
-        <div class="rounded-xl overflow-hidden shadow-lg">
-          <img id="hero-image" src="" alt="Hero" class="hero-img" />
-        </div>
-      </div>
-    </section>
+      <!-- hero art (glass card with image and stats) -->
+      <div class="relative">
+        <div class="hero-gradient glass rounded-2xl p-6 shadow-soft-lg">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+            <div class="overflow-hidden rounded-xl">
+              <img id="heroImg" src="" alt="Dashboard preview" class="w-full h-48 object-cover rounded-lg hero-img" />
+            </div>
 
-    <!-- WHY -->
-    <section class="max-w-7xl mx-auto px-6 py-10">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-        <div>
-          <h2 class="text-2xl font-bold">Why teams work with us</h2>
-          <p class="mt-4 text-slate-600">We reduce operational friction by building pragmatic automations and data-driven workflows on tools you already own.</p>
-        </div>
+            <div class="space-y-3">
+              <div class="text-sm text-slate-300">Prototype → Production</div>
+              <div class="text-white text-xl font-semibold">Validated in days · Reliable at scale</div>
+              <div class="text-slate-300 text-sm">Scheduled scripts, retry logic, monitoring and role-based access.</div>
 
-        <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div class="p-5 rounded-xl border bg-white reveal">
-            <div class="font-semibold">Rapid prototypes → production</div>
-            <div class="mt-2 text-sm text-slate-600">Validate with users in days, then harden scripts and monitoring for production.</div>
-          </div>
-
-          <div class="p-5 rounded-xl border bg-white reveal">
-            <div class="font-semibold">Low-cost, Google-first</div>
-            <div class="mt-2 text-sm text-slate-600">Leverage Sheets & Apps Script for secure, auditable tools that don't balloon costs.</div>
-          </div>
-
-          <div class="p-5 rounded-xl border bg-white reveal">
-            <div class="font-semibold">Operations-first mindset</div>
-            <div class="mt-2 text-sm text-slate-600">We design to reduce manual work, improve data quality, and make decisions measurable.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SERVICES -->
-    <section id="services" class="bg-slate-50 py-12">
-      <div class="max-w-7xl mx-auto px-6">
-        <h3 class="text-xl font-bold">What we build</h3>
-        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="p-6 rounded-2xl bg-white shadow-sm border reveal">
-            <div class="font-semibold">Custom CRM & Lead Ops</div>
-            <div class="mt-3 text-sm text-slate-600">Tailored pipelines, auto-routing, scoring and reporting.</div>
-          </div>
-
-          <div class="p-6 rounded-2xl bg-white shadow-sm border reveal">
-            <div class="font-semibold">Workflow Automation</div>
-            <div class="mt-3 text-sm text-slate-600">Scheduled jobs, triggers, and incident handling using Apps Script.</div>
-          </div>
-
-          <div class="p-6 rounded-2xl bg-white shadow-sm border reveal">
-            <div class="font-semibold">Dashboards & KPIs</div>
-            <div class="mt-3 text-sm text-slate-600">Single-pane dashboards powered by Sheets → BigQuery / Data Studio as needed.</div>
-          </div>
-
-          <div class="p-6 rounded-2xl bg-white shadow-sm border reveal">
-            <div class="font-semibold">Integrations & Sync</div>
-            <div class="mt-3 text-sm text-slate-600">Connect Sheets to external APIs, Slack, Gmail and robust error handling.</div>
+              <div class="mt-3 grid grid-cols-3 gap-2">
+                <div class="p-2 rounded-lg bg-white/6 text-center">
+                  <div class="text-sm text-slate-200 font-semibold">70%</div>
+                  <div class="text-xs text-slate-400">Time saved</div>
+                </div>
+                <div class="p-2 rounded-lg bg-white/6 text-center">
+                  <div class="text-sm text-slate-200 font-semibold">$30k</div>
+                  <div class="text-xs text-slate-400">Annual ops saved</div>
+                </div>
+                <div class="p-2 rounded-lg bg-white/6 text-center">
+                  <div class="text-sm text-slate-200 font-semibold">3d</div>
+                  <div class="text-xs text-slate-400">Prototype time</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- PROCESS -->
-    <section id="process" class="max-w-7xl mx-auto px-6 py-12">
-      <h4 class="text-xl font-bold">Our process — clear, measurable</h4>
-      <div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div class="p-5 rounded-xl border bg-white text-center reveal">
-          <div class="text-lg font-semibold">Discovery</div>
-          <div class="mt-2 text-sm text-slate-600">Map workflows, goals and failure modes.</div>
-        </div>
-        <div class="p-5 rounded-xl border bg-white text-center reveal">
-          <div class="text-lg font-semibold">Prototype</div>
-          <div class="mt-2 text-sm text-slate-600">Rapid prototypes in Sheets + Scripts to test with users.</div>
-        </div>
-        <div class="p-5 rounded-xl border bg-white text-center reveal">
-          <div class="text-lg font-semibold">Harden</div>
-          <div class="mt-2 text-sm text-slate-600">Add checks, error handling, permissions and monitoring.</div>
-        </div>
-        <div class="p-5 rounded-xl border bg-white text-center reveal">
-          <div class="text-lg font-semibold">Scale & maintain</div>
-          <div class="mt-2 text-sm text-slate-600">Operational runbooks, training & optional support plans.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CASE / SOCIAL PROOF -->
-    <section id="cases" class="bg-white py-12">
-      <div class="max-w-7xl mx-auto px-6">
-        <h4 class="text-xl font-bold">Trusted by teams that depend on their operations</h4>
-
-        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <blockquote class="p-6 rounded-2xl bg-slate-50 border reveal">
-            <p class="text-slate-700">“We decreased manual processing time by 70% with a custom Sheets CRM.”</p>
-            <div class="mt-4 text-sm text-slate-500">— COO, GrowthStage Inc.</div>
-          </blockquote>
-
-          <blockquote class="p-6 rounded-2xl bg-slate-50 border reveal">
-            <p class="text-slate-700">“Their automation saved us $30k/year in contractor time.”</p>
-            <div class="mt-4 text-sm text-slate-500">— Head of Ops, RetailCo</div>
-          </blockquote>
-
-          <div class="p-6 rounded-2xl bg-gradient-to-tr from-indigo-50 to-white border flex items-center justify-center reveal">
-            <div class="text-center">
-              <div class="text-sm text-slate-500">Sample case</div>
-              <div class="mt-3 font-semibold">Custom CRM + Auto Lead Scoring</div>
-              <div class="mt-2 text-sm text-slate-600">From prototype (3 days) to production with scheduled scripts, monitoring and dashboard.</div>
-              <a href="#contact" class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded-md">Request case study</a>
+        <!-- small floating card -->
+        <div class="absolute -bottom-6 -left-6 p-3 rounded-2xl glass shadow-lg card-hover reveal" style="width:230px;">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-md bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold">API</div>
+            <div>
+              <div class="font-semibold text-white text-sm">Integrations</div>
+              <div class="text-xs text-slate-300">Sheets ↔ Slack, Gmail & external APIs</div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="py-12 bg-indigo-600 text-white">
-      <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-        <div>
-          <h5 class="text-2xl font-bold">Ready to simplify operations?</h5>
-          <p class="mt-2 text-sm opacity-90">Book a 20-minute free consult and we'll sketch a 2-week proof of value.</p>
-        </div>
-        <div class="flex gap-3">
-          <a href="#contact" class="px-5 py-3 bg-white text-indigo-600 rounded-md font-semibold">Book consult</a>
-          <a href="mailto:[email protected]" class="px-4 py-3 border border-white rounded-md">Email us</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="max-w-4xl mx-auto px-6 py-12">
-      <div class="bg-white rounded-2xl shadow p-6">
-        <h6 class="text-lg font-semibold">Start a project</h6>
-        <p class="text-sm text-slate-600 mt-2">Tell us your top pain point. We'll respond within 48 hours.</p>
-
-        <form id="contact-form" class="mt-6 grid grid-cols-1 gap-4">
-          <input id="name" name="name" required placeholder="Your name" class="p-3 rounded-md border focus:ring-2 focus:ring-indigo-200" />
-          <input id="email" name="email" type="email" required placeholder="Company email" class="p-3 rounded-md border focus:ring-2 focus:ring-indigo-200" />
-          <input id="company" name="company" placeholder="Company / role" class="p-3 rounded-md border focus:ring-2 focus:ring-indigo-200" />
-          <textarea id="message" name="message" placeholder="Short description of your project or pain point" class="p-3 rounded-md border min-h-[120px]"></textarea>
-
-          <div class="flex items-center gap-3">
-            <button type="submit" class="px-5 py-3 bg-indigo-600 text-white rounded-md">Request consult</button>
-            <div class="text-xs text-slate-500">Or email <a id="contact-email" href="#" class="underline"></a></div>
-          </div>
-        </form>
-
-        <p id="form-note" class="text-xs text-slate-400 mt-3">Your message will open in your email client to send. To capture messages in a Sheet, see the commented Apps Script block below.</p>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="border-t py-6">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-      <div class="text-sm text-slate-600">© <span id="year"></span> <span id="footer-name">[Agency Name]</span>. Built with Google Workspace in mind.</div>
-      <div class="flex items-center gap-4 text-sm">
-        <a href="#" class="hover:underline">Privacy</a>
-        <a href="#" class="hover:underline">Terms</a>
-        <a id="footer-email" href="#">Contact</a>
-      </div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <!-- Optional: Google Apps Script Webhook example (commented) -->
-  <!--
-    If you want form submissions to land in a Google Sheet, deploy this Apps Script as a Web App
-    and set `FORM_WEBHOOK` below to the web app URL. Quick steps:
+<!-- SERVICES -->
+<section id="services" class="max-w-7xl mx-auto px-6 py-12">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <article class="p-6 rounded-2xl bg-white/3 card-hover reveal">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-lg bg-white/6 flex items-center justify-center text-white font-semibold">CRM</div>
+        <div>
+          <h4 class="text-white font-semibold">Custom CRM</h4>
+          <p class="text-slate-300 text-sm mt-1">Pipelines, scoring, routing and reporting built on Sheets.</p>
+        </div>
+      </div>
+    </article>
 
-    1) In Google Drive: New > Google Apps Script
-    2) Replace code with the doPost function below and publish > Deploy > New deployment > Web app,
-       make sure "Execute as: Me" and "Who has access: Anyone" (or Anyone with the link).
-    3) Copy the web app URL and paste into FORM_WEBHOOK variable in the JavaScript below.
+    <article class="p-6 rounded-2xl bg-white/3 card-hover reveal">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-lg bg-white/6 flex items-center justify-center text-white font-semibold">AUT</div>
+        <div>
+          <h4 class="text-white font-semibold">Workflow Automation</h4>
+          <p class="text-slate-300 text-sm mt-1">Triggers, scheduled scripts, and incident handling with retries.</p>
+        </div>
+      </div>
+    </article>
 
-    Apps Script code (paste into script editor):
-    ------------------------------------------------
-    function doPost(e) {
-      try {
-        var data = JSON.parse(e.postData.contents);
-        var ss = SpreadsheetApp.openById('YOUR_SHEET_ID'); // create a Sheet and put its ID here
-        var sh = ss.getSheetByName('Sheet1') || ss.getSheets()[0];
-        sh.appendRow([new Date(), data.name, data.email, data.company, data.message]);
-        return ContentService.createTextOutput(JSON.stringify({status:'ok'})).setMimeType(ContentService.MimeType.JSON);
-      } catch(err) {
-        return ContentService.createTextOutput(JSON.stringify({status:'error', message: err.message})).setMimeType(ContentService.MimeType.JSON);
-      }
+    <article class="p-6 rounded-2xl bg-white/3 card-hover reveal">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-lg bg-white/6 flex items-center justify-center text-white font-semibold">INT</div>
+        <div>
+          <h4 class="text-white font-semibold">Integrations</h4>
+          <p class="text-slate-300 text-sm mt-1">Reliable syncs to Slack, Gmail, APIs and BigQuery.</p>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- PROCESS (compact) -->
+<section id="process" class="bg-white/3 py-10">
+  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="p-4 rounded-lg glass reveal text-center">
+      <div class="text-xs text-slate-300">1. DISCOVER</div>
+      <div class="font-semibold text-white mt-2">Map workflows</div>
+    </div>
+    <div class="p-4 rounded-lg glass reveal text-center">
+      <div class="text-xs text-slate-300">2. PROTOTYPE</div>
+      <div class="font-semibold text-white mt-2">Validate fast</div>
+    </div>
+    <div class="p-4 rounded-lg glass reveal text-center">
+      <div class="text-xs text-slate-300">3. HARDEN</div>
+      <div class="font-semibold text-white mt-2">Monitoring & retries</div>
+    </div>
+    <div class="p-4 rounded-lg glass reveal text-center">
+      <div class="text-xs text-slate-300">4. SCALE</div>
+      <div class="font-semibold text-white mt-2">Support & runbooks</div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES / SOCIAL PROOF -->
+<section id="cases" class="max-w-7xl mx-auto px-6 py-12">
+  <h3 class="text-white font-semibold mb-6">Trusted by ops teams</h3>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="p-6 rounded-2xl bg-white/3 reveal">
+      <p class="text-slate-200">“We cut manual processing by 70% and improved lead response.”</p>
+      <div class="mt-3 text-xs text-slate-400">— COO, GrowthStage</div>
+    </div>
+    <div class="p-6 rounded-2xl bg-white/3 reveal">
+      <p class="text-slate-200">“Saved $30k/year in contractor costs with scheduled scripts.”</p>
+      <div class="mt-3 text-xs text-slate-400">— Head of Ops, RetailCo</div>
+    </div>
+    <div class="p-6 rounded-2xl bg-white/3 reveal">
+      <p class="text-slate-200">“From sketch to production in three days — nailed it.”</p>
+      <div class="mt-3 text-xs text-slate-400">— Product Lead, SaaS Co.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-12">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+    <div>
+      <h4 class="text-white text-2xl font-semibold">Ready to reduce ops friction?</h4>
+      <p class="text-slate-300 text-sm mt-1">Book a free 20-minute strategy call — we'll outline a 2-week proof.</p>
+    </div>
+    <div class="flex gap-3">
+      <a id="ctaEmail" href="#" class="px-5 py-3 rounded-lg bg-white text-slate-900 font-semibold">Get consult</a>
+      <a href="mailto:[email protected]" class="px-4 py-3 rounded-lg border border-white/6 text-slate-200">Email us</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="max-w-4xl mx-auto px-6 py-12">
+  <div class="bg-white/4 p-6 rounded-2xl">
+    <h5 class="text-white font-semibold">Start a project</h5>
+    <p class="text-slate-300 text-sm mt-2">Tell us your top pain point and we'll reply within 48 hours.</p>
+
+    <form id="contactForm" class="mt-6 grid grid-cols-1 gap-3">
+      <input id="nm" placeholder="Name" required class="p-3 rounded-md bg-white/6 placeholder:text-slate-300 text-white border border-white/6" />
+      <input id="em" type="email" placeholder="Email" required class="p-3 rounded-md bg-white/6 placeholder:text-slate-300 text-white border border-white/6" />
+      <input id="co" placeholder="Company / role" class="p-3 rounded-md bg-white/6 placeholder:text-slate-300 text-white border border-white/6" />
+      <textarea id="msg" placeholder="Short description" class="p-3 rounded-md bg-white/6 placeholder:text-slate-300 text-white border border-white/6 min-h-[120px]"></textarea>
+
+      <div class="flex items-center gap-3">
+        <button type="submit" class="px-5 py-3 rounded-md bg-white text-slate-900 font-semibold">Request consult</button>
+        <div class="text-xs text-slate-400">Or email <a id="contactEmailAnchor" href="#" class="underline"></a></div>
+      </div>
+    </form>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-white/6 py-6">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-3">
+    <div class="text-sm text-slate-400">© <span id="yr"></span> <span id="fName">[Agency Name]</span>. Built for ops teams.</div>
+    <div class="text-sm text-slate-400">Remote · <span id="emailFooter"></span></div>
+  </div>
+</footer>
+
+<!-- JS: interactions + animations -->
+<script>
+  (function(){
+    const C = window._CFG || {};
+    // populate dynamic fields
+    document.getElementById('logoText').textContent = C.short || 'AG';
+    document.getElementById('brandName').textContent = C.name || '[Agency]';
+    document.getElementById('brandTag').textContent = C.tagline || '';
+    document.getElementById('heroImg').src = C.heroImage || '';
+    document.getElementById('primaryCtaText').textContent = C.primaryCta || 'Book a free consult';
+    document.getElementById('emailLink').href = 'mailto:' + (C.email || 'hello@example.com');
+    document.getElementById('mobileEmail').href = 'mailto:' + (C.email || 'hello@example.com');
+    document.getElementById('contactEmailAnchor').textContent = C.email || 'hello@example.com';
+    document.getElementById('contactEmailAnchor').href = 'mailto:' + (C.email || 'hello@example.com');
+    document.getElementById('yr').textContent = new Date().getFullYear();
+    document.getElementById('fName').textContent = C.name || '[Agency]';
+    document.getElementById('ctaEmail').href = 'mailto:' + (C.email || 'hello@example.com');
+
+    // mobile nav
+    const mbBtn = document.getElementById('mobileBtn');
+    const mbOpen = document.getElementById('mbOpen');
+    const mbClose = document.getElementById('mbClose');
+    const mbNav = document.getElementById('mobileNav');
+    mbBtn && mbBtn.addEventListener('click', ()=> {
+      mbNav.classList.toggle('hidden');
+      mbOpen.classList.toggle('hidden');
+      mbClose.classList.toggle('hidden');
+    });
+
+    // reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // small parallax on mouse move for hero card
+    const heroSection = document.querySelector('section.relative');
+    const floatingCard = document.querySelector('.card-hover');
+    if (heroSection && floatingCard) {
+      heroSection.addEventListener('mousemove', (ev)=>{
+        const r = heroSection.getBoundingClientRect();
+        const x = (ev.clientX - r.left) / r.width - 0.5;
+        const y = (ev.clientY - r.top) / r.height - 0.5;
+        floatingCard.style.transform = `translate3d(${x * 12}px, ${y * 8}px, 0)`;
+      });
+      heroSection.addEventListener('mouseleave', ()=> floatingCard.style.transform = '');
     }
-    ------------------------------------------------
-  -->
 
-  <script>
-    // --- populate dynamic bits from CONFIG ---
-    (function() {
-      const C = window._AGENCY;
-      document.getElementById('site-name').textContent = C.name;
-      document.getElementById('site-tagline').textContent = C.tagline;
-      document.getElementById('logo-text').textContent = C.short;
-      document.getElementById('hero-headline').textContent = C.heroHeadline;
-      document.getElementById('hero-sub').textContent = C.heroSub;
-      document.getElementById('hero-image').src = C.heroImage;
-      document.getElementById('year').textContent = new Date().getFullYear();
-      document.getElementById('footer-name').textContent = C.name;
-      document.getElementById('contact-email').textContent = C.contactEmail;
-      document.getElementById('footer-email').href = 'mailto:' + C.contactEmail;
-      document.getElementById('email-link').href = 'mailto:' + C.contactEmail;
-      document.getElementById('mobile-email-link').href = 'mailto:' + C.contactEmail;
-      document.getElementById('mobile-email-link').textContent = 'Contact ' + C.short;
-
-      // update CTA text
-      document.getElementById('cta-primary').textContent = C.primaryCta || 'Book a free consult';
-      document.getElementById('cta-secondary').textContent = C.secondaryCta || 'See case studies';
-      document.getElementById('email-link').textContent = C.primaryCta || 'Contact';
-    })();
-
-    // --- mobile nav toggle ---
-    (function() {
-      const btn = document.getElementById('mobile-btn');
-      const nav = document.getElementById('mobile-nav');
-      const openIcon = document.getElementById('menu-open');
-      const closeIcon = document.getElementById('menu-close');
-      btn.addEventListener('click', () => {
-        nav.classList.toggle('hidden');
-        openIcon.classList.toggle('hidden');
-        closeIcon.classList.toggle('hidden');
-      });
-    })();
-
-    // --- smooth scroll for anchor links ---
-    (function() {
-      document.querySelectorAll('a[href^="#"]').forEach(a => {
-        a.addEventListener('click', e => {
-          const target = a.getAttribute('href');
-          if (target.length > 1) {
-            e.preventDefault();
-            const el = document.querySelector(target);
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        });
-      });
-    })();
-
-    // --- reveal on scroll (simple) ---
-    (function() {
-      const io = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) e.target.classList.add('visible');
-        });
-      }, { threshold: 0.12 });
-
-      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-    })();
-
-    // --- contact form handler: opens mail client with prefilled subject/body ---
-    (function() {
-      const form = document.getElementById('contact-form');
-      const FORM_WEBHOOK = ''; // optional: paste Apps Script / webhook URL here to POST JSON (not required)
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const company = document.getElementById('company').value.trim();
-        const message = document.getElementById('message').value.trim();
-
-        if (!name || !email) {
-          alert('Please enter name and email.');
-          return;
-        }
-
-        // if a FORM_WEBHOOK is provided, POST JSON (for Apps Script or your webhook)
-        if (FORM_WEBHOOK) {
-          try {
-            const res = await fetch(FORM_WEBHOOK, {
-              method: 'POST',
-              headers: {'Content-Type': 'application/json'},
-              body: JSON.stringify({ name, email, company, message })
-            });
-            if (res.ok) {
-              alert('Thanks — your message was submitted.');
-              form.reset();
-            } else {
-              const txt = await res.text();
-              alert('Submission failed: ' + txt);
-            }
-          } catch (err) {
-            alert('Submission error: ' + err.message);
-          }
-          return;
-        }
-
-        // Otherwise, open user's email client (mailto) with a populated body
-        const agencyEmail = window._AGENCY.contactEmail || 'hello@example.com';
-        const subject = encodeURIComponent(`[Website] ${name} — ${company || 'no company'}`);
-        const bodyLines = [
-          `Name: ${name}`,
-          `Email: ${email}`,
-          `Company / Role: ${company}`,
-          '',
-          'Message:',
-          message,
-          '',
-          '---',
-          `Site: ${location.href}`
-        ];
-        const body = encodeURIComponent(bodyLines.join('\n'));
-        // open mail client
-        window.location.href = `mailto:${agencyEmail}?subject=${subject}&body=${body}`;
-      });
-    })();
-
-    // --- tiny accessibility: focus visible on keyboard navigation ---
-    (function() {
-      function handleFirstTab(e) {
-        if (e.key === 'Tab') {
-          document.documentElement.classList.add('show-focus');
-          window.removeEventListener('keydown', handleFirstTab);
-        }
+    // simple typewriter cycling through short phrases
+    const phrases = (C.heroLines && C.heroLines.length) ? C.heroLines : ['Automate ops.','Build CRMs.','Ship fast.'];
+    const target = document.getElementById('typeTarget');
+    let pi = 0, ci = 0, deleting = false;
+    function tick(){
+      const p = phrases[pi];
+      if(!deleting) {
+        target.textContent = p.slice(0, ci+1);
+        ci++;
+        if(ci === p.length) { deleting = true; setTimeout(tick, 1100); return; }
+      } else {
+        target.textContent = p.slice(0, ci-1);
+        ci--;
+        if(ci === 0){ deleting = false; pi = (pi+1)%phrases.length; setTimeout(tick, 300); return; }
       }
-      window.addEventListener('keydown', handleFirstTab);
-    })();
-  </script>
+      setTimeout(tick, deleting ? 45 : 60);
+    }
+    tick();
+
+    // compact contact form behavior: open mail client
+    const form = document.getElementById('contactForm');
+    form && form.addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('nm').value.trim();
+      const email = document.getElementById('em').value.trim();
+      const company = document.getElementById('co').value.trim();
+      const msg = document.getElementById('msg').value.trim();
+      if(!name || !email){ alert('Please enter name and email'); return; }
+      const subject = encodeURIComponent(`${name} — ${company || 'prospect'}`);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nCompany: ${company}\n\nMessage:\n${msg}\n\nSite: ${location.href}`);
+      window.location.href = `mailto:${C.email || 'hello@example.com'}?subject=${subject}&body=${body}`;
+    });
+
+    // quick accessibility: focus outline for keyboard users
+    function onFirstTab(e){
+      if(e.key === 'Tab'){ document.documentElement.classList.add('show-focus'); window.removeEventListener('keydown', onFirstTab); }
+    }
+    window.addEventListener('keydown', onFirstTab);
+  })();
+</script>
 
 </body>
 </html>
