@@ -1,148 +1,471 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>[Agency Name] — Custom Systems & Automation</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Agency - Custom ops, CRM & systems on Google Sheets</title>
+  <meta name="description" content="We build custom CRMs, ops tooling, and automations using Google Sheets & Google Apps Script — fast prototypes to production." />
+  <meta name="theme-color" content="#4f46e5" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="[Agency Name] — Custom ops, CRM & systems on Google Sheets" />
+  <meta property="og:description" content="We build custom CRMs, ops tooling, and automations using Google Sheets & Google Apps Script — fast prototypes to production." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1508830524289-0adcbe822b40?q=80&w=1200&auto=format&fit=crop&s=placeholder" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="[Agency Name] — Custom ops, CRM & systems on Google Sheets" />
+  <meta name="twitter:description" content="We build custom CRMs, ops tooling, and automations using Google Sheets & Google Apps Script — fast prototypes to production." />
 
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- React CDN -->
-  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <!-- Favicon (small inline SVG) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%234f46e5'/%3E%3Ctext x='50' y='58' font-size='48' text-anchor='middle' fill='%23fff' font-family='Arial, sans-serif'%3E%5B%5D%3C/text%3E%3C/svg%3E">
 
-  <!-- Babel for JSX support -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    /* small visual tweaks beyond Tailwind */
+    .reveal { opacity: 0; transform: translateY(10px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    /* ensure large hero image stays crisp */
+    .hero-img { object-fit: cover; height: 420px; width: 100%; border-radius: 16px; }
+    /* skeleton focus outline */
+    .focus-ring:focus { outline: 3px solid rgba(79,70,229,0.18); outline-offset: 2px; }
+  </style>
 
-  <!-- Framer Motion CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/framer-motion/dist/framer-motion.umd.js"></script>
-
-</head>
-<body class="bg-white text-slate-900">
-
-  <div id="root"></div>
-
-  <script type="text/babel">
-
-    const { motion } = window['framer-motion'];
-
-    // ---------------- CONFIG ----------------
-    const CONFIG = {
-      agencyName: "[Agency Name]",
-      logo: "[LOGO]",
-      email: "hello@example.com",
-      tagline: "Custom ops, CRM & automation using Google Sheets + Apps Script",
-      heroImage: "https://images.unsplash.com/photo-1508830524289-0adcbe822b40?q=80",
-      cta: "Get a Free Consult",
-    };
-
-    // ---------------- COMPONENT ----------------
-    function LandingPage() {
-      return (
-        <div className="min-h-screen font-sans">
-
-          {/* NAV */}
-          <nav className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 bg-indigo-600 text-white rounded-md flex items-center justify-center font-bold">
-                {CONFIG.logo}
-              </div>
-              <div>
-                <div className="font-semibold">{CONFIG.agencyName}</div>
-                <div className="text-xs text-slate-500">{CONFIG.tagline}</div>
-              </div>
-            </div>
-
-            <a href={`mailto:${CONFIG.email}`} className="text-sm px-4 py-2 rounded-md border">
-              {CONFIG.email}
-            </a>
-          </nav>
-
-          {/* HERO */}
-          <header className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h1 className="text-4xl font-bold leading-tight">
-                We Build Custom Systems, CRMs & Automations on Google Workspace
-              </h1>
-
-              <p className="mt-4 text-slate-600 text-lg max-w-lg">
-                Ship fast. Automate everything. Eliminate manual work.  
-                We design scalable internal tools for operations-driven teams.
-              </p>
-
-              <button className="mt-6 px-6 py-3 bg-indigo-600 text-white rounded-md shadow">
-                {CONFIG.cta}
-              </button>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
-            >
-              <img src={CONFIG.heroImage} className="rounded-xl shadow-lg w-full object-cover" />
-            </motion.div>
-          </header>
-
-          {/* SERVICES */}
-          <section className="bg-slate-50 py-16">
-            <div className="max-w-7xl mx-auto px-6">
-              <h2 className="text-2xl font-bold">What We Build</h2>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                {[
-                  {
-                    title: "Custom CRM Systems",
-                    desc: "Tailored pipelines, lead routing, automations, reporting dashboards."
-                  },
-                  {
-                    title: "Workflow Automation",
-                    desc: "Replace repetitive tasks with Apps Script triggers and automations."
-                  },
-                  {
-                    title: "Integrations",
-                    desc: "Connect Sheets ↔ APIs, Slack, Gmail, BigQuery, databases."
-                  },
-                ].map((s, i) => (
-                  <div key={i} className="bg-white p-6 rounded-xl shadow-sm border">
-                    <h3 className="font-semibold">{s.title}</h3>
-                    <p className="text-slate-600 mt-2 text-sm">{s.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* CTA */}
-          <section className="py-16 bg-indigo-600 text-white text-center">
-            <h2 className="text-3xl font-bold">Ready to Automate Your Ops?</h2>
-            <p className="text-sm opacity-80 mt-2">Book a free 20-minute consultation.</p>
-
-            <a
-              href={`mailto:${CONFIG.email}`}
-              className="mt-6 inline-block px-6 py-3 bg-white text-indigo-600 rounded-md font-semibold"
-            >
-              Contact Us
-            </a>
-          </section>
-
-          {/* FOOTER */}
-          <footer className="py-6 text-center text-sm text-slate-500 border-t">
-            © {new Date().getFullYear()} {CONFIG.agencyName}. All rights reserved.
-          </footer>
-        </div>
-      );
-    }
-
-    // ---------------- RENDER ----------------
-    ReactDOM.createRoot(document.getElementById("root")).render(<LandingPage />);
-
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"ProfessionalService",
+    "name":"[Agency Name]",
+    "url":"https://levinders.github.io/agency/",
+    "logo":"https://levinders.github.io/agency/favicon.ico",
+    "description":"Custom CRMs, workflow automations, and integrations built on Google Sheets and Apps Script."
+  }
   </script>
+</head>
+<body class="antialiased text-slate-900 bg-white">
+
+  <!--
+    CONFIG block: edit these values to customize the site.
+    Replace [Agency Name], heroImage, contactEmail etc.
+  -->
+  <script>
+    window._AGENCY = {
+      name: "[Agency Name]",
+      short: "[Agency]",
+      tagline: "Custom ops, CRM & systems built on Google Sheets + Apps Script",
+      heroHeadline: "Ship automation and internal tools — fast, reliable, Google-first.",
+      heroSub: "We build custom CRMs, workflow automations, and integrations using Google Sheets and Apps Script. From prototype to production with monitoring and support.",
+      heroImage: "https://images.unsplash.com/photo-1508830524289-0adcbe822b40?q=80&w=1400&auto=format&fit=crop&s=placeholder",
+      contactEmail: "hello@example.com",
+      officeLocation: "Remote",
+      primaryCta: "Book a free consult",
+      secondaryCta: "Request a case study"
+    };
+  </script>
+
+  <!-- NAV -->
+  <header class="border-b">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-lg bg-gradient-to-tr from-indigo-600 to-purple-500 flex items-center justify-center text-white font-bold">
+          <span id="logo-text">[LOGO]</span>
+        </div>
+        <div>
+          <div id="site-name" class="font-semibold text-lg">[Agency Name]</div>
+          <div class="text-xs text-slate-500 -mt-0.5" id="site-tagline">Custom ops, CRM & systems</div>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6">
+        <a href="#services" class="text-sm hover:text-slate-900">Services</a>
+        <a href="#process" class="text-sm hover:text-slate-900">Process</a>
+        <a href="#cases" class="text-sm hover:text-slate-900">Cases</a>
+        <a href="#contact" class="text-sm hover:text-slate-900">Contact</a>
+        <a id="email-link" href="#" class="ml-4 inline-flex items-center px-4 py-2 rounded-md border text-sm focus-ring">Contact</a>
+      </nav>
+
+      <!-- mobile menu button -->
+      <div class="md:hidden">
+        <button id="mobile-btn" aria-label="Open menu" class="p-2 rounded-md focus-ring">
+          <svg id="menu-open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="menu-close" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- mobile nav -->
+    <div id="mobile-nav" class="md:hidden hidden border-t">
+      <div class="px-6 py-4 flex flex-col gap-3">
+        <a href="#services" class="py-2">Services</a>
+        <a href="#process" class="py-2">Process</a>
+        <a href="#cases" class="py-2">Cases</a>
+        <a href="#contact" class="py-2">Contact</a>
+        <a id="mobile-email-link" href="#" class="py-2 border rounded-md text-center">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+      <div>
+        <div class="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 text-sm font-medium mb-4">Google Sheets + Apps Script</div>
+        <h1 id="hero-headline" class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight">
+          Ship automation and internal tools — fast, reliable, Google-first.
+        </h1>
+        <p id="hero-sub" class="mt-4 text-lg text-slate-600 max-w-xl">We build custom CRMs, workflow automations, and integrations using Google Sheets and Apps Script. From prototype to production with monitoring and support.</p>
+
+        <ul class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-xl">
+          <li class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-md bg-slate-100 flex items-center justify-center font-semibold">1</div>
+            <div class="text-sm">Custom CRMs on Google Sheets</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-md bg-slate-100 flex items-center justify-center font-semibold">2</div>
+            <div class="text-sm">Automated ops & scheduled scripts</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-md bg-slate-100 flex items-center justify-center font-semibold">3</div>
+            <div class="text-sm">Integrations: Slack, Gmail, APIs</div>
+          </li>
+        </ul>
+
+        <div class="mt-8 flex items-center gap-3">
+          <a id="cta-primary" href="#contact" class="px-5 py-3 bg-indigo-600 text-white rounded-md shadow hover:shadow-lg focus-ring">Book a free consult</a>
+          <a id="cta-secondary" href="#cases" class="px-4 py-3 border rounded-md text-sm focus-ring">See case studies</a>
+        </div>
+
+        <div class="mt-4 text-xs text-slate-400">Free 20-minute discovery call • NDA available</div>
+      </div>
+
+      <div class="hidden lg:block">
+        <div class="rounded-xl overflow-hidden shadow-lg">
+          <img id="hero-image" src="" alt="Hero" class="hero-img" />
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY -->
+    <section class="max-w-7xl mx-auto px-6 py-10">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        <div>
+          <h2 class="text-2xl font-bold">Why teams work with us</h2>
+          <p class="mt-4 text-slate-600">We reduce operational friction by building pragmatic automations and data-driven workflows on tools you already own.</p>
+        </div>
+
+        <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div class="p-5 rounded-xl border bg-white reveal">
+            <div class="font-semibold">Rapid prototypes → production</div>
+            <div class="mt-2 text-sm text-slate-600">Validate with users in days, then harden scripts and monitoring for production.</div>
+          </div>
+
+          <div class="p-5 rounded-xl border bg-white reveal">
+            <div class="font-semibold">Low-cost, Google-first</div>
+            <div class="mt-2 text-sm text-slate-600">Leverage Sheets & Apps Script for secure, auditable tools that don't balloon costs.</div>
+          </div>
+
+          <div class="p-5 rounded-xl border bg-white reveal">
+            <div class="font-semibold">Operations-first mindset</div>
+            <div class="mt-2 text-sm text-slate-600">We design to reduce manual work, improve data quality, and make decisions measurable.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="bg-slate-50 py-12">
+      <div class="max-w-7xl mx-auto px-6">
+        <h3 class="text-xl font-bold">What we build</h3>
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="p-6 rounded-2xl bg-white shadow-sm border reveal">
+            <div class="font-semibold">Custom CRM & Lead Ops</div>
+            <div class="mt-3 text-sm text-slate-600">Tailored pipelines, auto-routing, scoring and reporting.</div>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white shadow-sm border reveal">
+            <div class="font-semibold">Workflow Automation</div>
+            <div class="mt-3 text-sm text-slate-600">Scheduled jobs, triggers, and incident handling using Apps Script.</div>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white shadow-sm border reveal">
+            <div class="font-semibold">Dashboards & KPIs</div>
+            <div class="mt-3 text-sm text-slate-600">Single-pane dashboards powered by Sheets → BigQuery / Data Studio as needed.</div>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white shadow-sm border reveal">
+            <div class="font-semibold">Integrations & Sync</div>
+            <div class="mt-3 text-sm text-slate-600">Connect Sheets to external APIs, Slack, Gmail and robust error handling.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process" class="max-w-7xl mx-auto px-6 py-12">
+      <h4 class="text-xl font-bold">Our process — clear, measurable</h4>
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div class="p-5 rounded-xl border bg-white text-center reveal">
+          <div class="text-lg font-semibold">Discovery</div>
+          <div class="mt-2 text-sm text-slate-600">Map workflows, goals and failure modes.</div>
+        </div>
+        <div class="p-5 rounded-xl border bg-white text-center reveal">
+          <div class="text-lg font-semibold">Prototype</div>
+          <div class="mt-2 text-sm text-slate-600">Rapid prototypes in Sheets + Scripts to test with users.</div>
+        </div>
+        <div class="p-5 rounded-xl border bg-white text-center reveal">
+          <div class="text-lg font-semibold">Harden</div>
+          <div class="mt-2 text-sm text-slate-600">Add checks, error handling, permissions and monitoring.</div>
+        </div>
+        <div class="p-5 rounded-xl border bg-white text-center reveal">
+          <div class="text-lg font-semibold">Scale & maintain</div>
+          <div class="mt-2 text-sm text-slate-600">Operational runbooks, training & optional support plans.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CASE / SOCIAL PROOF -->
+    <section id="cases" class="bg-white py-12">
+      <div class="max-w-7xl mx-auto px-6">
+        <h4 class="text-xl font-bold">Trusted by teams that depend on their operations</h4>
+
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <blockquote class="p-6 rounded-2xl bg-slate-50 border reveal">
+            <p class="text-slate-700">“We decreased manual processing time by 70% with a custom Sheets CRM.”</p>
+            <div class="mt-4 text-sm text-slate-500">— COO, GrowthStage Inc.</div>
+          </blockquote>
+
+          <blockquote class="p-6 rounded-2xl bg-slate-50 border reveal">
+            <p class="text-slate-700">“Their automation saved us $30k/year in contractor time.”</p>
+            <div class="mt-4 text-sm text-slate-500">— Head of Ops, RetailCo</div>
+          </blockquote>
+
+          <div class="p-6 rounded-2xl bg-gradient-to-tr from-indigo-50 to-white border flex items-center justify-center reveal">
+            <div class="text-center">
+              <div class="text-sm text-slate-500">Sample case</div>
+              <div class="mt-3 font-semibold">Custom CRM + Auto Lead Scoring</div>
+              <div class="mt-2 text-sm text-slate-600">From prototype (3 days) to production with scheduled scripts, monitoring and dashboard.</div>
+              <a href="#contact" class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded-md">Request case study</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-12 bg-indigo-600 text-white">
+      <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <h5 class="text-2xl font-bold">Ready to simplify operations?</h5>
+          <p class="mt-2 text-sm opacity-90">Book a 20-minute free consult and we'll sketch a 2-week proof of value.</p>
+        </div>
+        <div class="flex gap-3">
+          <a href="#contact" class="px-5 py-3 bg-white text-indigo-600 rounded-md font-semibold">Book consult</a>
+          <a href="mailto:[email protected]" class="px-4 py-3 border border-white rounded-md">Email us</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="max-w-4xl mx-auto px-6 py-12">
+      <div class="bg-white rounded-2xl shadow p-6">
+        <h6 class="text-lg font-semibold">Start a project</h6>
+        <p class="text-sm text-slate-600 mt-2">Tell us your top pain point. We'll respond within 48 hours.</p>
+
+        <form id="contact-form" class="mt-6 grid grid-cols-1 gap-4">
+          <input id="name" name="name" required placeholder="Your name" class="p-3 rounded-md border focus:ring-2 focus:ring-indigo-200" />
+          <input id="email" name="email" type="email" required placeholder="Company email" class="p-3 rounded-md border focus:ring-2 focus:ring-indigo-200" />
+          <input id="company" name="company" placeholder="Company / role" class="p-3 rounded-md border focus:ring-2 focus:ring-indigo-200" />
+          <textarea id="message" name="message" placeholder="Short description of your project or pain point" class="p-3 rounded-md border min-h-[120px]"></textarea>
+
+          <div class="flex items-center gap-3">
+            <button type="submit" class="px-5 py-3 bg-indigo-600 text-white rounded-md">Request consult</button>
+            <div class="text-xs text-slate-500">Or email <a id="contact-email" href="#" class="underline"></a></div>
+          </div>
+        </form>
+
+        <p id="form-note" class="text-xs text-slate-400 mt-3">Your message will open in your email client to send. To capture messages in a Sheet, see the commented Apps Script block below.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t py-6">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="text-sm text-slate-600">© <span id="year"></span> <span id="footer-name">[Agency Name]</span>. Built with Google Workspace in mind.</div>
+      <div class="flex items-center gap-4 text-sm">
+        <a href="#" class="hover:underline">Privacy</a>
+        <a href="#" class="hover:underline">Terms</a>
+        <a id="footer-email" href="#">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Optional: Google Apps Script Webhook example (commented) -->
+  <!--
+    If you want form submissions to land in a Google Sheet, deploy this Apps Script as a Web App
+    and set `FORM_WEBHOOK` below to the web app URL. Quick steps:
+
+    1) In Google Drive: New > Google Apps Script
+    2) Replace code with the doPost function below and publish > Deploy > New deployment > Web app,
+       make sure "Execute as: Me" and "Who has access: Anyone" (or Anyone with the link).
+    3) Copy the web app URL and paste into FORM_WEBHOOK variable in the JavaScript below.
+
+    Apps Script code (paste into script editor):
+    ------------------------------------------------
+    function doPost(e) {
+      try {
+        var data = JSON.parse(e.postData.contents);
+        var ss = SpreadsheetApp.openById('YOUR_SHEET_ID'); // create a Sheet and put its ID here
+        var sh = ss.getSheetByName('Sheet1') || ss.getSheets()[0];
+        sh.appendRow([new Date(), data.name, data.email, data.company, data.message]);
+        return ContentService.createTextOutput(JSON.stringify({status:'ok'})).setMimeType(ContentService.MimeType.JSON);
+      } catch(err) {
+        return ContentService.createTextOutput(JSON.stringify({status:'error', message: err.message})).setMimeType(ContentService.MimeType.JSON);
+      }
+    }
+    ------------------------------------------------
+  -->
+
+  <script>
+    // --- populate dynamic bits from CONFIG ---
+    (function() {
+      const C = window._AGENCY;
+      document.getElementById('site-name').textContent = C.name;
+      document.getElementById('site-tagline').textContent = C.tagline;
+      document.getElementById('logo-text').textContent = C.short;
+      document.getElementById('hero-headline').textContent = C.heroHeadline;
+      document.getElementById('hero-sub').textContent = C.heroSub;
+      document.getElementById('hero-image').src = C.heroImage;
+      document.getElementById('year').textContent = new Date().getFullYear();
+      document.getElementById('footer-name').textContent = C.name;
+      document.getElementById('contact-email').textContent = C.contactEmail;
+      document.getElementById('footer-email').href = 'mailto:' + C.contactEmail;
+      document.getElementById('email-link').href = 'mailto:' + C.contactEmail;
+      document.getElementById('mobile-email-link').href = 'mailto:' + C.contactEmail;
+      document.getElementById('mobile-email-link').textContent = 'Contact ' + C.short;
+
+      // update CTA text
+      document.getElementById('cta-primary').textContent = C.primaryCta || 'Book a free consult';
+      document.getElementById('cta-secondary').textContent = C.secondaryCta || 'See case studies';
+      document.getElementById('email-link').textContent = C.primaryCta || 'Contact';
+    })();
+
+    // --- mobile nav toggle ---
+    (function() {
+      const btn = document.getElementById('mobile-btn');
+      const nav = document.getElementById('mobile-nav');
+      const openIcon = document.getElementById('menu-open');
+      const closeIcon = document.getElementById('menu-close');
+      btn.addEventListener('click', () => {
+        nav.classList.toggle('hidden');
+        openIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+      });
+    })();
+
+    // --- smooth scroll for anchor links ---
+    (function() {
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+          const target = a.getAttribute('href');
+          if (target.length > 1) {
+            e.preventDefault();
+            const el = document.querySelector(target);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    })();
+
+    // --- reveal on scroll (simple) ---
+    (function() {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) e.target.classList.add('visible');
+        });
+      }, { threshold: 0.12 });
+
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    })();
+
+    // --- contact form handler: opens mail client with prefilled subject/body ---
+    (function() {
+      const form = document.getElementById('contact-form');
+      const FORM_WEBHOOK = ''; // optional: paste Apps Script / webhook URL here to POST JSON (not required)
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const company = document.getElementById('company').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        if (!name || !email) {
+          alert('Please enter name and email.');
+          return;
+        }
+
+        // if a FORM_WEBHOOK is provided, POST JSON (for Apps Script or your webhook)
+        if (FORM_WEBHOOK) {
+          try {
+            const res = await fetch(FORM_WEBHOOK, {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({ name, email, company, message })
+            });
+            if (res.ok) {
+              alert('Thanks — your message was submitted.');
+              form.reset();
+            } else {
+              const txt = await res.text();
+              alert('Submission failed: ' + txt);
+            }
+          } catch (err) {
+            alert('Submission error: ' + err.message);
+          }
+          return;
+        }
+
+        // Otherwise, open user's email client (mailto) with a populated body
+        const agencyEmail = window._AGENCY.contactEmail || 'hello@example.com';
+        const subject = encodeURIComponent(`[Website] ${name} — ${company || 'no company'}`);
+        const bodyLines = [
+          `Name: ${name}`,
+          `Email: ${email}`,
+          `Company / Role: ${company}`,
+          '',
+          'Message:',
+          message,
+          '',
+          '---',
+          `Site: ${location.href}`
+        ];
+        const body = encodeURIComponent(bodyLines.join('\n'));
+        // open mail client
+        window.location.href = `mailto:${agencyEmail}?subject=${subject}&body=${body}`;
+      });
+    })();
+
+    // --- tiny accessibility: focus visible on keyboard navigation ---
+    (function() {
+      function handleFirstTab(e) {
+        if (e.key === 'Tab') {
+          document.documentElement.classList.add('show-focus');
+          window.removeEventListener('keydown', handleFirstTab);
+        }
+      }
+      window.addEventListener('keydown', handleFirstTab);
+    })();
+  </script>
+
 </body>
 </html>
