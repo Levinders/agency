@@ -3,444 +3,396 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>[Agency Name] — Sheets + Apps Script Automation</title>
+  <title>Automation Agency — Custom Sheets & Apps Script</title>
   <meta name="description" content="Custom CRMs, automations and ops tooling built on Google Sheets & Apps Script — fast, secure, and designed for ops teams." />
-  <meta name="theme-color" content="#0F172A" />
+  <meta name="theme-color" content="#0f172a" />
 
-  <!-- Tailwind CDN -->
+  <!-- Tailwind CDN (production-ready classes via CDN) -->
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { brand: { 50:'#eef2ff', 100:'#e0e7ff', 500:'#6366f1', 600:'#4f46e5' } },
-          boxShadow: { 'soft-lg': '0 10px 30px rgba(15,23,42,0.12)' }
-        }
-      }
-    }
+    tailwind = { config: { theme: { extend: { colors: { brand: { 500: '#4f46e5', 600: '#4338ca' } } } } } }
   </script>
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    :root { --accent: #4f46e5; --muted: #64748b; --glass: rgba(255,255,255,0.06); }
-    html,body { background: radial-gradient(1200px 600px at 10% 10%, rgba(79,70,229,0.06), transparent), #0f172a; }
-    .hero-gradient {
-      background: linear-gradient(135deg, rgba(79,70,229,0.12), rgba(99,102,241,0.08) 40%, rgba(99,102,241,0.02));
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
-    }
-    .glass { background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.04); }
-    .card-hover { transition: transform .36s cubic-bezier(.2,.9,.3,1), box-shadow .36s; will-change: transform; }
-    .card-hover:hover { transform: translateY(-10px) scale(1.01); box-shadow: 0 20px 40px rgba(2,6,23,0.45); }
-    .reveal { opacity: 0; transform: translateY(12px) scale(.995); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.9,.3,1); }
-    .reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
-    .blob { position: absolute; filter: blur(60px); opacity: .55; pointer-events: none; mix-blend-mode: screen; }
-    .typewriter { display:inline-block; border-right: 2px solid rgba(255,255,255,0.12); padding-right:6px; animation: blink .9s infinite; }
-    @keyframes blink { 0%,100% { border-color: rgba(255,255,255,0.12) } 50% { border-color: transparent } }
-    .float-slow { transform-origin: center; animation: floaty 6s ease-in-out infinite; }
-    @keyframes floaty { 0%{ transform: translateY(0) } 50%{ transform: translateY(-8px) } 100%{ transform: translateY(0) } }
-    .svg-tilt { transition: transform .4s cubic-bezier(.2,.9,.3,1); will-change: transform; }
-    @media (max-width: 640px) { .hero-art { border-radius: 12px; } }
+    /* Page-level custom styles */
+    :root { --bg: #0f172a; --muted: #94a3b8; --accent: #4f46e5; }
+    html,body { height:100%; background: radial-gradient(1200px 600px at 10% 10%, rgba(79,70,229,0.06), transparent), var(--bg); color:#e6eef8; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+    .glass { background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.04); }
+    .card-hover { transition: transform .36s cubic-bezier(.2,.9,.3,1), box-shadow .36s, opacity .36s; will-change: transform; }
+    .card-hover:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(2,6,23,0.5); }
+    .reveal { opacity: 0; transform: translateY(12px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity:1; transform: translateY(0); }
+    .typewriter { display:inline-block; border-right: 2px solid rgba(230,238,248,0.16); padding-right:6px; animation: blink .9s infinite; }
+    @keyframes blink { 0%,100%{border-color:rgba(230,238,248,0.16)}50%{border-color:transparent} }
+    /* Small page specifics */
+    .hero-blob { filter: blur(60px); opacity:0.6; mix-blend-mode: screen; pointer-events: none; position: absolute; }
+    .shadow-soft { box-shadow: 0 10px 30px rgba(2,6,23,0.55); }
+    @media (max-width:640px) { .desktop-only { display:none; } .mobile-stack { gap: 1rem; } }
   </style>
 </head>
-<body class="antialiased text-slate-100">
+<body>
 
-<!-- CONFIG: edit values here -->
+<!-- CONFIG -->
 <script>
-  window._CFG = {
-    name: "[Agency Name]",
-    short: "AG",
-    tagline: "Sheets + Apps Script — Ops & CRM automation",
-    heroLines: ["Automate ops.", "Build custom CRMs.", "Ship in days, not months."],
-    // If you want to use an external hero raster image instead, set heroUseRaster: true and provide heroImage
-    heroUseRaster: false,
+  // Quick customization area
+  window.SITE = {
+    name: "Automation Agency",
+    short: "AA",
+    email: "hello@automationagency.com",
     heroImage: "https://images.unsplash.com/photo-1508830524289-0adcbe822b40?q=80&w=1400&auto=format&fit=crop&s=placeholder",
-    email: "hello@example.com",
-    primaryCta: "Book a free consult",
-    secondaryCta: "See case studies"
+    heroAccent: "#4f46e5"
   };
 </script>
 
-<!-- Sticky header -->
-<header class="sticky top-0 z-40 backdrop-blur-sm">
-  <div class="max-w-7xl mx-auto px-5 py-3 flex items-center justify-between">
-    <a href="#" class="flex items-center gap-3 select-none">
-      <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-brand-600 to-brand-500 flex items-center justify-center text-white font-semibold shadow-sm">
-        <span id="logoText">AG</span>
+<!-- NAV -->
+<header class="sticky top-0 z-50 backdrop-blur-md bg-black/20 border-b border-white/6">
+  <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+    <a class="flex items-center gap-3" href="#">
+      <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-indigo-600 to-purple-500 flex items-center justify-center text-white font-bold shadow-sm">
+        <span id="logoShort">AA</span>
       </div>
       <div class="hidden sm:block">
-        <div id="brandName" class="font-semibold text-white">[Agency]</div>
-        <div id="brandTag" class="text-xs text-slate-400">Sheets + Apps Script</div>
+        <div id="brandName" class="font-semibold text-white leading-tight">Automation Agency</div>
+        <div class="text-xs text-slate-300">Sheets · Apps Script · Integrations</div>
       </div>
     </a>
 
-    <nav class="hidden md:flex items-center gap-6">
-      <a href="#services" class="text-sm text-slate-200 hover:text-white">Services</a>
-      <a href="#process" class="text-sm text-slate-200 hover:text-white">Process</a>
-      <a href="#cases" class="text-sm text-slate-200 hover:text-white">Cases</a>
-      <a id="emailLink" href="#" class="ml-4 inline-flex items-center px-4 py-2 rounded-md bg-white/6 hover:bg-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 12H3m3 4H3m5-8H3M21 8v8a2 2 0 01-2 2H8" /></svg>
-        Contact
-      </a>
+    <nav class="hidden md:flex items-center gap-6 text-sm text-slate-200">
+      <a href="#services" class="hover:text-white">Services</a>
+      <a href="#how-it-works" class="hover:text-white">Process</a>
+      <a href="#pricing" class="hover:text-white">Pricing</a>
+      <a href="#contact" class="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-white/6 hover:bg-white/10">Contact</a>
     </nav>
 
-    <!-- mobile -->
     <div class="md:hidden">
-      <button id="mobileBtn" aria-label="open menu" class="p-2 rounded-md bg-white/6">
-        <svg id="mbOpen" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-        <svg id="mbClose" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hidden text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      <button id="mbBtn" class="p-2 rounded-md bg-white/6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
       </button>
     </div>
   </div>
-
-  <!-- mobile menu -->
-  <div id="mobileNav" class="md:hidden hidden border-t border-white/6">
-    <div class="px-5 py-4 flex flex-col gap-3">
-      <a href="#services" class="py-2">Services</a>
-      <a href="#process" class="py-2">Process</a>
-      <a href="#cases" class="py-2">Cases</a>
-      <a id="mobileEmail" href="#" class="py-2 rounded-md bg-white/6 text-center">Contact</a>
+  <div id="mbMenu" class="hidden md:hidden border-t border-white/6">
+    <div class="px-6 py-4 flex flex-col gap-3">
+      <a href="#services">Services</a>
+      <a href="#how-it-works">Process</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact" class="rounded-md bg-white/6 text-center p-2">Contact</a>
     </div>
   </div>
 </header>
 
 <!-- HERO -->
-<section class="relative overflow-hidden pt-10">
-  <!-- decorative blobs -->
-  <div class="blob" style="width:420px;height:420px;left:-60px;top:-120px;background:radial-gradient(circle at 30% 30%, rgba(79,70,229,0.75), rgba(99,102,241,0.4), transparent)"></div>
-  <div class="blob" style="width:360px;height:360px;right:-80px;bottom:-40px;background:radial-gradient(circle at 70% 60%, rgba(14,165,233,0.20), rgba(99,102,241,0.1), transparent)"></div>
+<section class="relative pt-16 pb-20 overflow-hidden">
+  <div class="hero-blob" style="width:420px;height:420px;left:-100px;top:-80px;background:radial-gradient(circle at 30% 30%, rgba(79,70,229,0.8), rgba(99,102,241,0.4) 60%, transparent)"></div>
 
   <div class="max-w-7xl mx-auto px-6">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-      <div class="relative z-10">
-        <div class="inline-flex items-center px-3 py-1 rounded-full bg-white/6 text-sm text-white/90 mb-6">Google Sheets · Apps Script</div>
+      <!-- Left -->
+      <div class="z-10">
+        <div class="inline-flex items-center px-3 py-1 rounded-full bg-white/6 text-sm mb-6">Google Sheets · Apps Script</div>
 
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
-          <span id="typeStatic" class="block">We build</span>
-          <span id="typeTarget" class="typewriter text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-200 text-3xl sm:text-4xl font-bold"></span>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight">
+          We make operations <span class="typewriter bg-clip-text text-transparent" id="typed">fast, predictable, delightful.</span>
         </h1>
 
         <p class="mt-6 text-slate-300 max-w-xl">
-          Custom CRMs, workflow automations and integrations — launched quickly, hardened for production, and maintained for ops teams.
+          Custom CRMs, workflow automations and integrations — shipped quickly, hardened for production, and designed for ops teams.
         </p>
 
-        <div class="mt-8 flex items-center gap-4">
-          <a id="primaryCta" href="#contact" class="inline-flex items-center gap-3 px-5 py-3 rounded-lg bg-white text-slate-900 font-semibold shadow-lg transform transition hover:-translate-y-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 5v14M5 12h14"/></svg>
-            <span id="primaryCtaText">Book a free consult</span>
+        <div class="mt-8 flex flex-col sm:flex-row gap-3">
+          <a id="primaryCta" href="#contact" class="inline-flex items-center gap-3 px-5 py-3 rounded-lg bg-white text-slate-900 font-semibold shadow-lg hover:translate-y-[-3px] transition">
+            Book a strategy call
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
-
-          <a id="secondaryCta" href="#cases" class="text-sm text-slate-200 px-4 py-3 rounded-lg border border-white/6 hover:bg-white/5">See case studies</a>
+          <a href="#cases" class="inline-flex items-center gap-2 px-4 py-3 rounded-lg border border-white/6 text-sm text-slate-200">See case studies</a>
         </div>
 
-        <div class="mt-6 text-xs text-slate-400">Free 20-min discovery call • NDA available</div>
+        <div class="mt-5 text-xs text-slate-400">Free 20-min discovery call • NDA available</div>
       </div>
 
-      <!-- hero art: inline SVG illustration (clean, editable, responsive) -->
-      <div class="relative">
-        <div class="hero-gradient glass rounded-2xl p-6 shadow-soft-lg">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
-            <!-- left column: stylized spreadsheet + chart -->
-            <div class="overflow-hidden rounded-xl float-slow">
-              <!-- Inline SVG illustration: spreadsheet, chart, gears, and integration arrows -->
-              <svg class="w-full h-full svg-tilt" viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Automation illustration">
-                <defs>
-                  <linearGradient id="g1" x1="0" x2="1">
-                    <stop offset="0" stop-color="#7c3aed" stop-opacity="0.95"/>
-                    <stop offset="1" stop-color="#06b6d4" stop-opacity="0.9"/>
-                  </linearGradient>
-                  <filter id="f1" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur stdDeviation="10" result="b"/>
-                    <feBlend in="SourceGraphic" in2="b"/>
-                  </filter>
-                </defs>
-
-                <!-- background card -->
-                <rect x="8" y="8" rx="14" ry="14" width="584" height="404" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.03)"/>
-
-                <!-- spreadsheet mock -->
-                <g transform="translate(28,28)">
-                  <rect x="0" y="0" width="320" height="160" rx="8" fill="#051124"/>
-                  <!-- rows -->
-                  <g fill="#0b1220" stroke="#09101b">
-                    <rect x="12" y="12" width="296" height="24" rx="4"/>
-                    <rect x="12" y="44" width="296" height="20" rx="4"/>
-                    <rect x="12" y="72" width="296" height="20" rx="4"/>
-                    <rect x="12" y="100" width="296" height="20" rx="4"/>
-                  </g>
-                  <!-- header labels -->
-                  <g fill="#9ca3ff" font-size="12" font-family="Arial, sans-serif">
-                    <text x="20" y="28">Lead</text>
-                    <text x="140" y="28">Status</text>
-                    <text x="240" y="28">Owner</text>
-                  </g>
-                </g>
-
-                <!-- chart mock -->
-                <g transform="translate(360,32)">
-                  <rect x="0" y="0" width="200" height="120" rx="8" fill="#051124"/>
-                  <!-- bars -->
-                  <g fill="url(#g1)" opacity="0.95">
-                    <rect x="18" y="30" width="22" height="70" rx="4"/>
-                    <rect x="58" y="18" width="22" height="82" rx="4"/>
-                    <rect x="98" y="6" width="22" height="94" rx="4"/>
-                    <rect x="138" y="40" width="22" height="60" rx="4"/>
-                  </g>
-                </g>
-
-                <!-- gears / automation -->
-                <g transform="translate(180,210)" opacity="0.95">
-                  <g transform="translate(0,0)">
-                    <circle cx="48" cy="48" r="28" fill="#062028"/>
-                    <g transform="translate(48,48)" fill="#c7d2fe" stroke="#94a3ff" stroke-width="1">
-                      <path d="M0,-22 L6,-16 L12,-18 L10,-10 L18,-8 L12,-2 L18,4 L10,6 L12,14 L6,12 L0,20 L-6,12 L-12,14 L-10,6 L-18,4 L-12,-2 L-18,-8 L-10,-10 L-12,-18 L-6,-16 Z"/>
-                    </g>
-                  </g>
-                  <g transform="translate(120,16)">
-                    <rect x="-12" y="-12" width="60" height="44" rx="8" fill="#05212a" stroke="#0ea5b4"/>
-                    <text x="18" y="16" font-size="12" fill="#9be7f3" font-family="Arial">API</text>
-                  </g>
-                </g>
-
-                <!-- arrows (integrations) -->
-                <g transform="translate(80,160)" stroke="#8b5cf6" stroke-width="2" fill="none" opacity="0.95">
-                  <path d="M0 120 C60 80 160 80 220 40" stroke-linecap="round"/>
-                  <polygon points="220,40 212,34 216,40 212,46" fill="#8b5cf6" />
-                </g>
-
-                <!-- subtle glow -->
-                <circle cx="480" cy="320" r="50" fill="url(#g1)" opacity="0.06" filter="url(#f1)"/>
-              </svg>
-            </div>
-
-            <!-- right column: concise stats and selling points -->
-            <div class="space-y-3">
-              <div class="text-sm text-slate-300">Prototype → Production</div>
-              <div class="text-white text-xl font-semibold">Validate in days · Reliable at scale</div>
-              <div class="text-slate-300 text-sm">Scheduled scripts, retry logic, monitoring and role-based access.</div>
-
-              <div class="mt-3 grid grid-cols-3 gap-2">
-                <div class="p-2 rounded-lg bg-white/6 text-center">
-                  <div class="text-sm text-slate-200 font-semibold">70%</div>
-                  <div class="text-xs text-slate-400">Time saved</div>
-                </div>
-                <div class="p-2 rounded-lg bg-white/6 text-center">
-                  <div class="text-sm text-slate-200 font-semibold">$30k</div>
-                  <div class="text-xs text-slate-400">Annual ops saved</div>
-                </div>
-                <div class="p-2 rounded-lg bg-white/6 text-center">
-                  <div class="text-sm text-slate-200 font-semibold">3d</div>
-                  <div class="text-xs text-slate-400">Prototype time</div>
+      <!-- Right: hero art (image with overlay UI mock) -->
+      <div>
+        <div class="glass rounded-2xl p-0 overflow-hidden shadow-soft">
+          <div style="position:relative;">
+            <img src="" id="heroImg" alt="Hero background" class="w-full h-[380px] object-cover block" />
+            <!-- overlay mock card -->
+            <div style="position:absolute;left:18px;bottom:18px;right:18px;">
+              <div class="rounded-lg bg-white/8 p-4 glass card-hover">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-md bg-indigo-500 flex items-center justify-center text-white font-bold">CRM</div>
+                  <div>
+                    <div class="text-white font-semibold">CRM dashboard</div>
+                    <div class="text-xs text-slate-300">Inline edits • Bulk actions • Auto-routing</div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- floating small card -->
-        <div class="absolute -bottom-6 -left-6 p-3 rounded-2xl glass shadow-lg card-hover reveal" style="width:230px;">
-          <div class="flex items-start gap-3">
-            <div class="w-10 h-10 rounded-md bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold">API</div>
-            <div>
-              <div class="font-semibold text-white text-sm">Integrations</div>
-              <div class="text-xs text-slate-300">Sheets ↔ Slack, Gmail & external APIs</div>
-            </div>
-          </div>
+        <div class="mt-4 grid grid-cols-3 gap-3 text-xs text-slate-300">
+          <div class="p-2 rounded-md bg-white/6 text-center">70% time saved</div>
+          <div class="p-2 rounded-md bg-white/6 text-center">$30k annual saved</div>
+          <div class="p-2 rounded-md bg-white/6 text-center">3d prototype</div>
         </div>
-
       </div>
     </div>
   </div>
 </section>
 
-<!-- SERVICES -->
-<section id="services" class="max-w-7xl mx-auto px-6 py-12">
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <article class="p-6 rounded-2xl bg-white/3 card-hover reveal">
-      <div class="flex items-center gap-3">
-        <div class="w-12 h-12 rounded-lg bg-white/6 flex items-center justify-center text-white font-semibold">CRM</div>
-        <div>
-          <h4 class="text-white font-semibold">Custom CRM</h4>
-          <p class="text-slate-300 text-sm mt-1">Pipelines, scoring, routing and reporting built on Sheets.</p>
-        </div>
-      </div>
-    </article>
+<!-- SERVICES (revamped, visual & polished) -->
+<section id="services" class="max-w-7xl mx-auto px-6 py-16">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+    <!-- left intro -->
+    <div class="lg:col-span-1 space-y-4">
+      <h3 class="text-3xl font-extrabold text-white">Precision systems for ops</h3>
+      <p class="text-slate-300 max-w-md">We design elegant interfaces and reliable automations that fit where your team works — Sheets, Slack and your toolchain. Prototype fast, ship confidently.</p>
 
-    <article class="p-6 rounded-2xl bg-white/3 card-hover reveal">
-      <div class="flex items-center gap-3">
-        <div class="w-12 h-12 rounded-lg bg-white/6 flex items-center justify-center text-white font-semibold">AUT</div>
-        <div>
-          <h4 class="text-white font-semibold">Workflow Automation</h4>
-          <p class="text-slate-300 text-sm mt-1">Triggers, scheduled scripts, and incident handling with retries.</p>
+      <div class="space-y-3 mt-4">
+        <div class="flex items-start gap-3 p-3 rounded-xl bg-white/4 border border-white/6">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-indigo-600 to-cyan-400 text-white flex items-center justify-center font-semibold">UI</div>
+          <div>
+            <div class="text-white font-semibold">Interfaces people use</div>
+            <div class="text-xs text-slate-300">Clean views, inline edits, role-based access.</div>
+          </div>
         </div>
-      </div>
-    </article>
 
-    <article class="p-6 rounded-2xl bg-white/3 card-hover reveal">
-      <div class="flex items-center gap-3">
-        <div class="w-12 h-12 rounded-lg bg-white/6 flex items-center justify-center text-white font-semibold">INT</div>
-        <div>
-          <h4 class="text-white font-semibold">Integrations</h4>
-          <p class="text-slate-300 text-sm mt-1">Reliable syncs to Slack, Gmail, APIs and BigQuery.</p>
+        <div class="flex items-start gap-3 p-3 rounded-xl bg-white/4 border border-white/6">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-rose-500 to-pink-400 text-white flex items-center justify-center font-semibold">⚡</div>
+          <div>
+            <div class="text-white font-semibold">Automation as a service</div>
+            <div class="text-xs text-slate-300">Retries, alerts and audit logs included.</div>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 p-3 rounded-xl bg-white/4 border border-white/6">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-emerald-500 to-lime-400 text-white flex items-center justify-center font-semibold">↔</div>
+          <div>
+            <div class="text-white font-semibold">Connected to your stack</div>
+            <div class="text-xs text-slate-300">Slack, Gmail, BigQuery, custom APIs.</div>
+          </div>
         </div>
       </div>
-    </article>
+
+      <div class="mt-6">
+        <a href="#contact" class="inline-flex items-center gap-3 px-5 py-3 rounded-lg bg-gradient-to-tr from-indigo-600 to-purple-500 text-white font-semibold">Start a project</a>
+      </div>
+    </div>
+
+    <!-- right visual grid -->
+    <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Card: CRM UI (image + overlay) -->
+      <article class="rounded-2xl overflow-hidden card-hover reveal bg-white/6">
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop&s=placeholder" alt="CRM" class="w-full h-40 object-cover" />
+        <div class="p-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-md bg-indigo-500 flex items-center justify-center"> <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7h18M3 12h18M3 17h18"/></svg></div>
+            <div>
+              <div class="font-semibold text-white">Polished CRM UI</div>
+              <div class="text-xs text-slate-300">Inline edits • Bulk actions • Role filters</div>
+            </div>
+          </div>
+          <div class="mt-3 flex items-center justify-between text-xs text-slate-400">
+            <div class="inline-flex items-center gap-2"><svg class="w-4 h-4 text-green-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7"/></svg> Auto-routing</div>
+            <div>3–5 day prototype</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card: Automation -->
+      <article class="rounded-2xl overflow-hidden card-hover reveal bg-white/6">
+        <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=1200&auto=format&fit=crop&s=placeholder" alt="Automation" class="w-full h-40 object-cover" />
+        <div class="p-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-md bg-sky-500 flex items-center justify-center"> <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-6a4 4 0 018 0v6"/></svg></div>
+            <div>
+              <div class="font-semibold text-white">Visual Automation</div>
+              <div class="text-xs text-slate-300">Flow builder with retries & alerting.</div>
+            </div>
+          </div>
+          <div class="mt-3 flex items-center justify-between text-xs text-slate-400">
+            <div>Retry logic</div>
+            <div>Alerting</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card: Dashboards & Integrations (larger) -->
+      <article class="rounded-2xl overflow-hidden md:col-span-3 card-hover reveal bg-white/6">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop&s=placeholder" alt="Dashboards" class="w-full h-40 object-cover" />
+        <div class="p-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-md bg-emerald-500 flex items-center justify-center"> <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h3l3 8 4-16 3 8h3"/></svg></div>
+            <div>
+              <div class="font-semibold text-white">Dashboards & Exports</div>
+              <div class="text-xs text-slate-300">Live KPIs, scheduled exports, and push-to-warehouse pipelines</div>
+            </div>
+          </div>
+          <div class="mt-3 flex items-center gap-3 text-xs text-slate-300">
+            <div class="p-2 rounded-md bg-white/6">CSV export</div>
+            <div class="p-2 rounded-md bg-white/6">BigQuery</div>
+            <div class="p-2 rounded-md bg-white/6">Webhooks</div>
+          </div>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 
 <!-- PROCESS -->
-<section id="process" class="bg-white/3 py-10">
-  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-4">
-    <div class="p-4 rounded-lg glass reveal text-center">
-      <div class="text-xs text-slate-300">1. DISCOVER</div>
-      <div class="font-semibold text-white mt-2">Map workflows</div>
+<section id="how-it-works" class="max-w-7xl mx-auto px-6 py-16">
+  <div class="text-center mb-12">
+    <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Our Process</h2>
+    <p class="text-slate-300 max-w-2xl mx-auto mt-3">Discovery → Prototype → Harden → Run</p>
+  </div>
+
+  <div class="grid md:grid-cols-4 gap-6">
+    <div class="p-6 rounded-2xl glass reveal text-center">
+      <div class="text-2xl font-bold text-white">1</div>
+      <div class="mt-3 font-semibold">Discover</div>
+      <div class="text-sm text-slate-300 mt-2">Map workflows, pain points and metrics.</div>
     </div>
-    <div class="p-4 rounded-lg glass reveal text-center">
-      <div class="text-xs text-slate-300">2. PROTOTYPE</div>
-      <div class="font-semibold text-white mt-2">Validate fast</div>
+    <div class="p-6 rounded-2xl glass reveal text-center">
+      <div class="text-2xl font-bold text-white">2</div>
+      <div class="mt-3 font-semibold">Prototype</div>
+      <div class="text-sm text-slate-300 mt-2">Validate in days with a working proof.</div>
     </div>
-    <div class="p-4 rounded-lg glass reveal text-center">
-      <div class="text-xs text-slate-300">3. HARDEN</div>
-      <div class="font-semibold text-white mt-2">Monitoring & retries</div>
+    <div class="p-6 rounded-2xl glass reveal text-center">
+      <div class="text-2xl font-bold text-white">3</div>
+      <div class="mt-3 font-semibold">Harden</div>
+      <div class="text-sm text-slate-300 mt-2">Monitoring, retries and access controls.</div>
     </div>
-    <div class="p-4 rounded-lg glass reveal text-center">
-      <div class="text-xs text-slate-300">4. SCALE</div>
-      <div class="font-semibold text-white mt-2">Support & runbooks</div>
+    <div class="p-6 rounded-2xl glass reveal text-center">
+      <div class="text-2xl font-bold text-white">4</div>
+      <div class="mt-3 font-semibold">Run</div>
+      <div class="text-sm text-slate-300 mt-2">Support, runbooks and ongoing improvements.</div>
     </div>
   </div>
 </section>
 
-<!-- CASES -->
-<section id="cases" class="max-w-7xl mx-auto px-6 py-12">
-  <h3 class="text-white font-semibold mb-6">Trusted by ops teams</h3>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div class="p-6 rounded-2xl bg-white/3 reveal">
-      <p class="text-slate-200">“We cut manual processing by 70% and improved lead response.”</p>
-      <div class="mt-3 text-xs text-slate-400">— COO, GrowthStage</div>
-    </div>
-    <div class="p-6 rounded-2xl bg-white/3 reveal">
-      <p class="text-slate-200">“Saved $30k/year in contractor costs with scheduled scripts.”</p>
-      <div class="mt-3 text-xs text-slate-400">— Head of Ops, RetailCo</div>
-    </div>
-    <div class="p-6 rounded-2xl bg-white/3 reveal">
-      <p class="text-slate-200">“From sketch to production in three days — nailed it.”</p>
-      <div class="mt-3 text-xs text-slate-400">— Product Lead, SaaS Co.</div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
+<!-- RESULTS -->
 <section class="py-12">
-  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-    <div>
-      <h4 class="text-white text-2xl font-semibold">Ready to reduce ops friction?</h4>
-      <p class="text-slate-300 text-sm mt-1">Book a free 20-minute strategy call — we'll outline a 2-week proof.</p>
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="rounded-2xl p-8 bg-gradient-to-r from-indigo-700 to-teal-600 shadow-lg">
+      <div class="grid md:grid-cols-3 gap-6 text-white text-center">
+        <div>
+          <div class="text-4xl font-bold">10,000+</div>
+          <div class="text-sm mt-1">Hours saved annually</div>
+        </div>
+        <div>
+          <div class="text-4xl font-bold">50+</div>
+          <div class="text-sm mt-1">Projects delivered</div>
+        </div>
+        <div>
+          <div class="text-4xl font-bold">98%</div>
+          <div class="text-sm mt-1">Client satisfaction</div>
+        </div>
+      </div>
     </div>
-    <div class="flex gap-3">
-      <a id="ctaEmail" href="#" class="px-5 py-3 rounded-lg bg-white text-slate-900 font-semibold">Get consult</a>
-      <a href="mailto:[email protected]" class="px-4 py-3 rounded-lg border border-white/6 text-slate-200">Email us</a>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="max-w-7xl mx-auto px-6 py-16">
+  <div class="text-center mb-8">
+    <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Pricing made simple</h2>
+    <p class="text-slate-300 max-w-2xl mx-auto mt-2">Choose a plan or talk to us for an enterprise quote.</p>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-6">
+    <div class="p-6 bg-white/6 rounded-2xl card-hover reveal">
+      <div class="text-sm text-slate-300">Starter</div>
+      <div class="text-2xl font-bold mt-2">$2,500</div>
+      <div class="text-xs text-slate-300 mt-2">Single automation • Basic integration</div>
+      <a class="inline-block mt-4 px-4 py-2 rounded-md bg-indigo-600 text-white" href="#contact">Start</a>
+    </div>
+    <div class="p-6 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl card-hover reveal">
+      <div class="text-sm text-blue-100">Professional</div>
+      <div class="text-2xl font-bold mt-2 text-white">$5,000</div>
+      <div class="text-xs text-blue-100 mt-2">Most popular • Multiple automations</div>
+      <a class="inline-block mt-4 px-4 py-2 rounded-md bg-white text-indigo-600" href="#contact">Get started</a>
+    </div>
+    <div class="p-6 bg-white/6 rounded-2xl card-hover reveal">
+      <div class="text-sm text-slate-300">Enterprise</div>
+      <div class="text-2xl font-bold mt-2">Custom</div>
+      <div class="text-xs text-slate-300 mt-2">Full integration • Dedicated support</div>
+      <a class="inline-block mt-4 px-4 py-2 rounded-md bg-indigo-600 text-white" href="#contact">Contact</a>
     </div>
   </div>
 </section>
 
 <!-- CONTACT -->
-<section id="contact" class="max-w-4xl mx-auto px-6 py-12">
-  <div class="bg-white/4 p-6 rounded-2xl">
-    <h5 class="text-white font-semibold">Start a project</h5>
-    <p class="text-slate-300 text-sm mt-2">Tell us your top pain point and we'll reply within 48 hours.</p>
+<section id="contact" class="max-w-4xl mx-auto px-6 py-16">
+  <div class="bg-white/6 p-6 rounded-2xl glass">
+    <h3 class="text-2xl font-semibold text-white">Start a project</h3>
+    <p class="text-slate-300 mt-2">Tell us your top pain point and we'll reply within 24 hours.</p>
 
     <form id="contactForm" class="mt-6 grid grid-cols-1 gap-3">
-      <input id="nm" placeholder="Name" required class="p-3 rounded-md bg-white/6 placeholder:text-slate-300 text-white border border-white/6" />
-      <input id="em" type="email" placeholder="Email" required class="p-3 rounded-md bg-white/6 placeholder:text-slate-300 text-white border border-white/6" />
-      <input id="co" placeholder="Company / role" class="p-3 rounded-md bg-white/6 placeholder:text-slate-300 text-white border border-white/6" />
-      <textarea id="msg" placeholder="Short description" class="p-3 rounded-md bg-white/6 placeholder:text-slate-300 text-white border border-white/6 min-h-[120px]"></textarea>
+      <input id="name" placeholder="Name" required class="p-3 rounded-md bg-white/6 placeholder:text-slate-300 text-white border border-white/6" />
+      <input id="email" type="email" placeholder="Email" required class="p-3 rounded-md bg-white/6 placeholder:text-slate-300 text-white border border-white/6" />
+      <input id="company" placeholder="Company / role" class="p-3 rounded-md bg-white/6 placeholder:text-slate-300 text-white border border-white/6" />
+      <textarea id="message" placeholder="Short description" class="p-3 rounded-md bg-white/6 placeholder:text-slate-300 text-white border border-white/6 min-h-[120px]"></textarea>
 
       <div class="flex items-center gap-3">
-        <button type="submit" class="px-5 py-3 rounded-md bg-white text-slate-900 font-semibold">Request consult</button>
-        <div class="text-xs text-slate-400">Or email <a id="contactEmailAnchor" href="#" class="underline"></a></div>
+        <button type="submit" class="px-5 py-3 rounded-md bg-indigo-600 text-white font-semibold">Request consult</button>
+        <div class="text-xs text-slate-400">Or email <a id="contactEmail" class="underline"></a></div>
       </div>
     </form>
-
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer class="border-t border-white/6 py-6">
+<footer class="border-t border-white/6 py-8">
   <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-3">
-    <div class="text-sm text-slate-400">© <span id="yr"></span> <span id="fName">[Agency Name]</span>. Built for ops teams.</div>
-    <div class="text-sm text-slate-400">Remote · <span id="emailFooter"></span></div>
+    <div class="text-sm text-slate-300">© <span id="yr"></span> <span id="brandFooter"></span>. Built for ops teams.</div>
+    <div class="text-sm text-slate-300">Remote · <a id="footerEmail" href="#" class="underline"></a></div>
   </div>
 </footer>
 
-<!-- JS: interactions + animations -->
+<!-- SCRIPTS: interactions, reveal, typewriter -->
 <script>
   (function(){
-    const C = window._CFG || {};
-    // populate dynamic fields
-    document.getElementById('logoText').textContent = C.short || 'AG';
-    document.getElementById('brandName').textContent = C.name || '[Agency]';
-    document.getElementById('brandTag').textContent = C.tagline || '';
-    document.getElementById('primaryCtaText').textContent = C.primaryCta || 'Book a free consult';
-    document.getElementById('emailLink').href = 'mailto:' + (C.email || 'hello@example.com');
-    document.getElementById('mobileEmail').href = 'mailto:' + (C.email || 'hello@example.com');
-    document.getElementById('contactEmailAnchor').textContent = C.email || 'hello@example.com';
-    document.getElementById('contactEmailAnchor').href = 'mailto:' + (C.email || 'hello@example.com');
+    const S = window.SITE || {};
+    document.getElementById('brandName').textContent = S.name || 'Automation Agency';
+    document.getElementById('logoShort').textContent = S.short || 'AA';
+    document.getElementById('brandFooter').textContent = S.name || 'Automation Agency';
     document.getElementById('yr').textContent = new Date().getFullYear();
-    document.getElementById('fName').textContent = C.name || '[Agency]';
-    document.getElementById('ctaEmail').href = 'mailto:' + (C.email || 'hello@example.com');
+    document.getElementById('footerEmail').textContent = S.email || 'hello@example.com';
+    document.getElementById('footerEmail').href = 'mailto:' + (S.email || 'hello@example.com');
+    document.getElementById('contactEmail').textContent = S.email || 'hello@example.com';
+    document.getElementById('contactEmail').href = 'mailto:' + (S.email || 'hello@example.com');
 
-    // Optionally swap to raster hero image (if heroUseRaster true)
-    if(C.heroUseRaster) {
-      const heroContainerImg = document.querySelector('#heroImg');
-      if(heroContainerImg) heroContainerImg.src = C.heroImage;
-    }
+    // hero image
+    const heroImg = document.getElementById('heroImg');
+    heroImg.src = S.heroImage || 'https://images.unsplash.com/photo-1508830524289-0adcbe822b40?q=80&w=1400&auto=format&fit=crop&s=placeholder';
 
-    // mobile nav
-    const mbBtn = document.getElementById('mobileBtn');
-    const mbOpen = document.getElementById('mbOpen');
-    const mbClose = document.getElementById('mbClose');
-    const mbNav = document.getElementById('mobileNav');
-    mbBtn && mbBtn.addEventListener('click', ()=> {
-      mbNav.classList.toggle('hidden');
-      mbOpen.classList.toggle('hidden');
-      mbClose.classList.toggle('hidden');
-    });
+    // mobile menu
+    const mbBtn = document.getElementById('mbBtn');
+    const mbMenu = document.getElementById('mbMenu');
+    mbBtn && mbBtn.addEventListener('click', () => mbMenu.classList.toggle('hidden'));
 
-    // reveal on scroll
-    const io = new IntersectionObserver((entries) => {
+    // simple reveal-on-scroll
+    const obs = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) e.target.classList.add('visible');
       });
     }, { threshold: 0.12 });
 
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-    // small parallax tilt for the svg on mouse move
-    const svgTilt = document.querySelector('.svg-tilt');
-    const heroSection = document.querySelector('section.relative');
-    if (heroSection && svgTilt) {
-      heroSection.addEventListener('mousemove', (ev)=>{
-        const r = heroSection.getBoundingClientRect();
-        const x = (ev.clientX - r.left) / r.width - 0.5;
-        const y = (ev.clientY - r.top) / r.height - 0.5;
-        svgTilt.style.transform = `rotateX(${(-y*6)}deg) rotateY(${(x*6)}deg) translateZ(0)`;
-      });
-      heroSection.addEventListener('mouseleave', ()=> svgTilt.style.transform = '');
-    }
-
-    // typewriter cycling
-    const phrases = (C.heroLines && C.heroLines.length) ? C.heroLines : ['Automate ops.','Build CRMs.','Ship fast.'];
-    const target = document.getElementById('typeTarget');
+    // simple typewriter cycle (hero)
+    const phrases = ['fast workflows.', 'predictable ops.', 'delightful interfaces.'];
+    const target = document.getElementById('typed');
     let pi = 0, ci = 0, deleting = false;
     function tick(){
       const p = phrases[pi];
-      if(!deleting) {
+      if(!deleting){
         target.textContent = p.slice(0, ci+1);
         ci++;
-        if(ci === p.length) { deleting = true; setTimeout(tick, 1100); return; }
+        if(ci === p.length){ deleting = true; setTimeout(tick, 900); return; }
       } else {
         target.textContent = p.slice(0, ci-1);
         ci--;
-        if(ci === 0){ deleting = false; pi = (pi+1)%phrases.length; setTimeout(tick, 300); return; }
+        if(ci === 0){ deleting = false; pi = (pi+1) % phrases.length; setTimeout(tick, 300); return; }
       }
       setTimeout(tick, deleting ? 45 : 60);
     }
@@ -448,24 +400,17 @@
 
     // contact form: mailto fallback
     const form = document.getElementById('contactForm');
-    form && form.addEventListener('submit', function(e){
+    form && form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = document.getElementById('nm').value.trim();
-      const email = document.getElementById('em').value.trim();
-      const company = document.getElementById('co').value.trim();
-      const msg = document.getElementById('msg').value.trim();
-      if(!name || !email){ alert('Please enter name and email'); return; }
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const company = document.getElementById('company').value.trim();
+      const msg = document.getElementById('message').value.trim();
+      if(!name || !email){ alert('Please enter name & email'); return; }
       const subject = encodeURIComponent(`${name} — ${company || 'prospect'}`);
       const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nCompany: ${company}\n\nMessage:\n${msg}\n\nSite: ${location.href}`);
-      window.location.href = `mailto:${C.email || 'hello@example.com'}?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:${S.email || 'hello@example.com'}?subject=${subject}&body=${body}`;
     });
-
-    // accessibility: focus outline for keyboard users
-    function onFirstTab(e){
-      if(e.key === 'Tab'){ document.documentElement.classList.add('show-focus'); window.removeEventListener('keydown', onFirstTab); }
-    }
-    window.addEventListener('keydown', onFirstTab);
-
   })();
 </script>
 
