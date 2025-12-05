@@ -3,504 +3,400 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AutomateOps — Ultra-Minimal</title>
-  <meta name="description" content="Ultra-minimal, Apple-like landing: vast whitespace, muted grayscale, premium typography and floating cards for AutomateOps." />
+  <title>AutomateOps — Premium Automation for Modern Teams</title>
+
+  <!-- Fonts + Tailwind -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            grayA: "#f5f5f7",
-            grayB: "#e7e7ea",
-            ink: "#0a0a0c",
-            soft: "#6b7280"
-          },
-          fontFamily: {
-            sans: ["Inter", "system-ui", "-apple-system"]
-          },
-          boxShadow: {
-            card: "0 8px 24px rgba(0,0,0,0.06)",
-          },
-          animation: {
-            fadeUp: "fadeUp .6s ease forwards",
-          },
-          keyframes: {
-            fadeUp: {
-              "0%": { opacity: 0, transform: "translateY(20px)" },
-              "100%": { opacity: 1, transform: "translateY(0)" }
-            }
-          }
-        }
-      }
-    }
-  </script>
-
   <style>
-    body {
-      background: white;
-      color: #0a0a0c;
-      font-family: Inter, system-ui, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      letter-spacing: -0.01rem;
-    }
+    :root{--ink:#0a0a0c;--muted:#6b7280;--accent:#111827}
+    body { font-family: Inter, -apple-system, system-ui; color:var(--ink); background:white; -webkit-font-smoothing:antialiased }
 
-    .card {
-      background: white;
-      border: 1px solid #f0f0f2;
-      border-radius: 18px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
-      transition: transform .28s ease, box-shadow .28s ease;
-    }
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 36px rgba(0,0,0,0.06);
-    }
+    .hero-gradient { background: linear-gradient(180deg, #fafafa 0%, #ffffff 60%); }
+    .section-title { font-size:2.2rem; font-weight:500; letter-spacing:-0.01em }
+    .section-sub { color:var(--muted) }
 
-    .btn {
-      padding: 0.75rem 1.6rem;
-      border-radius: 999px;
-      font-size: 0.95rem;
-      font-weight: 500;
-      transition: background .25s ease, color .25s ease;
-    }
+    .step-bubble { width:42px; height:42px; border-radius:50%; border:1px solid #e5e7eb; display:flex; align-items:center; justify-content:center; font-weight:600; background:white; flex-shrink:0 }
 
-    .btn-dark {
-      background: #0a0a0c;
-      color: white;
-    }
-    .btn-dark:hover { background: #111113; }
+    .testimonial-card { border:1px solid #f3f4f6; padding:22px; border-radius:14px; background:white; transition:box-shadow .25s ease }
+    .testimonial-card:hover { box-shadow:0 12px 38px rgba(0,0,0,0.06) }
 
-    .btn-light {
-      background: #f5f5f7;
-      color: #0a0a0c;
-    }
-    .btn-light:hover { background: #e7e7ea; }
-
-    /* Minimal testimonial */
-    .quote { font-size: 1rem; color: #111827; }
-    .muted { color: #6b7280; }
-
-    /* Minimal FAQ */
-    .faq-item { border-bottom: 1px solid #f0f0f2; padding: 1rem 0; }
-    .faq-q { display:flex; align-items:center; justify-content:space-between; width:100%; background:transparent; border:0; padding:0; font-weight:500; font-size:1rem; }
-    .faq-a { color:#6b7280; margin-top:0.5rem; font-size:0.95rem; }
-
-    .visually-hidden{ position:absolute!important; height:1px;width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap }
-
-    /* tools logos */
-    .tool { display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:12px; border:1px solid #f0f0f2; background:#fff }
+    .tool { display:inline-flex; align-items:center; gap:10px; padding:8px 12px; border-radius:10px; border:1px solid #f3f4f6; background:#fff }
     .tool img{ width:28px; height:28px; display:block }
 
-    /* services header */
-    .section-head { max-width:720px; margin:0 auto 28px; text-align:center }
-    .section-head h2{ font-size:28px; font-weight:500; letter-spacing:-0.01em }
-    .section-head p{ color:#6b7280; margin-top:6px }
+    .faq-item { border-bottom:1px solid #f3f4f6; padding:12px 0 }
+    .faq-q { display:flex; align-items:center; justify-content:space-between; width:100%; background:transparent; border:0; padding:0; font-weight:500 }
+    .faq-a { color:var(--muted); margin-top:8px; font-size:0.95rem }
 
-    /* steps */
-    .step-num{ width:48px; height:48px; border-radius:50%; display:inline-grid; place-items:center; border:1px solid #f0f0f2; font-weight:600 }
-    .step-card{ background:transparent; border:1px solid #f0f0f2; border-radius:12px; padding:18px }
+    .cta-footer { background:#0a0a0c; color:white; border-radius:14px }
 
-    /* stars */
-    .stars{ display:inline-flex; gap:6px; align-items:center }
-    .star{ width:18px; height:18px; display:block }
-
+    @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
   </style>
 </head>
-<body class="overflow-x-hidden">
+<body class="antialiased">
 
   <!-- NAV -->
-  <header class="w-full py-6">
-    <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
-      <div class="text-lg font-medium tracking-tight">AutomateOps</div>
-      <nav class="hidden md:flex items-center gap-10 text-sm text-gray-500">
-        <a href="#work" class="hover:text-black">How it works</a>
-        <a href="#services" class="hover:text-black">Solutions</a>
-        <a href="#contact" class="hover:text-black">Contact</a>
+  <header class="py-5">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <div class="font-semibold text-lg">AutomateOps</div>
+        <div class="text-sm text-gray-400">Sheets · Apps Script · Integrations</div>
+      </div>
+      <nav class="hidden md:flex items-center gap-8 text-sm text-gray-600">
+        <a href="#solutions" class="hover:text-black">Solutions</a>
+        <a href="#process" class="hover:text-black">Process</a>
+        <a href="#results" class="hover:text-black">Case</a>
+        <a href="#testimonials" class="hover:text-black">Testimonials</a>
+        <a href="#contact" class="px-4 py-2 rounded-full bg-black text-white">Book call</a>
       </nav>
     </div>
   </header>
 
   <!-- HERO -->
-  <section class="pt-20 pb-28">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-      <h1 class="text-5xl md:text-6xl font-light leading-tight tracking-tight">
-        Calm, reliable operations.<br/>Built on the tools you already use.
-      </h1>
+  <section class="hero-gradient pt-20 pb-12">
+    <div class="max-w-5xl mx-auto px-6 grid lg:grid-cols-12 gap-8 items-center">
+      <div class="lg:col-span-7">
+        <h1 class="text-4xl md:text-5xl font-light leading-tight">Remove manual work. Upgrade your operations.</h1>
+        <p class="mt-5 text-lg section-sub max-w-xl">AutomateOps turns noisy spreadsheets into dependable workflows using Google Sheets, Apps Script and compact integrations—pilots in one week, measurable ROI.</p>
 
-      <p class="text-lg text-gray-500 mt-6 max-w-2xl mx-auto">
-        We transform messy spreadsheets into elegant, automated systems using Google Sheets & Apps Script.
-      </p>
+        <div class="mt-8 flex gap-4">
+          <a href="#contact" class="px-5 py-3 rounded-full bg-black text-white">Book discovery</a>
+          <a href="#roi" class="px-4 py-3 rounded-full border border-gray-200 text-sm">Quick ROI</a>
+        </div>
 
-      <div class="mt-10 flex justify-center gap-4">
-        <a href="#contact" class="btn btn-dark">Book discovery</a>
-        <a href="#roi" class="btn btn-light">Quick ROI</a>
+        <!-- counters compact -->
+        <div class="mt-8 grid grid-cols-4 gap-3 text-sm text-gray-600 max-w-sm">
+          <div><div class="font-semibold text-lg">20+</div><div class="section-sub">Hrs saved / wk</div></div>
+          <div><div class="font-semibold text-lg">90%</div><div class="section-sub">Error reduction</div></div>
+          <div><div class="font-semibold text-lg">50+</div><div class="section-sub">Businesses served</div></div>
+          <div><div class="font-semibold text-lg">1 wk</div><div class="section-sub">Pilot available</div></div>
+        </div>
       </div>
 
-      <div class="mt-6 text-sm muted">Free 30-min discovery · Pilot in 1 week · Rapid ROI</div>
+      <div class="lg:col-span-5">
+        <div class="rounded-xl border border-gray-100 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981d?q=80&w=1200&auto=format&fit=crop&s=b8ff7a6" alt="dashboard" class="w-full h-64 object-cover"/>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- TOOLS (logos horizontally stacked) -->
-  <section id="tools" class="py-14 border-t border-gray-100">
-    <div class="max-w-5xl mx-auto px-6 text-center">
-      <div class="section-head">
-        <div class="muted">Powered by the tools you already use</div>
-      </div>
-
+  <section id="tools" class="py-10 border-t border-gray-100">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <div class="text-sm section-sub">Powered by the tools you already use</div>
       <div class="mt-6 flex items-center justify-center gap-4 flex-wrap">
-        <div class="tool" title="Google Sheets">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/Google_Sheets_icon_%282020%29.svg" alt="Sheets"/>
-          <span class="muted text-sm">Sheets</span>
-        </div>
+        <div class="tool" title="Google Sheets"><img src="https://upload.wikimedia.org/wikipedia/commons/8/80/Google_Sheets_icon_%282020%29.svg" alt="Sheets"/><span class="section-sub text-sm">Sheets</span></div>
+        <div class="tool" title="Apps Script"><img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Google_Apps_Script_logo.svg" alt="Apps Script"/><span class="section-sub text-sm">Apps Script</span></div>
+        <div class="tool" title="Drive"><img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Google_Drive_logo.png" alt="Drive"/><span class="section-sub text-sm">Drive</span></div>
+        <div class="tool" title="Gmail"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png" alt="Gmail"/><span class="section-sub text-sm">Gmail</span></div>
+        <div class="tool" title="Calendar"><img src="https://upload.wikimedia.org/wikipedia/commons/d/df/Google_Calendar_icon_%282020%29.svg" alt="Calendar"/><span class="section-sub text-sm">Calendar</span></div>
+      </div>
+    </div>
+  </section>
 
-        <div class="tool" title="Google Apps Script">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Google_Apps_Script_logo.svg" alt="Apps Script" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png'" />
-          <span class="muted text-sm">Apps Script</span>
-        </div>
+  <!-- SOLUTIONS (with polished header) -->
+  <section id="solutions" class="py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="section-title">Solutions tailored for modern operations</h2>
+        <p class="section-sub mt-2">Premium automation, tuned for reliability and fast outcomes.</p>
+      </div>
 
-        <div class="tool" title="Google Drive">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Google_Drive_logo.png" alt="Drive" />
-          <span class="muted text-sm">Drive</span>
+      <div class="mt-12 grid md:grid-cols-3 gap-8">
+        <div class="p-6">
+          <h4 class="text-sm section-sub">Operations Automation</h4>
+          <h3 class="mt-2 font-medium">Automated reconciliations, structured workflows</h3>
+          <p class="section-sub mt-2 text-sm">Scheduled reports, alerts, and audit trails to keep ops reliable.</p>
         </div>
-
-        <div class="tool" title="Gmail">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png" alt="Gmail" />
-          <span class="muted text-sm">Gmail</span>
+        <div class="p-6">
+          <h4 class="text-sm section-sub">Custom CRM in Sheets</h4>
+          <h3 class="mt-2 font-medium">Minimalist CRM frameworks with validation & views</h3>
+          <p class="section-sub mt-2 text-sm">Role views, validation rules and automations that reduce errors.</p>
         </div>
-
-        <div class="tool" title="Google Calendar">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/d/df/Google_Calendar_icon_%282020%29.svg" alt="Calendar" />
-          <span class="muted text-sm">Calendar</span>
+        <div class="p-6">
+          <h4 class="text-sm section-sub">Dashboards & Integrations</h4>
+          <h3 class="mt-2 font-medium">Clean dashboards, API syncs, structured automation</h3>
+          <p class="section-sub mt-2 text-sm">Executive dashboards, Slack/email triggers and secure syncs.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SERVICES with polished header -->
-  <section id="services" class="py-20">
+  <!-- PROCESS (slanted/adjacent alternating, improved) -->
+  <section id="process" class="py-20 bg-gray-50 border-t border-gray-100">
     <div class="max-w-6xl mx-auto px-6">
-
-      <div class="section-head">
-        <h2>Solutions tailored for modern operations</h2>
-        <p>Premium automation, tuned for reliability and fast outcomes.</p>
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="section-title">A simple 4‑step process</h2>
+        <p class="section-sub mt-2">Clear milestones, regular demos, and measurable outcomes.</p>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="card p-8">
-          <div class="text-sm muted">Operations Automation</div>
-          <h3 class="mt-3 font-medium">Automated reconciliations, structured workflows, clean reporting.</h3>
-          <p class="muted mt-3 text-sm">We reduce manual work with audit-ready automations and scheduled reports.</p>
-        </div>
+      <div class="mt-12 relative">
+        <div class="hidden md:block absolute left-1/2 top-6 bottom-6 w-px bg-gray-200" aria-hidden></div>
 
-        <div class="card p-8">
-          <div class="text-sm muted">Custom CRM in Sheets</div>
-          <h3 class="mt-3 font-medium">Minimalist CRM frameworks with views, validation + automations.</h3>
-          <p class="muted mt-3 text-sm">Custom pipelines, role-based views, and validation rules to keep data pristine.</p>
-        </div>
+        <div class="space-y-12">
 
-        <div class="card p-8">
-          <div class="text-sm muted">Dashboards & Integrations</div>
-          <h3 class="mt-3 font-medium">Clean dashboards, API syncs, structured automation.</h3>
-          <p class="muted mt-3 text-sm">Executive dashboards, Slack/email triggers and secure API syncs.</p>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS (revamped 4-step horizontal on desktop) -->
-  <section id="work" class="py-24 border-t border-gray-100">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="section-head">
-        <h2>A simple 4‑step process</h2>
-        <p>Clear milestones, regular demos, and measurable outcomes.</p>
-      </div>
-
-      <!-- Progress line horizontal on md, vertical on mobile -->
-      <div class="mt-12">
-        <div class="relative max-w-5xl mx-auto px-4">
-          <!-- horizontal line for desktop -->
-          <div class="hidden md:block absolute left-8 right-8 top-12 h-0.5 bg-gray-100" aria-hidden></div>
-
-          <div class="grid md:grid-cols-4 gap-6">
-            <!-- step 1 -->
-            <div class="flex md:flex-col items-start md:items-center text-left md:text-center">
-              <div class="flex items-center md:block">
-                <div class="step-num" aria-hidden>01</div>
-              </div>
-              <div class="ml-4 md:ml-0 md:mt-4">
-                <div class="font-medium">Discovery Call</div>
-                <p class="muted mt-2 text-sm">We map workflows and goals. No jargon.</p>
-              </div>
+          <div class="md:flex md:items-start md:gap-8">
+            <div class="md:w-1/2 md:text-right md:pr-8">
+              <div class="step-bubble mx-auto md:ml-auto">01</div>
             </div>
-
-            <!-- step 2 -->
-            <div class="flex md:flex-col items-start md:items-center text-left md:text-center">
-              <div class="flex items-center md:block">
-                <div class="step-num" aria-hidden>02</div>
-              </div>
-              <div class="ml-4 md:ml-0 md:mt-4">
-                <div class="font-medium">Solution Design</div>
-                <p class="muted mt-2 text-sm">A clean, minimal plan showing expected gains.</p>
-              </div>
-            </div>
-
-            <!-- step 3 -->
-            <div class="flex md:flex-col items-start md:items-center text-left md:text-center">
-              <div class="flex items-center md:block">
-                <div class="step-num" aria-hidden>03</div>
-              </div>
-              <div class="ml-4 md:ml-0 md:mt-4">
-                <div class="font-medium">Implementation</div>
-                <p class="muted mt-2 text-sm">We build with transparency + iteration.</p>
-              </div>
-            </div>
-
-            <!-- step 4 -->
-            <div class="flex md:flex-col items-start md:items-center text-left md:text-center">
-              <div class="flex items-center md:block">
-                <div class="step-num" aria-hidden>04</div>
-              </div>
-              <div class="ml-4 md:ml-0 md:mt-4">
-                <div class="font-medium">Training & Support</div>
-                <p class="muted mt-2 text-sm">Simple documentation + optional SLA.</p>
-              </div>
+            <div class="md:w-1/2">
+              <h4 class="text-lg font-medium">Discovery Call</h4>
+              <p class="section-sub mt-2">We map workflows and goals through a focused 30-minute session. Deliverable: pilot plan & estimate.</p>
             </div>
           </div>
 
-          <!-- mobile vertical connector -->
-          <style>
-            @media (max-width: 767px){
-              .step-num{ margin-bottom:6px }
-              .connector{ position:relative; margin-left:18px; margin-top:8px }
-              .connector:before{ content:''; position:absolute; left:-6px; top:0; bottom:0; width:2px; background:#f0f0f2; border-radius:2px }
-            }
-            @media (min-width:768px){
-              /* add small connector dots on the horizontal line for each step */
-              .step-num{ background:white; border:1px solid #f0f0f2 }
-              .step-num::after{ content:''; position:absolute; width:8px; height:8px; background:#fff; border-radius:50%; left:50%; transform:translateX(-50%); top:12px }
-            }
-          </style>
+          <div class="md:flex md:flex-row-reverse md:items-start md:gap-8">
+            <div class="md:w-1/2 md:text-left md:pl-8">
+              <div class="step-bubble mx-auto md:mr-auto">02</div>
+            </div>
+            <div class="md:w-1/2">
+              <h4 class="text-lg font-medium">Solution Design</h4>
+              <p class="section-sub mt-2">We produce a clear, minimal plan showing scope, milestones, and expected gains. Deliverable: design doc & timeline.</p>
+            </div>
+          </div>
+
+          <div class="md:flex md:items-start md:gap-8">
+            <div class="md:w-1/2 md:text-right md:pr-8">
+              <div class="step-bubble mx-auto md:ml-auto">03</div>
+            </div>
+            <div class="md:w-1/2">
+              <h4 class="text-lg font-medium">Implementation</h4>
+              <p class="section-sub mt-2">We build, test, and iterate with frequent demos. Deliverable: production-ready automation & test logs.</p>
+            </div>
+          </div>
+
+          <div class="md:flex md:flex-row-reverse md:items-start md:gap-8">
+            <div class="md:w-1/2 md:text-left md:pl-8">
+              <div class="step-bubble mx-auto md:mr-auto">04</div>
+            </div>
+            <div class="md:w-1/2">
+              <h4 class="text-lg font-medium">Training & Support</h4>
+              <p class="section-sub mt-2">We deliver documentation, training and optional SLA-backed support. Deliverable: enablement pack & SLA options.</p>
+            </div>
+          </div>
 
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- CASE SNAPSHOT (kept minimal) -->
-  <section id="results" class="py-16 border-t border-gray-100">
+  <!-- CASE SNAPSHOT -->
+  <section id="results" class="py-16">
     <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-6">
       <div class="p-6 rounded-lg border border-gray-100">
-        <div class="text-sm muted">Case Snapshot</div>
+        <div class="text-sm section-sub">Case Snapshot</div>
         <h3 class="mt-2 font-semibold">Retail Ops — 1-week pilot</h3>
-        <p class="muted mt-2 text-sm">Reduced manual reporting from 10h to 20m through automated reconciliation.</p>
+        <p class="section-sub mt-2 text-sm">Reduced manual reporting from 10h to 20m through automated reconciliation.</p>
       </div>
       <div class="p-6 rounded-lg border border-gray-100">
-        <div class="text-sm muted">Impact</div>
+        <div class="text-sm section-sub">Impact</div>
         <h3 class="mt-2 font-semibold">20+ hrs saved / wk</h3>
-        <p class="muted mt-2 text-sm">Real-time dashboards and scheduled reconciliations.</p>
+        <p class="section-sub mt-2 text-sm">Real-time dashboards and scheduled reconciliations.</p>
       </div>
       <div class="p-6 rounded-lg border border-gray-100">
-        <div class="text-sm muted">Client Quote</div>
-        <h3 class="mt-2 font-semibold">“Game-changer for ops”</h3>
-        <p class="muted mt-2 text-sm">"ROI visible in month one — recommended."</p>
+        <div class="text-sm section-sub">Client Quote</div>
+        <h3 class="mt-2 font-semibold">"Game-changer for ops"</h3>
+        <p class="section-sub mt-2 text-sm">"ROI visible in month one — recommended."</p>
       </div>
     </div>
   </section>
 
-  <!-- TESTIMONIALS — Apple-Minimal Redesign with star rating -->
-  <section class="py-16">
+  <!-- ROI (quick calculator) -->
+  <section id="roi" class="py-16 bg-gray-50 border-t border-gray-100">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="p-8 rounded-xl border border-gray-100 bg-white">
+        <div class="grid md:grid-cols-2 gap-6 items-center">
+          <div>
+            <h3 class="text-xl font-medium">Quick ROI snapshot</h3>
+            <p class="section-sub mt-2 text-sm">Estimate weekly savings for a pilot.</p>
+
+            <div class="mt-4 grid grid-cols-2 gap-3">
+              <input id="h" type="number" class="p-3 border rounded" value="8" />
+              <input id="r" type="number" class="p-3 border rounded" value="1" />
+              <input id="rate" type="number" class="p-3 border rounded" value="50" />
+              <input id="pct" type="number" class="p-3 border rounded" value="75" />
+            </div>
+            <div class="mt-4 flex gap-3"><button id="calcBtn" class="px-4 py-2 bg-black text-white rounded">Calculate</button><a href="#contact" class="px-4 py-2 border border-gray-200 rounded">Book pilot</a></div>
+          </div>
+          <div>
+            <div class="text-sm section-sub">Estimated weekly savings</div>
+            <div id="roiVal" class="text-3xl font-bold mt-2">$0</div>
+            <div id="roiBreak" class="mt-2 section-sub text-sm"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials" class="py-20">
     <div class="max-w-6xl mx-auto px-6 text-center">
-      <h3 class="text-2xl font-medium">What our clients say</h3>
-      <p class="muted mt-2 text-sm">Real feedback from operators — presented simply.</p>
+      <h2 class="section-title">What our clients say</h2>
+      <p class="section-sub mt-2">Real feedback from real operators.</p>
 
       <div class="mt-8 grid md:grid-cols-3 gap-6">
 
-        <figure class="p-6 card text-left">
-          <div class="flex items-center gap-4 mb-4">
+        <figure class="testimonial-card text-left">
+          <div class="flex items-center gap-3 mb-3">
             <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center font-semibold">SM</div>
-            <div class="text-left">
+            <div>
               <div class="font-medium">Sarah Mitchell</div>
-              <div class="muted text-xs">Ops Manager, TechFlow</div>
+              <div class="text-xs section-sub">Ops Manager, TechFlow</div>
             </div>
           </div>
-          <div class="stars mb-3" aria-hidden>
-            <svg class="star" viewBox="0 0 24 24" fill="#FBBF24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg class="star" viewBox="0 0 24 24" fill="#FBBF24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg class="star" viewBox="0 0 24 24" fill="#FBBF24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg class="star" viewBox="0 0 24 24" fill="#FBBF24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg class="star" viewBox="0 0 24 24" fill="#FBBF24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <div class="muted text-xs ml-3">4.9</div>
+          <div class="flex items-center gap-1 mb-3">
+            <svg class="w-4 h-4" fill="#FBBF24" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg class="w-4 h-4" fill="#FBBF24" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg class="w-4 h-4" fill="#FBBF24" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg class="w-4 h-4" fill="#FBBF24" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg class="w-4 h-4" fill="#FBBF24" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <div class="text-xs section-sub ml-3">4.9</div>
           </div>
-          <blockquote class="quote">“They cut our reporting time from 8 hours to 15 minutes. Our team now focuses on strategy, not busywork.”</blockquote>
+          <blockquote class="text-gray-800">“They cut our reporting time from 8 hours to 15 minutes. Our team now focuses on strategy, not busywork.”</blockquote>
         </figure>
 
-        <figure class="p-6 card text-left">
-          <div class="flex items-center gap-4 mb-4">
+        <figure class="testimonial-card text-left">
+          <div class="flex items-center gap-3 mb-3">
             <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center font-semibold">MC</div>
-            <div class="text-left">
+            <div>
               <div class="font-medium">Marcus Chen</div>
-              <div class="muted text-xs">Sales Director, GrowthPoint</div>
+              <div class="text-xs section-sub">Sales Director, GrowthPoint</div>
             </div>
           </div>
-          <div class="stars mb-3" aria-hidden>
-            <svg class="star" viewBox="0 0 24 24" fill="#FBBF24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg class="star" viewBox="0 0 24 24" fill="#FBBF24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg class="star" viewBox="0 0 24 24" fill="#FBBF24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg class="star" viewBox="0 0 24 24" fill="#FBBF24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg class="star" viewBox="0 0 24 24" fill="#FBBF24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <div class="muted text-xs ml-3">4.8</div>
+          <div class="flex items-center gap-1 mb-3">
+            <svg class="w-4 h-4" fill="#FBBF24" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg class="w-4 h-4" fill="#FBBF24" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg class="w-4 h-4" fill="#FBBF24" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg class="w-4 h-4" fill="#FBBF24" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg class="w-4 h-4" fill="#FBBF24" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <div class="text-xs section-sub ml-3">4.8</div>
           </div>
-          <blockquote class="quote">“Custom Sheets CRM removed manual busywork. Pipeline accuracy improved and reps are happier.”</blockquote>
+          <blockquote class="text-gray-800">“Custom Sheets CRM removed manual busywork. Pipeline accuracy improved and reps are happier.”</blockquote>
         </figure>
 
-        <figure class="p-6 card text-left">
-          <div class="flex items-center gap-4 mb-4">
+        <figure class="testimonial-card text-left">
+          <div class="flex items-center gap-3 mb-3">
             <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center font-semibold">ER</div>
-            <div class="text-left">
+            <div>
               <div class="font-medium">Emily Rodriguez</div>
-              <div class="muted text-xs">Finance Lead, Nexus</div>
+              <div class="text-xs section-sub">Finance Lead, Nexus</div>
             </div>
           </div>
-          <div class="stars mb-3" aria-hidden>
-            <svg class="star" viewBox="0 0 24 24" fill="#FBBF24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg class="star" viewBox="0 0 24 24" fill="#FBBF24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg class="star" viewBox="0 0 24 24" fill="#FBBF24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg class="star" viewBox="0 0 24 24" fill="#FBBF24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg class="star" viewBox="0 0 24 24" fill="#FBBF24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <div class="muted text-xs ml-3">4.9</div>
+          <div class="flex items-center gap-1 mb-3">
+            <svg class="w-4 h-4" fill="#FBBF24" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg class="w-4 h-4" fill="#FBBF24" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg class="w-4 h-4" fill="#FBBF24" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg class="w-4 h-4" fill="#FBBF24" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg class="w-4 h-4" fill="#FBBF24" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <div class="text-xs section-sub ml-3">4.9</div>
           </div>
-          <blockquote class="quote">“We eliminated 90% of manual errors and gained full visibility over reporting.”</blockquote>
+          <blockquote class="text-gray-800">“We eliminated 90% of manual errors and gained full visibility over reporting.”</blockquote>
         </figure>
 
       </div>
     </div>
   </section>
 
-  <!-- FAQ — Apple-Minimal Redesign -->
+  <!-- FAQ -->
   <section class="py-16 border-t border-gray-100">
     <div class="max-w-6xl mx-auto px-6">
-      <h3 class="text-2xl font-medium text-center">FAQ</h3>
-      <p class="muted text-center mt-2 text-sm">Tap a question to reveal the answer.</p>
+      <h2 class="section-title text-center">FAQ</h2>
+      <p class="section-sub text-center mt-2">Tap a question to reveal the answer.</p>
 
       <div class="mt-8 max-w-3xl mx-auto">
-
         <div class="faq-item">
-          <button class="faq-q" aria-expanded="false" aria-controls="faq1">
-            <span>How fast can we get a pilot?</span>
-            <svg class="ml-4" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M6 9l6 6 6-6" stroke="#334155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div id="faq1" class="faq-a" hidden>Pilots usually launch within 1 week and show quick wins.</div>
+          <button class="faq-q" aria-expanded="false" aria-controls="f1">How fast can we get a pilot?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M6 9l6 6 6-6" stroke="#334155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div id="f1" class="faq-a" hidden>Pilots usually launch within 1 week and show quick wins.</div>
         </div>
-
         <div class="faq-item">
-          <button class="faq-q" aria-expanded="false" aria-controls="faq2">
-            <span>What does a pilot include?</span>
-            <svg class="ml-4" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M6 9l6 6 6-6" stroke="#334155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div id="faq2" class="faq-a" hidden>A scoped workflow, implementation, a short training and a results report.</div>
+          <button class="faq-q" aria-expanded="false" aria-controls="f2">What does a pilot include?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M6 9l6 6 6-6" stroke="#334155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div id="f2" class="faq-a" hidden>A scoped workflow, implementation, a short training and a results report.</div>
         </div>
-
         <div class="faq-item">
-          <button class="faq-q" aria-expanded="false" aria-controls="faq3">
-            <span>How do you price work?</span>
-            <svg class="ml-4" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M6 9l6 6 6-6" stroke="#334155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div id="faq3" class="faq-a" hidden>Pilots are fixed-price; larger projects are milestone-based with acceptance criteria.</div>
+          <button class="faq-q" aria-expanded="false" aria-controls="f3">How do you price work?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M6 9l6 6 6-6" stroke="#334155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div id="f3" class="faq-a" hidden>Pilots are fixed-price; larger projects are milestone-based with acceptance criteria.</div>
         </div>
-
         <div class="faq-item">
-          <button class="faq-q" aria-expanded="false" aria-controls="faq4">
-            <span>Can you access our systems?</span>
-            <svg class="ml-4" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M6 9l6 6 6-6" stroke="#334155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div id="faq4" class="faq-a" hidden>Yes — we integrate securely using OAuth, webhooks and scoped service accounts where needed.</div>
+          <button class="faq-q" aria-expanded="false" aria-controls="f4">Can you access our systems?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M6 9l6 6 6-6" stroke="#334155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div id="f4" class="faq-a" hidden>Yes — we integrate securely using OAuth, webhooks and scoped service accounts where needed.</div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ROI -->
-  <section id="roi" class="py-28 border-t border-gray-100">
-    <div class="max-w-3xl mx-auto px-6">
-      <h2 class="text-3xl font-light tracking-tight">Quick ROI Estimate</h2>
-      <p class="muted mt-3 text-sm">A minimal calculator to visualize savings.</p>
-
-      <div class="card p-10 mt-10">
-        <div class="grid grid-cols-2 gap-4 mb-6">
-          <input id="h" type="number" class="p-3 border rounded-lg" value="8" />
-          <input id="r" type="number" class="p-3 border rounded-lg" value="1" />
-          <input id="rate" type="number" class="p-3 border rounded-lg" value="50" />
-          <input id="pct" type="number" class="p-3 border rounded-lg" value="75" />
+  <!-- FINAL CTA / CONVERSION PROMPT -->
+  <section class="py-12">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="cta-footer p-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <div class="text-sm section-sub">Ready to reduce manual work?</div>
+          <div class="text-xl font-medium mt-1">Book a 30-minute discovery — pilot in 1 week.</div>
         </div>
-        <button id="calc" class="btn btn-dark w-full">Calculate</button>
-
-        <div class="mt-6 text-xl font-medium" id="roiVal">$0</div>
-        <div class="mt-1 text-sm muted" id="roiBreak"></div>
+        <div class="flex gap-3">
+          <a href="#contact" class="px-5 py-3 bg-white text-black rounded-full">Request discovery</a>
+          <a href="#roi" class="px-5 py-3 border border-white/10 rounded-full text-white">Quick ROI</a>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="py-32 border-t border-gray-100">
-    <div class="max-w-3xl mx-auto px-6">
-      <h2 class="text-3xl font-light tracking-tight text-center">Get started</h2>
-      <p class="muted text-center mt-3 text-sm">Free 30-minute discovery call.</p>
+  <section id="contact" class="py-20 bg-gray-50 border-t border-gray-100">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="section-title">Get started</h2>
+      <p class="section-sub mt-2">Free 30-minute discovery — no commitment</p>
 
-      <form id="contactForm" class="mt-12 space-y-4 max-w-xl mx-auto">
-        <input name="name" class="w-full p-3 border rounded-lg" placeholder="Your name" required />
-        <input name="email" type="email" class="w-full p-3 border rounded-lg" placeholder="Email" required />
-        <textarea name="message" rows="4" class="w-full p-3 border rounded-lg" placeholder="Workflow description" required></textarea>
-        <button class="btn btn-dark w-full">Submit</button>
+      <form id="contactForm" class="mt-8 space-y-4 text-left">
+        <input name="name" class="w-full p-3 border rounded" placeholder="Your name" required />
+        <input name="email" class="w-full p-3 border rounded" placeholder="Email" required />
+        <input name="company" class="w-full p-3 border rounded" placeholder="Company" />
+        <textarea name="message" rows="4" class="w-full p-3 border rounded" placeholder="Describe the workflow" required></textarea>
+        <div class="flex gap-3 justify-end"><button type="submit" class="px-5 py-3 bg-black text-white rounded">Request discovery</button><button type="button" id="clear" class="px-5 py-3 border rounded">Clear</button></div>
       </form>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="py-16 border-t border-gray-100 text-center text-sm muted">
+  <footer class="py-8 text-center text-sm text-gray-500">
     © <span id="year"></span> AutomateOps
   </footer>
 
 <script>
+  // year
   document.getElementById('year').textContent = new Date().getFullYear();
 
   // ROI calc
-  document.getElementById('calc').addEventListener('click', () => {
-    const h = Number(document.getElementById('h').value || 0);
-    const r = Number(document.getElementById('r').value || 0);
-    const rate = Number(document.getElementById('rate').value || 0);
-    const pct = Number(document.getElementById('pct').value || 0);
-
-    const weekly = Math.round(h * r * rate * (pct / 100));
-
-    document.getElementById('roiVal').textContent = `$${weekly.toLocaleString()}`;
-    document.getElementById('roiBreak').textContent = `${h} hrs × ${r} runs × $${rate}/hr × ${pct}%`;
+  const calc = (h,r,rate,pct)=>Math.round(h*r*rate*(pct/100));
+  document.getElementById('calcBtn').addEventListener('click', ()=>{
+    const h=Number(document.getElementById('h').value||0);
+    const r=Number(document.getElementById('r').value||0);
+    const rate=Number(document.getElementById('rate').value||0);
+    const pct=Number(document.getElementById('pct').value||0);
+    const weekly=calc(h,r,rate,pct);
+    document.getElementById('roiVal').textContent='$'+weekly.toLocaleString();
+    document.getElementById('roiBreak').textContent=`${h} hrs × ${r} runs × $${rate}/hr × ${pct}% = $${weekly}/wk`;
   });
 
-  // FAQ interactions (minimal, accessible)
-  document.querySelectorAll('.faq-q').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      const targetId = btn.getAttribute('aria-controls');
-      const panel = document.getElementById(targetId);
-      // close any open
-      document.querySelectorAll('.faq-q').forEach(b => { if(b!==btn){ b.setAttribute('aria-expanded','false'); document.getElementById(b.getAttribute('aria-controls')).hidden = true; } });
+  // FAQ toggles
+  document.querySelectorAll('.faq-q').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const id=btn.getAttribute('aria-controls');
+      const expanded=btn.getAttribute('aria-expanded')==='true';
+      // close others
+      document.querySelectorAll('.faq-q').forEach(b=>{ if(b!==btn){ b.setAttribute('aria-expanded','false'); document.getElementById(b.getAttribute('aria-controls')).hidden=true; } });
       btn.setAttribute('aria-expanded', String(!expanded));
-      panel.hidden = expanded; // toggle
+      document.getElementById(id).hidden=expanded;
     });
-
-    btn.addEventListener('keydown', (e) => {
-      if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
-    });
+    btn.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); btn.click(); } });
   });
 
+  // Contact form mock
+  const form=document.getElementById('contactForm'); if(form){ form.addEventListener('submit',e=>{ e.preventDefault(); alert('Thanks — we received your request (mock).'); form.reset(); }); }
+  document.getElementById('clear').addEventListener('click',()=>form.reset());
 </script>
 
 </body>
