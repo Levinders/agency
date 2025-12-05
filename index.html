@@ -3,83 +3,74 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AutomateOps — Reliable automation built on Google Sheets & Apps Script</title>
+  <title>AutomateOps — Premium Automation for Modern Teams</title>
 
   <!-- Fonts + Tailwind -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com">  // BACK TO TOP button show/hide logic
+  (function(){
+    const btn = document.getElementById('backToTop');
+    window.addEventListener('scroll', ()=>{
+      const atBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 80;
+      if(atBottom){
+        btn.classList.remove('opacity-0','pointer-events-none');
+      } else {
+        btn.classList.add('opacity-0','pointer-events-none');
+      }
+    });
+    btn.addEventListener('click', ()=>{
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  })();
+
+</script>
 
   <style>
-    :root{ --ink:#0b1220; --muted:#6b7280; --bg:#ffffff; --primary:#0b74de; --glass: rgba(11,116,222,0.06) }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{font-family:Inter,system-ui,-apple-system; color:var(--ink); background:var(--bg); -webkit-font-smoothing:antialiased}
+    :root{--ink:#0a0a0c;--muted:#6b7280;--accent:#111827}
+    body { font-family: Inter, -apple-system, system-ui; color:var(--ink); background:white; -webkit-font-smoothing:antialiased }
 
-    /* motion + transitions */
-    *{transition:all .45s cubic-bezier(.2,.9,.25,1)}
-    @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+    .hero-gradient { background: linear-gradient(180deg, #fafafa 0%, #ffffff 60%); }
+    .section-title { font-size:2.2rem; font-weight:500; letter-spacing:-0.01em }
+    .section-sub { color:var(--muted) }
 
-    /* hero */
-    .hero{ padding-top:5.5rem; padding-bottom:3.5rem; background:linear-gradient(180deg,#fbfdff 0%, #ffffff 60%) }
-    .h-title{ font-size:2.6rem; line-height:1.02; font-weight:400 }
-    .h-sub{ color:var(--muted); font-size:1.03rem }
+    .step-bubble { width:42px; height:42px; border-radius:50%; border:1px solid #e5e7eb; display:flex; align-items:center; justify-content:center; font-weight:600; background:white; flex-shrink:0 }
 
-    /* buttons */
-    .btn-primary{ background:var(--primary); color:#fff; padding:.65rem 1.05rem; border-radius:999px; font-weight:600; box-shadow:0 8px 28px rgba(11,116,222,0.08) }
-    .btn-ghost{ border:1px solid rgba(15,23,42,0.06); padding:.6rem .9rem; border-radius:999px }
+    .testimonial-card { border:1px solid #f3f4f6; padding:22px; border-radius:14px; background:white; transition:box-shadow .25s ease; max-width:720px; margin:0 auto }
+    .testimonial-card:hover { box-shadow:0 12px 38px rgba(0,0,0,0.06) }
+    .testimonial-card:hover { box-shadow:0 12px 38px rgba(0,0,0,0.06) }
 
-    /* tools */
-    .tool{ display:inline-flex; gap:10px; padding:8px 12px; border-radius:10px; border:1px solid #f3f4f6; background:#fff; align-items:center }
-    .tool img{ width:26px; height:26px }
+    .tool { display:inline-flex; align-items:center; gap:10px; padding:8px 12px; border-radius:10px; border:1px solid #f3f4f6; background:#fff }
+    .tool img{ width:28px; height:28px; display:block }
 
-    /* tabbed builds */
-    .tabs{ display:flex; gap:8px; flex-wrap:wrap }
-    .tab-btn{ padding:10px 14px; border-radius:10px; border:1px solid transparent; background:transparent; cursor:pointer }
-    .tab-btn[aria-selected="true"]{ background:linear-gradient(180deg, rgba(11,116,222,0.06), #fff); border-color:rgba(11,116,222,0.12); color:var(--primary); box-shadow:0 8px 30px rgba(11,116,222,0.06) }
-    .tab-panel{ margin-top:18px; display:grid; grid-template-columns:360px 1fr; gap:20px; align-items:center }
-    .tab-thumb{ width:100%; height:200px; border-radius:12px; overflow:hidden; background:#f8fafc }
-    .tab-thumb img{ width:100%; height:100%; object-fit:cover }
-    @media (max-width:980px){ .tab-panel{ grid-template-columns:1fr; } .tab-thumb{ height:220px } }
+    .faq-item { border-bottom:1px solid #f3f4f6; padding:12px 0 }
+    .faq-q { display:flex; align-items:center; justify-content:space-between; width:100%; background:transparent; border:0; padding:0; font-weight:500 }
+    .faq-a { color:var(--muted); margin-top:8px; font-size:0.95rem }
 
-    /* builds shared */
-    .build-icon{ width:46px; height:46px; border-radius:12px; display:grid; place-items:center; background:var(--glass); color:var(--primary); font-size:18px }
-    .build-meta{ color:var(--muted); font-size:.96rem }
+    .cta-footer { background:#0a0a0c; color:white; border-radius:14px }
 
-    /* process icons */
-    .process-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:12px }
-    .process-item{ background:#fff; border:1px solid #f3f4f6; padding:18px; border-radius:12px; text-align:center }
-    .process-ic{ width:56px; height:56px; border-radius:12px; display:grid; place-items:center; margin:0 auto 10px; background:var(--glass); color:var(--primary); }
-    @media (max-width:980px){ .process-grid{ grid-template-columns:repeat(2,1fr) } }
+    /* Carousel styles */
+    .carousel { position:relative; overflow:hidden }
+    .slides { display:flex; transition:transform .9s cubic-bezier(.2,.9,.25,1); will-change:transform }
+    .slide { min-width:100%; box-sizing:border-box; padding:8px }
+    .carousel-controls { position:absolute; left:0; right:0; top:50%; transform:translateY(-50%); display:flex; justify-content:space-between; pointer-events:none }
+    .carousel-controls button{ pointer-events:auto; background:rgba(255,255,255,0.9); border:0; padding:8px;border-radius:8px; box-shadow:0 6px 18px rgba(2,6,23,0.06) }
 
-    /* testimonials carousel */
-    .carousel{ position:relative; overflow:hidden }
-    .slides{ display:flex; gap:18px; transition:transform .8s cubic-bezier(.2,.9,.25,1) }
-    .slide{ min-width:100%; box-sizing:border-box }
-    .testimonial-card{ border:1px solid #f3f4f6; padding:22px; border-radius:14px; background:#fff; min-height:160px }
+    /* FAQ improved */
+    .faq-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px }
+    .faq-card { border-radius:12px; padding:14px 16px; background:linear-gradient(180deg,#fff,#fbfdff); border:1px solid #eef3ff }
+    .faq-toggle { display:flex; align-items:center; justify-content:space-between; width:100%; padding:8px 0; background:transparent; border:0; font-weight:600 }
+    .faq-body { color:var(--muted); margin-top:8px; font-size:.97rem; max-height:0; overflow:hidden; transition:max-height .45s cubic-bezier(.2,.9,.25,1) }
+    .faq-body.open { max-height:400px; }
 
-    /* faq revamp */
-    .faq-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px }
-    .faq-card{ border-radius:12px; padding:14px 16px; background:linear-gradient(180deg,#fff,#fbfdff); border:1px solid #eef3ff }
-    .faq-q{ display:flex; align-items:center; justify-content:space-between; width:100%; background:transparent; border:0; padding:0; font-weight:600 }
-    .faq-a{ color:var(--muted); margin-top:10px; font-size:.95rem }
-    @media (max-width:980px){ .faq-grid{ grid-template-columns:1fr } }
-
-    /* info button (i) */
-    .info-btn{ position:fixed; right:18px; bottom:22px; width:44px; height:44px; border-radius:50%; background:var(--primary); color:white; display:grid; place-items:center; box-shadow:0 10px 30px rgba(11,116,222,0.14); z-index:70; cursor:pointer }
-    .info-btn.to-top{ transform:translateY(-55vh); opacity:0; transition:transform .9s cubic-bezier(.2,.9,.25,1), opacity .6s }
-
-    /* footer social */
+    /* Footer layout */
     footer{ padding-top:28px; padding-bottom:28px }
-    .socials{ display:flex; gap:12px; justify-content:center; margin-top:10px }
+    .footer-inner{ max-width:7xl; margin:0 auto; padding:0 1.5rem; display:flex; align-items:center; justify-content:space-between }
+    .socials{ display:flex; gap:12px; align-items:center }
 
-    /* utilities */
-    .fade-up{ transform:translateY(12px); opacity:0 }
-    .show{ transform:translateY(0); opacity:1 }
-
-    /* Counter layout small polish */
-    .counter { min-width:0; max-width:220px }
+    @media (max-width:980px){ .faq-grid{ grid-template-columns:1fr } .carousel-controls{ display:none } }
+    @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
   </style>
 </head>
 <body class="antialiased">
@@ -88,264 +79,162 @@
   <header class="py-5">
     <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
       <div class="flex items-center gap-4">
-        <div class="font-semibold text-lg" style="color:var(--primary)">AutomateOps</div>
-        <div class="text-sm text-gray-400">Trusted Sheets + Apps Script specialists</div>
+        <div class="font-semibold text-lg">AutomateOps</div>
+        <div class="text-sm text-gray-400">Sheets · Apps Script · Integrations</div>
       </div>
-      <nav class="hidden md:flex items-center gap-6 text-sm text-gray-600">
+      <nav class="hidden md:flex items-center gap-8 text-sm text-gray-600">
         <a href="#solutions" class="hover:text-black">Solutions</a>
-        <a href="#builds" class="hover:text-black">Builds</a>
         <a href="#process" class="hover:text-black">Process</a>
-        <a href="#contact" class="px-4 py-2 rounded-full bg-white text-sm" style="border:2px solid var(--primary); color:var(--primary);">Book a 30m call</a>
+        <a href="#results" class="hover:text-black">Case</a>
+        <a href="#testimonials" class="hover:text-black">Testimonials</a>
+        <a href="#contact" class="px-4 py-2 rounded-full bg-black text-white">Book call</a>
       </nav>
     </div>
   </header>
 
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero-gradient pt-20 pb-12">
     <div class="max-w-5xl mx-auto px-6 grid lg:grid-cols-12 gap-8 items-center">
       <div class="lg:col-span-7">
-        <h1 class="h-title">Stop manual busywork. Launch a pilot in 1 week.</h1>
-        <p class="h-sub mt-4">We build focused automations in Google Sheets + Apps Script that reduce errors, free time and show ROI fast. No vendor lock-in.</p>
+        <h1 class="text-4xl md:text-5xl font-light leading-tight">Remove manual work. Upgrade your operations.</h1>
+        <p class="mt-5 text-lg section-sub max-w-xl">AutomateOps turns noisy spreadsheets into dependable workflows using Google Sheets, Apps Script and compact integrations—pilots in one week, measurable ROI.</p>
 
-        <div class="mt-6 flex gap-4">
-          <a href="#contact" class="btn-primary">Free 30m discovery — no credit card</a>
-          <a href="#roi" class="btn-ghost">Quick ROI</a>
+        <div class="mt-8 flex gap-4">
+          <a href="#contact" class="px-5 py-3 rounded-full bg-black text-white">Book discovery</a>
+          <a href="#roi" class="px-4 py-3 rounded-full border border-gray-200 text-sm">Quick ROI</a>
         </div>
 
-        <!-- horizontal counters row -->
-        <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
-          <div class="counter fade-up flex flex-col items-start gap-2" data-target="20">
-            <div class="w-10 h-10 rounded-full bg-[var(--glass)] text-[var(--primary)] flex items-center justify-center">
-              <!-- clock -->
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="9"/>
-                <path d="M12 7v5l3 2"/>
-              </svg>
-            </div>
-            <div class="text-sm font-semibold counter-num" style="color:var(--primary)">0</div>
-            <div class="text-xs text-gray-500">Hrs saved / wk</div>
+        <!-- counters compact -->
+        <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm text-gray-600 max-w-md" id="heroCounters">
+          <div class="counter fade-up" data-target="20+">
+            <div class="text-lg font-semibold counter-num">0</div>
+            <div class="section-sub">Hrs saved / wk</div>
           </div>
-
-          <div class="counter fade-up flex flex-col items-start gap-2" data-target="90">
-            <div class="w-10 h-10 rounded-full bg-[var(--glass)] text-[var(--primary)] flex items-center justify-center">
-              <!-- shield -->
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 3l8 4v6c0 5-4.5 9-8 10-3.5-1-8-5-8-10V7l8-4z"/>
-                <path d="M9 12l2 2 4-4"/>
-              </svg>
-            </div>
-            <div class="text-sm font-semibold counter-num" style="color:var(--primary)">0%</div>
-            <div class="text-xs text-gray-500">Error reduction</div>
+          <div class="counter fade-up" data-target="90%">
+            <div class="text-lg font-semibold counter-num">0%</div>
+            <div class="section-sub">Error reduction</div>
           </div>
-
-          <div class="counter fade-up flex flex-col items-start gap-2" data-target="50">
-            <div class="w-10 h-10 rounded-full bg-[var(--glass)] text-[var(--primary)] flex items-center justify-center">
-              <!-- users -->
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="7" r="4"/>
-                <path d="M5 21v-1.5a4.5 4.5 0 0 1 4.5-4.5h5A4.5 4.5 0 0 1 19 19.5V21"/>
-              </svg>
-            </div>
-            <div class="text-sm font-semibold counter-num" style="color:var(--primary)">0</div>
-            <div class="text-xs text-gray-500">Clients served</div>
+          <div class="counter fade-up" data-target="50+">
+            <div class="text-lg font-semibold counter-num">0</div>
+            <div class="section-sub">Businesses served</div>
           </div>
-
-          <div class="counter fade-up flex flex-col items-start gap-2" data-target="7">
-            <div class="w-10 h-10 rounded-full bg-[var(--glass)] text-[var(--primary)] flex items-center justify-center">
-              <!-- rocket -->
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 15l4-4 6-1 3-6-6 3-1 6-4 4z"/>
-                <path d="M14 9l-5 5"/>
-              </svg>
-            </div>
-            <div class="text-sm font-semibold counter-num" style="color:var(--primary)">0</div>
-            <div class="text-xs text-gray-500">Pilot days</div>
+          <div class="counter fade-up" data-target="1w">
+            <div class="text-lg font-semibold counter-num">0</div>
+            <div class="section-sub">Pilot available</div>
           </div>
         </div>
-
-        <p class="section-sub mt-4">Quick pilots, measurable impact. We focus on outcomes — not shiny dashboards.</p>
       </div>
 
       <div class="lg:col-span-5">
-        <div class="rounded-xl overflow-hidden" style="box-shadow:0 18px 48px rgba(11,116,222,0.06)">
-          <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981d?q=80&w=1200&auto=format&fit=crop" alt="dashboard" class="w-full h-64 object-cover"/>
+        <div class="rounded-xl border border-gray-100 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981d?q=80&w=1200&auto=format&fit=crop&s=b8ff7a6" alt="dashboard" class="w-full h-64 object-cover"/>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- POWERED BY -->
-  <section id="powered" class="py-12 border-t border-gray-100">
+  <!-- TOOLS (logos horizontally stacked) -->
+  <section id="tools" class="py-10 border-t border-gray-100">
     <div class="max-w-6xl mx-auto px-6 text-center">
-      <h3 class="section-title">Powered by Google's ecosystem</h3>
-      <p class="section-sub mt-2">We leverage the tools your team already knows and loves — eliminating the learning curve and keeping control in your organisation.</p>
-
+      <div class="text-sm section-sub">Powered by the tools you already use</div>
       <div class="mt-6 flex items-center justify-center gap-4 flex-wrap">
-        <div class="tool" title="Google Sheets"><img src="https://upload.wikimedia.org/wikipedia/commons/8/80/Google_Sheets_icon_%282020%29.svg" alt="Sheets"/><span class="section-sub text-sm">Google Sheets</span></div>
+        <div class="tool" title="Google Sheets"><img src="https://upload.wikimedia.org/wikipedia/commons/8/80/Google_Sheets_icon_%282020%29.svg" alt="Sheets"/><span class="section-sub text-sm">Sheets</span></div>
         <div class="tool" title="Apps Script"><img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Google_Apps_Script_logo.svg" alt="Apps Script"/><span class="section-sub text-sm">Apps Script</span></div>
-        <div class="tool" title="Google Drive"><img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Google_Drive_logo.png" alt="Drive"/><span class="section-sub text-sm">Google Drive</span></div>
+        <div class="tool" title="Drive"><img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Google_Drive_logo.png" alt="Drive"/><span class="section-sub text-sm">Drive</span></div>
         <div class="tool" title="Gmail"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png" alt="Gmail"/><span class="section-sub text-sm">Gmail</span></div>
-        <div class="tool" title="Google Calendar"><img src="https://upload.wikimedia.org/wikipedia/commons/d/df/Google_Calendar_icon_%282020%29.svg" alt="Calendar"/><span class="section-sub text-sm">Google Calendar</span></div>
-        <div class="tool" title="Google Forms"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Google_Forms_icon_%282020%29.svg" alt="Forms" style="width:26px;height:26px"/><span class="section-sub text-sm">Google Forms</span></div>
+        <div class="tool" title="Calendar"><img src="https://upload.wikimedia.org/wikipedia/commons/d/df/Google_Calendar_icon_%282020%29.svg" alt="Calendar"/><span class="section-sub text-sm">Calendar</span></div>
       </div>
-
-      <p class="section-sub mt-4">No new apps to learn — we build production-ready automations on top of tools your team already trusts.</p>
     </div>
   </section>
 
-  <!-- BUILDS (TABBED) -->
-  <section id="builds" class="py-16 border-t border-gray-100">
+  <!-- SOLUTIONS (with polished header) -->
+  <section id="solutions" class="py-20">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center max-w-2xl mx-auto">
-        <h2 class="section-title">Select builds we've shipped</h2>
-        <p class="section-sub mt-2">Practical, production-ready tools we implement and customise — click a tab to see details and demos.</p>
+        <h2 class="section-title">Solutions tailored for modern operations</h2>
+        <p class="section-sub mt-2">Premium automation, tuned for reliability and fast outcomes.</p>
       </div>
 
-      <div class="mt-8">
-        <div class="tabs" role="tablist" aria-label="Builds tabs">
-          <button class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-bulk" id="tab-bulk">Bulk Email</button>
-          <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-slip" id="tab-slip">Payment Slip</button>
-          <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-clean" id="tab-clean">Cleaning System</button>
+      <div class="mt-12 grid md:grid-cols-3 gap-8">
+        <div class="p-6">
+          <h4 class="text-sm section-sub">Operations Automation</h4>
+          <h3 class="mt-2 font-medium">Automated reconciliations, structured workflows</h3>
+          <p class="section-sub mt-2 text-sm">Scheduled reports, alerts, and audit trails to keep ops reliable.</p>
         </div>
-
-        <div class="tab-panel fade-up" id="panel-bulk" role="tabpanel" aria-labelledby="tab-bulk">
-          <div class="tab-thumb video-thumb" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop" alt="bulk-email" />
-          </div>
-          <div>
-            <div class="flex items-center gap-4 mb-3">
-              <div class="build-icon">✉️</div>
-              <div>
-                <div class="font-medium text-lg">Bulk Email Sender + Multi-Inbox CRM</div>
-                <div class="build-meta">Personalized mass-mailing, multi-inbox tracking & simple CRM views inside Sheets.</div>
-              </div>
-            </div>
-            <p class="section-sub">Send personalized emails from Sheets, track opens/replies across inboxes and manage leads without leaving Sheets.</p>
-            <div class="mt-4 flex gap-3"><button class="btn-primary" onclick="openDemo(this)">View demo</button><a href="#contact" class="btn-ghost">Request this</a></div>
-          </div>
+        <div class="p-6">
+          <h4 class="text-sm section-sub">Custom CRM in Sheets</h4>
+          <h3 class="mt-2 font-medium">Minimalist CRM frameworks with validation & views</h3>
+          <p class="section-sub mt-2 text-sm">Role views, validation rules and automations that reduce errors.</p>
         </div>
-
-        <div class="tab-panel" id="panel-slip" role="tabpanel" aria-labelledby="tab-slip" hidden>
-          <div class="tab-thumb video-thumb" data-video="https://www.youtube.com/embed/3fumBcKC6RE">
-            <img src="https://images.unsplash.com/photo-1585386959984-a4155223f6f9?q=80&w=1200&auto=format&fit=crop" alt="payment-slip" />
-          </div>
-          <div>
-            <div class="flex items-center gap-4 mb-3">
-              <div class="build-icon">📄</div>
-              <div>
-                <div class="font-medium text-lg">Auto Payment-Slip Generator</div>
-                <div class="build-meta">Generate payment slips, batch-generate PDFs & email automatically.</div>
-              </div>
-            </div>
-            <p class="section-sub">Turn rows into branded payment slips, export PDFs in bulk and email receipts — fully auditable.</p>
-            <div class="mt-4 flex gap-3"><button class="btn-primary" onclick="openDemo(this)">View demo</button><a href="#contact" class="btn-ghost">Request this</a></div>
-          </div>
+        <div class="p-6">
+          <h4 class="text-sm section-sub">Dashboards & Integrations</h4>
+          <h3 class="mt-2 font-medium">Clean dashboards, API syncs, structured automation</h3>
+          <p class="section-sub mt-2 text-sm">Executive dashboards, Slack/email triggers and secure syncs.</p>
         </div>
-
-        <div class="tab-panel" id="panel-clean" role="tabpanel" aria-labelledby="tab-clean" hidden>
-          <div class="tab-thumb video-thumb" data-video="https://www.youtube.com/embed/tVj0ZTS4WF4">
-            <img src="https://images.unsplash.com/photo-1505692794404-058f6f5f9f22?q=80&w=1200&auto=format&fit=crop" alt="cleaning-system" />
-          </div>
-          <div>
-            <div class="flex items-center gap-4 mb-3">
-              <div class="build-icon">🏠</div>
-              <div>
-                <div class="font-medium text-lg">Cleaning Business System</div>
-                <div class="build-meta">Bookings, scheduling & invoicing — full kit in Sheets.</div>
-              </div>
-            </div>
-            <p class="section-sub">Bookings, team assignment, invoicing and client communications — an operational kit for cleaning businesses.</p>
-            <div class="mt-4 flex gap-3"><button class="btn-primary" onclick="openDemo(this)">View demo</button><a href="#contact" class="btn-ghost">Request this</a></div>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
 
-  <!-- PROCESS (icons instead of numbers, restored layout style) -->
+  <!-- PROCESS (slanted/adjacent alternating, improved) -->
   <section id="process" class="py-20 bg-gray-50 border-t border-gray-100">
-    <div class="max-w-4xl mx-auto px-6">
+    <div class="max-w-6xl mx-auto px-6">
       <div class="text-center max-w-2xl mx-auto">
-        <h2 class="section-title">How we work — predictable, outcome-driven</h2>
-        <p class="section-sub mt-2">Clear milestones, regular demos, measurable outcomes — and one responsible owner for delivery.</p>
+        <h2 class="section-title">A simple 4‑step process</h2>
+        <p class="section-sub mt-2">Clear milestones, regular demos, and measurable outcomes.</p>
       </div>
 
-      <div class="mt-14 space-y-10 relative fade-up">
-        <!-- connector line -->
-        <div class="absolute left-6 top-0 bottom-0 w-px bg-gray-200"></div>
+      <div class="mt-12 relative">
+        <div class="hidden md:block absolute left-1/2 top-6 bottom-6 w-px bg-gray-200" aria-hidden></div>
 
-        <div class="flex gap-6 items-start relative">
-          <div class="process-ic" style="min-width:56px;">🔎</div>
-          <div>
-            <div class="font-semibold text-lg">Discovery Call</div>
-            <p class="section-sub mt-2">We map workflows, clarify goals and identify high-ROI wins. No jargon, no fluff.</p>
+        <div class="space-y-12">
+
+          <div class="md:flex md:items-start md:gap-8">
+            <div class="md:w-1/2 md:text-right md:pr-8">
+              <div class="step-bubble mx-auto md:ml-auto">01</div>
+            </div>
+            <div class="md:w-1/2">
+              <h4 class="text-lg font-medium">Discovery Call</h4>
+              <p class="section-sub mt-2">We map workflows and goals through a focused 30-minute session. Deliverable: pilot plan & estimate.</p>
+            </div>
           </div>
-        </div>
 
-        <div class="flex gap-6 items-start relative">
-          <div class="process-ic" style="min-width:56px;">🧭</div>
-          <div>
-            <div class="font-semibold text-lg">Solution Design</div>
-            <p class="section-sub mt-2">A clean, minimal design showing expected gains, milestones and acceptance criteria.</p>
+          <div class="md:flex md:flex-row-reverse md:items-start md:gap-8">
+            <div class="md:w-1/2 md:text-left md:pl-8">
+              <div class="step-bubble mx-auto md:mr-auto">02</div>
+            </div>
+            <div class="md:w-1/2">
+              <h4 class="text-lg font-medium">Solution Design</h4>
+              <p class="section-sub mt-2">We produce a clear, minimal plan showing scope, milestones, and expected gains. Deliverable: design doc & timeline.</p>
+            </div>
           </div>
-        </div>
 
-        <div class="flex gap-6 items-start relative">
-          <div class="process-ic" style="min-width:56px;">🛠️</div>
-          <div>
-            <div class="font-semibold text-lg">Implementation</div>
-            <p class="section-sub mt-2">Transparent build process with weekly demos, testing and iteration.</p>
+          <div class="md:flex md:items-start md:gap-8">
+            <div class="md:w-1/2 md:text-right md:pr-8">
+              <div class="step-bubble mx-auto md:ml-auto">03</div>
+            </div>
+            <div class="md:w-1/2">
+              <h4 class="text-lg font-medium">Implementation</h4>
+              <p class="section-sub mt-2">We build, test, and iterate with frequent demos. Deliverable: production-ready automation & test logs.</p>
+            </div>
           </div>
-        </div>
 
-        <div class="flex gap-6 items-start relative">
-          <div class="process-ic" style="min-width:56px;">📚</div>
-          <div>
-            <div class="font-semibold text-lg">Training & Support</div>
-            <p class="section-sub mt-2">Simple documentation, handover, and optional SLA-based support for long-term reliability.</p>
+          <div class="md:flex md:flex-row-reverse md:items-start md:gap-8">
+            <div class="md:w-1/2 md:text-left md:pl-8">
+              <div class="step-bubble mx-auto md:mr-auto">04</div>
+            </div>
+            <div class="md:w-1/2">
+              <h4 class="text-lg font-medium">Training & Support</h4>
+              <p class="section-sub mt-2">We deliver documentation, training and optional SLA-backed support. Deliverable: enablement pack & SLA options.</p>
+            </div>
           </div>
+
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- QUICK ROI CALCULATOR -->
-  <section id="roi" class="py-20 bg-white border-t border-gray-100">
-    <div class="max-w-5xl mx-auto px-6 text-center">
-      <h2 class="section-title">Quick ROI — see your savings instantly</h2>
-      <p class="section-sub mt-2">Adjust the sliders to estimate weekly time saved and the financial impact of automation.</p>
-
-      <div class="mt-10 grid md:grid-cols-3 gap-10 text-left">
-        <div>
-          <label class="font-medium text-sm">Hours saved per week</label>
-          <input id="roi-hours" type="range" min="1" max="40" value="8" class="w-full mt-2" />
-          <div class="mt-1 text-sm text-gray-600"><span id="roi-hours-val">8</span> hrs/week</div>
-        </div>
-
-        <div>
-          <label class="font-medium text-sm">Hourly cost of the task</label>
-          <input id="roi-rate" type="range" min="5" max="100" value="25" class="w-full mt-2" />
-          <div class="mt-1 text-sm text-gray-600">$<span id="roi-rate-val">25</span> / hr</div>
-        </div>
-
-        <div>
-          <label class="font-medium text-sm">Team size affected</label>
-          <input id="roi-team" type="range" min="1" max="10" value="2" class="w-full mt-2" />
-          <div class="mt-1 text-sm text-gray-600"><span id="roi-team-val">2</span> people</div>
-        </div>
-      </div>
-
-      <div class="mt-12 p-8 rounded-xl border border-gray-100 bg-gray-50 max-w-xl mx-auto fade-up">
-        <div class="text-sm text-gray-500 mb-2">Estimated monthly savings</div>
-        <div class="text-4xl font-semibold" style="color:var(--primary)">$<span id="roi-result">0</span></div>
-        <p class="section-sub mt-3">Based on reduced manual work + more accurate workflows.</p>
       </div>
     </div>
   </section>
 
-  <!-- RESULTS (kept simple) -->
-  <section id="results" class="py-16 bg-white">
+  <!-- CASE SNAPSHOT -->
+  <section id="results" class="py-16">
     <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-6">
       <div class="p-6 rounded-lg border border-gray-100">
         <div class="text-sm section-sub">Case Snapshot</div>
@@ -354,7 +243,7 @@
       </div>
       <div class="p-6 rounded-lg border border-gray-100">
         <div class="text-sm section-sub">Impact</div>
-        <h3 class="mt-2 font-semibold"><span class="num-anim" data-target="20">0</span> hrs saved / wk</h3>
+        <h3 class="mt-2 font-semibold">20+ hrs saved / wk</h3>
         <p class="section-sub mt-2 text-sm">Real-time dashboards and scheduled reconciliations.</p>
       </div>
       <div class="p-6 rounded-lg border border-gray-100">
@@ -365,86 +254,140 @@
     </div>
   </section>
 
-  <!-- TESTIMONIALS (carousel autoplay) -->
-  <section id="testimonials" class="py-20 border-t border-gray-100">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="text-center">
-        <h2 class="section-title">What our customers say</h2>
-        <p class="section-sub mt-2">Short, honest feedback that matters to operations teams.</p>
+  <!-- ROI (quick calculator) -->
+  <section id="roi" class="py-16 bg-gray-50 border-t border-gray-100">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="p-8 rounded-xl border border-gray-100 bg-white">
+        <div class="grid md:grid-cols-2 gap-6 items-center">
+          <div>
+            <h3 class="text-xl font-medium">Quick ROI snapshot</h3>
+            <p class="section-sub mt-2 text-sm">Estimate weekly savings for a pilot.</p>
+
+            <div class="mt-4 grid grid-cols-2 gap-3">
+              <input id="h" type="number" class="p-3 border rounded" value="8" />
+              <input id="r" type="number" class="p-3 border rounded" value="1" />
+              <input id="rate" type="number" class="p-3 border rounded" value="50" />
+              <input id="pct" type="number" class="p-3 border rounded" value="75" />
+            </div>
+            <div class="mt-4 flex gap-3"><button id="calcBtn" class="px-4 py-2 bg-black text-white rounded">Calculate</button><a href="#contact" class="px-4 py-2 border border-gray-200 rounded">Book pilot</a></div>
+          </div>
+          <div>
+            <div class="text-sm section-sub">Estimated weekly savings</div>
+            <div id="roiVal" class="text-3xl font-bold mt-2">$0</div>
+            <div id="roiBreak" class="mt-2 section-sub text-sm"></div>
+          </div>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials" class="py-20">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h2 class="section-title">What our clients say</h2>
+      <p class="section-sub mt-2">Real feedback from real operators.</p>
 
       <div class="mt-8 carousel" aria-roledescription="carousel">
         <div class="slides" id="slides">
           <div class="slide">
-            <div class="testimonial-card">
-              <div class="flex items-center gap-3 mb-3"><div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center font-semibold">SM</div><div><div class="font-medium">Sarah Mitchell</div><div class="text-xs section-sub">Ops Manager, TechFlow</div></div></div>
-              <p>“They cut our reporting time from 8 hours to 15 minutes. Our team now focuses on strategy, not busywork.”</p>
+            <div class="testimonial-card text-left max-w-3xl mx-auto">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center font-semibold">SM</div>
+                <div>
+                  <div class="font-medium">Sarah Mitchell</div>
+                  <div class="text-xs section-sub">Ops Manager, TechFlow</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-1 mb-3">
+                <div class="text-xs section-sub ml-3">4.9</div>
+              </div>
+              <blockquote class="text-gray-800">“They cut our reporting time from 8 hours to 15 minutes. Our team now focuses on strategy, not busywork.”</blockquote>
             </div>
           </div>
 
           <div class="slide">
-            <div class="testimonial-card">
-              <div class="flex items-center gap-3 mb-3"><div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center font-semibold">MC</div><div><div class="font-medium">Marcus Chen</div><div class="text-xs section-sub">Sales Director, GrowthPoint</div></div></div>
-              <p>“Custom Sheets CRM removed manual busywork. Pipeline accuracy improved and reps are happier.”</p>
+            <div class="testimonial-card text-left max-w-3xl mx-auto">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center font-semibold">MC</div>
+                <div>
+                  <div class="font-medium">Marcus Chen</div>
+                  <div class="text-xs section-sub">Sales Director, GrowthPoint</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-1 mb-3">
+                <div class="text-xs section-sub ml-3">4.8</div>
+              </div>
+              <blockquote class="text-gray-800">“Custom Sheets CRM removed manual busywork. Pipeline accuracy improved and reps are happier.”</blockquote>
             </div>
           </div>
 
           <div class="slide">
-            <div class="testimonial-card">
-              <div class="flex items-center gap-3 mb-3"><div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center font-semibold">ER</div><div><div class="font-medium">Emily Rodriguez</div><div class="text-xs section-sub">Finance Lead, Nexus</div></div></div>
-              <p>“We eliminated 90% of manual errors and gained full visibility over reporting.”</p>
+            <div class="testimonial-card text-left max-w-3xl mx-auto">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center font-semibold">ER</div>
+                <div>
+                  <div class="font-medium">Emily Rodriguez</div>
+                  <div class="text-xs section-sub">Finance Lead, Nexus</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-1 mb-3">
+                <div class="text-xs section-sub ml-3">4.9</div>
+              </div>
+              <blockquote class="text-gray-800">“We eliminated 90% of manual errors and gained full visibility over reporting.”</blockquote>
             </div>
           </div>
+        </div>
+
+        <div class="carousel-controls" aria-hidden>
+          <button id="prevBtn" aria-label="Previous">◀</button>
+          <button id="nextBtn" aria-label="Next">▶</button>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- FAQ (revamped layout) -->
+  <!-- FAQ -->
   <section class="py-16 border-t border-gray-100">
     <div class="max-w-6xl mx-auto px-6">
-      <div class="text-center max-w-2xl mx-auto">
-        <h2 class="section-title">FAQ</h2>
-        <p class="section-sub mt-2">Quick answers — if yours isn't here we'll cover it in the discovery.</p>
-      </div>
+      <h2 class="section-title text-center">FAQ</h2>
+      <p class="section-sub text-center mt-2">Tap a question to reveal the answer.</p>
 
-      <div class="mt-8 faq-grid">
+      <div class="mt-8 max-w-4xl mx-auto faq-grid">
         <div class="faq-card">
-          <button class="faq-q" aria-expanded="false" aria-controls="q1">How fast can we get a pilot?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M6 9l6 6 6-6" stroke="#334155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <div id="q1" class="faq-a" hidden>Pilots typically start within 1 week and are scoped to produce measurable first-week wins.</div>
+          <button class="faq-toggle" data-target="f1">How fast can we get a pilot?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M6 9l6 6 6-6" stroke="#334155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div id="f1" class="faq-body">Pilots usually launch within 1 week and are scoped to produce measurable first-week wins.</div>
         </div>
 
         <div class="faq-card">
-          <button class="faq-q" aria-expanded="false" aria-controls="q2">What does a pilot include?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M6 9l6 6 6-6" stroke="#334155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <div id="q2" class="faq-a" hidden>A scoped workflow, a working automation demo, short training and a results report with next steps & pricing options.</div>
+          <button class="faq-toggle" data-target="f2">What does a pilot include?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M6 9l6 6 6-6" stroke="#334155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div id="f2" class="faq-body">A scoped workflow, implementation, a short training and a results report with next steps and pricing options.</div>
         </div>
 
         <div class="faq-card">
-          <button class="faq-q" aria-expanded="false" aria-controls="q3">How do you price work?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M6 9l6 6 6-6" stroke="#334155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <div id="q3" class="faq-a" hidden>Pilots are fixed-price and focused on clear ROI. Larger engagements use milestone billing with acceptance criteria.</div>
+          <button class="faq-toggle" data-target="f3">How do you price work?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M6 9l6 6 6-6" stroke="#334155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div id="f3" class="faq-body">Pilots are fixed-price; larger projects are milestone-based with acceptance criteria and sign-off.</div>
         </div>
 
         <div class="faq-card">
-          <button class="faq-q" aria-expanded="false" aria-controls="q4">Can you access our systems?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M6 9l6 6 6-6" stroke="#334155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <div id="q4" class="faq-a" hidden>Yes — we integrate securely using OAuth, scoped service accounts and webhooks. We document required permissions in advance.</div>
+          <button class="faq-toggle" data-target="f4">Can you access our systems?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M6 9l6 6 6-6" stroke="#334155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div id="f4" class="faq-body">Yes — we integrate securely using OAuth, webhooks and scoped service accounts where needed. We provide a permissions checklist ahead of time.</div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- FINAL CTA -->
+  <!-- FINAL CTA / CONVERSION PROMPT -->
   <section class="py-12">
     <div class="max-w-6xl mx-auto px-6">
-      <div class="cta-footer p-8 flex flex-col md:flex-row items-center justify-between gap-4" style="background:linear-gradient(90deg, rgba(11,116,222,0.95), rgba(11,116,222,0.85)); color:white; border-radius:12px">
+      <div class="cta-footer p-8 flex flex-col md:flex-row items-center justify-between gap-4">
         <div>
-          <div class="text-sm" style="opacity:.95">Ready to stop the manual grind?</div>
-          <div class="text-xl font-medium mt-1">Book your free 30-minute discovery — pilot in 1 week.</div>
+          <div class="text-sm section-sub">Ready to reduce manual work?</div>
+          <div class="text-xl font-medium mt-1">Book a 30-minute discovery — pilot in 1 week.</div>
         </div>
         <div class="flex gap-3">
           <a href="#contact" class="px-5 py-3 bg-white text-black rounded-full">Request discovery</a>
-          <a href="#roi" class="px-5 py-3 border border-white/20 rounded-full text-white">Quick ROI</a>
+          <a href="#roi" class="px-5 py-3 border border-white/10 rounded-full text-white">Quick ROI</a>
         </div>
       </div>
     </div>
@@ -454,235 +397,136 @@
   <section id="contact" class="py-20 bg-gray-50 border-t border-gray-100">
     <div class="max-w-4xl mx-auto px-6 text-center">
       <h2 class="section-title">Get started</h2>
-      <p class="section-sub mt-2">Free 30-minute discovery — no salesy demo. We diagnose and propose a short pilot.</p>
+      <p class="section-sub mt-2">Free 30-minute discovery — no commitment</p>
 
       <form id="contactForm" class="mt-8 space-y-4 text-left">
         <input name="name" class="w-full p-3 border rounded" placeholder="Your name" required />
         <input name="email" class="w-full p-3 border rounded" placeholder="Email" required />
         <input name="company" class="w-full p-3 border rounded" placeholder="Company" />
-        <textarea name="message" rows="4" class="w-full p-3 border rounded" placeholder="What workflow do you want to fix?" required></textarea>
+        <textarea name="message" rows="4" class="w-full p-3 border rounded" placeholder="Describe the workflow" required></textarea>
         <div class="flex gap-3 justify-end"><button type="submit" class="px-5 py-3 bg-black text-white rounded">Request discovery</button><button type="button" id="clear" class="px-5 py-3 border rounded">Clear</button></div>
       </form>
     </div>
   </section>
 
-  <!-- FOOTER + SOCIAL ICONS -->
-  <footer class="py-8 text-sm text-gray-500 border-t border-gray-100">
-    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
-      <!-- Left: Social Icons -->
-      <div class="socials flex gap-3 m-0 justify-start">
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="socials">
         <a href="#" aria-label="Twitter"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22 5.92c-.63.28-1.3.48-2 .57a3.5 3.5 0 0 0-6 2v.6A9.86 9.86 0 0 1 3 4.9a3.48 3.48 0 0 0 1.08 4.66c-.5 0-.97-.16-1.38-.4v.04c0 1.7 1.21 3.1 2.83 3.43a3.5 3.5 0 0 1-1.37.05c.39 1.2 1.48 2.07 2.78 2.1A7 7 0 0 1 2 18.58 9.86 9.86 0 0 0 7.29 20c6.42 0 9.94-5.32 9.94-9.95v-.45A6.9 6.9 0 0 0 22 5.92z" fill="currentColor"/></svg></a>
         <a href="#" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.98 3.5A2.5 2.5 0 1 1 4.98 8.5 2.5 2.5 0 0 1 4.98 3.5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-.9 1.7-1.9 3.5-1.9 3.7 0 4.4 2.4 4.4 5.6V21h-4v-5.1c0-1.2 0-2.7-1.6-2.7-1.6 0-1.9 1.3-1.9 2.6V21H9z" fill="currentColor"/></svg></a>
         <a href="#" aria-label="GitHub"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 .5A12 12 0 0 0 0 12.5c0 5.3 3.4 9.8 8.2 11.4.6.1.8-.2.8-.5v-2c-3.3.7-4-1.6-4-1.6-.5-1.2-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.7-1.4-2.6-.3-5.4-1.3-5.4-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.4 5.9.4.4.8 1 .8 2v3c0 .3.2.6.8.5A12 12 0 0 0 24 12.5 12 12 0 0 0 12 .5z" fill="currentColor"/></svg></a>
       </div>
-
-      <!-- Right: Copyright -->
-      <div class="mt-3 md:mt-0">© <span id="year"></span> AutomateOps</div>
+      <div class="text-sm text-gray-500">© <span id="year"></span> AutomateOps</div>
     </div>
   </footer>
 
-  <!-- INFO BUTTON -->
-  <button id="infoBtn" class="info-btn" aria-label="More info">i</button>
-
-  <!-- VIDEO MODAL -->
-  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="box">
-      <button id="closeModal" style="position:absolute;right:12px;top:12px;padding:8px;border-radius:8px;background:#fff;border:0;">✕</button>
-      <iframe id="modalIframe" src="" frameborder="0" allowfullscreen style="width:100%;height:60vh;border:0;border-radius:8px;"></iframe>
-    </div>
-  </div>
+  <!-- BACK TO TOP BUTTON -->
+  <button id="backToTop" aria-label="Back to top" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center shadow-lg opacity-0 pointer-events-none transition-all duration-300">↑</button>
 
 <script>
   // year
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Tabs interaction
-  const tabs = document.querySelectorAll('.tab-btn');
-  tabs.forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      // deselect
-      tabs.forEach(b=>b.setAttribute('aria-selected','false'));
-      btn.setAttribute('aria-selected','true');
-      // hide panels
-      document.querySelectorAll('[role="tabpanel"]').forEach(p=>p.hidden=true);
-      const panel = document.getElementById(btn.getAttribute('aria-controls'));
-      if(panel){ panel.hidden=false; panel.classList.add('show'); }
-    });
+  // ROI calc
+  const calc = (h,r,rate,pct)=>Math.round(h*r*rate*(pct/100));
+  document.getElementById('calcBtn').addEventListener('click', ()=>{
+    const h=Number(document.getElementById('h').value||0);
+    const r=Number(document.getElementById('r').value||0);
+    const rate=Number(document.getElementById('rate').value||0);
+    const pct=Number(document.getElementById('pct').value||0);
+    const weekly=calc(h,r,rate,pct);
+    document.getElementById('roiVal').textContent='$'+weekly.toLocaleString();
+    document.getElementById('roiBreak').textContent=`${h} hrs × ${r} runs × $${rate}/hr × ${pct}% = $${weekly}/wk`;
   });
 
-  // testimonials carousel autoplay
-  const slides = document.getElementById('slides');
-  let index = 0;
-  const total = slides.children.length;
-  function go(i){ slides.style.transform = `translateX(-${i*100}%)`; }
-  function next(){ index = (index+1)%total; go(index); }
-  let carouselInterval = setInterval(next, 4500);
-  // pause on hover
-  slides.addEventListener('mouseenter', ()=>clearInterval(carouselInterval));
-  slides.addEventListener('mouseleave', ()=>carouselInterval = setInterval(next,4500));
-
-  // FAQ accordion
-  document.querySelectorAll('.faq-q').forEach(btn=>{
+  // FAQ toggles — updated to use .faq-toggle and .faq-body
+  document.querySelectorAll('.faq-toggle').forEach(btn=>{
     btn.addEventListener('click', ()=>{
-      const id = btn.getAttribute('aria-controls');
-      const a = document.getElementById(id);
-      const open = !a.hidden;
-      // close others
-      document.querySelectorAll('.faq-a').forEach(x=>x.hidden=true);
-      document.querySelectorAll('.faq-q').forEach(q=>q.setAttribute('aria-expanded','false'));
-      a.hidden = open; // toggle
-      btn.setAttribute('aria-expanded', String(open));
-    });
-  });
-
-  // video modal logic (re-used)
-  function openDemo(el){
-    try{
-      const section = el.closest('section');
-      let thumb = section && section.querySelector('.video-thumb');
-      if(!thumb){ thumb = document.querySelector('.video-thumb'); }
-      if(!thumb){ alert('No demo video linked yet.'); return; }
-      const video = thumb.getAttribute('data-video');
-      if(!video){ alert('No demo video linked yet.'); return; }
-      const modal = document.getElementById('modal');
-      const iframe = document.getElementById('modalIframe');
-      iframe.src = video + '?autoplay=1&rel=0';
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden','false');
-    }catch(err){ alert('Could not open demo.'); }
-  }
-  document.getElementById('closeModal').addEventListener('click', ()=>{ const modal=document.getElementById('modal'); modal.classList.remove('open'); document.getElementById('modalIframe').src=''; modal.setAttribute('aria-hidden','true'); });
-  document.querySelectorAll('.video-thumb').forEach(t=>{ t.addEventListener('click', ()=>{ const video=t.getAttribute('data-video'); if(!video){ alert('No demo video linked yet.'); return;} const modal=document.getElementById('modal'); const iframe=document.getElementById('modalIframe'); iframe.src=video+'?autoplay=1&rel=0'; modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); }); });
-
-  // counters & on-scroll reveals (IntersectionObserver)
-  const io = new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        entry.target.classList.add('show');
-        // counter animation for elements with data-target
-        if(entry.target.dataset && entry.target.dataset.target){
-          animateCounter(entry.target, entry.target.dataset.target);
-        }
-        // num-anim (other places)
-        entry.target.querySelectorAll && entry.target.querySelectorAll('.num-anim').forEach(n=>{ animateCounter(n, n.dataset.target, true); });
+      const id = btn.dataset.target;
+      const body = document.getElementById(id);
+      const isOpen = body.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.faq-body').forEach(b=>{ b.classList.remove('open'); b.previousElementSibling && b.previousElementSibling.setAttribute('aria-expanded','false'); });
+      if(!isOpen){
+        body.classList.add('open');
+        btn.setAttribute('aria-expanded','true');
+      } else {
+        body.classList.remove('open');
+        btn.setAttribute('aria-expanded','false');
       }
     });
-  }, {threshold:0.15});
-  // observe counters and fade-up elements
-  document.querySelectorAll('.fade-up, .counter, .tab-panel').forEach(el=>io.observe(el));
-
-  // improved animateCounter targeting .counter-num
-  function animateCounter(el, target, noSuffix){
-    // find the numeric element inside the counter
-    let numEl = null;
-    if(el && el.classList && el.classList.contains('counter')){
-      numEl = el.querySelector('.counter-num');
-    } else if(el && el.classList && el.classList.contains('num-anim')){
-      numEl = el;
-    } else {
-      numEl = (el && el.querySelector && el.querySelector('.counter-num')) || el;
-    }
-    const rawTarget = String(target || '');
-    const hasPct = rawTarget.includes('%');
-    const end = Number(rawTarget.replace('%',''));
-    if(isNaN(end) || !numEl) return;
-    const duration = 1200 + Math.min(2600, end * 20);
-    let startTime = null;
-    function step(ts){
-      if(!startTime) startTime = ts;
-      const progress = Math.min((ts-startTime)/duration,1);
-      const value = Math.floor(progress * end);
-      numEl.textContent = value + (hasPct ? '%' : '');
-      if(progress < 1) requestAnimationFrame(step);
-      else numEl.textContent = end + (hasPct ? '%' : '');
-    }
-    requestAnimationFrame(step);
-  }
-
-  // INFO BUTTON behaviour (reappear only at bottom, hide after click)
-  const infoBtn = document.getElementById('infoBtn');
-  let manuallyHidden = false;
-
-  window.addEventListener('scroll', ()=>{
-    const y = window.scrollY || window.pageYOffset;
-    const docHeight = document.documentElement.scrollHeight;
-    const winHeight = window.innerHeight;
-    const atBottom = y + winHeight >= docHeight - 50;
-
-    // If user scrolled to bottom → show button
-    if(atBottom){
-      manuallyHidden = false;
-      infoBtn.style.opacity = '1';
-      infoBtn.style.transform = 'translateY(0)';
-      infoBtn.classList.remove('to-top');
-      return;
-    }
-
-    // If user clicked (hidden manually), keep it hidden until bottom
-    if(manuallyHidden){
-      infoBtn.style.opacity = '0';
-      infoBtn.style.transform = 'translateY(20px)';
-      return;
-    }
-
-    // Normal scroll behavior: hide while scrolled down, show near top
-    if(y > 220){
-      infoBtn.classList.add('to-top');
-    } else {
-      infoBtn.classList.remove('to-top');
-    }
+    btn.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); btn.click(); } });
   });
 
-  infoBtn.addEventListener('click', ()=>{
-    manuallyHidden = true;
-    window.scrollTo({top:0,behavior:'smooth'});
-    // Immediately hide button after click
-    infoBtn.style.opacity = '0';
-    infoBtn.style.transform = 'translateY(20px)';
-  });
+  document.getElementById('clear').addEventListener('click',()=>form.reset());
 
-  // small accessibility: allow tab switching with arrow keys
-  document.getElementById('tab-bulk').addEventListener('keydown', e=>{ if(e.key==='ArrowRight') document.getElementById('tab-slip').focus(); });
-  document.getElementById('tab-slip').addEventListener('keydown', e=>{ if(e.key==='ArrowLeft') document.getElementById('tab-bulk').focus(); if(e.key==='ArrowRight') document.getElementById('tab-clean').focus(); });
-  document.getElementById('tab-clean').addEventListener('keydown', e=>{ if(e.key==='ArrowLeft') document.getElementById('tab-slip').focus(); });
+  // COUNTERS: animate when in view
+  (function(){
+    function parseTarget(t){
+      if(!t) return {n:0,suff:''};
+      if(String(t).endsWith('+')) return {n:Number(String(t).slice(0,-1))||0, suff:'+'};
+      if(String(t).endsWith('%')) return {n:Number(String(t).slice(0,-1))||0, suff:'%'};
+      if(String(t).endsWith('w')) return {n:Number(String(t).slice(0,-1))||0, suff:'w'};
+      return {n:Number(t)||0, suff:''};
+    }
+    function animateNum(el, end, suff){
+      const start = 0; const duration = 1400 + Math.min(2200, end*20);
+      let startTime = null;
+      function step(ts){
+        if(!startTime) startTime = ts;
+        const prog = Math.min((ts-startTime)/duration,1);
+        const val = Math.floor(prog * end);
+        el.textContent = val + (suff==='w' ? (val===1? ' wk' : ' w') : (suff||''));
+        if(prog<1) requestAnimationFrame(step);
+        else el.textContent = end + (suff==='w' ? (end===1? ' wk' : ' w') : (suff||''));
+      }
+      requestAnimationFrame(step);
+    }
 
-  // --- REAL-TIME ROI CALCULATOR ---
-  const hoursInput = document.getElementById('roi-hours');
-  const rateInput = document.getElementById('roi-rate');
-  const teamInput = document.getElementById('roi-team');
-  const hoursVal = document.getElementById('roi-hours-val');
-  const rateVal = document.getElementById('roi-rate-val');
-  const teamVal = document.getElementById('roi-team-val');
-  const roiResult = document.getElementById('roi-result');
+    const counters = document.querySelectorAll('.counter');
+    if(counters.length){
+      const cIo = new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            const node = entry.target;
+            const span = node.querySelector('.counter-num');
+            const raw = node.dataset.target;
+            const {n,suff} = parseTarget(raw);
+            // Avoid re-running
+            if(!node.dataset.animated){
+              node.dataset.animated = '1';
+              animateNum(span, n, suff);
+            }
+            cIo.unobserve(node);
+          }
+        });
+      }, {threshold:0.3});
+      counters.forEach(c=>cIo.observe(c));
+    }
+  })();
 
-  function formatNumber(n){ return n.toLocaleString(); }
-
-  function computeROI(){
-    const hours = Number(hoursInput.value) || 0;
-    const rate = Number(rateInput.value) || 0;
-    const team = Number(teamInput.value) || 0;
-    // weekly savings = hours * team * rate
-    const weekly = hours * team * rate;
-    const monthly = Math.round(weekly * 4); // approximate 4 weeks
-    // update UI
-    hoursVal.textContent = hours;
-    rateVal.textContent = rate;
-    teamVal.textContent = team;
-    roiResult.textContent = formatNumber(monthly);
-  }
-
-  // wire inputs to realtime compute
-  [hoursInput, rateInput, teamInput].forEach(el=>{
-    el.addEventListener('input', computeROI);
-    el.addEventListener('change', computeROI);
-  });
-
-  // initial compute on load
-  computeROI();
-
-  // contact form mock
-  const form = document.getElementById('contactForm'); if(form){ form.addEventListener('submit', e=>{ e.preventDefault(); alert('Thanks — we received your request (mock).'); form.reset(); }); }
-
+  // Testimonials carousel behaviour (slower readable transition, pause on hover)
+  (function(){
+    const slides = document.getElementById('slides');
+    if(!slides) return;
+    const slideCount = slides.children.length;
+    let idx = 0;
+    const intervalMs = 8000; // slower so visitors can read
+    let timer = null;
+    function show(i){ slides.style.transform = `translateX(-${i*100}%)`; }
+    function start(){ timer = setInterval(()=>{ idx = (idx+1)%slideCount; show(idx); }, intervalMs); }
+    function stop(){ if(timer){ clearInterval(timer); timer=null; } }
+    // start autoplay
+    start();
+    // pause on hover
+    slides.addEventListener('mouseenter', stop);
+    slides.addEventListener('mouseleave', start);
+    // prev/next
+    const prev = document.getElementById('prevBtn'); const next = document.getElementById('nextBtn');
+    if(prev) prev.addEventListener('click', ()=>{ stop(); idx = (idx-1+slideCount)%slideCount; show(idx); start(); });
+    if(next) next.addEventListener('click', ()=>{ stop(); idx = (idx+1)%slideCount; show(idx); start(); });
+  })();
 </script>
 
 </body>
