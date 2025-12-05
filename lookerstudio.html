@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Secure Report Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at top left, #6366f1, #0f172a);
+      --card-bg: rgba(15, 23, 42, 0.82);
+      --accent: #6366f1;
+      --accent-soft: rgba(99, 102, 241, 0.15);
+      --border-subtle: rgba(148, 163, 184, 0.4);
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --danger: #f97373;
+      --success: #22c55e;
+      --shadow-soft: 0 22px 40px rgba(15, 23, 42, 0.7);
+      --radius-xl: 24px;
+      --radius-full: 999px;
+      --transition-fast: 180ms ease-out;
+      --transition-med: 260ms ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 1200px;
+      min-height: min(720px, 90vh);
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr);
+      border-radius: 32px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Shared layout between states */
+    .card {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+          to bottom right,
+          rgba(15, 23, 42, 0.95),
+          rgba(17, 24, 39, 0.96)
+        );
+      border-radius: 32px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      box-shadow: var(--shadow-soft);
+      padding: 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 900px) {
+      .card {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 20px;
+      }
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.16), transparent 55%),
+        radial-gradient(circle at 80% 0%, rgba(129, 140, 248, 0.16), transparent 50%),
+        radial-gradient(circle at 0% 100%, rgba(52, 211, 153, 0.12), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
+      display: contents;
+    }
+
+    /* Left side (branding / hero) */
+    .side-hero {
+      padding: 16px 18px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      backdrop-filter: blur(18px);
+      background: rgba(15, 23, 42, 0.8);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--success);
+      box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.25);
+    }
+
+    .brand-title {
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-pulse {
+      width: 28px;
+      height: 28px;
+      border-radius: 20px;
+      background: radial-gradient(
+        circle at 30% 30%,
+        #ffffff,
+        #a5b4fc 45%,
+        #4f46e5 75%
+      );
+      box-shadow:
+        0 0 0 5px rgba(129, 140, 248, 0.3),
+        0 18px 35px rgba(15, 23, 42, 0.8);
+    }
+
+    .brand-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 340px;
+    }
+
+    .hero-image {
+      margin-top: 10px;
+      border-radius: 20px;
+      background: radial-gradient(circle at top, #0f172a, #020617);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+      min-height: 180px;
+    }
+
+    .hero-image-main {
+      flex: 1;
+      border-radius: 14px;
+      background: linear-gradient(
+        135deg,
+        rgba(79, 70, 229, 0.1),
+        rgba(8, 47, 73, 0.2)
+      );
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      padding: 10px;
+    }
+
+    .hero-chart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .hero-pill {
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    .hero-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    .hero-bar {
+      flex: 1;
+      border-radius: 999px;
+      background: linear-gradient(to top, rgba(129, 140, 248, 0.2), #e5e7eb);
+      opacity: 0.9;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bar::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(129, 140, 248, 0.9),
+        rgba(56, 189, 248, 0.9)
+      );
+      transform-origin: bottom;
+      transform: scaleY(0.7);
+    }
+
+    .hero-bar:nth-child(2)::after {
+      transform: scaleY(0.45);
+    }
+    .hero-bar:nth-child(3)::after {
+      transform: scaleY(0.9);
+    }
+    .hero-bar:nth-child(4)::after {
+      transform: scaleY(0.6);
+    }
+    .hero-bar:nth-child(5)::after {
+      transform: scaleY(0.82);
+    }
+
+    .hero-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .hero-avatars {
+      display: flex;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: var(--radius-full);
+      background: radial-gradient(circle at 30% 30%, #facc15, #4f46e5);
+      border: 2px solid #020617;
+      margin-left: -8px;
+    }
+
+    .avatar:first-child {
+      margin-left: 0;
+    }
+
+    .side-footer {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .side-footer span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .spark-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    /* Right side - login + report */
+    .side-main {
+      padding: 18px 16px 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .top-row {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .mini-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #f9fafb, #a5b4fc);
+      border: 2px solid rgba(148, 163, 184, 0.4);
+    }
+
+    .content-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .panel-title {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .panel-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 380px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .pill {
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 11px;
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(14px);
+    }
+
+    /* LOGIN STATE */
+    #login-view {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      animation: fadeIn var(--transition-med);
+    }
+
+    .form {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 16px 16px 14px;
+      border: 1px solid var(--border-subtle);
+      backdrop-filter: blur(22px);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.9);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .input-shell {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.9);
+      transition: border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast),
+        transform 120ms ease-out;
+    }
+
+    .input-shell:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.7);
+      background: rgba(15, 23, 42, 0.98);
+      transform: translateY(-1px);
+    }
+
+    .input-prefix {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--text-main);
+      font-size: 13px;
+      font-family: inherit;
+    }
+
+    input::placeholder {
+      color: rgba(156, 163, 175, 0.7);
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .meta-row a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      opacity: 0.85;
+    }
+
+    .meta-row a:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .btn-primary {
+      width: 100%;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      border-radius: 16px;
+      padding: 9px 12px;
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: #f9fafb;
+      font-size: 14px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow:
+        0 15px 25px rgba(79, 70, 229, 0.45),
+        0 0 0 1px rgba(129, 140, 248, 0.7);
+      transition: transform 140ms ease-out, box-shadow 140ms ease-out,
+        filter var(--transition-fast);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow:
+        0 20px 32px rgba(79, 70, 229, 0.55),
+        0 0 0 1px rgba(129, 140, 248, 0.9);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow:
+        0 10px 18px rgba(79, 70, 229, 0.45),
+        0 0 0 1px rgba(129, 140, 248, 0.9);
+    }
+
+    .btn-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.3);
+    }
+
+    .hint-row {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-top: 2px;
+    }
+
+    .hint-pill {
+      padding: 4px 9px;
+      border-radius: var(--radius-full);
+      border: 1px dashed rgba(148, 163, 184, 0.65);
+      background: rgba(15, 23, 42, 0.75);
+    }
+
+    .status {
+      font-size: 11px;
+      min-height: 14px;
+      margin-top: 2px;
+    }
+
+    .status.error {
+      color: var(--danger);
+    }
+
+    .status.success {
+      color: var(--success);
+    }
+
+    /* REPORT VIEW */
+    #report-view {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      height: 100%;
+      animation: fadeInUp var(--transition-med);
+    }
+
+    .report-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .report-title {
+      font-weight: 500;
+    }
+
+    .report-tag {
+      padding: 3px 9px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(52, 211, 153, 0.4);
+      background: rgba(22, 163, 74, 0.18);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .report-frame-wrapper {
+      flex: 1;
+      min-height: 260px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: #020617;
+      box-shadow: 0 18px 34px rgba(15, 23, 42, 0.9);
+      position: relative;
+    }
+
+    .report-frame-wrapper::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        circle at top,
+        rgba(129, 140, 248, 0.06),
+        transparent
+      );
+      pointer-events: none;
+    }
+
+    .report-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .report-footer {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .chip-ghost {
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      border: 1px dashed rgba(148, 163, 184, 0.8);
+    }
+
+    @media (max-width: 900px) {
+      .report-frame-wrapper {
+        min-height: 320px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 12px;
+      }
+
+      .card {
+        border-radius: 24px;
+      }
+
+      .side-hero {
+        display: none; /* optionally hide hero column on very small screens */
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="card">
+      <div class="card-inner">
+        <!-- LEFT / HERO -->
+        <aside class="side-hero">
+          <div class="badge">
+            <span class="badge-dot"></span>
+            Secured access · Live insights
+          </div>
+
+          <div class="brand-title">
+            <div class="brand-pulse"></div>
+            Insight Portal
+          </div>
+          <p class="brand-subtitle">
+            Log in once to unlock your Google Looker Studio performance dashboard.
+          </p>
+
+          <!-- Placeholder image card -->
+          <section class="hero-image" aria-hidden="true">
+            <div class="hero-image-main">
+              <div class="hero-chart-header">
+                <span class="hero-pill">Traffic overview</span>
+                <span>Last 30 days</span>
+              </div>
+              <div class="hero-bars">
+                <div class="hero-bar" style="height: 62%"></div>
+                <div class="hero-bar" style="height: 40%"></div>
+                <div class="hero-bar" style="height: 78%"></div>
+                <div class="hero-bar" style="height: 55%"></div>
+                <div class="hero-bar" style="height: 72%"></div>
+              </div>
+              <div class="hero-footer">
+                <span>Avg. session: 4.2 mins</span>
+                <div class="hero-avatars">
+                  <div class="avatar"></div>
+                  <div class="avatar"></div>
+                  <div class="avatar"></div>
+                </div>
+              </div>
+            </div>
+            <div class="side-footer">
+              <span><span class="spark-dot"></span> Secure viewer</span>
+              <span>Looker Studio ready</span>
+            </div>
+          </section>
+        </aside>
+
+        <!-- RIGHT / LOGIN + REPORT -->
+        <main class="side-main">
+          <div class="top-row">
+            <span>Private workspace</span>
+            <div class="mini-avatar"></div>
+          </div>
+
+          <div class="content-panel">
+            <div>
+              <h1 class="panel-title">Sign in to view your report</h1>
+              <p class="panel-subtitle">
+                Access to this analytics report is restricted. Log in below to load the embedded dashboard.
+              </p>
+
+              <div class="pill-row">
+                <span class="pill">Inline access (no redirect)</span>
+                <span class="pill">Looker Studio embedded</span>
+                <span class="pill">Modern, sleek UI</span>
+              </div>
+            </div>
+
+            <!-- LOGIN VIEW -->
+            <section id="login-view">
+              <form id="login-form" class="form" autocomplete="off">
+                <div class="field-group">
+                  <label for="username">Email or username</label>
+                  <div class="input-shell">
+                    <span class="input-prefix">@</span>
+                    <input
+                      id="username"
+                      type="text"
+                      placeholder="you@example.com"
+                      autocomplete="off"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="field-group">
+                  <label for="password">Password</label>
+                  <div class="input-shell">
+                    <span class="input-prefix">•••</span>
+                    <input
+                      id="password"
+                      type="password"
+                      placeholder="Enter your password"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="meta-row">
+                  <label style="display:flex;align-items:center;gap:6px;">
+                    <input
+                      type="checkbox"
+                      id="remember"
+                      style="accent-color:#6366f1;width:12px;height:12px;"
+                    />
+                    <span>Keep me signed in</span>
+                  </label>
+                  <a href="#!" onclick="event.preventDefault();">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                  <span class="btn-dot"></span>
+                  Unlock report
+                </button>
+
+                <div id="status" class="status"></div>
+
+                <div class="hint-row">
+                  <span>Demo credentials:</span>
+                  <span class="hint-pill">
+                    user: <strong>demo</strong> · pass: <strong>password123</strong>
+                  </span>
+                </div>
+              </form>
+            </section>
+
+            <!-- REPORT VIEW (HIDDEN UNTIL LOGIN) -->
+            <section id="report-view">
+              <div class="report-header">
+                <div>
+                  <div class="report-title">Looker Studio – Analytics Report</div>
+                  <div style="font-size:11px;color:var(--text-muted);">
+                    You’re now authenticated. The report is loaded inline, no redirect.
+                  </div>
+                </div>
+                <span class="report-tag">Access granted</span>
+              </div>
+
+              <div class="report-frame-wrapper">
+                <iframe
+                  class="report-iframe"
+                  src="https://lookerstudio.google.com/reporting/ab793c5c-a730-484d-a590-6e5ac7e2b84c/page/0OhrE"
+                  allowfullscreen
+                  referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
+
+              <div class="report-footer">
+                <span>
+                  Connected to:
+                  <span class="chip-ghost">Google Looker Studio</span>
+                </span>
+                <span>Tip: Adjust height via CSS for your layout.</span>
+              </div>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const form = document.getElementById("login-form");
+      const statusEl = document.getElementById("status");
+      const loginView = document.getElementById("login-view");
+      const reportView = document.getElementById("report-view");
+      const usernameInput = document.getElementById("username");
+      const passwordInput = document.getElementById("password");
+
+      // Simple demo credentials – replace with a real auth check server-side.
+      const DEMO_USER = "demo";
+      const DEMO_PASS = "password123";
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value;
+
+        statusEl.textContent = "";
+        statusEl.className = "status";
+
+        if (!username || !password) {
+          statusEl.textContent = "Please enter both username and password.";
+          statusEl.classList.add("error");
+          return;
+        }
+
+        // Demo check
+        if (username === DEMO_USER && password === DEMO_PASS) {
+          statusEl.textContent = "Authenticated. Loading report…";
+          statusEl.classList.add("success");
+
+          setTimeout(() => {
+            loginView.style.display = "none";
+            reportView.style.display = "flex";
+          }, 400);
+        } else {
+          statusEl.textContent = "Invalid credentials. Try the demo user above.";
+          statusEl.classList.add("error");
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
