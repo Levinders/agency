@@ -29,11 +29,37 @@
 </script>
 
   <style>
-    :root{--ink:#0a0a0c;--muted:#6b7280;--accent:#111827;--primary:#4C8BF5}
+    :root{
+      --ink:#0a0a0c;
+      --muted:#6b7280;
+      --accent:#111827;
+      --primary:#4C8BF5;
+      --soft1:#f6f9ff;
+      --soft2:#f9f7ff;
+      --soft3:#f7fcff;
+    }
     body { font-family: Inter, -apple-system, system-ui; color:var(--ink); background:white; -webkit-font-smoothing:antialiased }
 
-    .hero-gradient { background: linear-gradient(180deg, #fafafa 0%, #ffffff 60%); }
+    .hero-gradient bg-[linear-gradient(180deg,var(--soft1)_0%,#ffffff_70%)] { background: linear-gradient(180deg, #fafafa 0%, #ffffff 60%); }
     .section-title { font-size:2.2rem; font-weight:500; letter-spacing:-0.01em }
+
+    /* Top navigation */
+    .top-nav { display:flex; align-items:center; justify-content:space-between; gap:16px }
+    .nav-left { display:flex; align-items:center; gap:14px }
+    .brand { font-weight:600; color:var(--primary) }
+    .nav-links { display:flex; gap:18px; align-items:center }
+    .nav-link { color:var(--muted); text-decoration:none; padding:6px 8px; border-radius:8px; font-weight:500 }
+    .nav-link:hover { color:var(--ink); background:linear-gradient(90deg, rgba(76,139,245,0.06), rgba(76,139,245,0.03)); }
+    .nav-cta { padding:8px 14px; border-radius:999px; background:var(--primary); color:white; font-weight:600; box-shadow:0 8px 24px rgba(76,139,245,0.10) }
+    .nav-toggle { display:none }
+    @media (max-width:768px){ .nav-links{ display:none } .nav-toggle{ display:inline-flex } }
+
+    /* Color swatches for quick preview */
+    .color-swatches{ display:flex; gap:10px; align-items:center; justify-content:flex-end }
+    .swatch{ width:36px; height:18px; border-radius:6px; box-shadow:0 6px 18px rgba(2,6,23,0.04); border:1px solid rgba(0,0,0,0.03) }
+    .swatch-label{ font-size:12px; color:var(--muted); margin-left:8px }
+
+    
     .section-sub { color:var(--muted) }
 
     .step-bubble { width:42px; height:42px; border-radius:50%; border:1px solid #e5e7eb; display:flex; align-items:center; justify-content:center; font-weight:600; background:white; flex-shrink:0 }
@@ -79,18 +105,37 @@
 
   <!-- NAV -->
   <header class="py-5">
-    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
-      <div class="flex items-center gap-4">
-        <div class="font-semibold text-lg">AutomateOps</div>
-        <div class="text-sm text-gray-400">Sheets · Apps Script · Integrations</div>
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="top-nav">
+        <div class="nav-left">
+          <div class="brand">AutomateOps</div>
+          <div class="text-sm text-gray-400 hidden md:block">Sheets · Apps Script · Integrations</div>
+        </div>
+
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a class="nav-link" href="/solutions">Solutions</a>
+          <a class="nav-link" href="/works">Works</a>
+          <a class="nav-link" href="/pricing">Pricing</a>
+          <a class="nav-link" href="/docs">Docs</a>
+          <a class="nav-link" href="/blog">Blog</a>
+          <a class="nav-link" href="#contact">Contact</a>
+          <a class="nav-cta" href="#contact">Book call</a>
+        </nav>
+
+        <button class="nav-toggle md:hidden" aria-label="Open menu">☰</button>
+
       </div>
-      <nav class="hidden md:flex items-center gap-8 text-sm text-gray-600">
-        <a href="#solutions" class="hover:text-[var(--ink)]">Solutions</a>
-        <a href="#process" class="hover:text-black">Process</a>
-        <a href="#results" class="hover:text-black">Case</a>
-        <a href="#testimonials" class="hover:text-black">Testimonials</a>
-        <a href="#contact" class="px-4 py-2 rounded-full bg-[var(--primary)] text-white">Book call</a>
-      </nav>
+
+      <!-- color swatches preview (for design) -->
+      <div class="mt-3 flex items-center justify-end gap-3">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="swatch" style="background:var(--primary)"></div>
+          <div class="swatch" style="background:var(--soft1)"></div>
+          <div class="swatch" style="background:var(--soft2)"></div>
+          <div class="swatch" style="background:var(--soft3)"></div>
+          <div class="swatch-label">Primary / Soft tones</div>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -150,7 +195,7 @@
   </section>
 
   <!-- SOLUTIONS (with polished header) -->
-  <section id="solutions" class="py-20">
+  <section id="solutions" class="py-20 bg-[linear-gradient(180deg,var(--soft3)_0%,#ffffff_90%)]"" class="py-20">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center max-w-2xl mx-auto">
         <h2 class="section-title">Solutions tailored for modern operations</h2>
@@ -178,7 +223,7 @@
   </section>
 
   <!-- WORKS / BUILT SOLUTIONS -->
-  <section id="works" class="py-20 bg-white border-t border-gray-100">
+  <section id="works" class="py-20 bg-[linear-gradient(180deg,#ffffff_0%,var(--soft1)_100%)] border-t border-gray-100"" class="py-20 bg-white border-t border-gray-100">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center max-w-2xl mx-auto mb-8">
         <h2 class="section-title">Select builds we've delivered</h2>
@@ -297,7 +342,7 @@
   <!-- PROCESS (slanted/adjacent alternating, improved) -->
   <div class="mt-56 sm:mt-64 md:mt-20"></div>
 
-  <section id="process" class="py-20 bg-gray-50 border-t border-gray-100">
+  <section id="process" class="py-20 bg-[linear-gradient(180deg,var(--soft2)_0%,#ffffff_100%)] border-t border-gray-100"" class="py-20 bg-gray-50 border-t border-gray-100">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center max-w-2xl mx-auto">
         <h2 class="section-title">A simple 4‑step process</h2>
@@ -355,7 +400,7 @@
   </section>
 
   <!-- CASE SNAPSHOT -->
-  <section id="results" class="py-16">
+  <section id="results" class="py-16 bg-[linear-gradient(180deg,#ffffff_0%,var(--soft3)_100%)]"" class="py-16">
     <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-6">
       <div class="p-6 rounded-lg border border-gray-100">
         <div class="text-sm section-sub">Case Snapshot</div>
@@ -376,7 +421,7 @@
   </section>
 
   <!-- ROI (quick calculator) -->
-  <section id="roi" class="py-16 bg-gray-50 border-t border-gray-100">
+  <section id="roi" class="py-16 bg-[linear-gradient(180deg,var(--soft1)_0%,#ffffff_100%)] border-t border-gray-100"" class="py-16 bg-gray-50 border-t border-gray-100">
     <div class="max-w-4xl mx-auto px-6">
       <div class="p-8 rounded-xl border border-gray-100 bg-white">
         <div class="grid md:grid-cols-2 gap-6 items-center">
@@ -408,63 +453,40 @@
       <h2 class="section-title">What our clients say</h2>
       <p class="section-sub mt-2">Real feedback from real operators.</p>
 
-      <div class="mt-8 carousel" aria-roledescription="carousel">
-        <div class="slides" id="slides">
-          <div class="slide">
-            <div class="testimonial-card text-left max-w-3xl mx-auto">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center font-semibold">SM</div>
-                <div>
-                  <div class="font-medium">Sarah Mitchell</div>
-                  <div class="text-xs section-sub">Ops Manager, TechFlow</div>
-                </div>
-              </div>
-              <div class="flex items-center gap-1 mb-3">
-                <div class="text-xs section-sub ml-3">4.9</div>
-              </div>
-              <blockquote class="text-gray-800">“They cut our reporting time from 8 hours to 15 minutes. Our team now focuses on strategy, not busywork.”</blockquote>
-            </div>
-          </div>
+      <div class="mt-8" style="max-width:56rem;margin:0 auto;">
+        <style>
+          .testimonial-card-centered{ border:1px solid #f3f4f6; padding:28px; border-radius:16px; background:white; box-shadow:0 20px 60px rgba(76,139,245,0.08); }
+          .testimonial-quote{ font-size:1.25rem; font-weight:500; margin-bottom:1.25rem; line-height:1.6 }
+          .testimonial-meta{ display:flex; align-items:center; gap:12px }
+          .testimonial-avatar{ width:56px; height:56px; border-radius:50%; background:#f1f5f9; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--primary) }
+          .testimonial-dots{ display:flex; gap:8px; justify-content:center; margin-top:18px }
+          .testimonial-dot{ width:10px; height:10px; border-radius:999px; background: rgba(76,139,245,0.15); cursor:pointer; transition: all .25s ease }
+          .testimonial-dot.active{ width:36px; background:var(--primary); border-radius:999px }
+        </style>
 
-          <div class="slide">
-            <div class="testimonial-card text-left max-w-3xl mx-auto">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center font-semibold">MC</div>
-                <div>
-                  <div class="font-medium">Marcus Chen</div>
-                  <div class="text-xs section-sub">Sales Director, GrowthPoint</div>
-                </div>
-              </div>
-              <div class="flex items-center gap-1 mb-3">
-                <div class="text-xs section-sub ml-3">4.8</div>
-              </div>
-              <blockquote class="text-gray-800">“Custom Sheets CRM removed manual busywork. Pipeline accuracy improved and reps are happier.”</blockquote>
-            </div>
-          </div>
+        <div id="testimonialContent" class="testimonial-card-centered">
+          <div style="font-size:3rem;color:rgba(76,139,245,0.12);margin-bottom:8px">“</div>
+          <p id="testimonialQuote" class="testimonial-quote">AutomateOps cut our reporting time from 8 hours to just 15 minutes. Our team now focuses on strategy instead of busywork.</p>
 
-          <div class="slide">
-            <div class="testimonial-card text-left max-w-3xl mx-auto">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center font-semibold">ER</div>
-                <div>
-                  <div class="font-medium">Emily Rodriguez</div>
-                  <div class="text-xs section-sub">Finance Lead, Nexus</div>
-                </div>
-              </div>
-              <div class="flex items-center gap-1 mb-3">
-                <div class="text-xs section-sub ml-3">4.9</div>
-              </div>
-              <blockquote class="text-gray-800">“We eliminated 90% of manual errors and gained full visibility over reporting.”</blockquote>
+          <div class="testimonial-meta">
+            <div id="testimonialInitials" class="testimonial-avatar">SM</div>
+            <div style="flex:1;text-align:left">
+              <div id="testimonialName" style="font-weight:700">Sarah Mitchell</div>
+              <div id="testimonialRole" style="font-size:0.9rem;color:var(--muted)">Operations Manager, TechFlow</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px">
+              <div style="color:var(--primary);">★★★★★</div>
+              <div id="testimonialRating" style="font-weight:600;color:var(--muted)">4.9</div>
             </div>
           </div>
         </div>
 
-        <div class="carousel-controls" aria-hidden>
-          <button id="prevBtn" aria-label="Previous">◀</button>
-          <button id="nextBtn" aria-label="Next">▶</button>
+        <div class="testimonial-dots" id="testimonialDots">
+          <button class="testimonial-dot active" data-testimonial="0" aria-label="Show testimonial 1"></button>
+          <button class="testimonial-dot" data-testimonial="1" aria-label="Show testimonial 2"></button>
+          <button class="testimonial-dot" data-testimonial="2" aria-label="Show testimonial 3"></button>
         </div>
       </div>
-
     </div>
   </section>
 
@@ -515,7 +537,7 @@
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="py-20 bg-gray-50 border-t border-gray-100">
+  <section id="contact" class="py-20 bg-[linear-gradient(180deg,var(--soft2)_0%,#ffffff_100%)] border-t border-gray-100"" class="py-20 bg-gray-50 border-t border-gray-100">
     <div class="max-w-4xl mx-auto px-6 text-center">
       <h2 class="section-title">Get started</h2>
       <p class="section-sub mt-2">Free 30-minute discovery — no commitment</p>
@@ -627,26 +649,51 @@
     }
   })();
 
-  // Testimonials carousel behaviour (slower readable transition, pause on hover)
+  // Testimonials: replace slide carousel with single-card readable carousel
   (function(){
-    const slides = document.getElementById('slides');
-    if(!slides) return;
-    const slideCount = slides.children.length;
-    let idx = 0;
-    const intervalMs = 8000; // slower so visitors can read
-    let timer = null;
-    function show(i){ slides.style.transform = `translateX(-${i*100}%)`; }
-    function start(){ timer = setInterval(()=>{ idx = (idx+1)%slideCount; show(idx); }, intervalMs); }
-    function stop(){ if(timer){ clearInterval(timer); timer=null; } }
-    // start autoplay
-    start();
+    const testimonials = [
+      { quote: 'AutomateOps cut our weekly reporting time from 8 hours to just 15 minutes. Our team now focuses on strategy instead of busywork.', name: 'Sarah Mitchell', role: 'Operations Manager, TechFlow', initials: 'SM', rating: 4.9 },
+      { quote: 'The custom Sheets CRM eliminated all the manual data entry that was killing our productivity. Pipeline accuracy improved by 40%.', name: 'Marcus Chen', role: 'Sales Director, GrowthPoint', initials: 'MC', rating: 4.8 },
+      { quote: 'We eliminated 90% of manual errors in our reconciliation process. The automated dashboards give us full visibility.', name: 'Emily Rodriguez', role: 'Finance Lead, Nexus Corp', initials: 'ER', rating: 4.9 }
+    ];
+
+    let currentTestimonial = 0;
+    const quoteEl = document.getElementById('testimonialQuote');
+    const nameEl = document.getElementById('testimonialName');
+    const roleEl = document.getElementById('testimonialRole');
+    const initialsEl = document.getElementById('testimonialInitials');
+    const ratingEl = document.getElementById('testimonialRating');
+    const dots = Array.from(document.querySelectorAll('.testimonial-dot'));
+
+    function showTestimonial(i){
+      const t = testimonials[i];
+      // gentle transition
+      const card = document.getElementById('testimonialContent');
+      card.style.opacity = 0; card.style.transform = 'translateY(6px)';
+      setTimeout(()=>{
+        quoteEl.textContent = t.quote;
+        nameEl.textContent = t.name;
+        roleEl.textContent = t.role;
+        initialsEl.textContent = t.initials;
+        ratingEl.textContent = t.rating;
+        dots.forEach((d, idx)=> d.classList.toggle('active', idx===i));
+        card.style.opacity = 1; card.style.transform = 'translateY(0)';
+      }, 220);
+    }
+
+    // dot clicks
+    dots.forEach((dot, idx)=> dot.addEventListener('click', ()=>{ currentTestimonial = idx; showTestimonial(idx); }));
+
+    // auto rotate
+    let tmr = setInterval(()=>{ currentTestimonial = (currentTestimonial+1) % testimonials.length; showTestimonial(currentTestimonial); }, 7000);
+
     // pause on hover
-    slides.addEventListener('mouseenter', stop);
-    slides.addEventListener('mouseleave', start);
-    // prev/next
-    const prev = document.getElementById('prevBtn'); const next = document.getElementById('nextBtn');
-    if(prev) prev.addEventListener('click', ()=>{ stop(); idx = (idx-1+slideCount)%slideCount; show(idx); start(); });
-    if(next) next.addEventListener('click', ()=>{ stop(); idx = (idx+1)%slideCount; show(idx); start(); });
+    const cardWrap = document.getElementById('testimonialContent');
+    cardWrap.addEventListener('mouseenter', ()=> clearInterval(tmr));
+    cardWrap.addEventListener('mouseleave', ()=> { tmr = setInterval(()=>{ currentTestimonial = (currentTestimonial+1) % testimonials.length; showTestimonial(currentTestimonial); }, 7000); });
+
+    // init
+    showTestimonial(0);
   })();
 </script>
 
