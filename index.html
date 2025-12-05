@@ -49,6 +49,7 @@
     .faq-q { display:flex; align-items:center; justify-content:space-between; width:100%; background:transparent; border:0; padding:0; font-weight:500 }
     .faq-a { color:var(--muted); margin-top:8px; font-size:0.95rem }
 
+    
     .cta-footer { background:#0a0a0c; color:white; border-radius:14px }
 
     /* Carousel styles */
@@ -179,49 +180,123 @@
   <!-- WORKS / BUILT SOLUTIONS -->
   <section id="works" class="py-20 bg-white border-t border-gray-100">
     <div class="max-w-6xl mx-auto px-6">
-      <div class="text-center max-w-2xl mx-auto mb-12">
+      <div class="text-center max-w-2xl mx-auto mb-8">
         <h2 class="section-title">Select builds we've delivered</h2>
-        <p class="section-sub mt-2">Production‑ready automations built on Google Sheets + Apps Script — fast, reliable, scalable.</p>
+        <p class="section-sub mt-2">Production‑ready automations built on Google Sheets + Apps Script — practical, production-grade and configurable.</p>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-10">
-        <!-- Bulk Email + CRM -->
-        <div class="p-6 rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-xl transition-all">
-          <div class="w-full h-40 bg-gray-100 rounded-lg mb-4 flex items-center justify-center text-gray-400 text-sm">Video / Image Placeholder</div>
-          <h3 class="text-lg font-medium">Bulk Email Sender + Multi‑Inbox CRM</h3>
-          <p class="section-sub mt-2 text-sm">Send personalized emails at scale, track opens/replies across inboxes, and manage leads directly inside Sheets.</p>
-          <div class="mt-4 flex gap-3 text-sm">
-            <a href="#" class="px-4 py-2 rounded-full bg-[var(--primary)] text-white">View demo</a>
-            <a href="#contact" class="px-4 py-2 rounded-full border border-gray-300">Request this</a>
-          </div>
+      <!-- Tabbed showcase -->
+      <div class="max-w-5xl mx-auto">
+        <div class="flex gap-3 justify-center mb-6" role="tablist" aria-label="Showcase tabs">
+          <button class="work-tab px-4 py-2 rounded-md" data-target="panel-1" aria-selected="true">Bulk Email</button>
+          <button class="work-tab px-4 py-2 rounded-md" data-target="panel-2" aria-selected="false">Payment Slip</button>
+          <button class="work-tab px-4 py-2 rounded-md" data-target="panel-3" aria-selected="false">Cleaning System</button>
         </div>
 
-        <!-- Payment Slip Generator -->
-        <div class="p-6 rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-xl transition-all">
-          <div class="w-full h-40 bg-gray-100 rounded-lg mb-4 flex items-center justify-center text-gray-400 text-sm">Video / Image Placeholder</div>
-          <h3 class="text-lg font-medium">Auto Payment‑Slip Generator</h3>
-          <p class="section-sub mt-2 text-sm">Batch-generate PDFs from Sheets rows, email customers automatically, and maintain a full audit history.</p>
-          <div class="mt-4 flex gap-3 text-sm">
-            <a href="#" class="px-4 py-2 rounded-full bg-[var(--primary)] text-white">View demo</a>
-            <a href="#contact" class="px-4 py-2 rounded-full border border-gray-300">Request this</a>
-          </div>
-        </div>
+        <div class="relative">
+          <!-- panels container with fixed height to avoid layout shift -->
+          <div class="panels" style="min-height:260px; position:relative;">
 
-        <!-- Cleaning Business System -->
-        <div class="p-6 rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-xl transition-all">
-          <div class="w-full h-40 bg-gray-100 rounded-lg mb-4 flex items-center justify-center text-gray-400 text-sm">Video / Image Placeholder</div>
-          <h3 class="text-lg font-medium">Cleaning Business System</h3>
-          <p class="section-sub mt-2 text-sm">Bookings, team scheduling, invoicing, automations and client comms — a full operational suite in Sheets.</p>
-          <div class="mt-4 flex gap-3 text-sm">
-            <a href="#" class="px-4 py-2 rounded-full bg-[var(--primary)] text-white">View demo</a>
-            <a href="#contact" class="px-4 py-2 rounded-full border border-gray-300">Request this</a>
+            <article id="panel-1" class="work-panel absolute inset-0 opacity-100 scale-100" role="tabpanel" aria-labelledby="panel-1" data-name="Bulk Email">
+              <div class="grid md:grid-cols-2 gap-6 items-center">
+                <div class="rounded-lg overflow-hidden tab-thumb" style="min-height:240px; background:#f8fafc; display:flex;align-items:center;justify-content:center">Video / Image Placeholder</div>
+                <div>
+                  <h3 class="text-2xl font-semibold">Bulk Email Sender + Multi‑Inbox CRM</h3>
+                  <p class="section-sub mt-3">Personalized mass-mailing from Sheets, multi-inbox tracking, unified lead views and reply tracking — ideal for small sales teams and outreach programs.</p>
+                  <ul class="mt-4 text-sm section-sub space-y-2">
+                    <li>• Personalized templates with column mapping</li>
+                    <li>• Multi-inbox open & reply tracking</li>
+                    <li>• CRM views, stage automation & simple ownership rules</li>
+                  </ul>
+                  <div class="mt-6 flex gap-3">
+                    <button class="px-4 py-2 rounded-full bg-[var(--primary)] text-white" onclick="openDemoPanel('https://www.youtube.com/embed/dQw4w9WgXcQ')">View demo</button>
+                    <a href="#contact" class="px-4 py-2 rounded-full border border-gray-200">Request this</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article id="panel-2" class="work-panel absolute inset-0 opacity-0 scale-95 pointer-events-none" role="tabpanel" aria-labelledby="panel-2" hidden data-name="Payment Slip">
+              <div class="grid md:grid-cols-2 gap-6 items-center">
+                <div class="rounded-lg overflow-hidden tab-thumb" style="min-height:240px; background:#f8fafc; display:flex;align-items:center;justify-content:center">Video / Image Placeholder</div>
+                <div>
+                  <h3 class="text-2xl font-semibold">Auto Payment‑Slip Generator</h3>
+                  <p class="section-sub mt-3">Transform rows into branded payment slips, batch-generate PDFs and email receipts automatically. Fully auditable, with versioned templates.</p>
+                  <ul class="mt-4 text-sm section-sub space-y-2">
+                    <li>• Custom templates exported to PDF</li>
+                    <li>• Batch generation + scheduled delivery</li>
+                    <li>• Audit log & retry queue for failed sends</li>
+                  </ul>
+                  <div class="mt-6 flex gap-3">
+                    <button class="px-4 py-2 rounded-full bg-[var(--primary)] text-white" onclick="openDemoPanel('https://www.youtube.com/embed/3fumBcKC6RE')">View demo</button>
+                    <a href="#contact" class="px-4 py-2 rounded-full border border-gray-200">Request this</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article id="panel-3" class="work-panel absolute inset-0 opacity-0 scale-95 pointer-events-none" role="tabpanel" aria-labelledby="panel-3" hidden data-name="Cleaning System">
+              <div class="grid md:grid-cols-2 gap-6 items-center">
+                <div class="rounded-lg overflow-hidden tab-thumb" style="min-height:240px; background:#f8fafc; display:flex;align-items:center;justify-content:center">Video / Image Placeholder</div>
+                <div>
+                  <h3 class="text-2xl font-semibold">Cleaning Business System</h3>
+                  <p class="section-sub mt-3">Bookings, scheduling, invoicing and client communications — a full operational kit designed for Airbnb, office and home cleaning businesses.</p>
+                  <ul class="mt-4 text-sm section-sub space-y-2">
+                    <li>• Booking imports & automated assignment</li>
+                    <li>• Team scheduling + notifications</li>
+                    <li>• Invoice generation & payment tracking</li>
+                  </ul>
+                  <div class="mt-6 flex gap-3">
+                    <button class="px-4 py-2 rounded-full bg-[var(--primary)] text-white" onclick="openDemoPanel('https://www.youtube.com/embed/tVj0ZTS4WF4')">View demo</button>
+                    <a href="#contact" class="px-4 py-2 rounded-full border border-gray-200">Request this</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
           </div>
         </div>
       </div>
     </div>
+
+    <style>
+      /* transitions for panels */
+      .work-panel{ transition:opacity .6s cubic-bezier(.2,.9,.25,1), transform .6s cubic-bezier(.2,.9,.25,1); }
+      .work-panel.opacity-0{ opacity:0 } .work-panel.opacity-100{ opacity:1 }
+      .work-panel.scale-95{ transform:translateY(8px) scale(.98) }
+      .work-panel.scale-100{ transform:translateY(0) scale(1) }
+    </style>
+
+    <script>
+      (function(){
+        const tabs = document.querySelectorAll('#works .work-tab');
+        const panels = document.querySelectorAll('#works .work-panel');
+        function activate(targetId){
+          panels.forEach(p=>{
+            if(p.id===targetId){
+              p.hidden=false; p.classList.remove('opacity-0','scale-95','pointer-events-none'); p.classList.add('opacity-100','scale-100');
+            } else {
+              p.classList.remove('opacity-100','scale-100'); p.classList.add('opacity-0','scale-95','pointer-events-none');
+              // hide after transition to avoid keyboard focus issues
+              setTimeout(()=>{ if(p.id!==targetId) p.hidden=true; }, 650);
+            }
+          });
+          tabs.forEach(t=> t.setAttribute('aria-selected', t.dataset.target===targetId ));
+        }
+        tabs.forEach(t=> t.addEventListener('click', ()=> activate(t.dataset.target)));
+        // keyboard nav
+        tabs.forEach((t,i)=> t.addEventListener('keydown', e=>{ if(e.key==='ArrowRight') tabs[(i+1)%tabs.length].focus(); if(e.key==='ArrowLeft') tabs[(i-1+tabs.length)%tabs.length].focus(); }));
+        // init
+        activate('panel-1');
+      })();
+    </script>
   </section>
 
+  <!-- PROCESS
+
   <!-- PROCESS (slanted/adjacent alternating, improved) -->
+  <div class="mt-20"></div>
+
   <section id="process" class="py-20 bg-gray-50 border-t border-gray-100">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center max-w-2xl mx-auto">
