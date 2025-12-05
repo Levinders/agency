@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutomateOps — Premium Automation for Modern Teams</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    :root {
+      --primary: 245 70% 65%;
+      --primary-foreground: 0 0% 100%;
+      --background: 250 100% 99%;
+      --foreground: 240 8% 20%;
+      --muted: 245 25% 96%;
+      --muted-foreground: 240 4% 46%;
+      --card: 0 0% 100%;
+      --card-foreground: 240 8% 20%;
+      --border: 245 20% 92%;
+      --accent: 245 60% 75%;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .gradient-mesh {
+      background: 
+        radial-gradient(at 20% 30%, hsl(245 70% 65% / 0.08) 0px, transparent 50%),
+        radial-gradient(at 80% 20%, hsl(245 60% 75% / 0.08) 0px, transparent 50%),
+        radial-gradient(at 60% 80%, hsl(245 50% 85% / 0.08) 0px, transparent 50%),
+        hsl(var(--background));
+    }
+
+    .gradient-primary {
+      background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    }
+
+    .text-primary { color: hsl(var(--primary)); }
+    .bg-primary { background: hsl(var(--primary)); }
+    .bg-card { background: hsl(var(--card)); }
+    .text-muted-foreground { color: hsl(var(--muted-foreground)); }
+    .border-border { border-color: hsl(var(--border)); }
+    .bg-muted { background: hsl(var(--muted)); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+      color: white;
+      box-shadow: 0 4px 16px hsl(var(--primary) / 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px hsl(var(--primary) / 0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid hsl(var(--border));
+      color: hsl(var(--foreground));
+    }
+
+    .btn-outline:hover {
+      border-color: hsl(var(--primary));
+      background: hsl(var(--primary) / 0.05);
+    }
+
+    .card {
+      background: hsl(var(--card));
+      border: 1px solid hsl(var(--border));
+      border-radius: 1rem;
+      padding: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 12px 40px hsl(var(--primary) / 0.1);
+      transform: translateY(-4px);
+    }
+
+    .nav-link {
+      color: hsl(var(--muted-foreground));
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: hsl(var(--foreground));
+    }
+
+    .tool-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--background));
+      transition: all 0.3s ease;
+    }
+
+    .tool-badge:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 8px 24px hsl(var(--primary) / 0.15);
+      border-color: hsl(var(--primary) / 0.3);
+    }
+
+    .tool-badge img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+
+    .solution-card {
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .solution-card:hover {
+      border-color: hsl(var(--primary) / 0.2);
+      box-shadow: 0 20px 60px hsl(var(--primary) / 0.15);
+      transform: translateY(-8px);
+    }
+
+    .process-card {
+      position: relative;
+      background: hsl(var(--card) / 0.8);
+      backdrop-filter: blur(10px);
+      border: 2px solid hsl(var(--border));
+      border-radius: 1rem;
+      padding: 1.5rem;
+      transition: all 0.5s ease;
+    }
+
+    .process-card:hover {
+      border-color: hsl(var(--primary) / 0.4);
+      box-shadow: 0 20px 60px hsl(var(--primary) / 0.2);
+      transform: translateY(-8px);
+    }
+
+    .process-number {
+      position: absolute;
+      top: -1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      background: hsl(var(--primary));
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.125rem;
+      box-shadow: 0 4px 12px hsl(var(--primary) / 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .process-card:hover .process-number {
+      transform: translateX(-50%) scale(1.1);
+    }
+
+    .process-icon {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 1rem;
+      background: hsl(var(--primary) / 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: hsl(var(--primary));
+      margin: 2rem auto 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .process-card:hover .process-icon {
+      background: hsl(var(--primary));
+      color: white;
+    }
+
+    .faq-item {
+      border: 1px solid hsl(var(--border));
+      border-radius: 0.75rem;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 1.5rem;
+      background: transparent;
+      border: none;
+      text-align: left;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.3s ease;
+    }
+
+    .faq-question:hover {
+      background: hsl(var(--muted) / 0.5);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding: 0 1.5rem;
+      color: hsl(var(--muted-foreground));
+    }
+
+    .faq-answer.open {
+      max-height: 500px;
+      padding: 0 1.5rem 1.5rem;
+    }
+
+    .testimonial-dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: hsl(var(--primary) / 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .testimonial-dot.active {
+      width: 2rem;
+      background: hsl(var(--primary));
+    }
+
+    .work-tab {
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid hsl(var(--border));
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .work-tab.active {
+      background: hsl(var(--primary));
+      color: white;
+      border-color: hsl(var(--primary));
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+      color: white;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 16px hsl(var(--primary) / 0.25);
+      z-index: 100;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .back-to-top:hover {
+      transform: scale(1.1);
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid hsl(var(--border));
+      border-radius: 0.5rem;
+      background: hsl(var(--background));
+      font-family: inherit;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: hsl(var(--primary));
+      box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: hsl(var(--card));
+      border-top: 1px solid hsl(var(--border));
+      padding: 1rem 1.5rem;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    @media (max-width: 768px) {
+      .hide-mobile { display: none; }
+    }
+
+    @media (min-width: 769px) {
+      .hide-desktop { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header style="position: sticky; top: 0; z-index: 50; background: hsl(var(--background) / 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid hsl(var(--border) / 0.5); padding: 1rem 0;">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <div style="width: 2.5rem; height: 2.5rem; border-radius: 0.75rem; background: hsl(var(--primary)); display: flex; align-items: center; justify-content: center; color: white;">
+          ✨
+        </div>
+        <div>
+          <div style="font-weight: 600; font-size: 1.125rem;">AutomateOps</div>
+          <div style="font-size: 0.75rem; color: hsl(var(--muted-foreground));" class="hide-mobile">Premium Automation Platform</div>
+        </div>
+      </div>
+      
+      <nav style="display: flex; align-items: center; gap: 1.5rem; font-size: 0.875rem;" class="hide-mobile">
+        <a href="#solutions" class="nav-link">Solutions</a>
+        <a href="#works" class="nav-link">Our Work</a>
+        <a href="#process" class="nav-link">Process</a>
+        <a href="#roi" class="nav-link">ROI Calculator</a>
+        <a href="#contact" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Book a Call</a>
+      </nav>
+
+      <button id="mobileMenuBtn" class="hide-desktop" style="background: none; border: none; cursor: pointer; font-size: 1.5rem;">☰</button>
+    </div>
+
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="#solutions" class="nav-link">Solutions</a>
+      <a href="#works" class="nav-link">Our Work</a>
+      <a href="#process" class="nav-link">Process</a>
+      <a href="#roi" class="nav-link">ROI Calculator</a>
+      <a href="#contact" class="btn btn-primary" style="width: 100%;">Book a Call</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="gradient-mesh" style="padding: 5rem 0 4rem;">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;">
+      <div style="display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center;">
+        <div style="grid-column: 1/-1;">
+          <div style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 9999px; background: hsl(var(--primary) / 0.1); color: hsl(var(--primary)); font-size: 0.875rem; font-weight: 500; margin-bottom: 1.5rem;">
+            ✨ Trusted by 50+ growing businesses
+          </div>
+          
+          <h1 style="font-size: clamp(2.5rem, 5vw, 3.75rem); font-weight: 700; line-height: 1.1; margin-bottom: 1.5rem;">
+            Stop drowning in spreadsheets. <span class="text-primary">Start automating.</span>
+          </h1>
+          
+          <p style="font-size: 1.25rem; color: hsl(var(--muted-foreground)); margin-bottom: 2rem; max-width: 40rem; line-height: 1.7;">
+            We transform your messy workflows into elegant automation—using the Google tools you already know. Get your pilot running in one week, with measurable ROI from day one.
+          </p>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem;">
+            <a href="#contact" class="btn btn-primary">Start Your Free Pilot →</a>
+            <a href="#roi" class="btn btn-outline">Calculate Your ROI</a>
+          </div>
+
+          <!-- Stats -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 2rem; max-width: 600px;">
+            <div style="text-align: center;">
+              <div class="stat-number text-primary" style="font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem;" data-target="20">0+</div>
+              <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Hours saved weekly</div>
+            </div>
+            <div style="text-align: center;">
+              <div class="stat-number text-primary" style="font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem;" data-target="90">0%</div>
+              <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Fewer errors</div>
+            </div>
+            <div style="text-align: center;">
+              <div class="stat-number text-primary" style="font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem;" data-target="50">0+</div>
+              <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Happy clients</div>
+            </div>
+            <div style="text-align: center;">
+              <div style="font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem;" class="text-primary">1 week</div>
+              <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">To first results</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tools Section -->
+  <section style="padding: 3rem 0; border-top: 1px solid hsl(var(--border) / 0.5); border-bottom: 1px solid hsl(var(--border) / 0.5); background: hsl(var(--card));">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;">
+      <p style="text-align: center; font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 2rem;">Built on the tools you already trust</p>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+        <div class="tool-badge">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Google_Sheets_logo_%282014-2020%29.svg" alt="Google Sheets">
+          <span style="font-size: 0.875rem; font-weight: 500;">Google Sheets</span>
+        </div>
+        <div class="tool-badge">
+          <img src="https://www.gstatic.com/images/branding/product/2x/apps_script_48dp.png" alt="Apps Script">
+          <span style="font-size: 0.875rem; font-weight: 500;">Apps Script</span>
+        </div>
+        <div class="tool-badge">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail">
+          <span style="font-size: 0.875rem; font-weight: 500;">Gmail</span>
+        </div>
+        <div class="tool-badge">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg" alt="Calendar">
+          <span style="font-size: 0.875rem; font-weight: 500;">Calendar</span>
+        </div>
+        <div class="tool-badge">
+          <img src="https://www.gstatic.com/images/branding/product/2x/drive_2020q4_48dp.png" alt="Drive">
+          <span style="font-size: 0.875rem; font-weight: 500;">Drive</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions Section -->
+  <section id="solutions" style="padding: 6rem 0; background: hsl(var(--muted) / 0.3);">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;">
+      <div style="text-align: center; max-width: 48rem; margin: 0 auto 4rem;">
+        <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
+          Automation that actually <span class="text-primary">works for you</span>
+        </h2>
+        <p style="font-size: 1.125rem; color: hsl(var(--muted-foreground));">
+          No more wrestling with complex tools. We build custom automation that fits your workflow perfectly.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+        <div class="card solution-card">
+          <div style="width: 3.5rem; height: 3.5rem; border-radius: 1rem; background: hsl(var(--primary) / 0.1); display: flex; align-items: center; justify-content: center; color: hsl(var(--primary)); margin-bottom: 1.5rem; font-size: 1.5rem;">
+            ⚡
+          </div>
+          <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;">Operations Automation</h3>
+          <p style="color: hsl(var(--muted-foreground)); line-height: 1.7;">
+            Turn repetitive tasks into automatic workflows. Scheduled reports, smart alerts, and audit trails that keep your operations running smoothly.
+          </p>
+        </div>
+
+        <div class="card solution-card">
+          <div style="width: 3.5rem; height: 3.5rem; border-radius: 1rem; background: hsl(var(--primary) / 0.1); display: flex; align-items: center; justify-content: center; color: hsl(var(--primary)); margin-bottom: 1.5rem; font-size: 1.5rem;">
+            👥
+          </div>
+          <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;">Custom CRM in Sheets</h3>
+          <p style="color: hsl(var(--muted-foreground)); line-height: 1.7;">
+            Get a CRM that your team will actually use. Built in Sheets with validation rules, custom views, and automations that eliminate data entry.
+          </p>
+        </div>
+
+        <div class="card solution-card">
+          <div style="width: 3.5rem; height: 3.5rem; border-radius: 1rem; background: hsl(var(--primary) / 0.1); display: flex; align-items: center; justify-content: center; color: hsl(var(--primary)); margin-bottom: 1.5rem; font-size: 1.5rem;">
+            📊
+          </div>
+          <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;">Smart Dashboards</h3>
+          <p style="color: hsl(var(--muted-foreground)); line-height: 1.7;">
+            See what matters, when it matters. Real-time dashboards, API integrations, and automated syncs that give you full visibility.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Works Section -->
+  <section id="works" style="padding: 6rem 0;">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;">
+      <div style="text-align: center; max-width: 48rem; margin: 0 auto 3rem;">
+        <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
+          Real solutions we've <span class="text-primary">built for clients</span>
+        </h2>
+        <p style="font-size: 1.125rem; color: hsl(var(--muted-foreground));">
+          Production-ready automations that teams use every day
+        </p>
+      </div>
+
+      <div style="display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 2rem; flex-wrap: wrap;">
+        <button class="work-tab active" data-work="0">Bulk Email</button>
+        <button class="work-tab" data-work="1">Payment Slip</button>
+        <button class="work-tab" data-work="2">Cleaning System</button>
+      </div>
+
+      <div id="workContent" class="card" style="border: 2px solid hsl(var(--primary) / 0.1);">
+        <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+          <div style="display: flex; align-items: center; justify-content: center; background: hsl(var(--muted) / 0.5); border-radius: 1rem; padding: 4rem; min-height: 200px;">
+            <div style="text-align: center;">
+              <div style="width: 5rem; height: 5rem; border-radius: 1rem; background: hsl(var(--primary) / 0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2.5rem;">
+                ✨
+              </div>
+              <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Interactive demo available</p>
+            </div>
+          </div>
+          
+          <div>
+            <h3 id="workTitle" style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">Bulk Email Sender + Multi-Inbox CRM</h3>
+            <p id="workDesc" style="color: hsl(var(--muted-foreground)); margin-bottom: 1.5rem; line-height: 1.7;">
+              Transform your outreach with personalized mass-mailing from Sheets. Track opens, replies, and manage leads across multiple inboxes.
+            </p>
+            
+            <div id="workFeatures" style="margin-bottom: 1.5rem;">
+              <div style="display: flex; align-items: start; gap: 0.75rem; margin-bottom: 0.75rem;">
+                <span style="color: hsl(var(--primary)); font-size: 1.25rem;">✓</span>
+                <span style="font-size: 0.875rem;">Personalized email templates with smart column mapping</span>
+              </div>
+              <div style="display: flex; align-items: start; gap: 0.75rem; margin-bottom: 0.75rem;">
+                <span style="color: hsl(var(--primary)); font-size: 1.25rem;">✓</span>
+                <span style="font-size: 0.875rem;">Real-time open & reply tracking across all inboxes</span>
+              </div>
+              <div style="display: flex; align-items: start; gap: 0.75rem;">
+                <span style="color: hsl(var(--primary)); font-size: 1.25rem;">✓</span>
+                <span style="font-size: 0.875rem;">Built-in CRM with pipeline stages and ownership rules</span>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+              <button class="btn btn-primary">Request This Solution</button>
+              <button class="btn btn-outline">View Demo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section id="process" style="padding: 6rem 0; position: relative; overflow: hidden;">
+    <div style="position: absolute; inset: 0; background: linear-gradient(135deg, hsl(var(--primary) / 0.05) 0%, hsl(var(--background)) 50%, hsl(var(--accent) / 0.05) 100%);"></div>
+    <div style="position: relative; max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;">
+      <div style="text-align: center; max-width: 48rem; margin: 0 auto 4rem;">
+        <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
+          From idea to <span class="text-primary">impact in 4 steps</span>
+        </h2>
+        <p style="font-size: 1.125rem; color: hsl(var(--muted-foreground));">
+          A clear, proven process that gets you results fast
+        </p>
+      </div>
+
+      <div style="position: relative; max-width: 80rem; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; position: relative;">
+          <div class="process-card">
+            <div class="process-number">01</div>
+            <div class="process-icon">👥</div>
+            <div style="text-align: center;">
+              <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem;">Discovery Call</h3>
+              <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); line-height: 1.6;">
+                30 minutes to understand your workflow and goals. No sales pitch—just focused questions.
+              </p>
+            </div>
+          </div>
+
+          <div class="process-card">
+            <div class="process-number">02</div>
+            <div class="process-icon">📊</div>
+            <div style="text-align: center;">
+              <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem;">Solution Design</h3>
+              <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); line-height: 1.6;">
+                Within 48 hours, get a clear plan with scope, timeline, and expected ROI.
+              </p>
+            </div>
+          </div>
+
+          <div class="process-card">
+            <div class="process-number">03</div>
+            <div class="process-icon">⚡</div>
+            <div style="text-align: center;">
+              <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem;">Build & Test</h3>
+              <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); line-height: 1.6;">
+                Regular check-ins and demos. We iterate based on your feedback until perfect.
+              </p>
+            </div>
+          </div>
+
+          <div class="process-card">
+            <div class="process-number">04</div>
+            <div class="process-icon">🛡️</div>
+            <div style="text-align: center;">
+              <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem;">Launch & Support</h3>
+              <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); line-height: 1.6;">
+                Team training, documentation, and optional SLA-backed maintenance.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Study -->
+  <section style="padding: 4rem 0; background: hsl(var(--primary) / 0.05);">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;">
+      <div class="card" style="border: 2px solid hsl(var(--primary) / 0.2);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+          <div>
+            <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.5rem;">Case Study</div>
+            <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem;">Retail Operations Transformation</h3>
+            <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">
+              Reduced manual reporting from 10 hours to 20 minutes per week through automated reconciliation.
+            </p>
+          </div>
+          <div style="display: flex; flex-direction: column; justify-content: center;">
+            <div style="font-size: 2.5rem; font-weight: 700; color: hsl(var(--primary)); margin-bottom: 0.5rem;">20+ hrs</div>
+            <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Saved per week with real-time dashboards</p>
+          </div>
+          <div style="display: flex; flex-direction: column; justify-content: center;">
+            <div style="display: flex; gap: 0.25rem; margin-bottom: 0.5rem;">
+              <span style="color: hsl(var(--primary));">★★★★★</span>
+            </div>
+            <p style="font-size: 0.875rem; font-weight: 500; margin-bottom: 0.25rem;">"A complete game-changer"</p>
+            <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">"ROI was visible in month one."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" style="padding: 6rem 0;">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;">
+      <div style="text-align: center; max-width: 48rem; margin: 0 auto 4rem;">
+        <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
+          Loved by teams who <span class="text-primary">value their time</span>
+        </h2>
+        <p style="font-size: 1.125rem; color: hsl(var(--muted-foreground));">
+          Real feedback from real people doing real work
+        </p>
+      </div>
+
+      <div style="max-width: 56rem; margin: 0 auto;">
+        <div id="testimonialContent" class="card" style="border: 2px solid hsl(var(--primary) / 0.1); box-shadow: 0 20px 60px hsl(var(--primary) / 0.15);">
+          <div style="font-size: 3rem; color: hsl(var(--primary) / 0.2); margin-bottom: 1.5rem;">"</div>
+          <p id="testimonialQuote" style="font-size: 1.5rem; font-weight: 500; margin-bottom: 2rem; line-height: 1.6;">
+            AutomateOps cut our weekly reporting time from 8 hours to just 15 minutes. Our team now focuses on strategy instead of busywork.
+          </p>
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div style="width: 3.5rem; height: 3.5rem; border-radius: 50%; background: hsl(var(--primary) / 0.1); display: flex; align-items: center; justify-content: center; color: hsl(var(--primary)); font-weight: 600; font-size: 1.125rem;">
+              SM
+            </div>
+            <div style="flex: 1;">
+              <div id="testimonialName" style="font-weight: 600;">Sarah Mitchell</div>
+              <div id="testimonialRole" style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Operations Manager, TechFlow</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.25rem;">
+              <span style="color: hsl(var(--primary));">★★★★★</span>
+              <span id="testimonialRating" style="margin-left: 0.5rem; font-size: 0.875rem; font-weight: 500;">4.9</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 2rem;">
+          <button class="testimonial-dot active" data-testimonial="0"></button>
+          <button class="testimonial-dot" data-testimonial="1"></button>
+          <button class="testimonial-dot" data-testimonial="2"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROI Calculator -->
+  <section id="roi" style="padding: 6rem 0; background: hsl(var(--muted) / 0.3);">
+    <div style="max-width: 80rem; margin: 0 auto; padding: 0 1.5rem;">
+      <div style="text-align: center; max-width: 48rem; margin: 0 auto 3rem;">
+        <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
+          Calculate your <span class="text-primary">potential savings</span>
+        </h2>
+        <p style="font-size: 1.125rem; color: hsl(var(--muted-foreground));">
+          See how much time and money you could save with automation
+        </p>
+      </div>
+
+      <div class="card" style="border: 2px solid hsl(var(--primary) / 0.2); box-shadow: 0 20px 60px hsl(var(--primary) / 0.15);">
+        <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Hours spent per task</label>
+              <input type="number" id="hours" class="input-field" value="8" min="0" step="0.5">
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Times per week</label>
+              <input type="number" id="runs" class="input-field" value="1" min="0" step="1">
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Hourly rate ($)</label>
+              <input type="number" id="rate" class="input-field" value="50" min="0" step="5">
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Automation efficiency (%)</label>
+              <input type="number" id="percent" class="input-field" value="75" min="0" max="100" step="5">
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 0.75rem;">
+            <button id="calculateBtn" class="btn btn-primary" style="flex: 1;">Calculate Savings</button>
+            <button id="resetBtn" class="btn btn-outline">Reset</button>
+          </div>
+
+          <div id="roiResults" style="display: none;">
+            <div style="text-align: center; padding: 2rem; border-radius: 1rem; background: hsl(var(--primary) / 0.05); border: 2px solid hsl(var(--primary) / 0.2); margin-bottom: 1.5rem;">
+              <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.5rem;">Weekly Savings</div>
+              <div id="weeklySavings" style="font-size: 3rem; font-weight: 700; color: hsl(var(--primary)); margin-bottom: 0.5rem;">$0</div>
+              <div id="hoursSaved" style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">0 hours saved per week</div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+              <div style="text-align: center; padding: 1.5rem; border-radius: 0.75rem; background: hsl(var(--card)); border: 1px solid hsl(var(--border));">
+                <div style="font-size: 0.75rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.25rem;">Monthly</div>
+                <div id="monthlySavings" style="font-size: 1.5rem; font-weight: 700;">$0</div>
+              </div>
+              <div style="text-align: center; padding: 1.5rem; border-radius: 0.75rem; background: hsl(var(--card)); border: 1px solid hsl(var(--border));">
+                <div style="font-size: 0.75rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.25rem;">Yearly</div>
+                <div id="yearlySavings" style="font-size: 1.5rem; font-weight: 700;">$0</div>
+              </div>
+            </div>
+
+            <div style="padding: 1.5rem; border-radius: 0.75rem; background: hsl(var(--muted) / 0.5); border: 1px solid hsl(var(--border)); margin-bottom: 1.5rem;">
+              <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.5rem;">Calculation breakdown:</div>
+              <div id="breakdown" style="font-size: 0.875rem; font-family: monospace;"></div>
+            </div>
+
+            <a href="#contact" class="btn btn-primary" style="width: 100%; display: block; text-align: center;">Start Saving Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="padding: 6rem 0;">
+    <div style="max-width: 56rem; margin: 0 auto; padding: 0 1.5rem;">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
+          Questions? <span class="text-primary">We've got answers</span>
+        </h2>
+        <p style="font-size: 1.125rem; color: hsl(var(--muted-foreground));">Everything you need to know to get started</p>
+      </div>
+
+      <div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How quickly can we see results?</span>
+            <span>›</span>
+          </button>
+          <div class="faq-answer">
+            Most pilots launch within one week and deliver measurable time savings in the first week of use. We focus on quick wins that prove value immediately.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What does a pilot project include?</span>
+            <span>›</span>
+          </button>
+          <div class="faq-answer">
+            A scoped workflow automation, full implementation, testing, training for your team, and a results report with recommendations for next steps—all at a fixed price.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How do you handle pricing?</span>
+            <span>›</span>
+          </button>
+          <div class="faq-answer">
+            Pilots are fixed-price for predictability. Larger projects use milestone-based pricing with clear acceptance criteria and sign-off at each stage.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Can you integrate with our existing systems?</span>
+            <span>›</span>
+          </button>
+          <div class="faq-answer">
+            Yes. We integrate securely using OAuth, webhooks, and scoped service accounts. You'll receive a permissions checklist before we start.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What if we need changes after launch?</span>
+            <span>›</span>
+          </button>
+          <div class="faq-answer">
+            We provide documentation and training so you can make simple updates yourself. For larger changes, we offer flexible SLA-backed maintenance packages.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Do we need technical expertise?</span>
+            <span>›</span>
+          </button>
+          <div class="faq-answer">
+            Not at all. We build everything to be user-friendly for non-technical teams. If you can use Google Sheets, you can use our automations.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section style="padding: 4rem 1.5rem;">
+    <div style="max-width: 80rem; margin: 0 auto;">
+      <div class="gradient-primary" style="padding: 3rem; border-radius: 1rem; text-align: center; color: white; position: relative; overflow: hidden;">
+        <div style="position: relative; z-index: 1;">
+          <h2 style="font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 1rem;">
+            Ready to reclaim your time?
+          </h2>
+          <p style="font-size: 1.125rem; margin-bottom: 2rem; opacity: 0.9; max-width: 40rem; margin-left: auto; margin-right: auto;">
+            Book a free 30-minute discovery call. No commitment, no sales pressure—just an honest conversation about how we can help.
+          </p>
+          <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+            <a href="#contact" class="btn" style="background: white; color: hsl(var(--primary)); padding: 0.875rem 2rem;">Schedule Your Free Call</a>
+            <a href="#roi" class="btn" style="background: rgba(255,255,255,0.1); color: white; border: 2px solid rgba(255,255,255,0.2); padding: 0.875rem 2rem;">Calculate Your ROI</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section id="contact" style="padding: 6rem 0; background: hsl(var(--muted) / 0.3);">
+    <div style="max-width: 42rem; margin: 0 auto; padding: 0 1.5rem;">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <h2 style="font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 1rem;">Let's talk about your workflow</h2>
+        <p style="color: hsl(var(--muted-foreground));">Tell us what's slowing you down, and we'll show you how to fix it</p>
+      </div>
+
+      <div class="card">
+        <form id="contactForm">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Your Name</label>
+              <input type="text" name="name" class="input-field" placeholder="John Smith" required>
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Email</label>
+              <input type="email" name="email" class="input-field" placeholder="john@company.com" required>
+            </div>
+          </div>
+          
+          <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Company</label>
+            <input type="text" name="company" class="input-field" placeholder="Your Company Inc.">
+          </div>
+
+          <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">What workflow would you like to automate?</label>
+            <textarea name="message" class="input-field" rows="5" placeholder="Tell us about the repetitive tasks that are eating up your team's time..." required></textarea>
+          </div>
+
+          <div style="display: flex; gap: 0.75rem;">
+            <button type="submit" class="btn btn-primary" style="flex: 1;">Send Message</button>
+            <button type="button" id="clearForm" class="btn btn-outline">Clear</button>
+          </div>
+        </form>
+        <div id="formSuccess" style="display: none; margin-top: 1rem; padding: 1rem; background: hsl(var(--primary) / 0.1); border: 1px solid hsl(var(--primary) / 0.3); border-radius: 0.5rem; color: hsl(var(--primary)); text-align: center;">
+          ✓ Thank you! We'll be in touch within 24 hours.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="padding: 3rem 0; border-top: 1px solid hsl(var(--border) / 0.5);">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <div style="width: 2.5rem; height: 2.5rem; border-radius: 0.75rem; background: hsl(var(--primary)); display: flex; align-items: center; justify-content: center; color: white;">
+            ✨
+          </div>
+          <div>
+            <div style="font-weight: 600;">AutomateOps</div>
+            <div style="font-size: 0.75rem; color: hsl(var(--muted-foreground));">© 2024 All rights reserved</div>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+          <a href="#" style="color: hsl(var(--muted-foreground)); transition: color 0.3s;" onmouseover="this.style.color='hsl(var(--foreground))'" onmouseout="this.style.color='hsl(var(--muted-foreground))'">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path></svg>
+          </a>
+          <a href="#" style="color: hsl(var(--muted-foreground)); transition: color 0.3s;" onmouseover="this.style.color='hsl(var(--foreground))'" onmouseout="this.style.color='hsl(var(--muted-foreground))'">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path><circle cx="4" cy="4" r="2"></circle></svg>
+          </a>
+          <a href="#" style="color: hsl(var(--muted-foreground)); transition: color 0.3s;" onmouseover="this.style.color='hsl(var(--foreground))'" onmouseout="this.style.color='hsl(var(--muted-foreground))'">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="back-to-top">↑</button>
+
+  <script>
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      mobileMenuBtn.textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
+    });
+
+    // Close mobile menu when clicking a link
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        mobileMenuBtn.textContent = '☰';
+      });
+    });
+
+    // Animated Counter
+    function animateCounter(element, target, suffix = '') {
+      const duration = 2000;
+      const steps = 60;
+      const increment = target / steps;
+      let current = 0;
+      
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          element.textContent = target + suffix;
+          clearInterval(timer);
+        } else {
+          element.textContent = Math.floor(current) + suffix;
+        }
+      }, duration / steps);
+    }
+
+    // Trigger counters on scroll
+    const observerOptions = { threshold: 0.5, rootMargin: '0px' };
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+          entry.target.classList.add('animated');
+          const target = parseInt(entry.target.dataset.target);
+          const text = entry.target.textContent;
+          const suffix = text.replace(/[0-9]/g, '');
+          animateCounter(entry.target, target, suffix);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.stat-number').forEach(el => counterObserver.observe(el));
+
+    // Works Tabs
+    const works = [
+      {
+        title: 'Bulk Email Sender + Multi-Inbox CRM',
+        desc: 'Transform your outreach with personalized mass-mailing from Sheets. Track opens, replies, and manage leads across multiple inboxes.',
+        features: [
+          'Personalized email templates with smart column mapping',
+          'Real-time open & reply tracking across all inboxes',
+          'Built-in CRM with pipeline stages and ownership rules'
+        ]
+      },
+      {
+        title: 'Auto Payment-Slip Generator',
+        desc: 'Say goodbye to manual invoicing. Generate branded payment slips, batch-create PDFs, and automatically email receipts—all from a single spreadsheet.',
+        features: [
+          'Custom branded templates exported to PDF instantly',
+          'Batch generation with scheduled delivery',
+          'Complete audit log with retry queue for reliability'
+        ]
+      },
+      {
+        title: 'Complete Cleaning Business System',
+        desc: 'Run your entire cleaning operation from one place. From bookings to invoicing, team scheduling to client communications.',
+        features: [
+          'Automated booking imports and smart assignment',
+          'Team scheduling with instant notifications',
+          'Invoice generation and payment tracking built-in'
+        ]
+      }
+    ];
+
+    document.querySelectorAll('.work-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const workIndex = parseInt(tab.dataset.work);
+        const work = works[workIndex];
+        
+        document.querySelectorAll('.work-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        document.getElementById('workTitle').textContent = work.title;
+        document.getElementById('workDesc').textContent = work.desc;
+        
+        const featuresHtml = work.features.map(f => 
+          `<div style="display: flex; align-items: start; gap: 0.75rem; margin-bottom: 0.75rem;">
+            <span style="color: hsl(var(--primary)); font-size: 1.25rem;">✓</span>
+            <span style="font-size: 0.875rem;">${f}</span>
+          </div>`
+        ).join('');
+        document.getElementById('workFeatures').innerHTML = featuresHtml;
+      });
+    });
+
+    // Testimonials
+    const testimonials = [
+      {
+        quote: 'AutomateOps cut our weekly reporting time from 8 hours to just 15 minutes. Our team now focuses on strategy instead of busywork.',
+        name: 'Sarah Mitchell',
+        role: 'Operations Manager, TechFlow',
+        initials: 'SM',
+        rating: 4.9
+      },
+      {
+        quote: 'The custom Sheets CRM eliminated all the manual data entry that was killing our productivity. Pipeline accuracy improved by 40%.',
+        name: 'Marcus Chen',
+        role: 'Sales Director, GrowthPoint',
+        initials: 'MC',
+        rating: 4.8
+      },
+      {
+        quote: 'We eliminated 90% of manual errors in our reconciliation process. The automated dashboards give us full visibility.',
+        name: 'Emily Rodriguez',
+        role: 'Finance Lead, Nexus Corp',
+        initials: 'ER',
+        rating: 4.9
+      }
+    ];
+
+    let currentTestimonial = 0;
+
+    function showTestimonial(index) {
+      const t = testimonials[index];
+      document.getElementById('testimonialQuote').textContent = t.quote;
+      document.getElementById('testimonialName').textContent = t.name;
+      document.getElementById('testimonialRole').textContent = t.role;
+      document.getElementById('testimonialRating').textContent = t.rating;
+      document.querySelector('#testimonialContent > div > div').textContent = t.initials;
+      
+      document.querySelectorAll('.testimonial-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+    }
+
+    document.querySelectorAll('.testimonial-dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        currentTestimonial = parseInt(dot.dataset.testimonial);
+        showTestimonial(currentTestimonial);
+      });
+    });
+
+    // Auto-rotate testimonials
+    setInterval(() => {
+      currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+      showTestimonial(currentTestimonial);
+    }, 7000);
+
+    // ROI Calculator
+    document.getElementById('calculateBtn').addEventListener('click', () => {
+      const hours = parseFloat(document.getElementById('hours').value) || 0;
+      const runs = parseFloat(document.getElementById('runs').value) || 0;
+      const rate = parseFloat(document.getElementById('rate').value) || 0;
+      const percent = parseFloat(document.getElementById('percent').value) || 0;
+      
+      const weekly = Math.round(hours * runs * rate * (percent / 100));
+      const monthly = weekly * 4;
+      const yearly = weekly * 52;
+      const hoursSaved = (hours * runs * percent / 100).toFixed(1);
+      
+      document.getElementById('weeklySavings').textContent = '$' + weekly.toLocaleString();
+      document.getElementById('monthlySavings').textContent = '$' + monthly.toLocaleString();
+      document.getElementById('yearlySavings').textContent = '$' + yearly.toLocaleString();
+      document.getElementById('hoursSaved').textContent = hoursSaved + ' hours saved per week';
+      document.getElementById('breakdown').textContent = 
+        `${hours}h × ${runs} runs × $${rate}/hr × ${percent}% = $${weekly}/week`;
+      
+      document.getElementById('roiResults').style.display = 'block';
+      document.getElementById('roiResults').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      document.getElementById('hours').value = 8;
+      document.getElementById('runs').value = 1;
+      document.getElementById('rate').value = 50;
+      document.getElementById('percent').value = 75;
+      document.getElementById('roiResults').style.display = 'none';
+    });
+
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+        const answer = question.nextElementSibling;
+        const isOpen = answer.classList.contains('open');
+        
+        document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+        
+        if (!isOpen) {
+          answer.classList.add('open');
+        }
+      });
+    });
+
+    // Contact Form
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('formSuccess').style.display = 'block';
+      document.getElementById('contactForm').reset();
+      setTimeout(() => {
+        document.getElementById('formSuccess').style.display = 'none';
+      }, 5000);
+    });
+
+    document.getElementById('clearForm').addEventListener('click', () => {
+      document.getElementById('contactForm').reset();
+      document.getElementById('formSuccess').style.display = 'none';
+    });
+
+    // Back to Top Button
+    const backToTop = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', () => {
+      const atBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
+      backToTop.classList.toggle('show', atBottom);
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
