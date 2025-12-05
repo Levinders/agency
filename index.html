@@ -9,26 +9,27 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com">  // BACK TO TOP button show/hide logic
-  (function(){
-    const btn = document.getElementById('backToTop');
-    window.addEventListener('scroll', ()=>{
-      const atBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 80;
-      if(atBottom){
-        btn.classList.remove('opacity-0','pointer-events-none');
-      } else {
-        btn.classList.add('opacity-0','pointer-events-none');
-      }
-    });
-    btn.addEventListener('click', ()=>{
-      window.scrollTo({top:0,behavior:'smooth'});
-    });
-  })();
+  <script src="https://cdn.tailwindcss.com">  // BACK TO TOP button show/hide logic — show ONLY when user reaches bottom of page
+(function(){
+  const btn = document.getElementById('backToTop');
+  function check(){
+    const atBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 40;
+    if(atBottom){
+      btn.classList.remove('opacity-0','pointer-events-none');
+    } else {
+      btn.classList.add('opacity-0','pointer-events-none');
+    }
+  }
+  window.addEventListener('scroll', check);
+  btn.addEventListener('click', ()=>{
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+})();
 
 </script>
 
   <style>
-    :root{--ink:#0a0a0c;--muted:#6b7280;--accent:#111827}
+    :root{--ink:#0a0a0c;--muted:#6b7280;--accent:#111827;--primary:#4C8BF5}
     body { font-family: Inter, -apple-system, system-ui; color:var(--ink); background:white; -webkit-font-smoothing:antialiased }
 
     .hero-gradient { background: linear-gradient(180deg, #fafafa 0%, #ffffff 60%); }
@@ -83,11 +84,11 @@
         <div class="text-sm text-gray-400">Sheets · Apps Script · Integrations</div>
       </div>
       <nav class="hidden md:flex items-center gap-8 text-sm text-gray-600">
-        <a href="#solutions" class="hover:text-black">Solutions</a>
+        <a href="#solutions" class="hover:text-[var(--ink)]">Solutions</a>
         <a href="#process" class="hover:text-black">Process</a>
         <a href="#results" class="hover:text-black">Case</a>
         <a href="#testimonials" class="hover:text-black">Testimonials</a>
-        <a href="#contact" class="px-4 py-2 rounded-full bg-black text-white">Book call</a>
+        <a href="#contact" class="px-4 py-2 rounded-full bg-[var(--primary)] text-white">Book call</a>
       </nav>
     </div>
   </header>
@@ -100,7 +101,7 @@
         <p class="mt-5 text-lg section-sub max-w-xl">AutomateOps turns noisy spreadsheets into dependable workflows using Google Sheets, Apps Script and compact integrations—pilots in one week, measurable ROI.</p>
 
         <div class="mt-8 flex gap-4">
-          <a href="#contact" class="px-5 py-3 rounded-full bg-black text-white">Book discovery</a>
+          <a href="#contact" class="px-5 py-3 rounded-full bg-[var(--primary)] text-white">Book discovery</a>
           <a href="#roi" class="px-4 py-3 rounded-full border border-gray-200 text-sm">Quick ROI</a>
         </div>
 
@@ -170,6 +171,51 @@
           <h4 class="text-sm section-sub">Dashboards & Integrations</h4>
           <h3 class="mt-2 font-medium">Clean dashboards, API syncs, structured automation</h3>
           <p class="section-sub mt-2 text-sm">Executive dashboards, Slack/email triggers and secure syncs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKS / BUILT SOLUTIONS -->
+  <section id="works" class="py-20 bg-white border-t border-gray-100">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="section-title">Select builds we've delivered</h2>
+        <p class="section-sub mt-2">Production‑ready automations built on Google Sheets + Apps Script — fast, reliable, scalable.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-10">
+        <!-- Bulk Email + CRM -->
+        <div class="p-6 rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-xl transition-all">
+          <div class="w-full h-40 bg-gray-100 rounded-lg mb-4 flex items-center justify-center text-gray-400 text-sm">Video / Image Placeholder</div>
+          <h3 class="text-lg font-medium">Bulk Email Sender + Multi‑Inbox CRM</h3>
+          <p class="section-sub mt-2 text-sm">Send personalized emails at scale, track opens/replies across inboxes, and manage leads directly inside Sheets.</p>
+          <div class="mt-4 flex gap-3 text-sm">
+            <a href="#" class="px-4 py-2 rounded-full bg-[var(--primary)] text-white">View demo</a>
+            <a href="#contact" class="px-4 py-2 rounded-full border border-gray-300">Request this</a>
+          </div>
+        </div>
+
+        <!-- Payment Slip Generator -->
+        <div class="p-6 rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-xl transition-all">
+          <div class="w-full h-40 bg-gray-100 rounded-lg mb-4 flex items-center justify-center text-gray-400 text-sm">Video / Image Placeholder</div>
+          <h3 class="text-lg font-medium">Auto Payment‑Slip Generator</h3>
+          <p class="section-sub mt-2 text-sm">Batch-generate PDFs from Sheets rows, email customers automatically, and maintain a full audit history.</p>
+          <div class="mt-4 flex gap-3 text-sm">
+            <a href="#" class="px-4 py-2 rounded-full bg-[var(--primary)] text-white">View demo</a>
+            <a href="#contact" class="px-4 py-2 rounded-full border border-gray-300">Request this</a>
+          </div>
+        </div>
+
+        <!-- Cleaning Business System -->
+        <div class="p-6 rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-xl transition-all">
+          <div class="w-full h-40 bg-gray-100 rounded-lg mb-4 flex items-center justify-center text-gray-400 text-sm">Video / Image Placeholder</div>
+          <h3 class="text-lg font-medium">Cleaning Business System</h3>
+          <p class="section-sub mt-2 text-sm">Bookings, team scheduling, invoicing, automations and client comms — a full operational suite in Sheets.</p>
+          <div class="mt-4 flex gap-3 text-sm">
+            <a href="#" class="px-4 py-2 rounded-full bg-[var(--primary)] text-white">View demo</a>
+            <a href="#contact" class="px-4 py-2 rounded-full border border-gray-300">Request this</a>
+          </div>
         </div>
       </div>
     </div>
@@ -269,7 +315,7 @@
               <input id="rate" type="number" class="p-3 border rounded" value="50" />
               <input id="pct" type="number" class="p-3 border rounded" value="75" />
             </div>
-            <div class="mt-4 flex gap-3"><button id="calcBtn" class="px-4 py-2 bg-black text-white rounded">Calculate</button><a href="#contact" class="px-4 py-2 border border-gray-200 rounded">Book pilot</a></div>
+            <div class="mt-4 flex gap-3"><button id="calcBtn" class="px-4 py-2 bg-[var(--primary)] text-white rounded">Calculate</button><a href="#contact" class="px-4 py-2 border border-gray-200 rounded">Book pilot</a></div>
           </div>
           <div>
             <div class="text-sm section-sub">Estimated weekly savings</div>
@@ -404,7 +450,7 @@
         <input name="email" class="w-full p-3 border rounded" placeholder="Email" required />
         <input name="company" class="w-full p-3 border rounded" placeholder="Company" />
         <textarea name="message" rows="4" class="w-full p-3 border rounded" placeholder="Describe the workflow" required></textarea>
-        <div class="flex gap-3 justify-end"><button type="submit" class="px-5 py-3 bg-black text-white rounded">Request discovery</button><button type="button" id="clear" class="px-5 py-3 border rounded">Clear</button></div>
+        <div class="flex gap-3 justify-end"><button type="submit" class="px-5 py-3 bg-[var(--primary)] text-white rounded">Request discovery</button><button type="button" id="clear" class="px-5 py-3 border rounded">Clear</button></div>
       </form>
     </div>
   </section>
@@ -422,7 +468,7 @@
   </footer>
 
   <!-- BACK TO TOP BUTTON -->
-  <button id="backToTop" aria-label="Back to top" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center shadow-lg opacity-0 pointer-events-none transition-all duration-300">↑</button>
+  <button id="backToTop" aria-label="Back to top" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-[var(--primary)] text-white flex items-center justify-center shadow-lg opacity-0 pointer-events-none transition-all duration-300">↑</button>
 
 <script>
   // year
