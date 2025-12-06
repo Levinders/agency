@@ -120,25 +120,21 @@
       padding: 0 1rem;
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 1.25rem;
-      font-weight: 700;
-      text-decoration: none;
-      color: var(--fg);
-    }
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--fg);
+  font-weight: 700;
+  font-size: 1.25rem;
+}
 
-    .logo-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--primary);
-      border-radius: var(--radius);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+.logo-img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
 
     .nav-links {
       display: none;
@@ -1051,11 +1047,15 @@
   <nav>
     <div class="container">
       <div class="nav-container">
-        <a href="#" class="logo">
-              <img src="https://raw.githubusercontent.com/Levinders/agency/refs/heads/main/packdez_favico(no%20bg).png">
-          </div>
-          <span>Packdez</span>
-        </a>
+<a href="#" class="logo">
+  <img 
+    src="https://raw.githubusercontent.com/Levinders/agency/refs/heads/main/packdez_favico(no%20bg).png" 
+    alt="Packdez Logo"
+    class="logo-img"
+  />
+  <span>Packdez</span>
+</a>
+
         
         <div class="nav-links">
           <a onclick="scrollToSection('solutions')">Solutions</a>
