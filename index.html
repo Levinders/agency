@@ -3,146 +3,413 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AutomateOps — Premium Automation for Modern Teams</title>
-
-  <!-- Fonts + Tailwind -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>AutomateOps — Sleek Soft UI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ——— YOUR FULL STYLE BLOCK (unchanged) ——— */
-    /* NOTE: for readability, I am not collapsing anything; this is exactly the same as your canvas version */
-    /* ——— START ——— */
-
     :root{
-      --ink:#0a0a0c;
-      --muted:#6b7280;
-      --accent:#111827;
-      --primary:#4C8BF5;
-      --soft1:#f6f9ff;
-      --soft2:#f9f7ff;
-      --soft3:#f7fcff;
+      --brand: #5B7CFA;        /* accent */
+      --brand-2: #8EA7FF;      /* light accent */
+      --bg-left: #F3F7FF;     /* left soft */
+      --bg-right: #FFFFFF;    /* right */
+      --ink: #07203a;         /* near-black text */
+      --muted: #6b7280;
+      --glass: rgba(91,124,250,0.08);
+      --radius: 18px;
+      --ease: cubic-bezier(.16,.84,.44,1);
     }
 
-    body { font-family: Inter, -apple-system, system-ui; color:var(--ink); background:white; -webkit-font-smoothing:antialiased }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;color:var(--ink);background:linear-gradient(180deg,var(--bg-left),var(--bg-right));-webkit-font-smoothing:antialiased}
 
-    .hero-gradient { background: linear-gradient(180deg, #fafafa 0%, #ffffff 60%); }
-    .section-title { font-size:2.2rem; font-weight:500; letter-spacing:-0.01em }
+    /* Surface shapes (inspired) */
+    .surface{position:fixed;inset:0;pointer-events:none;z-index:0;}
+    .shape{position:absolute;border-radius:40%;filter:blur(54px);opacity:.9;transform:translateZ(0)}
+    .shape.s1{width:520px;height:520px;left:-120px;top:-80px;background:linear-gradient(90deg, rgba(91,124,250,0.22), rgba(142,167,255,0.14));}
+    .shape.s2{width:320px;height:320px;left:40px;bottom:-60px;background:linear-gradient(90deg, rgba(91,124,250,0.10), rgba(255,255,255,0.06));}
 
-    /* NAV */
-    .top-nav { display:flex; align-items:center; justify-content:space-between; gap:16px }
-    .nav-left { display:flex; align-items:center; gap:14px }
-    .brand { font-weight:600; color:var(--primary) }
-    .nav-links { display:flex; gap:18px; align-items:center }
-    .nav-link { color:var(--muted); text-decoration:none; padding:6px 8px; border-radius:8px; font-weight:500 }
-    .nav-link:hover { color:var(--ink); background:linear-gradient(90deg, rgba(76,139,245,0.06), rgba(76,139,245,0.03)); }
-    .nav-cta { padding:8px 14px; border-radius:999px; background:var(--primary); color:white; font-weight:600; box-shadow:0 8px 24px rgba(76,139,245,0.10) }
-    .nav-toggle { display:none }
-    @media (max-width:768px){ .nav-links{ display:none } .nav-toggle{ display:inline-flex } }
+    /* Diagonal panel */
+    .diagonal{position:fixed;left:0;top:0;bottom:0;width:60%;background:linear-gradient(120deg,var(--bg-left),transparent 60%);clip-path:polygon(0 0,64% 0,40% 100%,0 100%);z-index:0}
 
-    .color-swatches{ display:flex; gap:10px; align-items:center; justify-content:flex-end }
-    .swatch{ width:36px; height:18px; border-radius:6px; box-shadow:0 6px 18px rgba(2,6,23,0.04); border:1px solid rgba(0,0,0,0.03) }
+    /* floating tiles */
+    .tile{position:absolute;width:80px;height:80px;border-radius:14px;background:linear-gradient(180deg,#fff,#f3f7ff);box-shadow:0 18px 46px rgba(13,43,102,0.08);opacity:.95}
 
-    .section-sub { color:var(--muted) }
+    /* logo circle */
+    .logo-circle{position:fixed;left:62%;top:16%;width:180px;height:180px;border-radius:999px;background:radial-gradient(circle,#fff,#f6f8ff);display:flex;align-items:center;justify-content:center;box-shadow:0 30px 80px rgba(91,124,250,0.12);border:1px solid rgba(91,124,250,0.08);z-index:3;transform:translate(-50%,-10%)}
+    .logo-circle img{width:110px;height:110px;object-fit:contain}
 
-    .step-bubble { width:42px; height:42px; border-radius:50%; border:1px solid #e5e7eb; display:flex; align-items:center; justify-content:center; font-weight:600; background:white; flex-shrink:0 }
+    /* Layout container */
+    .wrap{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:36px 20px}
 
-    .testimonial-card { border:1px solid #f3f4f6; padding:22px; border-radius:14px; background:white; transition:box-shadow .25s ease; max-width:720px; margin:0 auto }
+    header{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
+    .brand{font-weight:700;color:var(--brand);font-size:20px}
+    nav{display:flex;gap:14px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px;transition:all .18s var(--ease)}
+    nav a:hover{background:var(--glass);color:var(--ink);transform:translateY(-2px)}
+    .cta{padding:10px 16px;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--brand-2));color:white;font-weight:600;box-shadow:0 12px 36px rgba(91,124,250,0.16)}
 
-    .tool { display:inline-flex; align-items:center; gap:10px; padding:8px 12px; border-radius:10px; border:1px solid #f3f4f6; background:#fff }
-    .tool img{ width:28px; height:28px; display:block }
+    /* hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;padding:28px 0}
+    .hero-card{background:transparent;padding:24px;border-radius:14px}
+    h1{font-size:40px;line-height:1.03;margin:0;font-weight:700}
+    p.lead{margin-top:12px;color:var(--muted);max-width:56ch}
+    .hero-ctas{display:flex;gap:12px;margin-top:18px}
+    .stats{display:flex;gap:10px;margin-top:18px}
+    .stat{background:rgba(255,255,255,0.6);padding:10px 12px;border-radius:12px;font-weight:600;color:var(--ink);box-shadow:0 8px 22px rgba(13,43,102,0.04)}
 
-    .faq-item { border-bottom:1px solid #f3f4f6; padding:12px 0 }
-    .faq-q { display:flex; align-items:center; justify-content:space-between; width:100%; background:transparent; border:0; padding:0; font-weight:500 }
+    /* right panel image */
+    .hero-visual{border-radius:18px;overflow:hidden;box-shadow:0 28px 80px rgba(13,43,102,0.06);border:1px solid rgba(13,43,102,0.03)}
+    .hero-visual img{width:100%;height:340px;object-fit:cover;display:block}
 
-    footer{ padding-top:28px; padding-bottom:28px }
+    /* sections */
+    section.segment{padding:48px 0}
+    .section-title{font-size:20px;font-weight:700;margin-bottom:8px}
+    .section-sub{color:var(--muted);font-size:14px}
 
-    /* ——— Works + Testimonials styles kept exactly as in the canvas ——— */
-    /* (Not repeating all here for brevity—your version is preserved exactly) */
+    /* solutions grid - subtle cards */
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}
+    .pill{background:linear-gradient(180deg,#fff,#fbfdff);border-radius:14px;padding:18px;border:1px solid rgba(13,43,102,0.04);box-shadow:0 12px 36px rgba(13,43,102,0.04)}
+    .pill h4{margin:0;font-weight:700}
+    .pill p{margin-top:8px;color:var(--muted);font-size:13px}
+
+    /* works - sleek cards with subtle overlay */
+    .works-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+    .work{border-radius:14px;overflow:hidden;position:relative;border:1px solid rgba(13,43,102,0.03)}
+    .work img{width:100%;height:200px;object-fit:cover;display:block}
+    .work .meta{padding:14px;background:linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0.9))}
+    .work .meta .k{color:var(--muted);font-size:13px}
+    .work .meta h5{margin:6px 0 0;font-weight:700}
+    .work .actions{margin-top:10px;display:flex;gap:8px}
+    .btn-ghost{padding:8px 12px;border-radius:10px;border:1px solid rgba(13,43,102,0.06);background:transparent;color:var(--ink)}
+    .btn-ghost:hover{transform:translateY(-2px)}
+
+    /* process */
+    .process{display:flex;gap:12px;margin-top:20px}
+    .step{flex:1;padding:18px;border-radius:12px;background:linear-gradient(180deg,#ffffff,#fbfdff);border:1px solid rgba(13,43,102,0.03);text-align:center}
+    .step .num{font-weight:700;font-size:18px;color:var(--brand)}
+
+    /* ROI compact */
+    .roi{display:flex;gap:20px;align-items:center}
+    .roi .inputs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .input{padding:12px;border-radius:10px;border:1px solid rgba(13,43,102,0.04);background:white}
+
+    /* testimonials */
+    .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}
+    .test-card{padding:18px;border-radius:14px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid rgba(13,43,102,0.03)}
+
+    /* FAQ */
+    .faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}
+    details{background:transparent;padding:14px;border-radius:12px}
+    details summary{font-weight:700;cursor:pointer}
+    details p{margin-top:8px;color:var(--muted)}
+
+    /* contact */
+    .contact-panel{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
+    form .field{margin-bottom:10px}
+    input,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(13,43,102,0.04)}
+    button[type=submit]{padding:12px 16px;border-radius:12px;border:none;background:linear-gradient(90deg,var(--brand),var(--brand-2));color:white;font-weight:700}
+
+    footer{padding:28px 0;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+
+    /* modal & helpers */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(8,16,30,0.36);z-index:60}
+    .modal .box{width:min(980px,92%);background:white;border-radius:14px;overflow:hidden}
+
+    /* tiny responsive */
+    @media(max-width:980px){
+      .hero{grid-template-columns:1fr;}
+      .hero-visual{order:-1}
+      .logo-circle{display:none}
+      .diagonal{display:none}
+      .grid-3{grid-template-columns:1fr}
+      .works-grid{grid-template-columns:1fr}
+      .process{flex-direction:column}
+      .test-grid{grid-template-columns:1fr}
+      .contact-panel{grid-template-columns:1fr}
+    }
 
   </style>
 </head>
+<body>
 
-<body class="antialiased">
+  <!-- decorative surface -->
+  <div class="surface" aria-hidden>
+    <div class="shape s1"></div>
+    <div class="shape s2"></div>
+    <div class="diagonal"></div>
+    <div class="tile" style="right:10%;top:28%"></div>
+    <div class="tile" style="right:20%;top:64%;width:60px;height:60px"></div>
+  </div>
 
-  <!-- ——— NAV ——— -->
-  <header class="py-5">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="top-nav">
-        <div class="nav-left">
-          <div class="brand">AutomateOps</div>
+  <!-- floating logo -->
+  <div class="logo-circle" aria-hidden>
+    <img src="https://raw.githubusercontent.com/Levinders/Portfolio-Hub-Looker-Studio-Portfolio-Page-/refs/heads/main/Sendez_Logo__4_-removebg-preview.png" alt="logo" />
+  </div>
+
+  <div class="wrap">
+    <header>
+      <div class="brand">AutomateOps</div>
+      <nav>
+        <a href="#solutions">Solutions</a>
+        <a href="#works">Works</a>
+        <a href="#process">Process</a>
+        <a href="#contact">Contact</a>
+        <a class="cta" href="#contact">Book discovery</a>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-card">
+        <h1 id="hero-title">Remove manual work — design calm operations</h1>
+        <p class="lead">We convert sprawling Sheets and ad-hoc tasks into dependable workflows with clear ownership, audit trails and delightful contributor UX. Pilot in one week.</p>
+
+        <div class="hero-ctas">
+          <a class="cta" href="#contact">Start a pilot</a>
+          <a style="padding:10px 14px;border-radius:12px;border:1px solid rgba(13,43,102,0.06);text-decoration:none;color:var(--brand)" href="#works">View builds</a>
+          <a style="padding:10px 14px;border-radius:12px;background:transparent;border:1px solid rgba(13,43,102,0.03);color:var(--muted);text-decoration:none" href="#roi">Quick ROI</a>
         </div>
 
-        <nav class="nav-links" aria-label="Primary navigation">
-          <a class="nav-link" href="/solutions">Solutions</a>
-          <a class="nav-link" href="/works">Works</a>
-          <a class="nav-link" href="/pricing">Pricing</a>
-          <a class="nav-link" href="/docs">Docs</a>
-          <a class="nav-link" href="/blog">Blog</a>
-          <a class="nav-link" href="#contact">Contact</a>
-          <a class="nav-cta" href="#contact">Book call</a>
-        </nav>
-
-        <button class="nav-toggle md:hidden" aria-label="Open menu">☰</button>
-      </div>
-    </div>
-  </header>
-
-  <!-- ——— HERO ——— -->
-  <section class="hero-gradient pt-20 pb-12">
-    <div class="max-w-5xl mx-auto px-6 grid lg:grid-cols-12 gap-8 items-center">
-      <div class="lg:col-span-7">
-        <h1 class="text-4xl md:text-5xl font-light leading-tight">
-          Remove manual work. Upgrade your operations.
-        </h1>
-
-        <p class="mt-5 text-lg section-sub max-w-xl">
-          AutomateOps turns noisy spreadsheets into dependable workflows using Google Sheets, Apps Script and compact integrations—pilots in one week, measurable ROI.
-        </p>
-
-        <div class="mt-8 flex gap-4">
-          <a href="#contact" class="px-5 py-3 rounded-full bg-[var(--primary)] text-white">Book discovery</a>
-          <a href="#roi" class="px-4 py-3 rounded-full border border-gray-200 text-sm">Quick ROI</a>
+        <div class="stats">
+          <div class="stat">20+ hrs saved / wk</div>
+          <div class="stat">90% error reduction</div>
+          <div class="stat">Pilots in 1 week</div>
         </div>
       </div>
 
-      <div class="lg:col-span-5">
-        <img src="https://raw.githubusercontent.com/Levinders/Portfolio-Hub-Looker-Studio-Portfolio-Page-/refs/heads/main/e1.png"
-             class="w-full h-64 object-cover rounded-xl border border-gray-100" />
+      <div class="hero-visual">
+        <img src="https://raw.githubusercontent.com/Levinders/Portfolio-Hub-Looker-Studio-Portfolio-Page-/refs/heads/main/e1.png" alt="Visual" />
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ——— (NOT REMOVING ANY SECTION — your Works, Testimonials, Process, ROI, FAQ, CTA remain exactly as in canvas) ——— -->
+    <!-- TOOLS -->
+    <section class="segment">
+      <div class="section-title">Integrations</div>
+      <div class="section-sub">We work with the tools teams already use.</div>
+      <div style="margin-top:14px;display:flex;gap:16px;align-items:center">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Google_Sheets_logo_%282014-2020%29.svg" style="height:26px" alt="Sheets">
+        <img src="https://www.gstatic.com/images/branding/product/2x/apps_script_48dp.png" style="height:26px" alt="Apps Script">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Google_Drive_logo.png" style="height:26px" alt="Drive">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" style="height:26px" alt="Gmail">
+      </div>
+    </section>
 
-  <!-- ——— CONTACT ——— -->
-  <section id="contact" class="py-20 bg-[linear-gradient(180deg,var(--soft2)_0%,#ffffff_100%)] border-t border-gray-100">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-      <h2 class="section-title">Get started</h2>
-      <p class="section-sub mt-2">Free 30-minute discovery — no commitment</p>
+    <!-- SOLUTIONS -->
+    <section id="solutions" class="segment">
+      <div class="section-title">Solutions tailored for ops</div>
+      <div class="section-sub">Lightweight, resilient automations: reconciliations, CRM, dashboards and more.</div>
 
-      <form id="contactForm" class="mt-8 space-y-4 text-left">
-        <input name="name" class="w-full p-3 border rounded" placeholder="Your name" required />
-        <input name="email" class="w-full p-3 border rounded" placeholder="Email" required />
-        <input name="company" class="w-full p-3 border rounded" placeholder="Company" />
-        <textarea name="message" class="w-full p-3 border rounded" rows="4" placeholder="Your message"></textarea>
-        <button class="px-5 py-3 bg-[var(--primary)] text-white rounded-full">Submit</button>
-      </form>
-    </div>
-  </section>
+      <div class="grid-3">
+        <div class="pill">
+          <h4>Operations Automation</h4>
+          <p>Scheduled reconciliations, alerts and exception workflows with logs.</p>
+        </div>
+        <div class="pill">
+          <h4>Sheets CRM</h4>
+          <p>Minimal, audit-friendly CRM layers with role views and validation.</p>
+        </div>
+        <div class="pill">
+          <h4>Dashboards & Syncs</h4>
+          <p>Secure API syncs and executive dashboards refreshed on schedule.</p>
+        </div>
+      </div>
+    </section>
 
-  <!-- ——— FOOTER ——— -->
-  <footer class="py-10 border-t border-gray-200 text-center text-sm text-gray-500">
-    <div>© 2025 AutomateOps. All rights reserved.</div>
-  </footer>
+    <!-- WORKS -->
+    <section id="works" class="segment">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div class="section-title">Select builds</div>
+          <div class="section-sub">Production-ready automations we've shipped.</div>
+        </div>
+        <a href="#contact" style="color:var(--muted);text-decoration:none">Request a demo →</a>
+      </div>
 
-  <!-- ——— SCRIPTS (Your existing JS logic preserved exactly) ——— -->
+      <!-- marquee lanes -->
+      <style>
+        .marquee-lane{position:relative;overflow:hidden;padding:14px 0}
+        .marquee-track{display:flex;gap:16px;align-items:stretch;will-change:transform}
+        .scroll-left{animation:scroll-left 18s linear infinite}
+        .scroll-right{animation:scroll-right 22s linear infinite}
+        @keyframes scroll-left{from{transform:translateX(0)}to{transform:translateX(-50%)} }
+        @keyframes scroll-right{from{transform:translateX(0)}to{transform:translateX(50%)} }
+        .marquee-inner{display:flex;gap:16px}
+        .work-card{min-width:280px;border-radius:14px;overflow:hidden;position:relative;border:1px solid rgba(13,43,102,0.03);background:white;box-shadow:0 12px 32px rgba(13,43,102,0.04)}
+        .work-card img{width:100%;height:180px;object-fit:cover;display:block}
+        .work-card .meta{padding:14px;background:linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0.9))}
+        .work-card .meta .k{color:var(--muted);font-size:13px}
+        .work-card .meta h5{margin:6px 0 0;font-weight:700}
+        .work-card .actions{margin-top:10px;display:flex;gap:8px}
+      </style>
+
+      <!-- Lane 1 -->
+      <div class="marquee-lane">
+        <div class="marquee-track scroll-left">
+          <div class="marquee-inner">
+            <div class="work-card"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg"><div class="meta"><div class="k">Bulk Email</div><h5>Personalized sends</h5><div class="actions"><button class="btn-ghost" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">View</button><a class="btn-ghost" href="#contact">Request</a></div></div></div>
+            <div class="work-card"><img src="https://img.youtube.com/vi/3fumBcKC6RE/hqdefault.jpg"><div class="meta"><div class="k">Batch PDF</div><h5>Branded slips</h5><div class="actions"><button class="btn-ghost" data-video="https://www.youtube.com/embed/3fumBcKC6RE">View</button><a class="btn-ghost" href="#contact">Request</a></div></div></div>
+            <div class="work-card"><img src="https://img.youtube.com/vi/tVj0ZTS4WF4/hqdefault.jpg"><div class="meta"><div class="k">Scheduling</div><h5>Bookings & assignments</h5><div class="actions"><button class="btn-ghost" data-video="https://www.youtube.com/embed/tVj0ZTS4WF4">View</button><a class="btn-ghost" href="#contact">Request</a></div></div></div>
+            <!-- duplicate for seamless loop -->
+            <div class="work-card"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg"><div class="meta"><div class="k">Bulk Email</div><h5>Personalized sends</h5><div class="actions"><button class="btn-ghost" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">View</button><a class="btn-ghost" href="#contact">Request</a></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lane 2 -->
+      <div class="marquee-lane">
+        <div class="marquee-track scroll-right">
+          <div class="marquee-inner">
+            <div class="work-card"><img src="https://img.youtube.com/vi/aqz-KE-bpKQ/hqdefault.jpg"><div class="meta"><div class="k">Inventory Sync</div><h5>Stock automation</h5><div class="actions"><button class="btn-ghost" data-video="https://www.youtube.com/embed/aqz-KE-bpKQ">View</button><a class="btn-ghost" href="#contact">Request</a></div></div></div>
+            <div class="work-card"><img src="https://img.youtube.com/vi/oHg5SJYRHA0/hqdefault.jpg"><div class="meta"><div class="k">CRM Bridge</div><h5>2‑way sync</h5><div class="actions"><button class="btn-ghost" data-video="https://www.youtube.com/embed/oHg5SJYRHA0">View</button><a class="btn-ghost" href="#contact">Request</a></div></div></div>
+            <div class="work-card"><img src="https://img.youtube.com/vi/2vjPBrBU-TM/hqdefault.jpg"><div class="meta"><div class="k">Ops Dashboard</div><h5>Real‑time metrics</h5><div class="actions"><button class="btn-ghost" data-video="https://www.youtube.com/embed/2vjPBrBU-TM">View</button><a class="btn-ghost" href="#contact">Request</a></div></div></div>
+            <!-- duplicate -->
+            <div class="work-card"><img src="https://img.youtube.com/vi/aqz-KE-bpKQ/hqdefault.jpg"><div class="meta"><div class="k">Inventory Sync</div><h5>Stock automation</h5><div class="actions"><button class="btn-ghost" data-video="https://www.youtube.com/embed/aqz-KE-bpKQ">View</button><a class="btn-ghost" href="#contact">Request</a></div></div></div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- PROCESS --> -->
+    <section id="process" class="segment">
+      <div class="section-title">Our process</div>
+      <div class="section-sub">Fast, collaborative and outcome-focused.</div>
+
+      <div class="process">
+        <div class="step"><div class="num">01</div><div style="margin-top:8px;font-weight:700">Discovery</div><div style="margin-top:6px;color:var(--muted)">Map the workflow & goals</div></div>
+        <div class="step"><div class="num">02</div><div style="margin-top:8px;font-weight:700">Design</div><div style="margin-top:6px;color:var(--muted)">Prototype & agree scope</div></div>
+        <div class="step"><div class="num">03</div><div style="margin-top:8px;font-weight:700">Build</div><div style="margin-top:6px;color:var(--muted)">Implement, test, iterate</div></div>
+        <div class="step"><div class="num">04</div><div style="margin-top:8px;font-weight:700">Enable</div><div style="margin-top:6px;color:var(--muted)">Train & handover</div></div>
+      </div>
+    </section>
+
+    <!-- ROI -->
+    <section id="roi" class="segment">
+      <div style="display:flex;justify-content:space-between;gap:20px;align-items:center">
+        <div>
+          <div class="section-title">Quick ROI snapshot</div>
+          <div class="section-sub">Estimate weekly savings for a pilot.</div>
+        </div>
+        <div style="min-width:360px">
+          <div class="roi">
+            <div class="inputs" style="flex:1">
+              <input id="h" class="input" type="number" value="8" placeholder="hrs" />
+              <input id="r" class="input" type="number" value="1" placeholder="runs" />
+              <input id="rate" class="input" type="number" value="50" placeholder="$ / hr" />
+              <input id="pct" class="input" type="number" value="75" placeholder="% automation" />
+            </div>
+            <div style="margin-left:12px">
+              <button id="calcBtn" style="padding:12px 14px;border-radius:12px;border:none;background:linear-gradient(90deg,var(--brand),var(--brand-2));color:white;font-weight:700">Calculate</button>
+            </div>
+          </div>
+          <div style="margin-top:12px"><div class="section-sub">Estimated weekly savings</div><div id="roiVal" style="font-size:22px;font-weight:800;margin-top:8px">$0</div><div id="roiBreak" style="color:var(--muted);font-size:13px;margin-top:6px"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="segment">
+      <div class="section-title">What clients say</div>
+      <div class="section-sub">Short feedback from practitioners.</div>
+
+      <div class="test-grid">
+        <div class="test-card"><div style="font-weight:700">"Cut weekly reporting from 8 hours to 15 minutes."</div><div style="color:var(--muted);margin-top:10px">— Sarah Mitchell, Operations</div></div>
+        <div class="test-card"><div style="font-weight:700">"Sheets CRM removed 90% of manual work."</div><div style="color:var(--muted);margin-top:10px">— Marcus Chen, Sales</div></div>
+        <div class="test-card"><div style="font-weight:700">"Eliminated 90% of reconciliation errors."</div><div style="color:var(--muted);margin-top:10px">— Emily Rodriguez, Finance</div></div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="segment">
+      <div class="section-title">FAQ</div>
+      <div class="section-sub">Common questions answered.</div>
+
+      <div class="faq-grid">
+        <details>
+          <summary>How fast can we get a pilot?</summary>
+          <p>Typically within 1 week, scoped to deliver measurable first-week wins.</p>
+        </details>
+        <details>
+          <summary>What does a pilot include?</summary>
+          <p>A scoped workflow, implementation, training, and a results report.</p>
+        </details>
+        <details>
+          <summary>How do you price work?</summary>
+          <p>Pilots are fixed-price; larger projects use milestone billing with acceptance criteria.</p>
+        </details>
+        <details>
+          <summary>Can you access our systems?</summary>
+          <p>Yes — we integrate securely using OAuth, service accounts and scoped permissions.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="segment">
+      <div class="section-title">Get started — Free 30-minute discovery</div>
+      <div class="section-sub">No commitment. We scope a pilot and show first-week value.</div>
+
+      <div class="contact-panel" style="margin-top:14px">
+        <div style="padding:18px;border-radius:14px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid rgba(13,43,102,0.03)">
+          <h4 style="margin:0;font-weight:700">Ready to reduce manual work?</h4>
+          <p style="margin-top:8px;color:var(--muted)">Book a discovery and we’ll scope a pilot tailored to your needs.</p>
+          <div style="margin-top:14px"><a class="cta" href="#contact">Book discovery</a></div>
+        </div>
+
+        <form id="contactForm" style="padding:18px;border-radius:14px;background:transparent;border:1px solid rgba(13,43,102,0.03)">
+          <div class="field"><input name="name" placeholder="Your name" required></div>
+          <div class="field"><input name="email" type="email" placeholder="Email" required></div>
+          <div class="field"><input name="company" placeholder="Company"></div>
+          <div class="field"><textarea name="message" rows="4" placeholder="Describe the workflow" required></textarea></div>
+          <div style="display:flex;justify-content:flex-end;gap:8px"><button type="submit">Request discovery</button><button type="button" id="clearBtn">Clear</button></div>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      <div style="display:flex;gap:12px;align-items:center"><div style="font-weight:700;color:var(--brand)">AutomateOps</div><div style="color:var(--muted)">© <span id="year"></span></div></div>
+      <div style="display:flex;gap:10px;color:var(--muted)"><a href="#">Twitter</a><a href="#">LinkedIn</a><a href="#">GitHub</a></div>
+    </footer>
+  </div>
+
+  <!-- modal -->
+  <div class="modal" id="videoModal" role="dialog" aria-hidden="true">
+    <div class="box"><iframe id="modalFrame" src="" style="width:100%;height:520px;border:0" allow="autoplay;picture-in-picture" allowfullscreen></iframe></div>
+  </div>
+
   <script>
-    /* Everything from your canvas JS is preserved exactly */
-    /* View-modal logic, testimonial carousel, ROI calculator, FAQ toggles */
-  </script>
+    document.getElementById('year').textContent = new Date().getFullYear();
 
+    // ROI calculation
+    const calc = (h,r,rate,pct)=> Math.round(h * r * rate * (pct/100));
+    document.getElementById('calcBtn').addEventListener('click', ()=>{
+      const h = Number(document.getElementById('h').value||0);
+      const r = Number(document.getElementById('r').value||0);
+      const rate = Number(document.getElementById('rate').value||0);
+      const pct = Number(document.getElementById('pct').value||0);
+      const weekly = calc(h,r,rate,pct);
+      document.getElementById('roiVal').textContent = '$' + weekly.toLocaleString();
+      document.getElementById('roiBreak').textContent = `${h} hrs × ${r} runs × $${rate}/hr × ${pct}% = $${weekly}/wk`;
+    });
+
+    // open video modal
+    document.querySelectorAll('[data-video]').forEach(btn=> btn.addEventListener('click', ()=>{
+      const url = btn.dataset.video;
+      const modal = document.getElementById('videoModal');
+      const frame = document.getElementById('modalFrame');
+      frame.src = url + (url.includes('?')? '&':'?') + 'autoplay=1';
+      modal.style.display = 'flex'; modal.setAttribute('aria-hidden','false');
+    }));
+
+    // close modal on backdrop click or Escape
+    const modal = document.getElementById('videoModal');
+    modal.addEventListener('click', (e)=>{ if(e.target === modal){ modal.style.display='none'; document.getElementById('modalFrame').src=''; modal.setAttribute('aria-hidden','true'); } });
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.style.display==='flex'){ modal.style.display='none'; document.getElementById('modalFrame').src=''; modal.setAttribute('aria-hidden','true'); } });
+
+    // contact form demo
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', (e)=>{ e.preventDefault(); alert('Thanks — discovery requested. We will follow up by email.'); form.reset(); });
+    document.getElementById('clearBtn').addEventListener('click', ()=> form.reset());
+  </script>
 </body>
 </html>
