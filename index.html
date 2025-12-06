@@ -99,7 +99,108 @@
 
     @media (max-width:980px){ .faq-grid{ grid-template-columns:1fr } .carousel-controls{ display:none } }
     @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+
+
+        /* --- Works section styles (standalone) --- */
+    .tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+    .tab-btn{padding:.55rem .9rem;border-radius:10px;background:#fff;border:1px solid rgba(7,16,37,0.06);cursor:pointer;font-weight:600}
+    .tab-btn[aria-selected="true"]{background:linear-gradient(90deg,var(--primary),var(--accent));color:#fff;border:0}
+
+    .panel-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    @media (max-width:640px){
+      .container{padding:18px}
+      /* stop animations and stack cards vertically for mobile */
+      .marquee-lane{padding:8px 0}
+      .marquee-track{gap:12px; display:block; overflow:visible}
+      .marquee-inner{display:flex;flex-direction:column;gap:12px}
+      .work-card{min-width:100%;width:100%;border-radius:12px}
+      .thumb-wrap{padding-top:56.25%}
+      .marquee-lane::before,.marquee-lane::after{display:none}
+      .scroll-left,.scroll-right{animation:none}
+
+      /* larger play button and touch targets */
+      .play-overlay{width:64px;height:64px}
+      .play-overlay svg{width:26px;height:26px}
+      .work-actions{display:flex;flex-direction:column;gap:10px;padding:14px}
+      .btn{width:100%;padding:12px}
+
+      /* hide gradient overlays on smaller screens for clarity */
+      .marquee-overlay-left,.marquee-overlay-right{display:none}
+
+      /* modal sizing on mobile */
+      .modal{width:96vw}
+      .modal iframe{height:56vw}
+    } }
+
+    .work-card{border-radius:12px;overflow:hidden;border:1px solid rgba(7,16,37,0.06);box-shadow:0 10px 30px rgba(7,16,37,0.04);background:#fff;display:flex;flex-direction:column}
+    .work-card .p-4{padding:16px}
+    .work-card h3{margin:8px 0}
+    .thumb-wrap{position:relative;padding-top:56.25%;background:#000;overflow:hidden}
+    .thumb-wrap img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;display:block}
+    .play-overlay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;opacity:0.98}
+    .play-overlay svg{width:22px;height:22px;fill:white}
+    .work-actions{display:flex;gap:8px;padding:12px}
+    .btn{padding:8px 12px;border-radius:999px;border:1px solid rgba(7,16,37,0.06);background:#fff;cursor:pointer}
+    .btn.primary{background:var(--primary);color:#fff;border:0}
+
+    /* NEW: continuous marquee lanes (seamless feel) */
+    .marquee-lane{position:relative;overflow:hidden;padding:12px 0}
+    .marquee-lane::before, .marquee-lane::after{content:'';position:absolute;top:0;bottom:0;width:80px;pointer-events:none}
+    .marquee-lane::before{left:0;background:linear-gradient(90deg,rgba(255,255,255,1),rgba(255,255,255,0));}
+    .marquee-lane::after{right:0;background:linear-gradient(270deg,rgba(255,255,255,1),rgba(255,255,255,0));}
+    /* note: if background behind lanes isn't white, change rgba to match */
+
+    .marquee-track{display:flex;gap:16px;align-items:stretch;will-change:transform}
+    .marquee-inner{display:flex;gap:16px}
+
+    /* each card fixed min-width to ensure at least one always visible */
+    .work-card{min-width:280px}
+
+    /* continuous scroll animations (traffic) */
+    .scroll-left{animation:scroll-left linear infinite}
+    .scroll-right{animation:scroll-right linear infinite}
+    .scroll-left{animation-duration:14s}
+    .scroll-right{animation-duration:18s}
+
+    @keyframes scroll-left{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    @keyframes scroll-right{from{transform:translateX(0)}to{transform:translateX(50%)}}
+
+    /* responsive tuning */
+    @media (max-width:900px){ .scroll-left{animation-duration:22s} .scroll-right{animation-duration:26s} }
+    @media (max-width:640px){ .marquee-lane{padding:0} .marquee-track{gap:12px} .work-card{min-width:100%;} .scroll-left,.scroll-right{animation:none} .marquee-lane::before,.marquee-lane::after{display:none} }
+
+    /* soften the far edges (for non-white backgrounds, match stop color) */
+    .marquee-overlay-left, .marquee-overlay-right{position:absolute;top:0;bottom:0;width:120px;pointer-events:none}
+    .marquee-overlay-left{left:0;background:linear-gradient(90deg,rgba(255,255,255,1) 0%, rgba(255,255,255,0) 60%)}
+    .marquee-overlay-right{right:0;background:linear-gradient(270deg,rgba(255,255,255,1) 0%, rgba(255,255,255,0) 60%)}
+
+    /* --- Testimonial carousel styles --- */
+    .carousel{position:relative;overflow:hidden}
+    .carousel-track{display:flex;transition:transform .6s cubic-bezier(.2,.9,.25,1)}
+    .carousel-item{min-width:100%;box-sizing:border-box;padding:12px}
+    .carousel-card{background:linear-gradient(135deg, rgba(76,139,245,0.06), rgba(111,97,255,0.03));padding:28px;border-radius:16px;box-shadow:0 14px 40px rgba(7,16,37,0.06);max-width:720px;margin:0 auto;}
+    .carousel-dots{display:flex;gap:8px;justify-content:center;margin-top:12px}
+    .carousel-dot{width:10px;height:10px;border-radius:999px;background:rgba(7,16,37,0.12);cursor:pointer;border:0}
+    .carousel-dot.active{background:var(--primary);width:28px;border-radius:999px}
+
+    .controls{display:flex;gap:8px;justify-content:center;margin-top:12px}
+
+    /* small utility */
+    .muted{color:var(--muted)}
+
+    @media (prefers-reduced-motion: reduce){
+      .scroll-left,.scroll-right{animation:none}
+      .carousel-track{transition:none}
+    }
+
+    /* modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;pointer-events:none;transition:opacity .2s ease}
+    .modal-backdrop.open{opacity:1;pointer-events:auto}
+    .modal{width:min(920px,96vw);background:#000;border-radius:12px;overflow:hidden}
+    .modal iframe{width:100%;height:56vw;max-height:62vh;border:0;display:block}
+    @media(max-width:640px){ .modal iframe{height:62vw} }
   </style>
+  
 </head>
 <body class="antialiased">
 
@@ -222,13 +323,109 @@
     </div>
   </section>
 
-  <!-- WORKS / BUILT SOLUTIONS -->
-  <section id="works" class="py-20 bg-[linear-gradient(180deg,#ffffff_0%,var(--soft1)_100%)] border-t border-gray-100"" class="py-20 bg-white border-t border-gray-100">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="text-center max-w-2xl mx-auto mb-8">
-        <h2 class="section-title">Select builds we've delivered</h2>
-        <p class="section-sub mt-2">Production‑ready automations built on Google Sheets + Apps Script — practical, production-grade and configurable.</p>
+<div class="container">
+
+    <!-- WORKS -->
+    <section id="works">
+      <h2 style="text-align:center;margin:0;font-size:20px">Select builds we've delivered</h2>
+      <p class="muted" style="text-align:center;margin-top:6px">Practical automations — production ready.</p>
+
+      <div style="margin-top:18px">
+
+        <!-- Lane 1: scrolls left -->
+        <div class="marquee-lane" aria-hidden="false">
+          <div class="marquee-track scroll-left" data-direction="left" tabindex="0">
+            <div class="marquee-inner">
+              <!-- cards: use thumbnails (youtube thumbnails as placeholders) and data-video attribute -->
+              <div class="work-card" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                <div class="p-4"><div class="muted">Bulk Email</div><h3>Personalized sends</h3><p class="muted">Templates & reply capture.</p></div>
+                <div class="thumb-wrap"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="Bulk Email thumbnail"><div class="play-overlay" aria-hidden><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z"></path></svg></div></div>
+                <div class="work-actions"><a class="btn" href="#contact">Request</a><button class="btn primary view-btn">View</button></div>
+              </div>
+
+              <div class="work-card" data-video="https://www.youtube.com/embed/3fumBcKC6RE">
+                <div class="p-4"><div class="muted">Payment Slip</div><h3>Batch PDF export</h3><p class="muted">Branded slips & email.</p></div>
+                <div class="thumb-wrap"><img src="https://img.youtube.com/vi/3fumBcKC6RE/hqdefault.jpg" alt="Payment Slip thumbnail"><div class="play-overlay" aria-hidden><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z"></path></svg></div></div>
+                <div class="work-actions"><a class="btn" href="#contact">Request</a><button class="btn primary view-btn">View</button></div>
+              </div>
+
+              <div class="work-card" data-video="https://www.youtube.com/embed/tVj0ZTS4WF4">
+                <div class="p-4"><div class="muted">Cleaning System</div><h3>Bookings & scheduling</h3><p class="muted">Auto assignments & invoicing.</p></div>
+                <div class="thumb-wrap"><img src="https://img.youtube.com/vi/tVj0ZTS4WF4/hqdefault.jpg" alt="Cleaning thumbnail"><div class="play-overlay" aria-hidden><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z"></path></svg></div></div>
+                <div class="work-actions"><a class="btn" href="#contact">Request</a><button class="btn primary view-btn">View</button></div>
+              </div>
+
+              <div class="work-card" data-video="https://www.youtube.com/embed/FTQbiNvZqaY">
+                <div class="p-4"><div class="muted">Reconciliation</div><h3>Auto match & alerts</h3><p class="muted">Exceptions & audit logs.</p></div>
+                <div class="thumb-wrap"><img src="https://img.youtube.com/vi/FTQbiNvZqaY/hqdefault.jpg" alt="Reconciliation thumbnail"><div class="play-overlay" aria-hidden><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z"></path></svg></div></div>
+                <div class="work-actions"><a class="btn" href="#contact">Request</a><button class="btn primary view-btn">View</button></div>
+              </div>
+
+              <!-- duplicate set for continuity -->
+              <div class="work-card" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ"> <div class="p-4"><div class="muted">Bulk Email</div><h3>Personalized sends</h3><p class="muted">Templates & reply capture.</p></div><div class="thumb-wrap"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="Bulk Email"><div class="play-overlay" aria-hidden><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="work-actions"><a class="btn" href="#contact">Request</a><button class="btn primary view-btn">View</button></div></div>
+              <div class="work-card" data-video="https://www.youtube.com/embed/3fumBcKC6RE"> <div class="p-4"><div class="muted">Payment Slip</div><h3>Batch PDF export</h3><p class="muted">Branded slips & email.</p></div><div class="thumb-wrap"><img src="https://img.youtube.com/vi/3fumBcKC6RE/hqdefault.jpg" alt="Payment Slip"><div class="play-overlay" aria-hidden><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><div class="work-actions"><a class="btn" href="#contact">Request</a><button class="btn primary view-btn">View</button></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lane 2: scrolls right (unique content) -->
+        <div class="marquee-lane" aria-hidden="false">
+          <div class="marquee-track scroll-right" data-direction="right" tabindex="0">
+            <div class="marquee-inner">
+
+              <div class="work-card" data-video="https://www.youtube.com/embed/aqz-KE-bpKQ">
+                <div class="p-4"><div class="muted">Inventory Sync</div><h3>Stock level automation</h3><p class="muted">Live updates across channels.</p></div>
+                <div class="thumb-wrap"><img src="https://img.youtube.com/vi/aqz-KE-bpKQ/hqdefault.jpg" alt="Inventory"><div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+                <div class="work-actions"><a class="btn" href="#contact">Request</a><button class="btn primary view-btn">View</button></div>
+              </div>
+
+              <div class="work-card" data-video="https://www.youtube.com/embed/oHg5SJYRHA0">
+                <div class="p-4"><div class="muted">CRM Bridge</div><h3>2‑way data sync</h3><p class="muted">Sheets ↔ CRM mapping.</p></div>
+                <div class="thumb-wrap"><img src="https://img.youtube.com/vi/oHg5SJYRHA0/hqdefault.jpg" alt="CRM Bridge"><div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+                <div class="work-actions"><a class="btn" href="#contact">Request</a><button class="btn primary view-btn">View</button></div>
+              </div>
+
+              <div class="work-card" data-video="https://www.youtube.com/embed/2vjPBrBU-TM">
+                <div class="p-4"><div class="muted">Ops Dashboard</div><h3>Real‑time visibility</h3><p class="muted">KPIs auto‑refreshed.</p></div>
+                <div class="thumb-wrap"><img src="https://img.youtube.com/vi/2vjPBrBU-TM/hqdefault.jpg" alt="Dashboard"><div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+                <div class="work-actions"><a class="btn" href="#contact">Request</a><button class="btn primary view-btn">View</button></div>
+              </div>
+
+              <div class="work-card" data-video="https://www.youtube.com/embed/djV11Xbc914">
+                <div class="p-4"><div class="muted">Workflow Engine</div><h3>Rules‑based automation</h3><p class="muted">Complex logic simplified.</p></div>
+                <div class="thumb-wrap"><img src="https://img.youtube.com/vi/djV11Xbc914/hqdefault.jpg" alt="Workflow"><div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+                <div class="work-actions"><a class="btn" href="#contact">Request</a><button class="btn primary view-btn">View</button></div>
+              </div>
+
+              <!-- duplicate set for continuity -->
+
+              <div class="work-card" data-video="https://www.youtube.com/embed/aqz-KE-bpKQ">
+                <div class="p-4"><div class="muted">Inventory Sync</div><h3>Stock level automation</h3><p class="muted">Live updates across channels.</p></div>
+                <div class="thumb-wrap"><img src="https://img.youtube.com/vi/aqz-KE-bpKQ/hqdefault.jpg" alt="Inventory"><div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+                <div class="work-actions"><a class="btn" href="#contact">Request</a><button class="btn primary view-btn">View</button></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- End Lane 2 -->
+             
+
+            </div>
+          </div>
+        </div>
+
       </div>
+    </section>
+
+    <hr style="margin:28px 0;border:none;border-top:1px solid rgba(7,16,37,0.06)">
+
+    <!-- Video modal (hidden) -->
+  <div id="videoModal" class="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Video player">
+      <iframe id="modalFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
 
       <!-- Tabbed showcase -->
       <div class="max-w-5xl mx-auto">
@@ -447,48 +644,98 @@
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
-  <section id="testimonials" class="py-20">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <h2 class="section-title">What our clients say</h2>
-      <p class="section-sub mt-2">Real feedback from real operators.</p>
 
-      <div class="mt-8" style="max-width:56rem;margin:0 auto;">
-        <style>
-          .testimonial-card-centered{ border:1px solid #f3f4f6; padding:28px; padding-left: 35px; padding-right: 35px; border-radius:16px; margin-left:25px; margin-right:25px; background:white; box-shadow:0 20px 60px rgba(76,139,245,0.08); }
-          .testimonial-quote{ font-size:1.25rem; font-weight:500; margin-bottom:1.25rem; line-height:1.6 }
-          .testimonial-meta{ display:flex; align-items:center; gap:12px }
-          .testimonial-avatar{ width:56px; height:56px; border-radius:50%; background:#f1f5f9; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--primary) }
-          .testimonial-dots{ display:flex; gap:8px; justify-content:center; margin-top:18px }
-          .testimonial-dot{ width:10px; height:10px; border-radius:999px; background: rgba(76,139,245,0.15); cursor:pointer; transition: all .25s ease }
-          .testimonial-dot.active{ width:36px; background:var(--primary); border-radius:999px }
-        </style>
+  <div class="container">
+<!-- TESTIMONIALS -->
+    <section id="testimonials">
+      <style>
+        /* Scoped styles for testimonials spacing & mobile optimization */
+        .testimonials-wrap{margin-top:64px;padding-top:18px;padding-bottom:18px}
+        .testimonials-hero-title{font-size:20px;text-align:center;margin:0}
+        .testimonials-sub{color:var(--muted);text-align:center;margin-top:8px}
+        .testimonial-inner{margin-top:26px}
 
-        <div id="testimonialContent" class="testimonial-card-centered">
-          <div style="font-size:3rem;color:rgba(76,139,245,0.12);margin-bottom:8px">“</div>
-          <p id="testimonialQuote" class="testimonial-quote">AutomateOps cut our reporting time from 8 hours to just 15 minutes. Our team now focuses on strategy instead of busywork.</p>
+        /* increase card padding on mobile and give more breathing room */
+        @media (max-width:640px){
+          .testimonials-wrap{margin-top:40px;padding-top:22px;padding-bottom:26px}
+          .carousel-card{padding:20px}
+          .carousel-item{padding:18px}
+          .controls{margin-top:16px}
+          .carousel-dots{margin-top:14px}
+        }
+      </style>
 
-          <div class="testimonial-meta">
-            <div id="testimonialInitials" class="testimonial-avatar">SM</div>
-            <div style="flex:1;text-align:left">
-              <div id="testimonialName" style="font-weight:700">Sarah Mitchell</div>
-              <div id="testimonialRole" style="font-size:0.9rem;color:var(--muted)">Operations Manager, TechFlow</div>
+      <div class="testimonials-wrap">
+        <h2 class="testimonials-hero-title">What our clients say</h2>
+        <p class="testimonials-sub">Real feedback from real operators.</p>
+
+        <div class="testimonial-inner">
+          <div class="carousel" id="testimonialCarousel" tabindex="0" aria-roledescription="carousel" aria-label="Client testimonials">
+            <div class="carousel-track" id="carouselTrack">
+
+              <div class="carousel-item" role="group" aria-roledescription="slide" aria-label="1 of 3">
+                <div class="carousel-card">
+                  <p class="text-lg" style="margin:0;font-weight:600">"AutomateOps cut our weekly reporting from 8 hours to 15 minutes."</p>
+                  <div style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+                    <div style="display:flex;align-items:center;gap:10px">
+                      <div style="width:48px;height:48px;border-radius:8px;background:#fff;border:1px solid rgba(7,16,37,0.06);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--primary)">SM</div>
+                      <div>
+                        <div style="font-weight:700">Sarah Mitchell</div>
+                        <div class="muted" style="font-size:13px">Operations Manager, TechFlow</div>
+                      </div>
+                    </div>
+                    <div style="color:var(--primary);font-weight:700">★★★★★</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-item" role="group" aria-roledescription="slide" aria-label="2 of 3">
+                <div class="carousel-card">
+                  <p class="text-lg" style="margin:0;font-weight:600">"Custom Sheets CRM removed 90% of manual work and improved pipeline accuracy."</p>
+                  <div style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+                    <div style="display:flex;align-items:center;gap:10px">
+                      <div style="width:48px;height:48px;border-radius:8px;background:#fff;border:1px solid rgba(7,16,37,0.06);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--primary)">MC</div>
+                      <div>
+                        <div style="font-weight:700">Marcus Chen</div>
+                        <div class="muted" style="font-size:13px">Sales Director, GrowthPoint</div>
+                      </div>
+                    </div>
+                    <div style="color:var(--primary);font-weight:700">★★★★★</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-item" role="group" aria-roledescription="slide" aria-label="3 of 3">
+                <div class="carousel-card">
+                  <p class="text-lg" style="margin:0;font-weight:600">"We eliminated 90% of reconciliation errors with dashboards + automation."</p>
+                  <div style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+                    <div style="display:flex;align-items:center;gap:10px">
+                      <div style="width:48px;height:48px;border-radius:8px;background:#fff;border:1px solid rgba(7,16,37,0.06);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--primary)">ER</div>
+                      <div>
+                        <div style="font-weight:700">Emily Rodriguez</div>
+                        <div class="muted" style="font-size:13px">Finance Lead, Nexus Corp</div>
+                      </div>
+                    </div>
+                    <div style="color:var(--primary);font-weight:700">★★★★★</div>
+                  </div>
+                </div>
+              </div>
+
             </div>
-            <div style="display:flex;align-items:center;gap:6px">
-              <div style="color:var(--primary);">★★★★★</div>
-              <div id="testimonialRating" style="font-weight:600;color:var(--muted)">4.9</div>
+
+            <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Testimonial navigation"></div>
+
+            <div class="controls" aria-hidden="false">
+              <button id="prevTest" class="btn" aria-label="Previous testimonial">&#10094;</button>
+              <button id="nextTest" class="btn" aria-label="Next testimonial">&#10095;</button>
             </div>
+
           </div>
         </div>
-
-        <div class="testimonial-dots" id="testimonialDots">
-          <button class="testimonial-dot active" data-testimonial="0" aria-label="Show testimonial 1"></button>
-          <button class="testimonial-dot" data-testimonial="1" aria-label="Show testimonial 2"></button>
-          <button class="testimonial-dot" data-testimonial="2" aria-label="Show testimonial 3"></button>
-        </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+  </div>  
 
   <!-- FAQ -->
   <section class="py-16 border-t border-gray-100">
@@ -696,6 +943,145 @@
     showTestimonial(0);
   })();
 </script>
+
+
+  <script>
+    // small helper used by legacy View full buttons (kept for compatibility)
+    function openDemoPanel(url){ openVideoModal(url); }
+
+    // Tabs — keep ARIA and keyboard (unused here but left intact)
+    (function(){
+      const tabs = document.querySelectorAll('.tab-btn');
+      tabs.forEach(t=> t.addEventListener('click', ()=>{
+        tabs.forEach(x=> x.setAttribute('aria-selected','false'));
+        t.setAttribute('aria-selected','true');
+        const panels = document.querySelectorAll('[role="tabpanel"]');
+        panels.forEach(p=> p.hidden = true);
+        const target = document.getElementById(t.dataset.target);
+        if(target) target.hidden = false;
+        const first = target && target.querySelector('button, a'); if(first) first.focus();
+      }));
+      tabs.forEach((t,i)=> t.addEventListener('keydown', e=>{ if(e.key==='ArrowRight') tabs[(i+1)%tabs.length].focus(); if(e.key==='ArrowLeft') tabs[(i-1+tabs.length)%tabs.length].focus(); }));
+    })();
+
+    // Testimonial carousel
+    (function(){
+      const track = document.getElementById('carouselTrack');
+      if(!track) return;
+      const items = Array.from(track.children);
+      const dotsWrap = document.getElementById('carouselDots');
+      let index = 0;
+      items.forEach((it,i)=>{ const d = document.createElement('button'); d.className='carousel-dot'; d.setAttribute('aria-label','Show testimonial '+(i+1)); d.addEventListener('click', ()=> goTo(i)); dotsWrap.appendChild(d); });
+      const dots = Array.from(dotsWrap.children);
+      function update(){ track.style.transform = `translateX(-${index*100}%)`; dots.forEach((d,i)=> d.classList.toggle('active', i===index)); }
+      function goTo(i){ index = (i + items.length) % items.length; update(); }
+      document.getElementById('prevTest').addEventListener('click', ()=> goTo(index-1));
+      document.getElementById('nextTest').addEventListener('click', ()=> goTo(index+1));
+      let tmr = setInterval(()=> goTo(index+1), 6000);
+      const carousel = document.getElementById('testimonialCarousel');
+      carousel.addEventListener('mouseenter', ()=> clearInterval(tmr));
+      carousel.addEventListener('mouseleave', ()=> tmr = setInterval(()=> goTo(index+1), 6000));
+      carousel.addEventListener('focusin', ()=> clearInterval(tmr));
+      carousel.addEventListener('focusout', ()=> tmr = setInterval(()=> goTo(index+1), 6000));
+      carousel.addEventListener('keydown', e=>{ if(e.key==='ArrowLeft') goTo(index-1); if(e.key==='ArrowRight') goTo(index+1); });
+      update();
+    })();
+  </script>
+
+  <script>
+    // New behavior: only the exact track the user interacts with should pause.
+    (function(){
+      const tracks = Array.from(document.querySelectorAll('.marquee-track'));
+      if(tracks.length===0) return;
+
+      function pauseTrack(track){ track.style.animationPlayState='paused'; }
+      function resumeTrack(track){ track.style.animationPlayState='running'; }
+
+      tracks.forEach(track=>{
+        // ensure running initially
+        track.style.animationPlayState = 'running';
+
+        // pointer events
+        track.addEventListener('pointerenter', ()=> pauseTrack(track));
+        track.addEventListener('pointerleave', ()=> resumeTrack(track));
+        track.addEventListener('pointerdown', ()=> pauseTrack(track));
+        track.addEventListener('pointerup', ()=> resumeTrack(track));
+
+        // touch events
+        track.addEventListener('touchstart', ()=> pauseTrack(track), {passive:true});
+        track.addEventListener('touchend', ()=> resumeTrack(track));
+
+        // focus
+        track.addEventListener('focusin', ()=> pauseTrack(track));
+        track.addEventListener('focusout', ()=> resumeTrack(track));
+
+        // enable dragging horizontally while paused for the specific track
+        let isDown=false, startX=0, scrollLeft=0;
+        track.addEventListener('mousedown', (e)=>{
+          isDown=true; startX = e.pageX - track.offsetLeft; track.style.cursor='grabbing'; pauseTrack(track);
+        });
+        track.addEventListener('mouseup', ()=>{ isDown=false; track.style.cursor=''; resumeTrack(track); });
+        track.addEventListener('mouseleave', ()=>{ if(isDown){ isDown=false; track.style.cursor=''; resumeTrack(track); } });
+        track.addEventListener('mousemove', (e)=>{ if(!isDown) return; e.preventDefault(); const x = e.pageX - track.offsetLeft; const walk = (x - startX) * 1; track.scrollLeft -= walk; });
+
+        // touch drag
+        let tStartX=0, tStartScroll=0;
+        track.addEventListener('touchstart', (e)=>{ const t = e.touches[0]; tStartX = t.pageX; tStartScroll = track.scrollLeft; pauseTrack(track); });
+        track.addEventListener('touchmove', (e)=>{ const t = e.touches[0]; const dx = tStartX - t.pageX; track.scrollLeft = tStartScroll + dx; });
+        track.addEventListener('touchend', ()=> resumeTrack(track));
+      });
+
+      // View button -> open modal with iframe src from closest .work-card[data-video]
+      const modal = document.getElementById('videoModal');
+      const modalFrame = document.getElementById('modalFrame');
+      function openVideoModal(url){ modalFrame.src = url + (url.includes('?') ? '&' : '?') + 'autoplay=1'; modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+      function closeVideoModal(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); modalFrame.src=''; document.body.style.overflow=''; }
+
+      document.addEventListener('click', (e)=>{
+        const vb = e.target.closest('.view-btn');
+        if(vb){ const card = vb.closest('.work-card'); if(card && card.dataset && card.dataset.video) openVideoModal(card.dataset.video); }
+        // click backdrop to close
+        if(e.target === modal) closeVideoModal();
+      });
+
+      // close on ESC
+      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeVideoModal(); });
+
+      // make modal closeable by clicking outside iframe (backdrop already set up)
+      modal.addEventListener('click', (e)=>{ if(e.target === modal) closeVideoModal(); });
+
+    })();
+  </script>
+
+  <script>
+    // Mobile-specific adjustments: ensure tracks become vertical stacks and reset scroll
+    (function(){
+      function applyMobileLayout(){
+        const isMobile = window.matchMedia('(max-width:640px)').matches;
+        document.querySelectorAll('.marquee-track').forEach(track => {
+          if(isMobile){
+            track.style.display = 'block';
+            track.style.overflow = 'visible';
+            const inner = track.querySelector('.marquee-inner');
+            if(inner) inner.style.flexDirection = 'column';
+            // reset any scroll offsets
+            track.scrollLeft = 0;
+            // ensure pause state (no animation)
+            track.style.animationPlayState = 'paused';
+          } else {
+            track.style.display = '';
+            const inner = track.querySelector('.marquee-inner');
+            if(inner) inner.style.flexDirection = '';
+            track.style.animationPlayState = 'running';
+          }
+        });
+      }
+      window.addEventListener('resize', applyMobileLayout);
+      window.addEventListener('orientationchange', applyMobileLayout);
+      // run on load
+      applyMobileLayout();
+    })();
+  </script>
 
 </body>
 </html>
