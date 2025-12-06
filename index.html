@@ -232,7 +232,7 @@
 
     /* Hero Section */
     .hero {
-      padding: 4rem 0;
+      padding: 3rem 0;
       min-height: calc(100vh - 80px);
       display: flex;
       align-items: center;
@@ -240,7 +240,7 @@
 
     .hero-grid {
       display: grid;
-      gap: 3rem;
+      gap: 2rem;
       align-items: center;
     }
 
@@ -259,7 +259,7 @@
     }
 
     .hero h1 {
-      font-size: 2.5rem;
+      font-size: 2rem;
       margin-bottom: 1.5rem;
     }
 
@@ -271,7 +271,7 @@
     }
 
     .hero p {
-      font-size: 1.125rem;
+      font-size: 1rem;
       color: var(--muted-fg);
       margin-bottom: 2rem;
       line-height: 1.8;
@@ -281,33 +281,33 @@
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
     }
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
     }
 
     .stat-card {
       background: rgba(38, 38, 38, 0.5);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.5rem 1rem;
+      padding: 1rem;
       backdrop-filter: blur(10px);
       text-align: center;
     }
 
     .stat-card .value {
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: 700;
       color: var(--primary);
       margin-bottom: 0.25rem;
     }
 
     .stat-card .label {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: var(--muted-fg);
     }
 
@@ -327,13 +327,13 @@
 
     /* Section */
     section {
-      padding: 4rem 0;
+      padding: 3rem 0;
       position: relative;
     }
 
     .section-header {
       text-align: center;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
     }
 
     .section-badge {
@@ -346,12 +346,12 @@
     }
 
     .section-title {
-      font-size: 2.5rem;
+      font-size: 1.75rem;
       margin-bottom: 1rem;
     }
 
     .section-desc {
-      font-size: 1.125rem;
+      font-size: 1rem;
       color: var(--muted-fg);
       max-width: 600px;
       margin: 0 auto;
@@ -361,7 +361,7 @@
     .integrations {
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      padding: 3rem 0;
+      padding: 2rem 0;
     }
 
     .integration-logos {
@@ -370,8 +370,6 @@
       justify-content: center;
       align-items: center;
       gap: 2rem;
-      opacity: 0.5;
-      filter: grayscale(1);
     }
 
     .integration-logos img {
@@ -383,13 +381,13 @@
     .grid-3 {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 1rem;
     }
 
     .grid-4 {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
     /* Card */
@@ -397,7 +395,7 @@
       background: rgba(38, 38, 38, 0.3);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 2rem;
+      padding: 1.5rem;
       backdrop-filter: blur(10px);
       transition: all 0.3s;
     }
@@ -408,25 +406,26 @@
     }
 
     .card-icon {
-      width: 56px;
-      height: 56px;
+      width: 48px;
+      height: 48px;
       background: rgba(250, 204, 21, 0.1);
       border: 1px solid rgba(250, 204, 21, 0.2);
       border-radius: var(--radius);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     .card h3 {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       margin-bottom: 0.75rem;
     }
 
     .card p {
       color: var(--muted-fg);
       line-height: 1.7;
+      font-size: 0.9rem;
     }
 
     /* Process Cards */
@@ -435,10 +434,15 @@
     }
 
     .process-num {
-      font-size: 3rem;
+      font-size: 2.5rem;
       font-weight: 700;
       color: var(--primary);
       margin-bottom: 1rem;
+    }
+
+    .process-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
     }
 
     /* Works Section */
@@ -446,7 +450,7 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
       flex-wrap: wrap;
       gap: 1rem;
     }
@@ -458,16 +462,17 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      font-size: 0.9rem;
     }
 
     .marquee-container {
       overflow: hidden;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .marquee {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.25rem;
       animation: scroll 40s linear infinite;
     }
 
@@ -486,7 +491,7 @@
     }
 
     .work-card {
-      min-width: 300px;
+      min-width: 280px;
       background: rgba(38, 38, 38, 0.3);
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -504,7 +509,7 @@
     .work-image {
       position: relative;
       overflow: hidden;
-      height: 200px;
+      height: 180px;
     }
 
     .work-image img {
@@ -530,8 +535,8 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0);
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
       background: var(--primary);
       color: var(--primary-fg);
       border-radius: 50%;
@@ -547,11 +552,11 @@
     }
 
     .work-content {
-      padding: 1.25rem;
+      padding: 1rem;
     }
 
     .work-category {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 700;
       color: var(--primary);
       text-transform: uppercase;
@@ -560,9 +565,9 @@
     }
 
     .work-title {
-      font-size: 1.125rem;
+      font-size: 1rem;
       font-weight: 600;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     .work-actions {
@@ -573,32 +578,71 @@
     .work-actions .btn {
       flex: 1;
       padding: 0.5rem 1rem;
-      font-size: 0.875rem;
+      font-size: 0.8rem;
     }
 
     /* ROI Calculator */
-    .roi-card {
-      max-width: 800px;
+    .roi-container {
+      max-width: 1100px;
       margin: 0 auto;
     }
 
     .roi-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .roi-inputs {
+      background: rgba(38, 38, 38, 0.3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .roi-result-card {
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.1), rgba(34, 197, 94, 0.05));
+      border: 2px solid rgba(250, 204, 21, 0.3);
+      border-radius: var(--radius);
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      text-align: center;
+      position: sticky;
+      top: 100px;
+    }
+
+    .roi-result-card.hidden {
+      display: none;
     }
 
     .form-group {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
+      margin-bottom: 1.25rem;
     }
 
     .form-group label {
       font-size: 0.875rem;
       font-weight: 600;
       color: var(--muted-fg);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .label-number {
+      width: 28px;
+      height: 28px;
+      background: rgba(250, 204, 21, 0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 700;
     }
 
     .form-group input,
@@ -619,18 +663,16 @@
     }
 
     .roi-result {
-      background: rgba(250, 204, 21, 0.1);
-      border: 1px solid rgba(250, 204, 21, 0.2);
-      border-radius: var(--radius);
-      padding: 2rem;
-      text-align: center;
-      margin-top: 1.5rem;
+      margin-top: 1rem;
     }
 
     .roi-result .label {
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       color: var(--muted-fg);
       margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
     }
 
     .roi-result .value {
@@ -641,28 +683,39 @@
     }
 
     .roi-result .breakdown {
-      font-size: 0.875rem;
+      font-size: 0.8rem;
       color: var(--muted-fg);
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.75rem;
+      border-radius: 8px;
+      margin-top: 1rem;
     }
 
     /* Testimonials */
+    .testimonial-carousel {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+
     .testimonial-card {
-      background: rgba(38, 38, 38, 0.3);
+      background: linear-gradient(135deg, rgba(38, 38, 38, 0.5), rgba(250, 204, 21, 0.05));
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 2rem;
+      padding: 2.5rem 2rem;
       backdrop-filter: blur(10px);
+      text-align: center;
     }
 
     .testimonial-quote {
-      font-size: 4rem;
+      font-size: 3rem;
       color: var(--primary);
       line-height: 1;
       margin-bottom: 1rem;
     }
 
     .testimonial-text {
-      font-size: 1.125rem;
+      font-size: 1.25rem;
       margin-bottom: 1.5rem;
       line-height: 1.7;
     }
@@ -670,19 +723,21 @@
     .testimonial-author {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 1rem;
     }
 
     .testimonial-avatar {
       width: 48px;
       height: 48px;
-      background: rgba(250, 204, 21, 0.2);
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.3), rgba(34, 197, 94, 0.3));
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
       color: var(--primary);
+      border: 2px solid rgba(250, 204, 21, 0.2);
     }
 
     .testimonial-info .name {
@@ -693,6 +748,28 @@
     .testimonial-info .role {
       font-size: 0.875rem;
       color: var(--muted-fg);
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .carousel-dot.active {
+      background: var(--primary);
+      width: 24px;
+      border-radius: 4px;
     }
 
     /* FAQ */
@@ -708,12 +785,12 @@
     .faq-question {
       width: 100%;
       text-align: left;
-      padding: 1.5rem;
+      padding: 1.25rem;
       background: transparent;
       border: none;
       color: var(--fg);
       font-family: inherit;
-      font-size: 1.125rem;
+      font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
@@ -746,16 +823,17 @@
     }
 
     .faq-answer-content {
-      padding: 0 1.5rem 1.5rem;
+      padding: 0 1.25rem 1.25rem;
       color: var(--muted-fg);
       line-height: 1.7;
+      font-size: 0.9rem;
     }
 
     /* Contact */
     .contact-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 1.5rem;
       max-width: 1000px;
       margin: 0 auto;
     }
@@ -768,13 +846,13 @@
     }
 
     .contact-cta h3 {
-      font-size: 2rem;
+      font-size: 1.5rem;
       margin-bottom: 1rem;
     }
 
     .contact-cta p {
-      font-size: 1.125rem;
-      margin-bottom: 2rem;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
       opacity: 0.9;
     }
 
@@ -794,7 +872,7 @@
     /* Footer */
     footer {
       border-top: 1px solid var(--border);
-      padding: 3rem 0;
+      padding: 2.5rem 0;
     }
 
     .footer-content {
@@ -813,13 +891,12 @@
 
     .footer-links {
       display: flex;
-      gap: 2rem;
+      gap: 1.5rem;
     }
 
     .footer-links a {
       color: var(--muted-fg);
       text-decoration: none;
-      font-size: 0.875rem;
       transition: color 0.2s;
     }
 
@@ -884,8 +961,8 @@
 
     /* Icons */
     .icon {
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
       stroke: currentColor;
       stroke-width: 2;
       stroke-linecap: round;
@@ -893,96 +970,54 @@
       fill: none;
     }
 
+    /* Counting Animation */
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .counting {
+      animation: countUp 0.5s ease-out;
+    }
+
     /* Responsive */
     @media (min-width: 640px) {
-      .hero h1 {
-        font-size: 3rem;
-      }
-
-      .section-title {
-        font-size: 3rem;
-      }
-
-      .roi-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .hero h1 { font-size: 2.5rem; }
+      .section-title { font-size: 2rem; }
+      .stat-card .value { font-size: 1.75rem; }
+      .stat-card .label { font-size: 0.75rem; }
+      .testimonial-text { font-size: 1.35rem; }
     }
 
     @media (min-width: 768px) {
-      .nav-links {
-        display: flex;
-      }
-
-      .mobile-menu-btn {
-        display: none;
-      }
-
-      .hero-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 4rem;
-      }
-
-      .grid-3 {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .grid-4 {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
-      .contact-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .work-card {
-        min-width: 340px;
-      }
+      .nav-links { display: flex; }
+      .mobile-menu-btn { display: none; }
+      .hero { padding: 4rem 0; }
+      .hero-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+      .hero h1 { font-size: 3rem; }
+      .section-title { font-size: 2.5rem; }
+      .grid-3 { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+      .grid-4 { grid-template-columns: repeat(4, 1fr); }
+      .contact-grid { grid-template-columns: 1fr 1fr; }
+      .work-card { min-width: 300px; }
+      .roi-grid { grid-template-columns: 1fr 1fr; }
+      section { padding: 4rem 0; }
     }
 
     @media (min-width: 1024px) {
-      .container {
-        padding: 0 2rem;
-      }
-
-      .hero {
-        padding: 6rem 0;
-      }
-
-      .hero h1 {
-        font-size: 4rem;
-      }
-
-      section {
-        padding: 6rem 0;
-      }
-
-      .section-title {
-        font-size: 3.5rem;
-      }
+      .container { padding: 0 2rem; }
+      .hero { padding: 5rem 0; }
+      .hero h1 { font-size: 3.5rem; }
+      section { padding: 5rem 0; }
+      .section-title { font-size: 2.75rem; }
+      .testimonial-text { font-size: 1.5rem; }
     }
 
-    /* Mobile Optimizations */
     @media (max-width: 767px) {
-      .hero-cta {
-        flex-direction: column;
-      }
-
-      .hero-cta .btn {
-        width: 100%;
-      }
-
-      .stats {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .work-card {
-        min-width: 280px;
-      }
-
-      .works-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+      .hero-cta { flex-direction: column; }
+      .hero-cta .btn { width: 100%; }
+      .works-header { flex-direction: column; align-items: flex-start; }
+      .roi-result-card { position: static; margin-top: 1.5rem; }
     }
   </style>
 </head>
@@ -1068,22 +1103,22 @@
 
           <div class="stats">
             <div class="stat-card">
-              <div class="value">20+</div>
+              <div class="value" id="stat1">0</div>
               <div class="label">hrs saved / wk</div>
             </div>
             <div class="stat-card">
-              <div class="value">90%</div>
+              <div class="value" id="stat2">0</div>
               <div class="label">error reduction</div>
             </div>
             <div class="stat-card">
-              <div class="value">1 wk</div>
+              <div class="value" id="stat3">0</div>
               <div class="label">pilot time</div>
             </div>
           </div>
         </div>
 
         <div class="hero-image">
-          <img src="https://raw.githubusercontent.com/Levinders/Portfolio-Hub-Looker-Studio-Portfolio-Page-/refs/heads/main/e1.png" alt="Dashboard Preview">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop" alt="Google Sheets Dashboard Analytics">
         </div>
       </div>
     </div>
@@ -1434,24 +1469,28 @@
       <div class="grid-4">
         <div class="card process-card">
           <div class="process-num">01</div>
+          <div class="process-icon">🔍</div>
           <h3>Discovery</h3>
           <p>Map the workflow & goals</p>
         </div>
 
         <div class="card process-card">
           <div class="process-num">02</div>
+          <div class="process-icon">✏️</div>
           <h3>Design</h3>
           <p>Prototype & agree scope</p>
         </div>
 
         <div class="card process-card">
           <div class="process-num">03</div>
+          <div class="process-icon">🔨</div>
           <h3>Build</h3>
           <p>Implement, test, iterate</p>
         </div>
 
         <div class="card process-card">
           <div class="process-num">04</div>
+          <div class="process-icon">🚀</div>
           <h3>Enable</h3>
           <p>Train & handover</p>
         </div>
@@ -1461,43 +1500,57 @@
 
   <!-- ROI Calculator -->
   <section id="roi">
-    <div class="container">
+    <div class="container roi-container">
       <div class="section-header">
         <div class="section-badge">Calculate</div>
         <h2 class="section-title">Quick ROI snapshot</h2>
         <p class="section-desc">Estimate weekly savings for a pilot</p>
       </div>
 
-      <div class="card roi-card">
-        <form id="roiForm" onsubmit="calculateROI(event)">
-          <div class="roi-grid">
+      <div class="roi-grid">
+        <div class="roi-inputs">
+          <form id="roiForm" onsubmit="calculateROI(event)">
             <div class="form-group">
-              <label>Hours per task</label>
+              <label>
+                <span class="label-number">1</span>
+                Hours per task
+              </label>
               <input type="number" id="hours" value="8" required>
             </div>
             <div class="form-group">
-              <label>Runs per week</label>
+              <label>
+                <span class="label-number">2</span>
+                Runs per week
+              </label>
               <input type="number" id="runs" value="1" required>
             </div>
             <div class="form-group">
-              <label>Rate ($/hr)</label>
+              <label>
+                <span class="label-number">3</span>
+                Rate ($/hr)
+              </label>
               <input type="number" id="rate" value="50" required>
             </div>
             <div class="form-group">
-              <label>% Automation</label>
+              <label>
+                <span class="label-number">4</span>
+                % Automation
+              </label>
               <input type="number" id="percent" value="75" required>
             </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">
+              Calculate Savings
+            </button>
+          </form>
+        </div>
+
+        <div id="roiResult" class="roi-result-card hidden">
+          <div class="roi-result">
+            <div class="label">Estimated weekly savings</div>
+            <div class="value" id="roiValue">$0</div>
+            <div class="breakdown" id="roiBreakdown"></div>
           </div>
-
-          <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1.5rem;">
-            Calculate Savings
-          </button>
-        </form>
-
-        <div id="roiResult" class="roi-result" style="display: none;">
-          <div class="label">Estimated weekly savings</div>
-          <div class="value" id="roiValue">$0</div>
-          <div class="breakdown" id="roiBreakdown"></div>
         </div>
       </div>
     </div>
@@ -1512,41 +1565,23 @@
         <p class="section-desc">Short feedback from practitioners</p>
       </div>
 
-      <div class="grid-3">
-        <div class="testimonial-card">
+      <div class="testimonial-carousel">
+        <div class="testimonial-card" id="testimonialCard">
           <div class="testimonial-quote">"</div>
-          <div class="testimonial-text">Cut weekly reporting from 8 hours to 15 minutes.</div>
+          <div class="testimonial-text" id="testimonialText">Cut weekly reporting from 8 hours to 15 minutes.</div>
           <div class="testimonial-author">
-            <div class="testimonial-avatar">S</div>
+            <div class="testimonial-avatar" id="testimonialAvatar">S</div>
             <div class="testimonial-info">
-              <div class="name">Sarah Mitchell</div>
-              <div class="role">Operations</div>
+              <div class="name" id="testimonialName">Sarah Mitchell</div>
+              <div class="role" id="testimonialRole">Operations</div>
             </div>
           </div>
         </div>
 
-        <div class="testimonial-card">
-          <div class="testimonial-quote">"</div>
-          <div class="testimonial-text">Sheets CRM removed 90% of manual work.</div>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">M</div>
-            <div class="testimonial-info">
-              <div class="name">Marcus Chen</div>
-              <div class="role">Sales</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="testimonial-quote">"</div>
-          <div class="testimonial-text">Eliminated 90% of reconciliation errors.</div>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">E</div>
-            <div class="testimonial-info">
-              <div class="name">Emily Rodriguez</div>
-              <div class="role">Finance</div>
-            </div>
-          </div>
+        <div class="carousel-dots">
+          <div class="carousel-dot active" onclick="goToTestimonial(0)"></div>
+          <div class="carousel-dot" onclick="goToTestimonial(1)"></div>
+          <div class="carousel-dot" onclick="goToTestimonial(2)"></div>
         </div>
       </div>
     </div>
@@ -1639,7 +1674,7 @@
           </a>
         </div>
 
-        <div class="card contact-form">
+        <div class="card">
           <form onsubmit="handleContactForm(event)">
             <div class="form-group">
               <input type="text" placeholder="Your name" required>
@@ -1679,9 +1714,22 @@
           <span style="color: var(--muted-fg);">© <span id="year"></span></span>
         </div>
         <div class="footer-links">
-          <a href="#">Twitter</a>
-          <a href="#">LinkedIn</a>
-          <a href="#">GitHub</a>
+          <a href="#" aria-label="Twitter">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="LinkedIn">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="GitHub">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/>
+            </svg>
+          </a>
         </div>
       </div>
     </div>
@@ -1704,6 +1752,38 @@
     // Set year
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // Animated Counter
+    function animateCounter(element, target, suffix = '') {
+      let current = 0;
+      const increment = target / 60;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          element.textContent = target + suffix;
+          element.classList.add('counting');
+          clearInterval(timer);
+        } else {
+          element.textContent = Math.floor(current) + suffix;
+        }
+      }, 30);
+    }
+
+    // Trigger counters on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+          entry.target.classList.add('counted');
+          if (entry.target.id === 'stat1') animateCounter(entry.target, 20, '+');
+          if (entry.target.id === 'stat2') animateCounter(entry.target, 90, '%');
+          if (entry.target.id === 'stat3') animateCounter(entry.target, 1, ' wk');
+        }
+      });
+    }, { threshold: 0.5 });
+
+    observer.observe(document.getElementById('stat1'));
+    observer.observe(document.getElementById('stat2'));
+    observer.observe(document.getElementById('stat3'));
+
     // Mobile Menu Toggle
     function toggleMobileMenu() {
       const menu = document.getElementById('mobileMenu');
@@ -1715,10 +1795,8 @@
       const item = button.parentElement;
       const wasActive = item.classList.contains('active');
       
-      // Close all
       document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
       
-      // Open clicked if it wasn't active
       if (!wasActive) {
         item.classList.add('active');
       }
@@ -1738,8 +1816,40 @@
       document.getElementById('roiValue').textContent = '$' + weekly.toLocaleString();
       document.getElementById('roiBreakdown').textContent = 
         `${hours} hrs × ${runs} runs × $${rate}/hr × ${percent}% = $${weekly}/wk`;
-      document.getElementById('roiResult').style.display = 'block';
+      document.getElementById('roiResult').classList.remove('hidden');
     }
+
+    // Testimonials
+    const testimonials = [
+      { quote: "Cut weekly reporting from 8 hours to 15 minutes.", author: "Sarah Mitchell", role: "Operations", initial: "S" },
+      { quote: "Sheets CRM removed 90% of manual work.", author: "Marcus Chen", role: "Sales", initial: "M" },
+      { quote: "Eliminated 90% of reconciliation errors.", author: "Emily Rodriguez", role: "Finance", initial: "E" }
+    ];
+
+    let currentTestimonial = 0;
+
+    function showTestimonial(index) {
+      const testimonial = testimonials[index];
+      document.getElementById('testimonialText').textContent = testimonial.quote;
+      document.getElementById('testimonialName').textContent = testimonial.author;
+      document.getElementById('testimonialRole').textContent = testimonial.role;
+      document.getElementById('testimonialAvatar').textContent = testimonial.initial;
+      
+      document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+    }
+
+    function goToTestimonial(index) {
+      currentTestimonial = index;
+      showTestimonial(currentTestimonial);
+    }
+
+    // Auto-scroll testimonials
+    setInterval(() => {
+      currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+      showTestimonial(currentTestimonial);
+    }, 5000);
 
     // Contact Form
     function handleContactForm(event) {
@@ -1769,7 +1879,6 @@
       }
     }
 
-    // Close modal on Escape
     document.addEventListener('keydown', function(event) {
       if (event.key === 'Escape') {
         const modal = document.getElementById('videoModal');
@@ -1782,7 +1891,7 @@
       }
     });
 
-    // Smooth scroll for anchor links
+    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
