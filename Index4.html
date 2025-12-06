@@ -22,7 +22,7 @@
       --soft2:#f9f7ff;
       --soft3:#f7fcff;
     }
-    html,body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,'Helvetica Neue',Arial; background:linear-gradient(180deg,var(--soft3) 0%, #ffffff 100%); color:var(--ink); -webkit-font-smoothing:antialiased}
+    html,body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,'Helvetica Neue',Arial; background:linear-gradient(180deg,var(--soft3) 0%, #ffffff 100%); color:var(--ink); -webkit-font-smoothing:antialiased; overflow-x:hidden}
 
     /* --- Presentation: boxless, layered, asymmetry --- */
     .hero-split{display:grid;grid-template-columns:1fr;gap:2.5rem;align-items:center}
@@ -33,12 +33,15 @@
 
     /* floating artwork + layered shapes (no hard boxes) */
     .float-wrap{position:relative}
-    .blob{position:absolute;filter:blur(36px);opacity:.55;border-radius:48%;transform:rotate(18deg)}
-    .blob.a{width:260px;height:160px;right:-40px;top:-30px;background:linear-gradient(135deg,var(--primary),var(--accent));}
-    .blob.b{width:180px;height:120px;left:-60px;bottom:-30px;background:linear-gradient(135deg,rgba(111,97,255,0.16),rgba(76,139,245,0.08));}
+    .blob{position:absolute;filter:blur(36px);opacity:.55;border-radius:48%;transform:rotate(18deg);pointer-events:none}
+    .blob.a{width:260px;height:160px;right:0;top:-10px;background:linear-gradient(135deg,var(--primary),var(--accent));}
+    .blob.b{width:180px;height:120px;left:0;bottom:-10px;background:linear-gradient(135deg,rgba(111,97,255,0.16),rgba(76,139,245,0.08));}
+
+    /* hide decorative blobs on small screens to avoid overflow */
+    @media(max-width:640px){ .blob{display:none} }
 
     /* glass panel for demo preview but visually open */
-    .demo-frame{border-radius:18px;padding:14px;background:linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6));box-shadow:0 28px 80px rgba(12,32,80,0.08);border:1px solid rgba(12,32,80,0.04)}
+    .demo-frame{border-radius:18px;padding:14px;background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6));box-shadow:0 28px 80px rgba(12,32,80,0.08);border:1px solid rgba(12,32,80,0.04)}
 
     /* thin separators and inline stats (not cards) */
     .stat-inline{display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center}
@@ -49,9 +52,9 @@
     /* solutions as soft stripes with icons on left (no boxed cards) */
     .solution-row{display:flex;gap:1rem;align-items:center;padding:1rem;border-radius:12px;background:linear-gradient(180deg,#fff, #fbfdff);border:1px solid rgba(12,32,80,0.03)}
 
-    /* works section: overlapping panels that peek outside container */
-    .peek-left{transform:translateX(-6%)}
-    .peek-right{transform:translateX(6%)}
+    /* works section: overlapping panels that peek outside container (clamped transforms) */
+    .peek-left{transform:translateX(clamp(-6%, -60px, 0))}
+    .peek-right{transform:translateX(clamp(6%, 0, 60px))}
 
     /* process timeline — inline with connectors */
     .timeline{display:flex;flex-direction:column;gap:1.75rem}
@@ -59,18 +62,27 @@
     .step{flex:1;position:relative;padding-left:2.5rem}
     .step::before{content:'';position:absolute;left:0;top:12px;width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));box-shadow:0 6px 18px rgba(76,139,245,0.18)}
 
-    /* testimonial: large quote with soft background and image overlap */
+    /* testimonial: large quote with soft background and image overlap - keep photo inside container on small screens */
     .testimonial-hero{position:relative;padding:3rem;border-radius:18px;background:linear-gradient(135deg, rgba(76,139,245,0.06), rgba(111,97,255,0.03));overflow:visible}
-    .testimonial-photo{position:absolute;right:-48px;top:-28px;width:120px;height:120px;border-radius:16px;box-shadow:0 18px 40px rgba(12,32,80,0.12);overflow:hidden}
+    .testimonial-photo{position:absolute;right:0;top:-28px;width:120px;height:120px;border-radius:16px;box-shadow:0 18px 40px rgba(12,32,80,0.12);overflow:hidden}
+    @media(max-width:880px){ .testimonial-photo{position:static;margin-bottom:12px;width:76px;height:76px;border-radius:12px} .testimonial-hero{display:flex;flex-direction:column;gap:12px} }
 
     /* FAQ: minimal list with chevrons */
     .faq-list{display:grid;gap:10px}
     .faq-q{display:flex;align-items:center;justify-content:space-between;padding:.85rem;border-radius:10px;background:transparent}
 
+    /* off-canvas mobile nav */
+    .offcanvas{position:fixed;inset:0;display:flex;justify-content:flex-end;pointer-events:none}
+    .offcanvas-panel{width:280px;max-width:80%;height:100%;background:white;box-shadow: -20px 0 60px rgba(10,12,20,0.12);transform:translateX(110%);transition:transform .36s cubic-bezier(.2,.9,.25,1);pointer-events:auto;padding:20px}
+    .offcanvas.open .offcanvas-panel{transform:translateX(0)}
+
     /* misc */
     .reveal{opacity:0;transform:translateY(8px);transition:all .6s cubic-bezier(.2,.9,.25,1)}
     .reveal.in{opacity:1;transform:translateY(0)}
     @media (prefers-reduced-motion: reduce){ .reveal, .blob{transition:none;animation:none} }
+
+    /* ensure images don't overflow */
+    img{max-width:100%;height:auto;display:block}
   </style>
 </head>
 <body>
@@ -79,15 +91,35 @@
     <div class="max-w-7xl mx-auto px-6">
       <div class="flex items-center justify-between gap-4 py-4 bg-white/40 backdrop-blur rounded-2xl border border-gray-100/50">
         <a class="text-[var(--primary)] font-bold text-lg" href="#">AutomateOps</a>
+
         <nav class="hidden md:flex gap-6 items-center text-sm text-[var(--muted)]">
           <a href="#solutions" class="hover:underline">Solutions</a>
           <a href="#works" class="hover:underline">Works</a>
           <a href="#contact" class="px-3 py-1 rounded-full bg-[var(--primary)] text-white text-sm">Book discovery</a>
         </nav>
-        <div class="md:hidden text-sm text-[var(--muted)]">☰</div>
+
+        <div class="md:hidden">
+          <button id="mobileMenuBtn" aria-label="Open menu" class="p-2 rounded-md bg-white/60">☰</button>
+        </div>
       </div>
     </div>
   </header>
+
+  <!-- offcanvas mobile nav -->
+  <div id="mobileMenu" class="offcanvas" aria-hidden="true">
+    <div class="offcanvas-panel" role="dialog" aria-modal="true">
+      <div class="flex items-center justify-between mb-6">
+        <div class="font-bold text-lg text-[var(--primary)]">AutomateOps</div>
+        <button id="mobileClose" aria-label="Close menu">✕</button>
+      </div>
+      <nav class="flex flex-col gap-4 text-sm">
+        <a href="#solutions" class="py-2">Solutions</a>
+        <a href="#works" class="py-2">Works</a>
+        <a href="#roi" class="py-2">Quick ROI</a>
+        <a href="#contact" class="py-2">Book discovery</a>
+      </nav>
+    </div>
+  </div>
 
   <main class="mt-8">
     <!-- HERO: split with layered art, no heavy boxes -->
@@ -112,7 +144,7 @@
         </div>
 
         <div class="float-wrap relative">
-          <div class="blob a"></div>
+          <div class="blob a" aria-hidden></div>
           <div class="demo-frame reveal" data-reveal-delay="200">
             <div style="height:260px;overflow:hidden;border-radius:12px;border:1px solid rgba(12,32,80,0.04)">
               <img src="https://raw.githubusercontent.com/Levinders/Portfolio-Hub-Looker-Studio-Portfolio-Page-/refs/heads/main/e1.png" alt="demo" class="w-full h-full object-cover">
@@ -124,16 +156,16 @@
               <div class="ml-auto text-sm text-[var(--muted)]">Last run: 8m ago</div>
             </div>
           </div>
-          <div class="blob b"></div>
+          <div class="blob b" aria-hidden></div>
         </div>
       </div>
     </section>
 
-    <!-- Tools: inline badges, but without boxes -->
+    <!-- Tools: inline badges, responsive wrap (no horizontal scrolling) -->
     <section class="py-6">
-      <div class="max-w-7xl mx-auto px-6 flex items-center gap-6 overflow-x-auto">
+      <div class="max-w-7xl mx-auto px-6 flex flex-wrap items-center gap-4">
         <div class="text-sm text-[var(--muted)] whitespace-nowrap">Integrations — you already use these</div>
-        <div class="flex gap-4 items-center">
+        <div class="flex gap-4 items-center flex-wrap">
           <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Google_Sheets_logo_%282014-2020%29.svg" class="w-8 h-8" alt="Sheets">
           <img src="https://www.gstatic.com/images/branding/product/2x/apps_script_48dp.png" class="w-8 h-8" alt="Apps Script">
           <img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Google_Drive_logo.png" class="w-8 h-8" alt="Drive">
@@ -185,25 +217,23 @@
         <h2 class="text-2xl font-semibold text-center">Select builds we've delivered</h2>
         <p class="text-[var(--muted)] text-center mt-2">Practical automations — production ready.</p>
 
-        <div class="mt-8 flex gap-6 items-start justify-center">
-          <div class="w-full max-w-xl relative reveal peek-left">
+        <div class="mt-8 flex flex-col md:flex-row gap-6 items-start justify-center">
+          <div class="w-full max-w-xl relative reveal md:peek-left">
             <div class="rounded-xl demo-frame p-4" style="overflow:visible">
               <div class="text-sm text-[var(--muted)]">Bulk Email + Multi‑Inbox CRM</div>
               <h3 class="font-semibold mt-2">Personalized sends with reply capture</h3>
               <p class="text-[var(--muted)] mt-2">Column-driven templates, tracking and ownership.</p>
               <div class="mt-4 flex gap-3"><button class="px-4 py-2 rounded-full bg-[var(--primary)] text-white" onclick="openDemoPanel('https://www.youtube.com/embed/dQw4w9WgXcQ')">View demo</button><a href="#contact" class="px-4 py-2 rounded-full border">Request</a></div>
             </div>
-            <div class="absolute -left-8 -top-8 w-24 h-24 rounded-md bg-white/80 border shadow-md"></div>
           </div>
 
-          <div class="w-full max-w-xl relative reveal peek-right">
+          <div class="w-full max-w-xl relative reveal md:peek-right">
             <div class="rounded-xl demo-frame p-4" style="overflow:visible">
               <div class="text-sm text-[var(--muted)]">Payment Slip Generator</div>
               <h3 class="font-semibold mt-2">Batch PDF export & email</h3>
               <p class="text-[var(--muted)] mt-2">Branded slips, scheduled delivery and retry queue.</p>
               <div class="mt-4 flex gap-3"><button class="px-4 py-2 rounded-full bg-[var(--primary)] text-white" onclick="openDemoPanel('https://www.youtube.com/embed/3fumBcKC6RE')">View demo</button><a href="#contact" class="px-4 py-2 rounded-full border">Request</a></div>
             </div>
-            <div class="absolute -right-8 -bottom-8 w-20 h-20 rounded-md bg-gradient-to-br from-[var(--primary)]/10 to-[var(--accent)]/6 blur-lg"></div>
           </div>
         </div>
       </div>
@@ -260,8 +290,8 @@
     <!-- ROI calc compact (inline) -->
     <section id="roi" class="py-12">
       <div class="max-w-4xl mx-auto px-6">
-        <div class="flex gap-6 items-center bg-white/60 p-4 rounded-2xl border">
-          <div class="flex-1">
+        <div class="flex gap-6 items-center bg-white/60 p-4 rounded-2xl border flex-wrap">
+          <div class="flex-1 min-w-[220px]">
             <div class="text-sm text-[var(--muted)]">Quick ROI snapshot</div>
             <div class="mt-3 grid grid-cols-2 gap-3">
               <input id="h" type="number" class="p-2 border rounded" value="8" aria-label="Hours saved per run">
@@ -271,7 +301,7 @@
             </div>
             <div class="mt-3"><button id="calcBtn" class="px-4 py-2 rounded-full bg-[var(--primary)] text-white">Calculate</button></div>
           </div>
-          <div class="w-48 text-right">
+          <div class="w-48 text-right min-w-[160px]">
             <div class="text-sm text-[var(--muted)]">Est. weekly savings</div>
             <div id="roiVal" class="font-semibold text-2xl mt-2">$0</div>
             <div id="roiBreak" class="text-[var(--muted)] text-sm mt-1"></div>
@@ -339,9 +369,9 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // reveal simple
+    // reveal simple (optimized)
     document.querySelectorAll('.reveal').forEach(el=>{
-      const io = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ el.classList.add('in'); io.unobserve(el); } }); }, {threshold:.12});
+      const io = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ el.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:.12});
       io.observe(el);
     });
 
@@ -354,7 +384,7 @@
       document.getElementById('roiBreak').textContent = `${h} hrs × ${r} runs × $${rate}/hr × ${pct}% = $${weekly}/wk`;
     });
 
-    // FAQ toggles
+    // FAQ toggles (no layout shifts)
     document.querySelectorAll('.faq-q').forEach(btn=> btn.addEventListener('click', ()=>{
       const id = btn.dataset.target; const node = document.getElementById(id);
       if(node.classList.contains('hidden')) node.classList.remove('hidden'); else node.classList.add('hidden');
@@ -365,6 +395,18 @@
     document.getElementById('clear').addEventListener('click', ()=> document.getElementById('contactForm').reset());
 
     function openDemoPanel(url){ window.open(url, '_blank'); }
+
+    // Mobile menu off-canvas
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileClose = document.getElementById('mobileClose');
+    mobileBtn && mobileBtn.addEventListener('click', ()=>{ mobileMenu.classList.add('open'); mobileMenu.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; });
+    mobileClose && mobileClose.addEventListener('click', ()=>{ mobileMenu.classList.remove('open'); mobileMenu.setAttribute('aria-hidden','true'); document.body.style.overflow=''; });
+    // close when tapping backdrop
+    mobileMenu && mobileMenu.addEventListener('click', (e)=>{ if(e.target === mobileMenu){ mobileMenu.classList.remove('open'); mobileMenu.setAttribute('aria-hidden','true'); document.body.style.overflow=''; } });
+
+    // ensure layout recalculates on orientation changes/resizes
+    window.addEventListener('resize', ()=>{ document.documentElement.style.setProperty('--vh', window.innerHeight+'px'); });
   </script>
 </body>
 </html>
