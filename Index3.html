@@ -3,963 +3,1601 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AutomateOps — Premium Automation for Modern Teams</title>
+  <title>AutomateOps - Google Sheets Automation</title>
+  <meta name="description" content="Turn your messy spreadsheets into money-making machines. Custom Google Sheets automation that eliminates 80% of manual work.">
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
-    :root {
-      --primary: 245 70% 65%;
-      --primary-foreground: 0 0% 100%;
-      --background: 250 100% 99%;
-      --foreground: 240 8% 20%;
-      --muted: 245 25% 96%;
-      --muted-foreground: 240 4% 46%;
-      --card: 0 0% 100%;
-      --card-foreground: 240 8% 20%;
-      --border: 245 20% 92%;
-      --accent: 245 60% 75%;
-    }
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    :root {
+      --primary: #5FBF78;
+      --primary-dark: #2E8C4E;
+      --primary-light: #CFF7E3;
+      --accent-mint: #E4F8EE;
+      
+      --bg: #0A0A0A;
+      --card: #111;
+      --border: #1E1E1E;
+      
+      --fg: #FAFAFA;
+      --muted-fg: #A3A3A3;
+      
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-display: 'Space Grotesk', 'Inter', sans-serif;
+      --radius: 0.75rem;
+    }
+
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: hsl(var(--background));
-      color: hsl(var(--foreground));
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--fg);
       line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    .gradient-mesh {
-      background: 
-        radial-gradient(at 20% 30%, hsl(245 70% 65% / 0.08) 0px, transparent 50%),
-        radial-gradient(at 80% 20%, hsl(245 60% 75% / 0.08) 0px, transparent 50%),
-        radial-gradient(at 60% 80%, hsl(245 50% 85% / 0.08) 0px, transparent 50%),
-        hsl(var(--background));
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      line-height: 1.2;
     }
 
-    .gradient-primary {
-      background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    /* Grid Background */
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.07) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+      z-index: 0;
     }
 
-    .text-primary { color: hsl(var(--primary)); }
-    .bg-primary { background: hsl(var(--primary)); }
-    .bg-card { background: hsl(var(--card)); }
-    .text-muted-foreground { color: hsl(var(--muted-foreground)); }
-    .border-border { border-color: hsl(var(--border)); }
-    .bg-muted { background: hsl(var(--muted)); }
+    /* Gradient Orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.3;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orb-1 {
+      top: 0;
+      right: 25%;
+      width: 400px;
+      height: 400px;
+      background: var(--primary);
+    }
+
+    .orb-2 {
+      bottom: 0;
+      left: 25%;
+      width: 400px;
+      height: 400px;
+      background: var(--accent-mint);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 50;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+      padding: 0 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--fg);
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--primary);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-links {
+      display: none;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--muted-fg);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 0.5rem;
       padding: 0.75rem 1.5rem;
-      border-radius: 9999px;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      border: none;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: 0.875rem;
       text-decoration: none;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
-      color: white;
-      box-shadow: 0 4px 16px hsl(var(--primary) / 0.2);
+      background: var(--primary);
+      color: var(--bg);
+      box-shadow: 0 0 20px rgba(95, 191, 120, 0.3);
     }
 
     .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px hsl(var(--primary) / 0.3);
+      background: var(--primary-dark);
+      box-shadow: 0 0 30px rgba(95, 191, 120, 0.5);
     }
 
     .btn-outline {
       background: transparent;
-      border: 2px solid hsl(var(--border));
-      color: hsl(var(--foreground));
+      color: var(--fg);
+      border: 1px solid var(--border);
     }
 
     .btn-outline:hover {
-      border-color: hsl(var(--primary));
-      background: hsl(var(--primary) / 0.05);
+      border-color: var(--primary);
+      color: var(--primary);
     }
 
-    .card {
-      background: hsl(var(--card));
-      border: 1px solid hsl(var(--border));
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted-fg);
+    }
+
+    .btn-ghost:hover {
+      color: var(--primary);
+    }
+
+    .mobile-menu-btn {
+      display: block;
+      background: transparent;
+      border: none;
+      color: var(--fg);
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .mobile-menu {
+      display: none;
+      border-top: 1px solid var(--border);
+      background: var(--bg);
+      padding: 1rem;
+    }
+
+    .mobile-menu.active {
+      display: block;
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 0.75rem 0;
+      color: var(--fg);
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .mobile-menu .btn {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 3rem 0;
+      margin-top: 80px;
+      min-height: calc(100vh - 80px);
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(95, 191, 120, 0.1);
+      border: 1px solid rgba(95, 191, 120, 0.2);
+      color: var(--primary);
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, var(--primary), var(--accent-mint));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      color: var(--muted-fg);
+      margin-bottom: 2rem;
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+
+    .stat-card {
+      background: rgba(38, 38, 38, 0.5);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+
+    .stat-card .value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-card .label {
+      font-size: 0.7rem;
+      color: var(--muted-fg);
+    }
+
+    .hero-image {
+      position: relative;
       border-radius: 1rem;
-      padding: 2rem;
-      transition: all 0.3s ease;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Section */
+    section {
+      padding: 3rem 0;
+      position: relative;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      font-size: 1rem;
+      color: var(--muted-fg);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Trust Bar */
+    .trust-bar {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .integration-logos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      opacity: 0.6;
+    }
+
+    .integration-logos img {
+      height: 40px;
+      width: auto;
+      filter: grayscale(100%);
+      transition: filter 0.3s;
+    }
+
+    .integration-logos img:hover {
+      filter: grayscale(0%);
+    }
+
+    /* Grid Layouts */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    /* Card */
+    .card {
+      background: rgba(38, 38, 38, 0.3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
     }
 
     .card:hover {
-      box-shadow: 0 12px 40px hsl(var(--primary) / 0.1);
+      border-color: rgba(95, 191, 120, 0.5);
       transform: translateY(-4px);
     }
 
-    .nav-link {
-      color: hsl(var(--muted-foreground));
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .nav-link:hover {
-      color: hsl(var(--foreground));
-    }
-
-    .tool-badge {
-      display: inline-flex;
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(95, 191, 120, 0.1);
+      border: 1px solid rgba(95, 191, 120, 0.2);
+      border-radius: var(--radius);
+      display: flex;
       align-items: center;
-      gap: 0.75rem;
-      padding: 0.75rem 1rem;
-      border-radius: 0.75rem;
-      border: 1px solid hsl(var(--border));
-      background: hsl(var(--background));
-      transition: all 0.3s ease;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
     }
 
-    .tool-badge:hover {
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 8px 24px hsl(var(--primary) / 0.15);
-      border-color: hsl(var(--primary) / 0.3);
+    .card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
     }
 
-    .tool-badge img {
+    .card p {
+      color: var(--muted-fg);
+      line-height: 1.7;
+      font-size: 0.9rem;
+    }
+
+    /* Works Section */
+    .works-section {
+      background: rgba(38, 38, 38, 0.2);
+      overflow: hidden;
+    }
+
+    .marquee-container {
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .marquee {
+      display: flex;
+      gap: 1.25rem;
+      animation: scroll 40s linear infinite;
+    }
+
+    .marquee-reverse {
+      animation: scroll-reverse 40s linear infinite;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @keyframes scroll-reverse {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(0); }
+    }
+
+    .work-card {
+      min-width: 280px;
+      background: rgba(17, 17, 17, 0.8);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+      flex-shrink: 0;
+    }
+
+    .work-card:hover {
+      border-color: rgba(95, 191, 120, 0.5);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .work-image {
+      position: relative;
+      overflow: hidden;
+      height: 180px;
+      cursor: pointer;
+    }
+
+    .work-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .work-card:hover .work-image img {
+      transform: scale(1.1);
+    }
+
+    .work-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10, 10, 10, 0.8), transparent);
+      opacity: 0.6;
+    }
+
+    .work-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      width: 50px;
+      height: 50px;
+      background: var(--primary);
+      color: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .work-card:hover .work-play {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .work-content {
+      padding: 1rem;
+    }
+
+    .work-category {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .work-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .work-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .work-actions .btn {
+      flex: 1;
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+    }
+
+    /* Process Cards */
+    .process-card {
+      text-align: center;
+    }
+
+    .process-num {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .process-icon {
+      font-size: 3rem;
+      margin-bottom: 0.75rem;
+    }
+
+    /* ROI Calculator */
+    .roi-grid {
+      display: grid;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .roi-inputs {
+      background: rgba(17, 17, 17, 0.8);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .roi-result-card {
+      background: linear-gradient(135deg, rgba(95, 191, 120, 0.1), rgba(228, 248, 238, 0.05));
+      border: 2px solid rgba(95, 191, 120, 0.3);
+      border-radius: var(--radius);
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      text-align: center;
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .roi-result-card.hidden {
+      display: none;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--muted-fg);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .label-number {
       width: 28px;
       height: 28px;
-      object-fit: contain;
+      background: rgba(95, 191, 120, 0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 700;
     }
 
-    .solution-card {
-      border: 2px solid transparent;
-      transition: all 0.3s ease;
+    .form-group input,
+    .form-group textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.75rem 1rem;
+      color: var(--fg);
+      font-family: inherit;
+      font-size: 1rem;
     }
 
-    .solution-card:hover {
-      border-color: hsl(var(--primary) / 0.2);
-      box-shadow: 0 20px 60px hsl(var(--primary) / 0.15);
-      transform: translateY(-8px);
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
     }
 
-    .process-card {
-      position: relative;
-      background: hsl(var(--card) / 0.8);
+    .roi-result .value {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .roi-result .breakdown {
+      font-size: 0.8rem;
+      color: var(--muted-fg);
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.75rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+
+    /* Testimonials */
+    .testimonial-card {
+      background: linear-gradient(135deg, rgba(38, 38, 38, 0.5), rgba(95, 191, 120, 0.05));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem 2rem;
       backdrop-filter: blur(10px);
-      border: 2px solid hsl(var(--border));
-      border-radius: 1rem;
-      padding: 1.5rem;
-      transition: all 0.5s ease;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
-    .process-card:hover {
-      border-color: hsl(var(--primary) / 0.4);
-      box-shadow: 0 20px 60px hsl(var(--primary) / 0.2);
-      transform: translateY(-8px);
+    .testimonial-quote {
+      font-size: 3rem;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 1rem;
     }
 
-    .process-number {
-      position: absolute;
-      top: -1.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 3rem;
-      height: 3rem;
+    .testimonial-text {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .testimonial-avatar {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, rgba(95, 191, 120, 0.3), rgba(228, 248, 238, 0.3));
       border-radius: 50%;
-      background: hsl(var(--primary));
-      color: white;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 1.125rem;
-      box-shadow: 0 4px 12px hsl(var(--primary) / 0.3);
-      transition: all 0.3s ease;
+      color: var(--primary);
+      border: 2px solid rgba(95, 191, 120, 0.2);
     }
 
-    .process-card:hover .process-number {
-      transform: translateX(-50%) scale(1.1);
+    .testimonial-info .name {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
     }
 
-    .process-icon {
-      width: 4rem;
-      height: 4rem;
-      border-radius: 1rem;
-      background: hsl(var(--primary) / 0.1);
+    .testimonial-info .role {
+      font-size: 0.875rem;
+      color: var(--muted-fg);
+    }
+
+    .carousel-dots {
       display: flex;
-      align-items: center;
       justify-content: center;
-      color: hsl(var(--primary));
-      margin: 2rem auto 1rem;
-      transition: all 0.3s ease;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
     }
 
-    .process-card:hover .process-icon {
-      background: hsl(var(--primary));
-      color: white;
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: all 0.3s;
+      cursor: pointer;
     }
 
+    .carousel-dot.active {
+      background: var(--primary);
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    /* FAQ */
     .faq-item {
-      border: 1px solid hsl(var(--border));
-      border-radius: 0.75rem;
+      background: rgba(38, 38, 38, 0.3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
       overflow: hidden;
+      backdrop-filter: blur(10px);
       margin-bottom: 1rem;
     }
 
     .faq-question {
       width: 100%;
-      padding: 1.5rem;
+      text-align: left;
+      padding: 1.25rem;
       background: transparent;
       border: none;
-      text-align: left;
+      color: var(--fg);
+      font-family: inherit;
+      font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: background 0.3s ease;
+      transition: background 0.2s;
     }
 
     .faq-question:hover {
-      background: hsl(var(--muted) / 0.5);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .faq-icon {
+      color: var(--primary);
+      transition: transform 0.3s;
+    }
+
+    .faq-item.active .faq-icon {
+      transform: rotate(180deg);
     }
 
     .faq-answer {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.3s ease;
-      padding: 0 1.5rem;
-      color: hsl(var(--muted-foreground));
+      transition: max-height 0.3s ease-out;
     }
 
-    .faq-answer.open {
+    .faq-item.active .faq-answer {
       max-height: 500px;
-      padding: 0 1.5rem 1.5rem;
     }
 
-    .testimonial-dot {
-      width: 0.5rem;
-      height: 0.5rem;
-      border-radius: 50%;
-      background: hsl(var(--primary) / 0.2);
-      cursor: pointer;
-      transition: all 0.3s ease;
+    .faq-answer-content {
+      padding: 0 1.25rem 1.25rem;
+      color: var(--muted-fg);
+      line-height: 1.7;
+      font-size: 0.9rem;
     }
 
-    .testimonial-dot.active {
-      width: 2rem;
-      background: hsl(var(--primary));
+    /* Contact */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
     }
 
-    .work-tab {
-      padding: 0.5rem 1rem;
-      border-radius: 9999px;
-      border: 1px solid hsl(var(--border));
-      background: transparent;
-      cursor: pointer;
-      transition: all 0.3s ease;
+    .contact-cta {
+      background: var(--primary);
+      color: var(--bg);
+      border: 1px solid var(--primary);
+      box-shadow: 0 0 20px rgba(95, 191, 120, 0.3);
     }
 
-    .work-tab.active {
-      background: hsl(var(--primary));
-      color: white;
-      border-color: hsl(var(--primary));
+    .contact-cta h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
     }
 
-    .back-to-top {
+    .contact-cta p {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.9;
+    }
+
+    .contact-cta ul {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-cta li {
+      display: flex;
+      align-items: start;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .form-actions .btn {
+      flex: 1;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      color: var(--muted-fg);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
       position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 3.5rem;
-      height: 3.5rem;
-      border-radius: 50%;
-      background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
-      color: white;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 40px;
+      height: 40px;
+      background: rgba(0, 0, 0, 0.7);
       border: none;
+      border-radius: 50%;
+      color: var(--fg);
+      cursor: pointer;
+      z-index: 10;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 16px hsl(var(--primary) / 0.25);
-      z-index: 100;
+      transition: background 0.2s;
+      font-size: 1.5rem;
     }
 
-    .back-to-top.show {
-      opacity: 1;
-      pointer-events: auto;
+    .modal-close:hover {
+      background: rgba(0, 0, 0, 0.9);
     }
 
-    .back-to-top:hover {
-      transform: scale(1.1);
-    }
-
-    .input-field {
+    .modal iframe {
       width: 100%;
-      padding: 0.75rem;
-      border: 1px solid hsl(var(--border));
-      border-radius: 0.5rem;
-      background: hsl(var(--background));
-      font-family: inherit;
-      font-size: 1rem;
-      transition: all 0.3s ease;
+      aspect-ratio: 16/9;
+      border: none;
     }
 
-    .input-field:focus {
-      outline: none;
-      border-color: hsl(var(--primary));
-      box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
+    /* Icons */
+    .icon {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
     }
 
-    .mobile-menu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: hsl(var(--card));
-      border-top: 1px solid hsl(var(--border));
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--card);
+      border: 1px solid var(--primary);
+      border-radius: var(--radius);
       padding: 1rem 1.5rem;
-      flex-direction: column;
-      gap: 1rem;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      display: none;
+      animation: slideIn 0.3s ease-out;
     }
 
-    .mobile-menu.open {
-      display: flex;
+    .toast.active {
+      display: block;
     }
 
-    @media (max-width: 768px) {
-      .hide-mobile { display: none; }
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
     }
 
-    @media (min-width: 769px) {
-      .hide-desktop { display: none; }
+    /* Responsive */
+    @media (min-width: 640px) {
+      .hero h1 { font-size: 2.5rem; }
+      .section-title { font-size: 2rem; }
+      .stat-card .value { font-size: 1.75rem; }
+      .stat-card .label { font-size: 0.75rem; }
+      .testimonial-text { font-size: 1.35rem; }
+    }
+
+    @media (min-width: 768px) {
+      .nav-links { display: flex; }
+      .mobile-menu-btn { display: none; }
+      .hero { padding: 4rem 0; }
+      .hero-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+      .hero h1 { font-size: 3rem; }
+      .section-title { font-size: 2.5rem; }
+      .grid-3 { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+      .grid-4 { grid-template-columns: repeat(4, 1fr); }
+      .contact-grid { grid-template-columns: 1fr 1fr; }
+      .work-card { min-width: 300px; }
+      .roi-grid { grid-template-columns: 1fr 1fr; }
+      section { padding: 4rem 0; }
+    }
+
+    @media (min-width: 1024px) {
+      .container { padding: 0 2rem; }
+      .hero { padding: 5rem 0; }
+      .hero h1 { font-size: 3.5rem; }
+      section { padding: 5rem 0; }
+      .section-title { font-size: 2.75rem; }
+      .testimonial-text { font-size: 1.5rem; }
+      .roi-result-card {
+        position: sticky;
+        top: 100px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .hero-cta { flex-direction: column; }
+      .hero-cta .btn { width: 100%; }
     }
   </style>
 </head>
 <body>
+  <!-- Grid Background -->
+  <div class="grid-bg"></div>
+  
+  <!-- Gradient Orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
 
   <!-- Navigation -->
-  <header style="position: sticky; top: 0; z-index: 50; background: hsl(var(--background) / 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid hsl(var(--border) / 0.5); padding: 1rem 0;">
-    <div style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between;">
-      <div style="display: flex; align-items: center; gap: 0.75rem;">
-        <div style="width: 2.5rem; height: 2.5rem; border-radius: 0.75rem; background: hsl(var(--primary)); display: flex; align-items: center; justify-content: center; color: white;">
-          ✨
+  <nav>
+    <div class="container">
+      <div class="nav-container">
+        <a href="#" class="logo">
+          <div class="logo-icon">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <span>AutomateOps</span>
+        </a>
+        
+        <div class="nav-links">
+          <a onclick="scrollToSection('solutions')">Solutions</a>
+          <a onclick="scrollToSection('works')">Works</a>
+          <a onclick="scrollToSection('process')">Process</a>
+          <a onclick="scrollToSection('contact')">Contact</a>
+          <a onclick="scrollToSection('contact')" class="btn btn-primary">Get Started Free</a>
         </div>
-        <div>
-          <div style="font-weight: 600; font-size: 1.125rem;">AutomateOps</div>
-          <div style="font-size: 0.75rem; color: hsl(var(--muted-foreground));" class="hide-mobile">Premium Automation Platform</div>
-        </div>
+
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+          <svg class="icon" viewBox="0 0 24 24">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
       </div>
-      
-      <nav style="display: flex; align-items: center; gap: 1.5rem; font-size: 0.875rem;" class="hide-mobile">
-        <a href="#solutions" class="nav-link">Solutions</a>
-        <a href="#works" class="nav-link">Our Work</a>
-        <a href="#process" class="nav-link">Process</a>
-        <a href="#roi" class="nav-link">ROI Calculator</a>
-        <a href="#contact" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Book a Call</a>
-      </nav>
 
-      <button id="mobileMenuBtn" class="hide-desktop" style="background: none; border: none; cursor: pointer; font-size: 1.5rem;">☰</button>
+      <div class="mobile-menu" id="mobileMenu">
+        <a onclick="scrollToSection('solutions'); toggleMobileMenu()">Solutions</a>
+        <a onclick="scrollToSection('works'); toggleMobileMenu()">Works</a>
+        <a onclick="scrollToSection('process'); toggleMobileMenu()">Process</a>
+        <a onclick="scrollToSection('contact'); toggleMobileMenu()">Contact</a>
+        <a onclick="scrollToSection('contact'); toggleMobileMenu()" class="btn btn-primary">Get Started Free</a>
+      </div>
     </div>
-
-    <div id="mobileMenu" class="mobile-menu">
-      <a href="#solutions" class="nav-link">Solutions</a>
-      <a href="#works" class="nav-link">Our Work</a>
-      <a href="#process" class="nav-link">Process</a>
-      <a href="#roi" class="nav-link">ROI Calculator</a>
-      <a href="#contact" class="btn btn-primary" style="width: 100%;">Book a Call</a>
-    </div>
-  </header>
+  </nav>
 
   <!-- Hero Section -->
-  <section class="gradient-mesh" style="padding: 5rem 0 4rem;">
-    <div style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;">
-      <div style="display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center;">
-        <div style="grid-column: 1/-1;">
-          <div style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 9999px; background: hsl(var(--primary) / 0.1); color: hsl(var(--primary)); font-size: 0.875rem; font-weight: 500; margin-bottom: 1.5rem;">
-            ✨ Trusted by 50+ growing businesses
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="badge">
+            <svg class="icon" width="16" height="16" viewBox="0 0 24 24">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+            Stop Losing Money on Manual Work
           </div>
-          
-          <h1 style="font-size: clamp(2.5rem, 5vw, 3.75rem); font-weight: 700; line-height: 1.1; margin-bottom: 1.5rem;">
-            Stop drowning in spreadsheets. <span class="text-primary">Start automating.</span>
+          <h1>
+            Turn Your Messy Spreadsheets Into <span class="text-gradient">Money-Making Machines</span>
           </h1>
+          <p>
+            Your team is drowning in repetitive tasks. We build custom Google Sheets automation that eliminates 80% of manual work—so you can focus on growth, not grunt work.
+          </p>
           
-          <p style="font-size: 1.25rem; color: hsl(var(--muted-foreground)); margin-bottom: 2rem; max-width: 40rem; line-height: 1.7;">
-            We transform your messy workflows into elegant automation—using the Google tools you already know. Get your pilot running in one week, with measurable ROI from day one.
-          </p>
-
-          <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem;">
-            <a href="#contact" class="btn btn-primary">Start Your Free Pilot →</a>
-            <a href="#roi" class="btn btn-outline">Calculate Your ROI</a>
+          <div class="hero-cta">
+            <a onclick="scrollToSection('contact')" class="btn btn-primary">
+              Get Your Free Automation Audit
+              <svg class="icon" width="20" height="20" viewBox="0 0 24 24">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </a>
+            <a onclick="scrollToSection('works')" class="btn btn-outline">See What We've Built</a>
           </div>
 
-          <!-- Stats -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 2rem; max-width: 600px;">
-            <div style="text-align: center;">
-              <div class="stat-number text-primary" style="font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem;" data-target="20">0+</div>
-              <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Hours saved weekly</div>
+          <div class="stats">
+            <div class="stat-card">
+              <div class="value" id="stat1">0</div>
+              <div class="label">Hours Saved Weekly</div>
             </div>
-            <div style="text-align: center;">
-              <div class="stat-number text-primary" style="font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem;" data-target="90">0%</div>
-              <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Fewer errors</div>
+            <div class="stat-card">
+              <div class="value" id="stat2">0</div>
+              <div class="label">Fewer Errors</div>
             </div>
-            <div style="text-align: center;">
-              <div class="stat-number text-primary" style="font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem;" data-target="50">0+</div>
-              <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Happy clients</div>
-            </div>
-            <div style="text-align: center;">
-              <div style="font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem;" class="text-primary">1 week</div>
-              <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">To first results</div>
+            <div class="stat-card">
+              <div class="value" id="stat3">0</div>
+              <div class="label">Days to Launch</div>
             </div>
           </div>
+        </div>
+
+        <div class="hero-image">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop" alt="Google Sheets Dashboard Analytics">
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Tools Section -->
-  <section style="padding: 3rem 0; border-top: 1px solid hsl(var(--border) / 0.5); border-bottom: 1px solid hsl(var(--border) / 0.5); background: hsl(var(--card));">
-    <div style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;">
-      <p style="text-align: center; font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 2rem;">Built on the tools you already trust</p>
-      <div style="display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-        <div class="tool-badge">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Google_Sheets_logo_%282014-2020%29.svg" alt="Google Sheets">
-          <span style="font-size: 0.875rem; font-weight: 500;">Google Sheets</span>
-        </div>
-        <div class="tool-badge">
-          <img src="https://www.gstatic.com/images/branding/product/2x/apps_script_48dp.png" alt="Apps Script">
-          <span style="font-size: 0.875rem; font-weight: 500;">Apps Script</span>
-        </div>
-        <div class="tool-badge">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail">
-          <span style="font-size: 0.875rem; font-weight: 500;">Gmail</span>
-        </div>
-        <div class="tool-badge">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg" alt="Calendar">
-          <span style="font-size: 0.875rem; font-weight: 500;">Calendar</span>
-        </div>
-        <div class="tool-badge">
-          <img src="https://www.gstatic.com/images/branding/product/2x/drive_2020q4_48dp.png" alt="Drive">
-          <span style="font-size: 0.875rem; font-weight: 500;">Drive</span>
-        </div>
+  <!-- Trust Bar -->
+  <section class="trust-bar">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Powered By Tools You Already Use</div>
+        <p class="section-desc">No complex software. Just smarter Google Sheets.</p>
+      </div>
+      <div class="integration-logos">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Google_Sheets_logo_%282014-2020%29.svg" alt="Google Sheets">
+        <img src="https://www.gstatic.com/images/branding/product/2x/apps_script_48dp.png" alt="Apps Script">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Google_Drive_logo.png" alt="Google Drive">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail">
       </div>
     </div>
   </section>
 
-  <!-- Solutions Section -->
-  <section id="solutions" style="padding: 6rem 0; background: hsl(var(--muted) / 0.3);">
-    <div style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;">
-      <div style="text-align: center; max-width: 48rem; margin: 0 auto 4rem;">
-        <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
-          Automation that actually <span class="text-primary">works for you</span>
-        </h2>
-        <p style="font-size: 1.125rem; color: hsl(var(--muted-foreground));">
-          No more wrestling with complex tools. We build custom automation that fits your workflow perfectly.
-        </p>
+  <!-- Solutions -->
+  <section id="solutions">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">What We Build</div>
+        <h2 class="section-title">Stop Paying for Bloated Software</h2>
+        <p class="section-desc">We build lightweight, custom ops tools in Google Sheets—at a fraction of the cost of traditional software. Get exactly what you need, nothing you don't.</p>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-        <div class="card solution-card">
-          <div style="width: 3.5rem; height: 3.5rem; border-radius: 1rem; background: hsl(var(--primary) / 0.1); display: flex; align-items: center; justify-content: center; color: hsl(var(--primary)); margin-bottom: 1.5rem; font-size: 1.5rem;">
-            ⚡
-          </div>
-          <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;">Operations Automation</h3>
-          <p style="color: hsl(var(--muted-foreground)); line-height: 1.7;">
-            Turn repetitive tasks into automatic workflows. Scheduled reports, smart alerts, and audit trails that keep your operations running smoothly.
-          </p>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <h3>Invoice & Payment Automation</h3>
+          <p>Generate branded invoices and payment slips in seconds. Eliminate manual data entry and get paid faster.</p>
         </div>
 
-        <div class="card solution-card">
-          <div style="width: 3.5rem; height: 3.5rem; border-radius: 1rem; background: hsl(var(--primary) / 0.1); display: flex; align-items: center; justify-content: center; color: hsl(var(--primary)); margin-bottom: 1.5rem; font-size: 1.5rem;">
-            👥
-          </div>
-          <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;">Custom CRM in Sheets</h3>
-          <p style="color: hsl(var(--muted-foreground)); line-height: 1.7;">
-            Get a CRM that your team will actually use. Built in Sheets with validation rules, custom views, and automations that eliminate data entry.
-          </p>
+        <div class="card">
+          <div class="card-icon">👥</div>
+          <h3>Custom CRM Systems</h3>
+          <p>Track leads, customers, and deals without expensive software. Built exactly how your team works.</p>
         </div>
 
-        <div class="card solution-card">
-          <div style="width: 3.5rem; height: 3.5rem; border-radius: 1rem; background: hsl(var(--primary) / 0.1); display: flex; align-items: center; justify-content: center; color: hsl(var(--primary)); margin-bottom: 1.5rem; font-size: 1.5rem;">
-            📊
-          </div>
-          <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;">Smart Dashboards</h3>
-          <p style="color: hsl(var(--muted-foreground)); line-height: 1.7;">
-            See what matters, when it matters. Real-time dashboards, API integrations, and automated syncs that give you full visibility.
-          </p>
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <h3>Real-Time Dashboards</h3>
+          <p>See your key metrics at a glance. Auto-refreshed data, beautiful charts, zero manual updates.</p>
         </div>
+
+        <div class="card">
+          <div class="card-icon">📝</div>
+          <h3>Smart Forms & Data Collection</h3>
+          <p>Custom forms that feed directly into your workflows. Validation, notifications, and automated routing.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🗄️</div>
+          <h3>Time Trackers & Project Management</h3>
+          <p>Log hours, track projects, and generate reports automatically. Perfect for agencies and consultants.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📈</div>
+          <h3>Operations Workflows</h3>
+          <p>Scheduled tasks, reconciliations, alerts, and audit logs. Turn chaos into predictable processes.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 3rem; text-align: center;">
+        <p style="color: var(--muted-fg); margin-bottom: 1rem;">Don't see what you need? We build custom solutions for unique workflows.</p>
+        <a onclick="scrollToSection('contact')" style="color: var(--primary); font-weight: 600; cursor: pointer;">Tell us what you need →</a>
       </div>
     </div>
   </section>
 
-  <!-- Works Section -->
-  <section id="works" style="padding: 6rem 0;">
-    <div style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;">
-      <div style="text-align: center; max-width: 48rem; margin: 0 auto 3rem;">
-        <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
-          Real solutions we've <span class="text-primary">built for clients</span>
-        </h2>
-        <p style="font-size: 1.125rem; color: hsl(var(--muted-foreground));">
-          Production-ready automations that teams use every day
-        </p>
+  <!-- Works -->
+  <section id="works" class="works-section">
+    <div class="container" style="margin-bottom: 3rem;">
+      <div class="section-header">
+        <div class="section-badge">Real Results</div>
+        <h2 class="section-title">See What's Possible</h2>
+        <p class="section-desc">These aren't mockups. These are production systems saving our clients hours every week.</p>
       </div>
+    </div>
 
-      <div style="display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 2rem; flex-wrap: wrap;">
-        <button class="work-tab active" data-work="0">Bulk Email</button>
-        <button class="work-tab" data-work="1">Payment Slip</button>
-        <button class="work-tab" data-work="2">Cleaning System</button>
+    <div class="marquee-container">
+      <div class="marquee" id="marquee1">
+        <!-- Cards will be inserted here by JavaScript -->
       </div>
+    </div>
 
-      <div id="workContent" class="card" style="border: 2px solid hsl(var(--primary) / 0.1);">
-        <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
-          <div style="display: flex; align-items: center; justify-content: center; background: hsl(var(--muted) / 0.5); border-radius: 1rem; padding: 4rem; min-height: 200px;">
-            <div style="text-align: center;">
-              <div style="width: 5rem; height: 5rem; border-radius: 1rem; background: hsl(var(--primary) / 0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2.5rem;">
-                ✨
-              </div>
-              <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Interactive demo available</p>
-            </div>
-          </div>
-          
-          <div>
-            <h3 id="workTitle" style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">Bulk Email Sender + Multi-Inbox CRM</h3>
-            <p id="workDesc" style="color: hsl(var(--muted-foreground)); margin-bottom: 1.5rem; line-height: 1.7;">
-              Transform your outreach with personalized mass-mailing from Sheets. Track opens, replies, and manage leads across multiple inboxes.
-            </p>
-            
-            <div id="workFeatures" style="margin-bottom: 1.5rem;">
-              <div style="display: flex; align-items: start; gap: 0.75rem; margin-bottom: 0.75rem;">
-                <span style="color: hsl(var(--primary)); font-size: 1.25rem;">✓</span>
-                <span style="font-size: 0.875rem;">Personalized email templates with smart column mapping</span>
-              </div>
-              <div style="display: flex; align-items: start; gap: 0.75rem; margin-bottom: 0.75rem;">
-                <span style="color: hsl(var(--primary)); font-size: 1.25rem;">✓</span>
-                <span style="font-size: 0.875rem;">Real-time open & reply tracking across all inboxes</span>
-              </div>
-              <div style="display: flex; align-items: start; gap: 0.75rem;">
-                <span style="color: hsl(var(--primary)); font-size: 1.25rem;">✓</span>
-                <span style="font-size: 0.875rem;">Built-in CRM with pipeline stages and ownership rules</span>
-              </div>
-            </div>
-
-            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-              <button class="btn btn-primary">Request This Solution</button>
-              <button class="btn btn-outline">View Demo</button>
-            </div>
-          </div>
-        </div>
+    <div class="marquee-container">
+      <div class="marquee marquee-reverse" id="marquee2">
+        <!-- Cards will be inserted here by JavaScript -->
       </div>
+    </div>
+
+    <div class="container" style="margin-top: 3rem; text-align: center;">
+      <p style="font-size: 1.125rem; color: var(--muted-fg); margin-bottom: 1rem;">Want something similar for your business?</p>
+      <a onclick="scrollToSection('contact')" class="btn btn-primary">Let's Build It Together</a>
     </div>
   </section>
 
-  <!-- Process Section -->
-  <section id="process" style="padding: 6rem 0; position: relative; overflow: hidden;">
-    <div style="position: absolute; inset: 0; background: linear-gradient(135deg, hsl(var(--primary) / 0.05) 0%, hsl(var(--background)) 50%, hsl(var(--accent) / 0.05) 100%);"></div>
-    <div style="position: relative; max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;">
-      <div style="text-align: center; max-width: 48rem; margin: 0 auto 4rem;">
-        <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
-          From idea to <span class="text-primary">impact in 4 steps</span>
-        </h2>
-        <p style="font-size: 1.125rem; color: hsl(var(--muted-foreground));">
-          A clear, proven process that gets you results fast
-        </p>
+  <!-- Process -->
+  <section id="process">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">How It Works</div>
+        <h2 class="section-title">From Idea to Impact in 7 Days</h2>
+        <p class="section-desc">No lengthy contracts. No endless meetings. Just fast, collaborative delivery that gets results.</p>
       </div>
 
-      <div style="position: relative; max-width: 80rem; margin: 0 auto;">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; position: relative;">
-          <div class="process-card">
-            <div class="process-number">01</div>
-            <div class="process-icon">👥</div>
-            <div style="text-align: center;">
-              <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem;">Discovery Call</h3>
-              <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); line-height: 1.6;">
-                30 minutes to understand your workflow and goals. No sales pitch—just focused questions.
-              </p>
-            </div>
-          </div>
-
-          <div class="process-card">
-            <div class="process-number">02</div>
-            <div class="process-icon">📊</div>
-            <div style="text-align: center;">
-              <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem;">Solution Design</h3>
-              <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); line-height: 1.6;">
-                Within 48 hours, get a clear plan with scope, timeline, and expected ROI.
-              </p>
-            </div>
-          </div>
-
-          <div class="process-card">
-            <div class="process-number">03</div>
-            <div class="process-icon">⚡</div>
-            <div style="text-align: center;">
-              <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem;">Build & Test</h3>
-              <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); line-height: 1.6;">
-                Regular check-ins and demos. We iterate based on your feedback until perfect.
-              </p>
-            </div>
-          </div>
-
-          <div class="process-card">
-            <div class="process-number">04</div>
-            <div class="process-icon">🛡️</div>
-            <div style="text-align: center;">
-              <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem;">Launch & Support</h3>
-              <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); line-height: 1.6;">
-                Team training, documentation, and optional SLA-backed maintenance.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Case Study -->
-  <section style="padding: 4rem 0; background: hsl(var(--primary) / 0.05);">
-    <div style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;">
-      <div class="card" style="border: 2px solid hsl(var(--primary) / 0.2);">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
-          <div>
-            <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.5rem;">Case Study</div>
-            <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem;">Retail Operations Transformation</h3>
-            <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">
-              Reduced manual reporting from 10 hours to 20 minutes per week through automated reconciliation.
-            </p>
-          </div>
-          <div style="display: flex; flex-direction: column; justify-content: center;">
-            <div style="font-size: 2.5rem; font-weight: 700; color: hsl(var(--primary)); margin-bottom: 0.5rem;">20+ hrs</div>
-            <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Saved per week with real-time dashboards</p>
-          </div>
-          <div style="display: flex; flex-direction: column; justify-content: center;">
-            <div style="display: flex; gap: 0.25rem; margin-bottom: 0.5rem;">
-              <span style="color: hsl(var(--primary));">★★★★★</span>
-            </div>
-            <p style="font-size: 0.875rem; font-weight: 500; margin-bottom: 0.25rem;">"A complete game-changer"</p>
-            <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">"ROI was visible in month one."</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonials -->
-  <section id="testimonials" style="padding: 6rem 0;">
-    <div style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;">
-      <div style="text-align: center; max-width: 48rem; margin: 0 auto 4rem;">
-        <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
-          Loved by teams who <span class="text-primary">value their time</span>
-        </h2>
-        <p style="font-size: 1.125rem; color: hsl(var(--muted-foreground));">
-          Real feedback from real people doing real work
-        </p>
-      </div>
-
-      <div style="max-width: 56rem; margin: 0 auto;">
-        <div id="testimonialContent" class="card" style="border: 2px solid hsl(var(--primary) / 0.1); box-shadow: 0 20px 60px hsl(var(--primary) / 0.15);">
-          <div style="font-size: 3rem; color: hsl(var(--primary) / 0.2); margin-bottom: 1.5rem;">"</div>
-          <p id="testimonialQuote" style="font-size: 1.5rem; font-weight: 500; margin-bottom: 2rem; line-height: 1.6;">
-            AutomateOps cut our weekly reporting time from 8 hours to just 15 minutes. Our team now focuses on strategy instead of busywork.
-          </p>
-          <div style="display: flex; align-items: center; gap: 1rem;">
-            <div style="width: 3.5rem; height: 3.5rem; border-radius: 50%; background: hsl(var(--primary) / 0.1); display: flex; align-items: center; justify-content: center; color: hsl(var(--primary)); font-weight: 600; font-size: 1.125rem;">
-              SM
-            </div>
-            <div style="flex: 1;">
-              <div id="testimonialName" style="font-weight: 600;">Sarah Mitchell</div>
-              <div id="testimonialRole" style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Operations Manager, TechFlow</div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 0.25rem;">
-              <span style="color: hsl(var(--primary));">★★★★★</span>
-              <span id="testimonialRating" style="margin-left: 0.5rem; font-size: 0.875rem; font-weight: 500;">4.9</span>
-            </div>
-          </div>
+      <div class="grid-4">
+        <div class="card process-card">
+          <div class="process-icon">🔍</div>
+          <div class="process-num">01</div>
+          <h3>Discovery Call (Free)</h3>
+          <p>We map your workflow, identify bottlenecks, and calculate potential ROI. Zero pressure, pure value.</p>
         </div>
 
-        <div style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 2rem;">
-          <button class="testimonial-dot active" data-testimonial="0"></button>
-          <button class="testimonial-dot" data-testimonial="1"></button>
-          <button class="testimonial-dot" data-testimonial="2"></button>
+        <div class="card process-card">
+          <div class="process-icon">✏️</div>
+          <div class="process-num">02</div>
+          <h3>Prototype & Scope</h3>
+          <p>See a working mockup before you commit. We agree on deliverables, timeline, and fixed price.</p>
+        </div>
+
+        <div class="card process-card">
+          <div class="process-icon">🔨</div>
+          <div class="process-num">03</div>
+          <h3>Build & Test</h3>
+          <p>We build, you test. Rapid iterations until it's perfect. Typical turnaround: 5-7 days.</p>
+        </div>
+
+        <div class="card process-card">
+          <div class="process-icon">🚀</div>
+          <div class="process-num">04</div>
+          <h3>Launch & Train</h3>
+          <p>We train your team, provide documentation, and offer 30 days of support. You're never alone.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 3rem; text-align: center;">
+        <div style="display: inline-block; background: rgba(95, 191, 120, 0.1); border: 1px solid rgba(95, 191, 120, 0.2); border-radius: var(--radius); padding: 1.5rem;">
+          <p style="font-size: 1.125rem; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">⚡ Limited Availability: Only 3 New Projects Per Month</p>
+          <p style="font-size: 0.875rem; color: var(--muted-fg);">We keep our client load small to ensure quality. Book your discovery call now.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ROI Calculator -->
-  <section id="roi" style="padding: 6rem 0; background: hsl(var(--muted) / 0.3);">
-    <div style="max-width: 80rem; margin: 0 auto; padding: 0 1.5rem;">
-      <div style="text-align: center; max-width: 48rem; margin: 0 auto 3rem;">
-        <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
-          Calculate your <span class="text-primary">potential savings</span>
-        </h2>
-        <p style="font-size: 1.125rem; color: hsl(var(--muted-foreground));">
-          See how much time and money you could save with automation
-        </p>
+  <section id="roi" style="background: rgba(38, 38, 38, 0.2);">
+    <div class="container" style="max-width: 1100px;">
+      <div class="section-header">
+        <div class="section-badge">ROI Calculator</div>
+        <h2 class="section-title">How Much Are You Losing?</h2>
+        <p class="section-desc">Calculate how much money you're wasting on manual tasks—and what automation could save you.</p>
       </div>
 
-      <div class="card" style="border: 2px solid hsl(var(--primary) / 0.2); box-shadow: 0 20px 60px hsl(var(--primary) / 0.15);">
-        <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
-            <div>
-              <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Hours spent per task</label>
-              <input type="number" id="hours" class="input-field" value="8" min="0" step="0.5">
+      <div class="roi-grid">
+        <div class="roi-inputs">
+          <form id="roiForm" onsubmit="calculateROI(event)">
+            <div class="form-group">
+              <label>
+                <span class="label-number">1</span>
+                Hours spent per task
+              </label>
+              <input type="number" id="hours" value="8" required>
             </div>
-            <div>
-              <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Times per week</label>
-              <input type="number" id="runs" class="input-field" value="1" min="0" step="1">
+            <div class="form-group">
+              <label>
+                <span class="label-number">2</span>
+                How many times per week?
+              </label>
+              <input type="number" id="runs" value="1" required>
             </div>
-            <div>
-              <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Hourly rate ($)</label>
-              <input type="number" id="rate" class="input-field" value="50" min="0" step="5">
+            <div class="form-group">
+              <label>
+                <span class="label-number">3</span>
+                Hourly cost ($/hr)
+              </label>
+              <input type="number" id="rate" value="50" required>
             </div>
-            <div>
-              <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Automation efficiency (%)</label>
-              <input type="number" id="percent" class="input-field" value="75" min="0" max="100" step="5">
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 0.75rem;">
-            <button id="calculateBtn" class="btn btn-primary" style="flex: 1;">Calculate Savings</button>
-            <button id="resetBtn" class="btn btn-outline">Reset</button>
-          </div>
-
-          <div id="roiResults" style="display: none;">
-            <div style="text-align: center; padding: 2rem; border-radius: 1rem; background: hsl(var(--primary) / 0.05); border: 2px solid hsl(var(--primary) / 0.2); margin-bottom: 1.5rem;">
-              <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.5rem;">Weekly Savings</div>
-              <div id="weeklySavings" style="font-size: 3rem; font-weight: 700; color: hsl(var(--primary)); margin-bottom: 0.5rem;">$0</div>
-              <div id="hoursSaved" style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">0 hours saved per week</div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
-              <div style="text-align: center; padding: 1.5rem; border-radius: 0.75rem; background: hsl(var(--card)); border: 1px solid hsl(var(--border));">
-                <div style="font-size: 0.75rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.25rem;">Monthly</div>
-                <div id="monthlySavings" style="font-size: 1.5rem; font-weight: 700;">$0</div>
-              </div>
-              <div style="text-align: center; padding: 1.5rem; border-radius: 0.75rem; background: hsl(var(--card)); border: 1px solid hsl(var(--border));">
-                <div style="font-size: 0.75rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.25rem;">Yearly</div>
-                <div id="yearlySavings" style="font-size: 1.5rem; font-weight: 700;">$0</div>
-              </div>
+            <div class="form-group">
+              <label>
+                <span class="label-number">4</span>
+                % We can automate
+              </label>
+              <input type="number" id="percent" value="75" required>
             </div>
 
-            <div style="padding: 1.5rem; border-radius: 0.75rem; background: hsl(var(--muted) / 0.5); border: 1px solid hsl(var(--border)); margin-bottom: 1.5rem;">
-              <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.5rem;">Calculation breakdown:</div>
-              <div id="breakdown" style="font-size: 0.875rem; font-family: monospace;"></div>
-            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">
+              Calculate My Savings
+            </button>
+          </form>
+        </div>
 
-            <a href="#contact" class="btn btn-primary" style="width: 100%; display: block; text-align: center;">Start Saving Now</a>
+        <div id="roiResult" class="roi-result-card">
+          <div style="font-size: 4rem; margin-bottom: 1rem;">📊</div>
+          <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Ready to Calculate?</h3>
+          <p style="color: var(--muted-fg);">Fill in the form and click "Calculate My Savings" to see your potential ROI</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section>
+    <div class="container" style="max-width: 900px;">
+      <div class="section-header">
+        <div class="section-badge">Client Success</div>
+        <h2 class="section-title">Real People, Real Results</h2>
+        <p class="section-desc">Don't just take our word for it—here's what our clients say</p>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <div class="testimonial-text" id="testimonialText">We were spending 8 hours every week on reporting. Now it takes 15 minutes. AutomateOps paid for itself in the first month.</div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" id="testimonialAvatar">S</div>
+          <div class="testimonial-info">
+            <div class="name" id="testimonialName">Sarah Mitchell</div>
+            <div class="role" id="testimonialRole">Operations Manager, TechFlow Solutions</div>
           </div>
         </div>
+      </div>
+
+      <div class="carousel-dots">
+        <div class="carousel-dot active" onclick="goToTestimonial(0)"></div>
+        <div class="carousel-dot" onclick="goToTestimonial(1)"></div>
+        <div class="carousel-dot" onclick="goToTestimonial(2)"></div>
       </div>
     </div>
   </section>
 
   <!-- FAQ -->
-  <section style="padding: 6rem 0;">
-    <div style="max-width: 56rem; margin: 0 auto; padding: 0 1.5rem;">
-      <div style="text-align: center; margin-bottom: 3rem;">
-        <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem;">
-          Questions? <span class="text-primary">We've got answers</span>
-        </h2>
-        <p style="font-size: 1.125rem; color: hsl(var(--muted-foreground));">Everything you need to know to get started</p>
+  <section style="background: rgba(38, 38, 38, 0.2);">
+    <div class="container" style="max-width: 800px;">
+      <div class="section-header">
+        <div class="section-badge">FAQ</div>
+        <h2 class="section-title">Questions? We've Got Answers</h2>
+        <p class="section-desc">Everything you need to know before getting started</p>
       </div>
 
       <div>
         <div class="faq-item">
-          <button class="faq-question">
-            <span>How quickly can we see results?</span>
-            <span>›</span>
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span>How fast can we actually get started?</span>
+            <svg class="icon faq-icon" viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
           </button>
           <div class="faq-answer">
-            Most pilots launch within one week and deliver measurable time savings in the first week of use. We focus on quick wins that prove value immediately.
+            <div class="faq-answer-content">
+              Most pilots launch within 5-7 days. We start with a free discovery call, show you a prototype within 48 hours, and deliver the finished automation within a week. No lengthy contracts or delays.
+            </div>
           </div>
         </div>
 
         <div class="faq-item">
-          <button class="faq-question">
-            <span>What does a pilot project include?</span>
-            <span>›</span>
-          </button>
-          <div class="faq-answer">
-            A scoped workflow automation, full implementation, testing, training for your team, and a results report with recommendations for next steps—all at a fixed price.
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question">
-            <span>How do you handle pricing?</span>
-            <span>›</span>
-          </button>
-          <div class="faq-answer">
-            Pilots are fixed-price for predictability. Larger projects use milestone-based pricing with clear acceptance criteria and sign-off at each stage.
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question">
-            <span>Can you integrate with our existing systems?</span>
-            <span>›</span>
-          </button>
-          <div class="faq-answer">
-            Yes. We integrate securely using OAuth, webhooks, and scoped service accounts. You'll receive a permissions checklist before we start.
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question">
+          <button class="faq-question" onclick="toggleFAQ(this)">
             <span>What if we need changes after launch?</span>
-            <span>›</span>
+            <svg class="icon faq-icon" viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
           </button>
           <div class="faq-answer">
-            We provide documentation and training so you can make simple updates yourself. For larger changes, we offer flexible SLA-backed maintenance packages.
+            <div class="faq-answer-content">
+              Every project includes 30 days of free support and adjustments. After that, we offer affordable maintenance packages or you can manage it yourself—we provide full documentation and training.
+            </div>
           </div>
         </div>
 
         <div class="faq-item">
-          <button class="faq-question">
-            <span>Do we need technical expertise?</span>
-            <span>›</span>
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span>How much does a typical project cost?</span>
+            <svg class="icon faq-icon" viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
           </button>
           <div class="faq-answer">
-            Not at all. We build everything to be user-friendly for non-technical teams. If you can use Google Sheets, you can use our automations.
+            <div class="faq-answer-content">
+              Most pilots range from $1,500-$3,500 depending on complexity. We always provide fixed-price quotes upfront—no surprises. Most clients see ROI within the first month.
+            </div>
           </div>
         </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span>Do we need technical knowledge to use it?</span>
+            <svg class="icon faq-icon" viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Nope! We build everything in Google Sheets—if your team can use a spreadsheet, they can use our automations. Plus, we provide training and documentation so everyone feels confident.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span>What if our workflow is really complex?</span>
+            <svg class="icon faq-icon" viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Perfect! Complex workflows are where we shine. We'll break it down, simplify it, and build exactly what you need. That's what the discovery call is for—to understand your unique process.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span>Can you integrate with our other tools?</span>
+            <svg class="icon faq-icon" viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Yes! We connect Google Sheets with Gmail, Drive, Slack, CRMs, payment processors, and most tools with APIs. If it has an API or webhook, we can probably connect it.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 3rem; text-align: center;">
+        <p style="color: var(--muted-fg); margin-bottom: 1rem;">Still have questions?</p>
+        <a onclick="scrollToSection('contact')" style="color: var(--primary); font-weight: 600; cursor: pointer;">Let's talk on a free discovery call →</a>
       </div>
     </div>
   </section>
 
-  <!-- Final CTA -->
-  <section style="padding: 4rem 1.5rem;">
-    <div style="max-width: 80rem; margin: 0 auto;">
-      <div class="gradient-primary" style="padding: 3rem; border-radius: 1rem; text-align: center; color: white; position: relative; overflow: hidden;">
-        <div style="position: relative; z-index: 1;">
-          <h2 style="font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 1rem;">
-            Ready to reclaim your time?
-          </h2>
-          <p style="font-size: 1.125rem; margin-bottom: 2rem; opacity: 0.9; max-width: 40rem; margin-left: auto; margin-right: auto;">
-            Book a free 30-minute discovery call. No commitment, no sales pressure—just an honest conversation about how we can help.
-          </p>
-          <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
-            <a href="#contact" class="btn" style="background: white; color: hsl(var(--primary)); padding: 0.875rem 2rem;">Schedule Your Free Call</a>
-            <a href="#roi" class="btn" style="background: rgba(255,255,255,0.1); color: white; border: 2px solid rgba(255,255,255,0.2); padding: 0.875rem 2rem;">Calculate Your ROI</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Form -->
-  <section id="contact" style="padding: 6rem 0; background: hsl(var(--muted) / 0.3);">
-    <div style="max-width: 42rem; margin: 0 auto; padding: 0 1.5rem;">
-      <div style="text-align: center; margin-bottom: 3rem;">
-        <h2 style="font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 1rem;">Let's talk about your workflow</h2>
-        <p style="color: hsl(var(--muted-foreground));">Tell us what's slowing you down, and we'll show you how to fix it</p>
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Get Started</div>
+        <h2 class="section-title">Ready to Stop Wasting Time?</h2>
+        <p class="section-desc">Book a free 30-minute discovery call. We'll analyze your workflow, show you what's possible, and give you a custom automation roadmap—zero commitment required.</p>
       </div>
 
-      <div class="card">
-        <form id="contactForm">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
-            <div>
-              <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Your Name</label>
-              <input type="text" name="name" class="input-field" placeholder="John Smith" required>
-            </div>
-            <div>
-              <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Email</label>
-              <input type="email" name="email" class="input-field" placeholder="john@company.com" required>
-            </div>
+      <div class="contact-grid">
+        <div class="card contact-cta">
+          <h3>Free Discovery Call ($500 Value)</h3>
+          <p>On this call, you'll get:</p>
+          <ul>
+            <li><span style="font-size: 1.5rem;">✓</span> <span>Custom workflow analysis and bottleneck identification</span></li>
+            <li><span style="font-size: 1.5rem;">✓</span> <span>ROI calculation showing exactly what you'll save</span></li>
+            <li><span style="font-size: 1.5rem;">✓</span> <span>Live prototype demo of your first automation</span></li>
+            <li><span style="font-size: 1.5rem;">✓</span> <span>Fixed-price quote with zero hidden fees</span></li>
+          </ul>
+          <div style="background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(0, 0, 0, 0.3); border-radius: var(--radius); padding: 1rem;">
+            <p style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.25rem;">⚡ Limited Time Offer</p>
+            <p style="font-size: 0.875rem; opacity: 0.9;">First 10 discovery calls this month get 20% off their first project</p>
           </div>
-          
-          <div style="margin-bottom: 1.5rem;">
-            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Company</label>
-            <input type="text" name="company" class="input-field" placeholder="Your Company Inc.">
-          </div>
-
-          <div style="margin-bottom: 1.5rem;">
-            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">What workflow would you like to automate?</label>
-            <textarea name="message" class="input-field" rows="5" placeholder="Tell us about the repetitive tasks that are eating up your team's time..." required></textarea>
-          </div>
-
-          <div style="display: flex; gap: 0.75rem;">
-            <button type="submit" class="btn btn-primary" style="flex: 1;">Send Message</button>
-            <button type="button" id="clearForm" class="btn btn-outline">Clear</button>
-          </div>
-        </form>
-        <div id="formSuccess" style="display: none; margin-top: 1rem; padding: 1rem; background: hsl(var(--primary) / 0.1); border: 1px solid hsl(var(--primary) / 0.3); border-radius: 0.5rem; color: hsl(var(--primary)); text-align: center;">
-          ✓ Thank you! We'll be in touch within 24 hours.
         </div>
+
+        <div class="card">
+          <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Request Your Free Call</h3>
+          <form onsubmit="handleContactForm(event)">
+            <div class="form-group">
+              <input type="text" placeholder="Your name *" required>
+            </div>
+            <div class="form-group">
+              <input type="email" placeholder="Work email *" required>
+            </div>
+            <div class="form-group">
+              <input type="text" placeholder="Company name">
+            </div>
+            <div class="form-group">
+              <textarea rows="5" placeholder="Tell us about the task you want to automate (the more detail, the better!) *" required></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                Book My Free Call
+                <svg class="icon" width="20" height="20" viewBox="0 0 24 24">
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                  <polyline points="12 5 19 12 12 19"/>
+                </svg>
+              </button>
+              <button type="button" class="btn btn-outline" onclick="this.form.reset()">Clear</button>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--muted-fg); text-align: center; margin-top: 1rem;">We typically respond within 24 hours • No spam, ever</p>
+          </form>
+        </div>
+      </div>
+
+      <div style="margin-top: 3rem; text-align: center;">
+        <p style="font-size: 0.875rem; color: var(--muted-fg);">🔒 Your information is safe. We never share or sell your data.</p>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer style="padding: 3rem 0; border-top: 1px solid hsl(var(--border) / 0.5);">
-    <div style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;">
-      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem;">
-        <div style="display: flex; align-items: center; gap: 0.75rem;">
-          <div style="width: 2.5rem; height: 2.5rem; border-radius: 0.75rem; background: hsl(var(--primary)); display: flex; align-items: center; justify-content: center; color: white;">
-            ✨
-          </div>
-          <div>
-            <div style="font-weight: 600;">AutomateOps</div>
-            <div style="font-size: 0.75rem; color: hsl(var(--muted-foreground));">© 2024 All rights reserved</div>
-          </div>
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span style="font-weight: 700;">AutomateOps</span>
+          <span style="color: var(--muted-fg);">© <span id="year"></span></span>
         </div>
-
-        <div style="display: flex; align-items: center; gap: 1.5rem;">
-          <a href="#" style="color: hsl(var(--muted-foreground)); transition: color 0.3s;" onmouseover="this.style.color='hsl(var(--foreground))'" onmouseout="this.style.color='hsl(var(--muted-foreground))'">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path></svg>
+        <div class="footer-links">
+          <a href="#" aria-label="Twitter">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+            </svg>
           </a>
-          <a href="#" style="color: hsl(var(--muted-foreground)); transition: color 0.3s;" onmouseover="this.style.color='hsl(var(--foreground))'" onmouseout="this.style.color='hsl(var(--muted-foreground))'">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path><circle cx="4" cy="4" r="2"></circle></svg>
+          <a href="#" aria-label="LinkedIn">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
           </a>
-          <a href="#" style="color: hsl(var(--muted-foreground)); transition: color 0.3s;" onmouseover="this.style.color='hsl(var(--foreground))'" onmouseout="this.style.color='hsl(var(--muted-foreground))'">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path></svg>
+          <a href="#" aria-label="GitHub">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/>
+            </svg>
           </a>
         </div>
+      </div>
+      <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center;">
+        <p style="font-size: 0.875rem; color: var(--muted-fg);">Built with ❤️ for teams who want to work smarter, not harder</p>
       </div>
     </div>
   </footer>
 
-  <!-- Back to Top Button -->
-  <button id="backToTop" class="back-to-top">↑</button>
+  <!-- Video Modal -->
+  <div class="modal" id="videoModal" onclick="closeModal(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal(event)">×</button>
+      <iframe id="videoFrame" src="" allow="autoplay; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
 
   <script>
-    // Mobile Menu Toggle
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('open');
-      mobileMenuBtn.textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
-    });
+    // Set year
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Close mobile menu when clicking a link
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.remove('open');
-        mobileMenuBtn.textContent = '☰';
-      });
-    });
+    // Scroll to section
+    function scrollToSection(id) {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // Mobile Menu Toggle
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('active');
+    }
 
     // Animated Counter
     function animateCounter(element, target, suffix = '') {
-      const duration = 2000;
-      const steps = 60;
-      const increment = target / steps;
       let current = 0;
-      
+      const increment = target / 60;
       const timer = setInterval(() => {
         current += increment;
         if (current >= target) {
@@ -968,212 +1606,198 @@
         } else {
           element.textContent = Math.floor(current) + suffix;
         }
-      }, duration / steps);
+      }, 30);
     }
 
     // Trigger counters on scroll
-    const observerOptions = { threshold: 0.5, rootMargin: '0px' };
-    const counterObserver = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
-          entry.target.classList.add('animated');
-          const target = parseInt(entry.target.dataset.target);
-          const text = entry.target.textContent;
-          const suffix = text.replace(/[0-9]/g, '');
-          animateCounter(entry.target, target, suffix);
+        if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+          entry.target.classList.add('counted');
+          if (entry.target.id === 'stat1') animateCounter(entry.target, 20, '+');
+          if (entry.target.id === 'stat2') animateCounter(entry.target, 90, '%');
+          if (entry.target.id === 'stat3') animateCounter(entry.target, 7, '');
         }
       });
-    }, observerOptions);
+    }, { threshold: 0.5 });
 
-    document.querySelectorAll('.stat-number').forEach(el => counterObserver.observe(el));
+    observer.observe(document.getElementById('stat1'));
+    observer.observe(document.getElementById('stat2'));
+    observer.observe(document.getElementById('stat3'));
 
-    // Works Tabs
+    // Works Section - Marquee
     const works = [
-      {
-        title: 'Bulk Email Sender + Multi-Inbox CRM',
-        desc: 'Transform your outreach with personalized mass-mailing from Sheets. Track opens, replies, and manage leads across multiple inboxes.',
-        features: [
-          'Personalized email templates with smart column mapping',
-          'Real-time open & reply tracking across all inboxes',
-          'Built-in CRM with pipeline stages and ownership rules'
-        ]
-      },
-      {
-        title: 'Auto Payment-Slip Generator',
-        desc: 'Say goodbye to manual invoicing. Generate branded payment slips, batch-create PDFs, and automatically email receipts—all from a single spreadsheet.',
-        features: [
-          'Custom branded templates exported to PDF instantly',
-          'Batch generation with scheduled delivery',
-          'Complete audit log with retry queue for reliability'
-        ]
-      },
-      {
-        title: 'Complete Cleaning Business System',
-        desc: 'Run your entire cleaning operation from one place. From bookings to invoicing, team scheduling to client communications.',
-        features: [
-          'Automated booking imports and smart assignment',
-          'Team scheduling with instant notifications',
-          'Invoice generation and payment tracking built-in'
-        ]
-      }
+      { category: 'Bulk Email', title: 'Personalized Email Campaigns', thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
+      { category: 'Batch PDF', title: 'Branded Invoice Generator', thumbnail: 'https://img.youtube.com/vi/3fumBcKC6RE/hqdefault.jpg', videoUrl: 'https://www.youtube.com/embed/3fumBcKC6RE' },
+      { category: 'Scheduling', title: 'Booking & Assignment System', thumbnail: 'https://img.youtube.com/vi/tVj0ZTS4WF4/hqdefault.jpg', videoUrl: 'https://www.youtube.com/embed/tVj0ZTS4WF4' },
+      { category: 'Inventory Sync', title: 'Stock Automation', thumbnail: 'https://img.youtube.com/vi/aqz-KE-bpKQ/hqdefault.jpg', videoUrl: 'https://www.youtube.com/embed/aqz-KE-bpKQ' },
+      { category: 'CRM Bridge', title: '2-Way Data Sync', thumbnail: 'https://img.youtube.com/vi/oHg5SJYRHA0/hqdefault.jpg', videoUrl: 'https://www.youtube.com/embed/oHg5SJYRHA0' },
+      { category: 'Dashboard', title: 'Real-Time Metrics', thumbnail: 'https://img.youtube.com/vi/2vjPBrBU-TM/hqdefault.jpg', videoUrl: 'https://www.youtube.com/embed/2vjPBrBU-TM' }
     ];
 
-    document.querySelectorAll('.work-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        const workIndex = parseInt(tab.dataset.work);
-        const work = works[workIndex];
-        
-        document.querySelectorAll('.work-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        
-        document.getElementById('workTitle').textContent = work.title;
-        document.getElementById('workDesc').textContent = work.desc;
-        
-        const featuresHtml = work.features.map(f => 
-          `<div style="display: flex; align-items: start; gap: 0.75rem; margin-bottom: 0.75rem;">
-            <span style="color: hsl(var(--primary)); font-size: 1.25rem;">✓</span>
-            <span style="font-size: 0.875rem;">${f}</span>
-          </div>`
-        ).join('');
-        document.getElementById('workFeatures').innerHTML = featuresHtml;
-      });
+    function createWorkCard(work) {
+      return `
+        <div class="work-card">
+          <div class="work-image" onclick="openVideo('${work.videoUrl}')">
+            <img src="${work.thumbnail}" alt="${work.title}">
+            <div class="work-overlay"></div>
+            <div class="work-play">
+              <svg class="icon" viewBox="0 0 24 24">
+                <polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/>
+              </svg>
+            </div>
+          </div>
+          <div class="work-content">
+            <div class="work-category">${work.category}</div>
+            <div class="work-title">${work.title}</div>
+            <div class="work-actions">
+              <button class="btn btn-outline" onclick="openVideo('${work.videoUrl}')">Watch Demo</button>
+              <button class="btn btn-ghost" onclick="scrollToSection('contact')">Get This</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Populate marquees
+    const marquee1 = document.getElementById('marquee1');
+    const marquee2 = document.getElementById('marquee2');
+    
+    const row1Works = [...works.slice(0, 3), ...works.slice(0, 3)];
+    const row2Works = [...works.slice(3, 6), ...works.slice(3, 6)];
+    
+    marquee1.innerHTML = row1Works.map(createWorkCard).join('');
+    marquee2.innerHTML = row2Works.map(createWorkCard).join('');
+
+    // Video Modal
+    function openVideo(url) {
+      const modal = document.getElementById('videoModal');
+      const frame = document.getElementById('videoFrame');
+      frame.src = url + '?autoplay=1';
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(event) {
+      if (event.target.classList.contains('modal') || 
+          event.target.classList.contains('modal-close') ||
+          event.target.textContent === '×') {
+        const modal = document.getElementById('videoModal');
+        const frame = document.getElementById('videoFrame');
+        frame.src = '';
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        const modal = document.getElementById('videoModal');
+        if (modal.classList.contains('active')) {
+          const frame = document.getElementById('videoFrame');
+          frame.src = '';
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      }
     });
+
+    // ROI Calculator
+    function calculateROI(event) {
+      event.preventDefault();
+      
+      const hours = Number(document.getElementById('hours').value);
+      const runs = Number(document.getElementById('runs').value);
+      const rate = Number(document.getElementById('rate').value);
+      const percent = Number(document.getElementById('percent').value);
+      
+      const weeklySavings = Math.round(hours * runs * rate * (percent / 100));
+      const monthlySavings = weeklySavings * 4;
+      const yearlySavings = weeklySavings * 52;
+      const hoursSaved = Math.round(hours * runs * (percent / 100));
+      
+      const resultCard = document.getElementById('roiResult');
+      resultCard.innerHTML = `
+        <p style="font-size: 0.875rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">Your Potential Savings</p>
+        <div style="font-size: 3rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">
+          $${weeklySavings.toLocaleString()}<span style="font-size: 1rem; color: var(--muted-fg);">/week</span>
+        </div>
+        <div style="font-size: 1.5rem; font-weight: 600; color: var(--primary); margin-bottom: 1.5rem;">
+          ${hoursSaved} hours saved per week
+        </div>
+        <div style="background: rgba(0, 0, 0, 0.3); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; font-size: 0.875rem; color: var(--muted-fg);">
+          <p style="margin-bottom: 0.5rem;">${hours} hrs × ${runs} runs × $${rate}/hr × ${percent}% = <span style="color: var(--primary); font-weight: 700;">$${weeklySavings}/wk</span></p>
+          <div style="padding-top: 0.5rem; border-top: 1px solid var(--border);">
+            <p style="font-weight: 600; color: var(--fg); margin-bottom: 0.25rem;">That's $${monthlySavings.toLocaleString()}/month</p>
+            <p style="font-weight: 600; color: var(--fg);">Or $${yearlySavings.toLocaleString()}/year</p>
+          </div>
+        </div>
+        <button onclick="scrollToSection('contact')" class="btn btn-primary" style="width: 100%; padding: 1rem;">Let's Capture This Value</button>
+        <p style="font-size: 0.75rem; color: var(--muted-fg); margin-top: 1rem;">Most projects pay for themselves in 2-4 weeks</p>
+      `;
+    }
 
     // Testimonials
     const testimonials = [
-      {
-        quote: 'AutomateOps cut our weekly reporting time from 8 hours to just 15 minutes. Our team now focuses on strategy instead of busywork.',
-        name: 'Sarah Mitchell',
-        role: 'Operations Manager, TechFlow',
-        initials: 'SM',
-        rating: 4.9
-      },
-      {
-        quote: 'The custom Sheets CRM eliminated all the manual data entry that was killing our productivity. Pipeline accuracy improved by 40%.',
-        name: 'Marcus Chen',
-        role: 'Sales Director, GrowthPoint',
-        initials: 'MC',
-        rating: 4.8
-      },
-      {
-        quote: 'We eliminated 90% of manual errors in our reconciliation process. The automated dashboards give us full visibility.',
-        name: 'Emily Rodriguez',
-        role: 'Finance Lead, Nexus Corp',
-        initials: 'ER',
-        rating: 4.9
-      }
+      { quote: "We were spending 8 hours every week on reporting. Now it takes 15 minutes. AutomateOps paid for itself in the first month.", author: "Sarah Mitchell", role: "Operations Manager, TechFlow Solutions", initial: "S" },
+      { quote: "The Sheets CRM they built eliminated 90% of our manual data entry. Our sales team can actually focus on selling now.", author: "Marcus Chen", role: "Sales Director, GrowthLabs", initial: "M" },
+      { quote: "Invoice generation went from 2 hours to 5 minutes. Plus zero errors. This was a game-changer for our billing process.", author: "Emily Rodriguez", role: "Finance Lead, Bright Consulting", initial: "E" }
     ];
 
     let currentTestimonial = 0;
 
     function showTestimonial(index) {
-      const t = testimonials[index];
-      document.getElementById('testimonialQuote').textContent = t.quote;
-      document.getElementById('testimonialName').textContent = t.name;
-      document.getElementById('testimonialRole').textContent = t.role;
-      document.getElementById('testimonialRating').textContent = t.rating;
-      document.querySelector('#testimonialContent > div > div').textContent = t.initials;
+      const testimonial = testimonials[index];
+      document.getElementById('testimonialText').textContent = testimonial.quote;
+      document.getElementById('testimonialName').textContent = testimonial.author;
+      document.getElementById('testimonialRole').textContent = testimonial.role;
+      document.getElementById('testimonialAvatar').textContent = testimonial.initial;
       
-      document.querySelectorAll('.testimonial-dot').forEach((dot, i) => {
+      document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
         dot.classList.toggle('active', i === index);
       });
     }
 
-    document.querySelectorAll('.testimonial-dot').forEach(dot => {
-      dot.addEventListener('click', () => {
-        currentTestimonial = parseInt(dot.dataset.testimonial);
-        showTestimonial(currentTestimonial);
-      });
-    });
+    function goToTestimonial(index) {
+      currentTestimonial = index;
+      showTestimonial(currentTestimonial);
+    }
 
-    // Auto-rotate testimonials
+    // Auto-scroll testimonials
     setInterval(() => {
       currentTestimonial = (currentTestimonial + 1) % testimonials.length;
       showTestimonial(currentTestimonial);
-    }, 7000);
+    }, 6000);
 
-    // ROI Calculator
-    document.getElementById('calculateBtn').addEventListener('click', () => {
-      const hours = parseFloat(document.getElementById('hours').value) || 0;
-      const runs = parseFloat(document.getElementById('runs').value) || 0;
-      const rate = parseFloat(document.getElementById('rate').value) || 0;
-      const percent = parseFloat(document.getElementById('percent').value) || 0;
+    // FAQ Toggle
+    function toggleFAQ(button) {
+      const item = button.parentElement;
+      const wasActive = item.classList.contains('active');
       
-      const weekly = Math.round(hours * runs * rate * (percent / 100));
-      const monthly = weekly * 4;
-      const yearly = weekly * 52;
-      const hoursSaved = (hours * runs * percent / 100).toFixed(1);
+      document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
       
-      document.getElementById('weeklySavings').textContent = '$' + weekly.toLocaleString();
-      document.getElementById('monthlySavings').textContent = '$' + monthly.toLocaleString();
-      document.getElementById('yearlySavings').textContent = '$' + yearly.toLocaleString();
-      document.getElementById('hoursSaved').textContent = hoursSaved + ' hours saved per week';
-      document.getElementById('breakdown').textContent = 
-        `${hours}h × ${runs} runs × $${rate}/hr × ${percent}% = $${weekly}/week`;
-      
-      document.getElementById('roiResults').style.display = 'block';
-      document.getElementById('roiResults').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    });
-
-    document.getElementById('resetBtn').addEventListener('click', () => {
-      document.getElementById('hours').value = 8;
-      document.getElementById('runs').value = 1;
-      document.getElementById('rate').value = 50;
-      document.getElementById('percent').value = 75;
-      document.getElementById('roiResults').style.display = 'none';
-    });
-
-    // FAQ Accordion
-    document.querySelectorAll('.faq-question').forEach(question => {
-      question.addEventListener('click', () => {
-        const answer = question.nextElementSibling;
-        const isOpen = answer.classList.contains('open');
-        
-        document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
-        
-        if (!isOpen) {
-          answer.classList.add('open');
-        }
-      });
-    });
+      if (!wasActive) {
+        item.classList.add('active');
+      }
+    }
 
     // Contact Form
-    document.getElementById('contactForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      document.getElementById('formSuccess').style.display = 'block';
-      document.getElementById('contactForm').reset();
+    function handleContactForm(event) {
+      event.preventDefault();
+      showToast('Request received! We\'ll reach out within 24 hours to schedule your free discovery call.');
+      event.target.reset();
+    }
+
+    // Toast Notification
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('active');
+      
       setTimeout(() => {
-        document.getElementById('formSuccess').style.display = 'none';
+        toast.classList.remove('active');
       }, 5000);
-    });
-
-    document.getElementById('clearForm').addEventListener('click', () => {
-      document.getElementById('contactForm').reset();
-      document.getElementById('formSuccess').style.display = 'none';
-    });
-
-    // Back to Top Button
-    const backToTop = document.getElementById('backToTop');
-    
-    window.addEventListener('scroll', () => {
-      const atBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
-      backToTop.classList.toggle('show', atBottom);
-    });
-
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
+    }
   </script>
 </body>
 </html>
