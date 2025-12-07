@@ -1104,7 +1104,7 @@
           
           <div class="hero-cta">
             <a onclick="scrollToSection('contact')" class="btn btn-primary">
-              Get Your Free Automation Audit
+              Tell Us About It
               <svg class="icon" width="20" height="20" viewBox="0 0 24 24">
                 <line x1="5" y1="12" x2="19" y2="12"/>
                 <polyline points="12 5 19 12 12 19"/>
@@ -1495,7 +1495,7 @@
         </div>
 
         <div class="card">
-          <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Request Your Free Call</h3>
+          <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Tell Us About It</h3>
           <form onsubmit="handleContactForm(event)">
             <div class="form-group">
               <input type="text" placeholder="Your name *" required>
@@ -1511,7 +1511,7 @@
             </div>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary">
-                Book My Free Call
+                Send
                 <svg class="icon" width="20" height="20" viewBox="0 0 24 24">
                   <line x1="5" y1="12" x2="19" y2="12"/>
                   <polyline points="12 5 19 12 12 19"/>
@@ -1782,7 +1782,7 @@
     // Contact Form
     function handleContactForm(event) {
       event.preventDefault();
-      showToast('Request received! We\'ll reach out within 24 hours to schedule your free discovery call.');
+      showToast('Thanks — we got your details. Check your inbox for next steps.');
       event.target.reset();
     }
 
