@@ -1,278 +1,878 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Packdez – Google Sheets Automation for Operations Teams</title>
-  <meta name="description" content="Packdez helps operations teams automate Google Sheets to eliminate manual work, reduce errors, and scale faster. Book a free automation audit." />
-
-  <style>
-    :root {
-      --primary: #2563eb;
-      --dark: #0f172a;
-      --gray: #475569;
-      --light: #f8fafc;
-      --border: #e2e8f0;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-
-    body {
-      color: var(--dark);
-      background: white;
-      line-height: 1.6;
-    }
-
-    section {
-      padding: 80px 20px;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    h1 {
-      font-size: 3rem;
-      line-height: 1.1;
-      margin-bottom: 20px;
-    }
-
-    h2 {
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-    }
-
-    h3 {
-      font-size: 1.3rem;
-      margin-bottom: 10px;
-    }
-
-    p {
-      color: var(--gray);
-      margin-bottom: 16px;
-    }
-
-    .btn {
-      display: inline-block;
-      background: var(--primary);
-      color: white;
-      padding: 16px 28px;
-      border-radius: 8px;
-      font-weight: 600;
-      text-decoration: none;
-      margin-top: 20px;
-    }
-
-    .btn.secondary {
-      background: transparent;
-      color: var(--primary);
-      border: 2px solid var(--primary);
-    }
-
-    .grid {
-      display: grid;
-      gap: 40px;
-    }
-
-    .grid-2 {
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    }
-
-    .card {
-      border: 1px solid var(--border);
-      padding: 30px;
-      border-radius: 12px;
-      background: white;
-    }
-
-    .hero {
-      padding-top: 120px;
-      padding-bottom: 120px;
-    }
-
-    .hero p {
-      font-size: 1.1rem;
-    }
-
-    .badge {
-      display: inline-block;
-      background: #e0e7ff;
-      color: var(--primary);
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      margin-bottom: 20px;
-      font-weight: 600;
-    }
-
-    .cta {
-      background: var(--light);
-      border-radius: 16px;
-      text-align: center;
-    }
-
-    footer {
-      padding: 40px 20px;
-      text-align: center;
-      border-top: 1px solid var(--border);
-      font-size: 0.9rem;
-      color: var(--gray);
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.2rem;
-      }
-      h2 {
-        font-size: 1.8rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packdez - Google Sheets Automation for Growing Teams</title>
+    <meta name="description" content="Turn Google Sheets into fully automated systems. We help operations, finance, and growth teams eliminate manual work with Zapier, Apps Script, and APIs.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 220 20% 10%;
+            --primary: 146 55% 36%;
+            --primary-foreground: 0 0% 100%;
+            --muted: 220 14% 96%;
+            --muted-foreground: 220 9% 46%;
+            --border: 220 13% 91%;
+            --destructive: 0 84% 60%;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+            scroll-behavior: smooth;
+        }
+        
+        .bg-primary { background-color: hsl(146 55% 36%); }
+        .text-primary { color: hsl(146 55% 36%); }
+        .border-primary { border-color: hsl(146 55% 36%); }
+        .bg-muted { background-color: hsl(220 14% 96%); }
+        .text-muted-foreground { color: hsl(220 9% 46%); }
+        .border-border { border-color: hsl(220 13% 91%); }
+        .text-destructive { color: hsl(0 84% 60%); }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background-color: hsl(146 55% 36%);
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary:hover {
+            background-color: hsl(146 55% 30%);
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid hsl(220 13% 91%);
+            color: hsl(220 20% 10%);
+        }
+        
+        .btn-outline:hover {
+            background-color: hsl(220 14% 96%);
+            border-color: hsl(146 55% 36%);
+        }
+        
+        .card {
+            background-color: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(20px);
+            border: 2px solid hsl(220 13% 91%);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            border-color: hsl(146 55% 36% / 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+        
+        .input, .textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        
+        .textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .input:focus, .textarea:focus {
+            outline: none;
+            border-color: hsl(146 55% 36%);
+            box-shadow: 0 0 0 3px hsl(146 55% 36% / 0.1);
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            background-color: hsl(146 55% 36% / 0.1);
+            color: hsl(146 55% 36%);
+            border: 1px solid hsl(146 55% 36% / 0.2);
+        }
+        
+        .nav-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            backdrop-filter: blur(20px);
+            background-color: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid hsl(220 13% 91% / 0.5);
+        }
+        
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 100;
+            background-color: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .video-modal.active { display: flex; }
+        
+        .video-container {
+            width: 100%;
+            max-width: 1200px;
+            aspect-ratio: 16/9;
+            background-color: black;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        
+        .mobile-menu {
+            display: none;
+            background-color: white;
+            border-top: 1px solid hsl(220 13% 91%);
+            padding: 1rem;
+        }
+        
+        .mobile-menu.active { display: block; }
+        
+        @media (max-width: 768px) {
+            .desktop-only { display: none !important; }
+        }
+        
+        @media (min-width: 769px) {
+            .mobile-only { display: none !important; }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, hsl(146 55% 36% / 0.05) 0%, transparent 50%, hsl(146 65% 45% / 0.05) 100%);
+        }
+        
+        .icon-container {
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.75rem;
+            background-color: hsl(146 55% 36% / 0.1);
+        }
+        
+        .toast {
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: hsl(146 55% 36%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .toast.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
-
-  <!-- HERO -->
-  <section class="hero">
-    <span class="badge">Google Sheets Automation for Operations Teams</span>
-    <h1>Stop wasting hours every week managing Google Sheets manually</h1>
-    <p>
-      Packdez helps operations teams automate Google Sheets so your workflows run
-      automatically, your data stays accurate, and your business scales without chaos.
-    </p>
-    <a href="https://calendly.com/your-link" class="btn">Book Free Automation Audit</a>
-    <p style="margin-top:10px; font-size:0.9rem;">✔ 30 minutes · ✔ No obligation · ✔ Actionable insights</p>
-  </section>
-
-  <!-- PAIN -->
-  <section>
-    <h2>Does this sound familiar?</h2>
-    <div class="grid grid-2">
-      <div class="card">
-        <p>❌ Team members copy-paste data between tools and spreadsheets</p>
-        <p>❌ Reports are built manually every week</p>
-        <p>❌ Errors slip in and nobody trusts the numbers</p>
-        <p>❌ Processes break as volume increases</p>
-      </div>
-      <div class="card">
-        <p>
-          Google Sheets started simple — but now it’s slowing your operations down.
-          Automation fixes this without replacing your tools.
-        </p>
-      </div>
+    <div id="toast" class="toast"></div>
+    
+    <!-- Navigation -->
+    <nav class="nav-fixed">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-between h-20">
+                <a href="#" class="flex items-center gap-2">
+                    <img 
+                        src="https://packdez.com/assets/logo/packdez-logo-512x512.png" 
+                        alt="Packdez"
+                        class="h-10 w-10"
+                    />
+                    <span class="text-2xl font-bold">Packdez</span>
+                </a>
+                
+                <div class="desktop-only flex items-center gap-8">
+                    <a href="#services" class="text-sm font-semibold text-muted-foreground hover:text-primary">Services</a>
+                    <a href="#casestudies" class="text-sm font-semibold text-muted-foreground hover:text-primary">Case Studies</a>
+                    <a href="#faq" class="text-sm font-semibold text-muted-foreground hover:text-primary">FAQ</a>
+                    <a href="#booking" class="btn btn-primary">Book Free Audit</a>
+                </div>
+                
+                <button class="mobile-only" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" id="menu-icon"></i>
+                </button>
+            </div>
+            
+            <div id="mobile-menu" class="mobile-menu">
+                <a href="#services" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">Services</a>
+                <a href="#casestudies" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">Case Studies</a>
+                <a href="#faq" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">FAQ</a>
+                <a href="#booking" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">Booking</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center pt-32 pb-12 px-4">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight">
+                        Turn Google Sheets into a fully automated system for your business
+                    </h1>
+                    
+                    <h2 class="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
+                        We help operations, finance, and growth teams eliminate manual work by automating Google Sheets with Zapier, Apps Script, and APIs.
+                    </h2>
+                    
+                    <a href="#booking" class="btn btn-primary text-lg mb-6">
+                        👉 Book Free Automation Audit
+                    </a>
+                    
+                    <div class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary"></i>
+                            <span>Trusted by growing teams</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary"></i>
+                            <span>Real systems, not templates</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <img 
+                        src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop"
+                        alt="Automated Dashboard"
+                        class="w-full rounded-2xl shadow-2xl border-2 border-border"
+                    />
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pain Awareness -->
+    <section class="py-24 bg-muted px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-black mb-12 text-center">
+                Still running your business on manual Google Sheets?
+            </h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+                <div class="card text-center">
+                    <i data-lucide="alert-circle" class="w-8 h-8 text-destructive mx-auto mb-3"></i>
+                    <p class="text-sm font-semibold">Copy-pasting data between tools</p>
+                </div>
+                <div class="card text-center">
+                    <i data-lucide="file-spreadsheet" class="w-8 h-8 text-destructive mx-auto mb-3"></i>
+                    <p class="text-sm font-semibold">Broken formulas and version chaos</p>
+                </div>
+                <div class="card text-center">
+                    <i data-lucide="clock" class="w-8 h-8 text-destructive mx-auto mb-3"></i>
+                    <p class="text-sm font-semibold">Weekly reports built by hand</p>
+                </div>
+                <div class="card text-center">
+                    <i data-lucide="bar-chart-3" class="w-8 h-8 text-destructive mx-auto mb-3"></i>
+                    <p class="text-sm font-semibold">No real-time visibility</p>
+                </div>
+                <div class="card text-center">
+                    <i data-lucide="trending-up" class="w-8 h-8 text-destructive mx-auto mb-3"></i>
+                    <p class="text-sm font-semibold">Processes that don't scale</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <a href="#solution" class="text-primary font-semibold hover:underline">
+                    See how automation fixes this ↓
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Solution Overview -->
+    <section id="solution" class="py-24 px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-black mb-16 text-center">
+                How Packdez automates your workflows
+            </h2>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="card relative overflow-hidden">
+                    <div class="absolute top-0 right-0 text-8xl font-black text-primary opacity-5">1</div>
+                    <div class="relative">
+                        <div class="icon-container mb-4 bg-primary">
+                            <i data-lucide="zap" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Trigger</h3>
+                        <p class="text-muted-foreground">New order, form submission, CRM update</p>
+                    </div>
+                </div>
+                <div class="card relative overflow-hidden">
+                    <div class="absolute top-0 right-0 text-8xl font-black text-primary opacity-5">2</div>
+                    <div class="relative">
+                        <div class="icon-container mb-4 bg-primary">
+                            <i data-lucide="arrow-right-left" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Automation</h3>
+                        <p class="text-muted-foreground">Logic + validation + calculations (Zapier / Apps Script)</p>
+                    </div>
+                </div>
+                <div class="card relative overflow-hidden">
+                    <div class="absolute top-0 right-0 text-8xl font-black text-primary opacity-5">3</div>
+                    <div class="relative">
+                        <div class="icon-container mb-4 bg-primary">
+                            <i data-lucide="target" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Output</h3>
+                        <p class="text-muted-foreground">Clean Sheets, dashboards, alerts, reports</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-center text-xl text-muted-foreground">
+                No bloated tools. Just systems that actually work.
+            </p>
+        </div>
+    </section>
+    
+    <!-- Services -->
+    <section id="services" class="py-24 bg-muted px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-black mb-16 text-center">
+                What we automate with Google Sheets
+            </h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card">
+                    <div class="icon-container mb-4">
+                        <i data-lucide="bar-chart-3" class="w-6 h-6 text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Automated Reporting Systems</h3>
+                    <p class="text-muted-foreground mb-3">Live dashboards pulling data from multiple tools</p>
+                    <p class="text-sm text-muted-foreground mb-6">Examples: Sales reports, KPI dashboards</p>
+                    <button onclick="openVideo('HsMaIpEOlF4')" class="btn btn-outline w-full">View example →</button>
+                </div>
+                <div class="card">
+                    <div class="icon-container mb-4">
+                        <i data-lucide="settings" class="w-6 h-6 text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Operations Automation</h3>
+                    <p class="text-muted-foreground mb-3">From order to invoice without manual steps</p>
+                    <p class="text-sm text-muted-foreground mb-6">Examples: Fulfillment tracking, internal workflows</p>
+                    <button onclick="openVideo('4fjE3eJ01T4')" class="btn btn-outline w-full">View example →</button>
+                </div>
+                <div class="card">
+                    <div class="icon-container mb-4">
+                        <i data-lucide="file-check" class="w-6 h-6 text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Custom Google Sheets Apps</h3>
+                    <p class="text-muted-foreground mb-3">Apps Script + custom UI for teams</p>
+                    <p class="text-sm text-muted-foreground mb-6">Examples: Internal tools, approvals, data validation</p>
+                    <button onclick="openVideo('-svuBj0WpkE')" class="btn btn-outline w-full">View example →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Case Studies -->
+    <section id="casestudies" class="py-24 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="badge mb-4">Proof</span>
+                <h2 class="text-3xl md:text-5xl font-black">Real results from real automations</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card overflow-hidden" style="padding: 0;">
+                    <div class="relative aspect-video cursor-pointer" onclick="openVideo('HsMaIpEOlF4')">
+                        <img 
+                            src="https://img.youtube.com/vi/HsMaIpEOlF4/maxresdefault.jpg"
+                            alt="E-commerce Brand"
+                            class="w-full h-full object-cover"
+                        />
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
+                                <i data-lucide="play" class="w-5 h-5 text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="badge mb-3">E-commerce Brand</span>
+                        <div class="space-y-3">
+                            <div>
+                                <span class="font-bold text-destructive">Problem: </span>
+                                <span class="text-sm text-muted-foreground">Manual reporting took 6 hrs/week</span>
+                            </div>
+                            <div>
+                                <span class="font-bold text-primary">Solution: </span>
+                                <span class="text-sm text-muted-foreground">Automated Sheets + API sync</span>
+                            </div>
+                            <div class="pt-3 border-t border-border">
+                                <span class="font-bold">Result: </span>
+                                <span class="text-sm font-semibold text-primary">⏱ Reduced to 20 minutes/week</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card overflow-hidden" style="padding: 0;">
+                    <div class="relative aspect-video cursor-pointer" onclick="openVideo('-svuBj0WpkE')">
+                        <img 
+                            src="https://img.youtube.com/vi/-svuBj0WpkE/maxresdefault.jpg"
+                            alt="Healthcare Operations"
+                            class="w-full h-full object-cover"
+                        />
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
+                                <i data-lucide="play" class="w-5 h-5 text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="badge mb-3">Healthcare Operations</span>
+                        <div class="space-y-3">
+                            <div>
+                                <span class="font-bold text-destructive">Problem: </span>
+                                <span class="text-sm text-muted-foreground">Patient data scattered across 5 tools</span>
+                            </div>
+                            <div>
+                                <span class="font-bold text-primary">Solution: </span>
+                                <span class="text-sm text-muted-foreground">Real-time dashboard with automated sync</span>
+                            </div>
+                            <div class="pt-3 border-t border-border">
+                                <span class="font-bold">Result: </span>
+                                <span class="text-sm font-semibold text-primary">⏱ 100% accuracy, instant visibility</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card overflow-hidden" style="padding: 0;">
+                    <div class="relative aspect-video cursor-pointer" onclick="openVideo('ykFwXvWZ6lc')">
+                        <img 
+                            src="https://img.youtube.com/vi/ykFwXvWZ6lc/maxresdefault.jpg"
+                            alt="Cleaning Business"
+                            class="w-full h-full object-cover"
+                        />
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
+                                <i data-lucide="play" class="w-5 h-5 text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="badge mb-3">Cleaning Business</span>
+                        <div class="space-y-3">
+                            <div>
+                                <span class="font-bold text-destructive">Problem: </span>
+                                <span class="text-sm text-muted-foreground">Booking management chaos</span>
+                            </div>
+                            <div>
+                                <span class="font-bold text-primary">Solution: </span>
+                                <span class="text-sm text-muted-foreground">Complete operations system in Sheets</span>
+                            </div>
+                            <div class="pt-3 border-t border-border">
+                                <span class="font-bold">Result: </span>
+                                <span class="text-sm font-semibold text-primary">⏱ 3x more bookings, 20hrs saved weekly</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Why Packdez -->
+    <section class="py-24 bg-muted px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-black mb-12 text-center">
+                Why teams choose Packdez
+            </h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="card text-center">
+                    <div class="icon-container mx-auto mb-4">
+                        <i data-lucide="file-spreadsheet" class="w-6 h-6 text-primary"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">Built for Google Sheets</h3>
+                    <p class="text-sm text-muted-foreground">Not generic automation</p>
+                </div>
+                <div class="card text-center">
+                    <div class="icon-container mx-auto mb-4">
+                        <i data-lucide="trending-up" class="w-6 h-6 text-primary"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">Systems designed to scale</h3>
+                    <p class="text-sm text-muted-foreground">Grow with your business</p>
+                </div>
+                <div class="card text-center">
+                    <div class="icon-container mx-auto mb-4">
+                        <i data-lucide="file-check" class="w-6 h-6 text-primary"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">Clean logic, documented</h3>
+                    <p class="text-sm text-muted-foreground">Workflows you understand</p>
+                </div>
+                <div class="card text-center">
+                    <div class="icon-container mx-auto mb-4">
+                        <i data-lucide="shield" class="w-6 h-6 text-primary"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">Long-term reliability</h3>
+                    <p class="text-sm text-muted-foreground">Not hacks or workarounds</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap items-center justify-center gap-8 opacity-50 text-sm">
+                <span class="font-semibold">Integrates with:</span>
+                <span>Google Sheets</span>
+                <span>Zapier</span>
+                <span>Slack</span>
+                <span>Stripe</span>
+                <span>Gmail</span>
+                <span>+ more</span>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Primary CTA / Booking -->
+    <section id="booking" class="py-24 gradient-bg px-4">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-black mb-6 text-center">
+                Not sure what you should automate?
+            </h2>
+            <p class="text-xl text-muted-foreground mb-8 text-center">
+                Get a free 30-minute automation audit and see exactly where you're wasting time.
+            </p>
+            
+            <div class="card max-w-2xl mx-auto mb-8">
+                <form onsubmit="handleSubmit(event)" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <input type="text" id="name" placeholder="Your Name *" class="input" required />
+                        <input type="email" id="email" placeholder="Email Address *" class="input" required />
+                    </div>
+                    <input type="text" id="company" placeholder="Company Name" class="input" />
+                    <textarea id="message" placeholder="What manual processes are slowing you down? *" class="textarea" required></textarea>
+                    <button type="submit" id="submit-btn" class="btn btn-primary w-full text-lg">
+                        👉 Book Free Automation Audit
+                    </button>
+                </form>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-muted-foreground">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="check-circle" class="w-4 h-4 text-primary"></i>
+                    <span>No obligation</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="check-circle" class="w-4 h-4 text-primary"></i>
+                    <span>Actionable recommendations</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="check-circle" class="w-4 h-4 text-primary"></i>
+                    <span>Built for your workflows</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About -->
+    <section class="py-24 px-4">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-black mb-6">
+                Built by automation specialists
+            </h2>
+            <p class="text-lg text-muted-foreground leading-relaxed">
+                Packdez specializes exclusively in Google Sheets automation for growing teams. 
+                We design systems that reduce errors, save time, and scale with your business. 
+                No templates, no generic solutions—just custom automation that fits your exact workflow.
+            </p>
+        </div>
+    </section>
+    
+    <!-- FAQ -->
+    <section id="faq" class="py-24 bg-muted px-4">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-black mb-16 text-center">
+                Frequently Asked Questions
+            </h2>
+            
+            <div class="space-y-4">
+                <div class="card">
+                    <button onclick="toggleFaq(0)" class="w-full flex items-center justify-between text-left">
+                        <span class="font-bold text-lg pr-4">How long does automation take?</span>
+                        <span class="text-primary text-2xl font-bold" id="faq-icon-0">+</span>
+                    </button>
+                    <div id="faq-answer-0" class="mt-4 text-muted-foreground leading-relaxed" style="display: none;">
+                        Most projects are delivered in 7-10 days. We show you a working prototype within 72 hours so you can see progress immediately.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <button onclick="toggleFaq(1)" class="w-full flex items-center justify-between text-left">
+                        <span class="font-bold text-lg pr-4">Do you work with existing Sheets?</span>
+                        <span class="text-primary text-2xl font-bold" id="faq-icon-1">+</span>
+                    </button>
+                    <div id="faq-answer-1" class="mt-4 text-muted-foreground leading-relaxed" style="display: none;">
+                        Yes! We can enhance and automate your existing Google Sheets or build new systems from scratch based on your needs.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <button onclick="toggleFaq(2)" class="w-full flex items-center justify-between text-left">
+                        <span class="font-bold text-lg pr-4">What tools do you integrate?</span>
+                        <span class="text-primary text-2xl font-bold" id="faq-icon-2">+</span>
+                    </button>
+                    <div id="faq-answer-2" class="mt-4 text-muted-foreground leading-relaxed" style="display: none;">
+                        We integrate with Zapier, Slack, Stripe, Gmail, Calendar, CRMs, and virtually any tool with an API. If it has data, we can connect it.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <button onclick="toggleFaq(3)" class="w-full flex items-center justify-between text-left">
+                        <span class="font-bold text-lg pr-4">Is this custom or template-based?</span>
+                        <span class="text-primary text-2xl font-bold" id="faq-icon-3">+</span>
+                    </button>
+                    <div id="faq-answer-3" class="mt-4 text-muted-foreground leading-relaxed" style="display: none;">
+                        100% custom. Every system is built specifically for your workflow. No generic templates that force you to adapt.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <button onclick="toggleFaq(4)" class="w-full flex items-center justify-between text-left">
+                        <span class="font-bold text-lg pr-4">What happens after the audit?</span>
+                        <span class="text-primary text-2xl font-bold" id="faq-icon-4">+</span>
+                    </button>
+                    <div id="faq-answer-4" class="mt-4 text-muted-foreground leading-relaxed" style="display: none;">
+                        You get a detailed breakdown of what can be automated, estimated time savings, and fixed pricing. No obligation to proceed.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Final CTA -->
+    <section class="py-24 gradient-bg px-4">
+        <div class="max-w-2xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-black mb-8">
+                Ready to stop doing work your sheets should do?
+            </h2>
+            <a href="#booking" class="btn btn-primary text-lg">
+                👉 Book Free Automation Audit
+            </a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-16 border-t border-border px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <img 
+                            src="https://packdez.com/assets/logo/packdez-logo-512x512.png" 
+                            alt="Packdez"
+                            class="h-8 w-8"
+                        />
+                        <h3 class="text-xl font-black">Packdez</h3>
+                    </div>
+                    <p class="text-sm text-muted-foreground mb-6">
+                        Google Sheets automation specialists. We eliminate manual work for growing teams.
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="https://x.com/packdezHQ" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-muted hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all">
+                            <i data-lucide="twitter" class="w-4 h-4"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/packdez/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-muted hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all">
+                            <i data-lucide="linkedin" class="w-4 h-4"></i>
+                        </a>
+                        <a href="https://youtube.com/@packdezhqz?si=EXj27rVMq27WlWQp" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-muted hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all">
+                            <i data-lucide="youtube" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Services</h4>
+                    <ul class="space-y-2 text-sm text-muted-foreground">
+                        <li>Automated Reporting</li>
+                        <li>Operations Automation</li>
+                        <li>Custom Sheets Apps</li>
+                        <li>Dashboard Development</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-sm text-muted-foreground">
+                        <li>Email: hello@packdez.com</li>
+                        <li>Response: Within 24 hours</li>
+                        <li>Delivery: 7-10 days</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-border text-center text-sm text-muted-foreground">
+                <p>© 2024 Packdez. Empowering teams with smart automation.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Video Modal -->
+    <div id="video-modal" class="video-modal" onclick="closeVideo()">
+        <div class="video-container" onclick="event.stopPropagation()">
+            <iframe id="video-iframe" src="" class="w-full h-full" allow="autoplay; picture-in-picture" allowfullscreen></iframe>
+        </div>
     </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section>
-    <h2>How Packdez automates your workflows</h2>
-    <div class="grid grid-2">
-      <div class="card">
-        <h3>1. Identify bottlenecks</h3>
-        <p>We analyze where your team wastes time inside Google Sheets.</p>
-      </div>
-      <div class="card">
-        <h3>2. Build automation</h3>
-        <p>Using Apps Script, Zapier, and APIs, we remove manual steps.</p>
-      </div>
-      <div class="card">
-        <h3>3. Deliver clean systems</h3>
-        <p>Reliable spreadsheets, real-time dashboards, and alerts.</p>
-      </div>
-      <div class="card">
-        <h3>4. Scale with confidence</h3>
-        <p>Your workflows keep working as volume and team size grow.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-  <section>
-    <h2>What we automate with Google Sheets</h2>
-    <div class="grid grid-2">
-      <div class="card">
-        <h3>Automated Reporting</h3>
-        <p>Live dashboards that update automatically from multiple tools.</p>
-      </div>
-      <div class="card">
-        <h3>Operations Workflows</h3>
-        <p>From order intake to invoicing without manual updates.</p>
-      </div>
-      <div class="card">
-        <h3>Custom Sheets Apps</h3>
-        <p>Internal tools with validation, approvals, and logic built-in.</p>
-      </div>
-      <div class="card">
-        <h3>Tool Integrations</h3>
-        <p>Connect Sheets with CRMs, payment tools, Slack, and more.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROOF -->
-  <section>
-    <h2>Results teams see after automation</h2>
-    <div class="grid grid-2">
-      <div class="card">
-        <h3>⏱ 10–20 hours saved per week</h3>
-        <p>Manual reporting and updates removed.</p>
-      </div>
-      <div class="card">
-        <h3>📉 Fewer errors</h3>
-        <p>Validated data and consistent logic.</p>
-      </div>
-      <div class="card">
-        <h3>📊 Real-time visibility</h3>
-        <p>Always-up-to-date metrics for decision making.</p>
-      </div>
-      <div class="card">
-        <h3>🔁 Scalable systems</h3>
-        <p>Workflows that don’t break as you grow.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta">
-    <h2>Get a free Google Sheets automation audit</h2>
-    <p>
-      In 30 minutes, we’ll show you exactly what can be automated
-      and how much time your team can save.
-    </p>
-    <a href="https://calendly.com/your-link" class="btn">Book Free Automation Audit</a>
-  </section>
-
-  <!-- FAQ -->
-  <section>
-    <h2>Frequently asked questions</h2>
-    <div class="grid grid-2">
-      <div class="card">
-        <h3>Do you work with existing spreadsheets?</h3>
-        <p>Yes. We improve and automate what you already use.</p>
-      </div>
-      <div class="card">
-        <h3>Is this custom?</h3>
-        <p>Every system is built specifically for your workflows.</p>
-      </div>
-      <div class="card">
-        <h3>How long does it take?</h3>
-        <p>Most automations are delivered within 1–3 weeks.</p>
-      </div>
-      <div class="card">
-        <h3>What happens after the audit?</h3>
-        <p>You receive a clear plan and decide if you want us to build it.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    © 2025 Packdez · Google Sheets Automation  
-    <br/>
-    hello@packdez.com
-  </footer>
-
+    
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('active');
+        }
+        
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.remove('active');
+        }
+        
+        // Video modal
+        function openVideo(videoId) {
+            const modal = document.getElementById('video-modal');
+            const iframe = document.getElementById('video-iframe');
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            modal.classList.add('active');
+        }
+        
+        function closeVideo() {
+            const modal = document.getElementById('video-modal');
+            const iframe = document.getElementById('video-iframe');
+            iframe.src = '';
+            modal.classList.remove('active');
+        }
+        
+        // FAQ toggle
+        function toggleFaq(index) {
+            const answer = document.getElementById(`faq-answer-${index}`);
+            const icon = document.getElementById(`faq-icon-${index}`);
+            
+            if (answer.style.display === 'none') {
+                answer.style.display = 'block';
+                icon.textContent = '−';
+            } else {
+                answer.style.display = 'none';
+                icon.textContent = '+';
+            }
+        }
+        
+        // Toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast active';
+            toast.style.backgroundColor = type === 'success' ? 'hsl(146 55% 36%)' : 'hsl(0 84% 60%)';
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 3000);
+        }
+        
+        // Form submission
+        async function handleSubmit(event) {
+            event.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                company: document.getElementById('company').value,
+                message: document.getElementById('message').value,
+                submittedAt: new Date().toISOString()
+            };
+            
+            const scriptBaseURL = "https://corsproxy.io/?" + encodeURIComponent(
+                "https://script.google.com/macros/s/AKfycbznvN_BiRWk1_GnLdRj4zzGnD0oGnq5d1LXpi2hBeBn1ZYzPp6IsMgigPbCiq0nr4Z4tA/exec"
+            );
+            
+            try {
+                const response = await fetch(scriptBaseURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+                    body: new URLSearchParams(formData).toString(),
+                });
+                
+                if (response.ok) {
+                    showToast("Thanks! We'll contact you within 24 hours 🎉", 'success');
+                    document.getElementById('name').value = '';
+                    document.getElementById('email').value = '';
+                    document.getElementById('company').value = '';
+                    document.getElementById('message').value = '';
+                } else {
+                    showToast('Something went wrong. Please try again.', 'error');
+                }
+            } catch (err) {
+                showToast('Network error. Please try again.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '👉 Book Free Automation Audit';
+            }
+        }
+    </script>
 </body>
 </html>
