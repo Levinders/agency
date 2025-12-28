@@ -1,1314 +1,1129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Packdez - Google Sheets Automation Specialists</title>
-    <meta name="description" content="We build automated operational systems in Google Sheets for growing teams. No templates. No bloat. Just reliable systems that work.">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <style>
-        :root {
-            --background: 0 0% 100%;
-            --foreground: 220 20% 10%;
-            --primary: 146 55% 36%;
-            --primary-foreground: 0 0% 100%;
-            --muted: 220 14% 96%;
-            --muted-foreground: 220 9% 46%;
-            --border: 220 13% 91%;
-            --destructive: 0 84% 60%;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: hsl(var(--background));
-            color: hsl(var(--foreground));
-            scroll-behavior: smooth;
-            line-height: 1.6;
-        }
-        
-        .bg-primary { background-color: hsl(146 55% 36%); }
-        .text-primary { color: hsl(146 55% 36%); }
-        .border-primary { border-color: hsl(146 55% 36%); }
-        .bg-muted { background-color: hsl(220 14% 96%); }
-        .text-muted-foreground { color: hsl(220 9% 46%); }
-        .border-border { border-color: hsl(220 13% 91%); }
-        .text-destructive { color: hsl(0 84% 60%); }
-        
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            font-weight: 600;
-            border-radius: 0.5rem;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            border: none;
-            font-size: 1rem;
-            text-decoration: none;
-        }
-        
-        .btn-primary {
-            background-color: hsl(146 55% 36%);
-            color: white;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn-primary:hover {
-            background-color: hsl(146 55% 32%);
-            box-shadow: 0 4px 12px rgba(46, 140, 78, 0.3);
-            transform: translateY(-1px);
-        }
-        
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid hsl(220 13% 91%);
-            color: hsl(220 20% 10%);
-        }
-        
-        .btn-outline:hover {
-            background-color: hsl(220 14% 96%);
-            border-color: hsl(146 55% 36%);
-        }
-        
-        .card {
-            background-color: white;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.75rem;
-            padding: 2rem;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .card:hover {
-            border-color: hsl(146 55% 36% / 0.3);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-            transform: translateY(-2px);
-        }
-        
-        .card-flat {
-            background-color: white;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.75rem;
-            padding: 2rem;
-        }
-        
-        .input, .textarea {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            transition: all 0.2s;
-            font-family: inherit;
-            background-color: white;
-        }
-        
-        .textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        
-        .input:focus, .textarea:focus {
-            outline: none;
-            border-color: hsl(146 55% 36%);
-            box-shadow: 0 0 0 3px hsl(146 55% 36% / 0.1);
-        }
-        
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.25rem 0.75rem;
-            font-size: 0.8125rem;
-            font-weight: 600;
-            border-radius: 0.375rem;
-            background-color: hsl(146 55% 36% / 0.1);
-            color: hsl(146 55% 36%);
-            border: 1px solid hsl(146 55% 36% / 0.2);
-        }
-        
-        .nav-fixed {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 50;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid hsl(220 13% 91%);
-        }
-        
-        .video-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 100;
-            background-color: rgba(0, 0, 0, 0.9);
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            animation: fadeIn 0.2s ease;
-        }
-        
-        .video-modal.active { display: flex; }
-        
-        .video-container {
-            width: 100%;
-            max-width: 1200px;
-            aspect-ratio: 16/9;
-            background-color: black;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .mobile-menu {
-            display: none;
-            background-color: white;
-            border-top: 1px solid hsl(220 13% 91%);
-            padding: 1rem;
-        }
-        
-        .mobile-menu.active { display: block; }
-        
-        /* Conversion Popup */
-        .conversion-popup {
-            display: none;
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 90;
-            width: 90%;
-            max-width: 420px;
-            background-color: white;
-            border: 2px solid hsl(146 55% 36%);
-            border-radius: 1rem;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .conversion-popup.active { display: block; }
-        
-        @media (max-width: 768px) {
-            .desktop-only { display: none !important; }
-            .conversion-popup {
-                bottom: 1rem;
-                right: 1rem;
-                left: 1rem;
-                max-width: none;
-            }
-        }
-        
-        @media (min-width: 769px) {
-            .mobile-only { display: none !important; }
-        }
-        
-        .toast {
-            position: fixed;
-            top: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: hsl(146 55% 36%);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            display: none;
-        }
-        
-        .toast.active {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes scaleIn {
-            from { transform: scale(0.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-        }
-        
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.6s ease forwards;
-        }
-        
-        .section-padding {
-            padding: 5rem 1rem;
-        }
-        
-        @media (max-width: 768px) {
-            .section-padding {
-                padding: 3rem 1rem;
-            }
-        }
-        
-        .metric {
-            font-size: 2rem;
-            font-weight: 800;
-            color: hsl(146 55% 36%);
-            line-height: 1.2;
-        }
-        
-        .problem-icon {
-            width: 2.5rem;
-            height: 2.5rem;
-            color: hsl(0 84% 60%);
-            margin-bottom: 1rem;
-        }
-        
-        .check-icon {
-            width: 1.25rem;
-            height: 1.25rem;
-            color: hsl(146 55% 36%);
-            flex-shrink: 0;
-            margin-top: 0.125rem;
-        }
-        
-        .star-icon {
-            width: 1rem;
-            height: 1rem;
-            color: hsl(43 96% 56%);
-            fill: hsl(43 96% 56%);
-        }
-        
-        .pricing-table {
-            background-color: white;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.75rem;
-            overflow: hidden;
-        }
-        
-        .pricing-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            border-bottom: 1px solid hsl(220 13% 91%);
-            align-items: center;
-            min-height: 3.5rem;
-        }
-        
-        .pricing-row:last-child {
-            border-bottom: none;
-        }
-        
-        .pricing-header {
-            background-color: hsl(220 14% 96%);
-            font-weight: 700;
-        }
-        
-        .pricing-cell {
-            padding: 1rem 1.5rem;
-            border-right: 1px solid hsl(220 13% 91%);
-        }
-        
-        .pricing-cell:last-child {
-            border-right: none;
-        }
-        
-        .pricing-cell-center {
-            text-align: center;
-        }
-        
-        @media (max-width: 768px) {
-            .pricing-row {
-                grid-template-columns: 1fr;
-            }
-            .pricing-cell {
-                border-right: none;
-                border-bottom: 1px solid hsl(220 13% 91%);
-            }
-            .pricing-cell:last-child {
-                border-bottom: none;
-            }
-        }
-    </style>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5KLXPS5M');</script>
+  <!-- End Google Tag Manager -->
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Packdez - Operations That Actually Work for Remote Teams</title>
+  <meta name="description" content="Transform your Google Sheets into intelligent systems that work for your remote team. No learning curve. No migration headaches.">
+  <link rel="canonical" href="https://packdez.com" />
+  <link rel="icon" type="image/png" href="https://packdez.com/assets/logo/packdez-logo-512x512.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: 140 50% 37%;
+      --bg: 0 0% 100%;
+      --fg: 222 47% 11%;
+      --muted: 220 14% 96%;
+      --muted-fg: 215 16% 47%;
+      --border: 220 13% 91%;
+      --card: 0 0% 100%;
+      --radius: 0.75rem;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: hsl(var(--bg));
+      color: hsl(var(--fg));
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Sora', 'Inter', sans-serif;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: hsla(var(--bg), 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid hsl(var(--border));
+      z-index: 50;
+      animation: slideDown 0.6s ease-out;
+    }
+    @keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+    .nav-container { display: flex; justify-content: space-between; align-items: center; height: 80px; padding: 0 1rem; }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: hsl(var(--fg));
+      font-weight: 700;
+      font-size: 1.25rem;
+      transition: transform 0.2s;
+    }
+    .logo:hover { transform: scale(1.05); }
+    .logo img { height: 40px; width: 40px; }
+    .nav-links { display: none; gap: 2rem; align-items: center; }
+    .nav-links button, .nav-links a {
+      color: hsl(var(--muted-fg));
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 1rem;
+    }
+    .nav-links button:hover, .nav-links a:hover { color: hsl(var(--fg)); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: hsl(var(--primary));
+      color: white;
+      box-shadow: 0 4px 14px hsla(var(--primary), 0.25);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px hsla(var(--primary), 0.3);
+    }
+    .btn-outline {
+      background: transparent;
+      color: hsl(var(--fg));
+      border: 1px solid hsl(var(--border));
+    }
+    .btn-outline:hover { background: hsl(var(--muted)); }
+    .btn-lg { padding: 1rem 2rem; font-size: 1rem; }
+    .mobile-menu-btn { display: block; background: transparent; border: none; cursor: pointer; padding: 0.5rem; }
+    .mobile-menu {
+      display: none;
+      border-top: 1px solid hsl(var(--border));
+      background: hsl(var(--bg));
+      padding: 1.5rem 1rem;
+    }
+    .mobile-menu.active { display: block; }
+    .mobile-menu button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 1rem 0;
+      color: hsl(var(--fg));
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 1rem;
+    }
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 1rem 5rem;
+      margin-top: 80px;
+      overflow: hidden;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.2;
+      animation: pulse 8s ease-in-out infinite;
+    }
+    .orb-1 { top: 0; left: 25%; width: 384px; height: 384px; background: hsl(var(--primary)); }
+    .orb-2 { bottom: 0; right: 25%; width: 384px; height: 384px; background: #3b82f6; animation-delay: 1s; }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(1.1); }
+    }
+    .hero-content { max-width: 64rem; margin: 0 auto; text-align: center; position: relative; z-index: 10; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      background: hsla(var(--primary), 0.1);
+      border: 1px solid hsla(var(--primary), 0.2);
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: hsl(var(--primary));
+      border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.8; }
+    }
+    .hero h1 { font-size: 3rem; margin-bottom: 1.5rem; line-height: 1.1; }
+    .text-primary { color: hsl(var(--primary)); }
+    .hero-desc {
+      font-size: 1.25rem;
+      color: hsl(var(--muted-fg));
+      max-width: 48rem;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+    .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
+    .hero-checks {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      font-size: 0.875rem;
+      color: hsl(var(--muted-fg));
+    }
+    .check-item { display: flex; align-items: center; gap: 0.5rem; }
+    .stats {
+      padding: 4rem 1rem;
+      border-top: 1px solid hsl(var(--border));
+      border-bottom: 1px solid hsl(var(--border));
+      background: hsla(var(--muted), 0.3);
+    }
+    .stats-grid { display: grid; gap: 2rem; text-align: center; }
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: hsl(var(--primary));
+      margin-bottom: 0.5rem;
+    }
+    .stat-label { color: hsl(var(--muted-fg)); }
+    section { padding: 6rem 1rem; }
+    .section-bg { background: hsla(var(--muted), 0.5); }
+    .section-header { text-align: center; margin-bottom: 4rem; }
+    .section-title { font-size: 2.5rem; margin-bottom: 1rem; }
+    .section-desc {
+      font-size: 1.25rem;
+      color: hsl(var(--muted-fg));
+      max-width: 42rem;
+      margin: 0 auto;
+    }
+    .card-grid { display: grid; gap: 1.5rem; max-width: 80rem; margin: 0 auto; }
+    .card {
+      padding: 1.5rem;
+      background: hsl(var(--card));
+      border: 1px solid hsl(var(--border));
+      border-radius: var(--radius);
+      transition: all 0.3s;
+    }
+    .card:hover {
+      box-shadow: 0 10px 30px hsla(var(--fg), 0.1);
+      transform: translateY(-5px);
+    }
+    .icon { width: 40px; height: 40px; color: hsl(var(--primary)); margin-bottom: 1rem; }
+    .card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+    .card p { color: hsl(var(--muted-fg)); }
+    .roi-card {
+      max-width: 64rem;
+      margin: 0 auto;
+      background: hsl(var(--card));
+      border: 2px solid hsla(var(--primary), 0.2);
+      border-radius: 1rem;
+      padding: 3rem;
+      box-shadow: 0 20px 60px hsla(var(--fg), 0.1);
+    }
+    .roi-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+    .roi-icon-wrap {
+      width: 48px;
+      height: 48px;
+      background: hsla(var(--primary), 0.1);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slider-group { margin-bottom: 1.5rem; }
+    .slider-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+    }
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      background: hsl(var(--muted));
+      border-radius: 3px;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      background: hsl(var(--primary));
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: hsl(var(--primary));
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+    .roi-results {
+      background: hsla(var(--primary), 0.1);
+      border: 2px solid hsla(var(--primary), 0.2);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-top: 2rem;
+      display: grid;
+      gap: 2rem;
+      text-align: center;
+    }
+    .roi-result-item { font-size: 2rem; font-weight: 700; color: hsl(var(--primary)); }
+    .roi-result-label { font-size: 0.875rem; color: hsl(var(--muted-fg)); margin-top: 0.25rem; }
+    .project-card {
+      background: hsl(var(--card));
+      border: 1px solid hsl(var(--border));
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .project-card:hover { box-shadow: 0 20px 40px hsla(var(--fg), 0.1); }
+    .project-visual {
+      position: relative;
+      aspect-ratio: 16/9;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .project-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .project-card:hover .project-visual img { transform: scale(1.05); }
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .play-btn {
+      width: 64px;
+      height: 64px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+    }
+    .project-card:hover .play-btn { transform: scale(1.1); }
+    .project-info { padding: 1.5rem; }
+    .review-card {
+      background: hsl(var(--card));
+      border: 1px solid hsl(var(--border));
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      height: 100%;
+      transition: all 0.3s;
+    }
+    .review-card:hover {
+      box-shadow: 0 10px 30px hsla(var(--fg), 0.1);
+      transform: translateY(-5px);
+    }
+    .stars { display: flex; gap: 0.25rem; margin-bottom: 1rem; }
+    .star { color: hsl(var(--primary)); fill: hsl(var(--primary)); }
+    .reviewer { display: flex; align-items: center; gap: 1rem; margin-top: 1.5rem; }
+    .reviewer-img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: hsl(var(--muted));
+    }
+    .faq-item {
+      background: hsl(var(--card));
+      border: 1px solid hsl(var(--border));
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      padding: 1.5rem;
+      font-weight: 600;
+      font-size: 1rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding: 0 1.5rem;
+      color: hsl(var(--muted-fg));
+    }
+    .faq-item.active .faq-answer {
+      max-height: 500px;
+      padding: 0 1.5rem 1.5rem;
+    }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid hsl(var(--border));
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 0.875rem;
+      background: hsl(var(--bg));
+      color: hsl(var(--fg));
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: hsl(var(--primary));
+    }
+    .form-group textarea { resize: none; min-height: 128px; }
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal.active { display: flex; }
+    .modal-content {
+      position: relative;
+      width: 100%;
+      max-width: 1400px;
+      background: white;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+    .modal-close {
+      position: absolute;
+      top: -48px;
+      right: 0;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .modal-close:hover { opacity: 1; }
+    .modal iframe { width: 100%; aspect-ratio: 16/9; border: none; }
+    .floating-btn {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 40;
+      border-radius: 999px;
+      padding: 1rem 1.5rem;
+      box-shadow: 0 10px 40px hsla(var(--fg), 0.3);
+      animation: fadeInScale 0.5s ease-out 2s both;
+    }
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    footer { padding: 4rem 1rem; border-top: 1px solid hsl(var(--border)); }
+    .footer-grid { display: grid; gap: 3rem; margin-bottom: 3rem; }
+    .social-links { display: flex; gap: 0.75rem; margin-top: 1rem; }
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border: 1px solid hsl(var(--border));
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: hsl(var(--fg));
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .social-link:hover {
+      border-color: hsl(var(--primary));
+      background: hsla(var(--primary), 0.1);
+    }
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid hsl(var(--border));
+      text-align: center;
+      color: hsl(var(--muted-fg));
+      font-size: 0.875rem;
+    }
+    @media (min-width: 768px) {
+      .nav-links { display: flex; }
+      .mobile-menu-btn { display: none; }
+      .hero h1 { font-size: 4rem; }
+      .section-title { font-size: 3rem; }
+      .stats-grid { grid-template-columns: repeat(3, 1fr); }
+      .card-grid { grid-template-columns: repeat(2, 1fr); }
+      .roi-results { grid-template-columns: repeat(3, 1fr); }
+      .hero-checks { flex-direction: row; }
+      .footer-grid { grid-template-columns: 2fr 1fr 1fr; }
+    }
+    @media (min-width: 1024px) {
+      .hero h1 { font-size: 4.5rem; }
+    }
+    .icon {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+    .toast {
+      position: fixed;
+      top: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: hsl(var(--card));
+      border: 1px solid hsl(var(--border));
+      border-radius: var(--radius);
+      padding: 1rem 1.5rem;
+      box-shadow: 0 10px 30px hsla(var(--fg), 0.2);
+      z-index: 200;
+      display: none;
+      animation: slideDown 0.3s ease-out;
+    }
+    .toast.show { display: block; }
+  </style>
 </head>
 <body>
-    <div id="toast" class="toast"></div>
-    
-    <!-- Conversion Popup -->
-    <div id="conversion-popup" class="conversion-popup">
-        <div style="padding: 2rem; position: relative;">
-            <button onclick="closePopup()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; cursor: pointer; color: hsl(220 9% 46%);">
-                <i data-lucide="x" style="width: 1.25rem; height: 1.25rem;"></i>
-            </button>
-            
-            <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1.5rem;">
-                <div style="width: 3rem; height: 3rem; background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 65% 45%)); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                    <i data-lucide="zap" style="width: 1.5rem; height: 1.5rem; color: white;"></i>
-                </div>
-                <div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Most teams save 10+ hours per week</h3>
-                    <p style="color: hsl(220 9% 46%); font-size: 0.9375rem;">See exactly what you can automate in a free 30-minute audit.</p>
-                </div>
-            </div>
-            
-            <div style="background-color: hsl(146 55% 36% / 0.05); border-radius: 0.5rem; padding: 1rem; margin-bottom: 1.5rem;">
-                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
-                    <i data-lucide="check-circle" style="width: 1.25rem; height: 1.25rem; color: hsl(146 55% 36%);"></i>
-                    <span style="font-size: 0.875rem; font-weight: 600;">No obligation, no sales pitch</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
-                    <i data-lucide="check-circle" style="width: 1.25rem; height: 1.25rem; color: hsl(146 55% 36%);"></i>
-                    <span style="font-size: 0.875rem; font-weight: 600;">Get actionable recommendations</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 0.75rem;">
-                    <i data-lucide="check-circle" style="width: 1.25rem; height: 1.25rem; color: hsl(146 55% 36%);"></i>
-                    <span style="font-size: 0.875rem; font-weight: 600;">See estimated time savings</span>
-                </div>
-            </div>
-            
-            <button onclick="scrollToAudit(); closePopup();" class="btn btn-primary" style="width: 100%; justify-content: center;">
-                Get Your Free Audit
-                <i data-lucide="arrow-right" style="width: 1rem; height: 1rem;"></i>
-            </button>
-            
-            <p style="text-align: center; font-size: 0.8125rem; color: hsl(220 9% 46%); margin-top: 0.75rem;">
-                Response within 24 hours
-            </p>
+  
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5KLXPS5M"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <div id="toast" class="toast"></div>
+
+  <nav>
+    <div class="container">
+      <div class="nav-container">
+        <a href="#" class="logo">
+          <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez"/>
+          <span>Packdez</span>
+        </a>
+        <div class="nav-links">
+          <button onclick="scrollToSection('how')">How It Works</button>
+          <button onclick="scrollToSection('projects')">Case Studies</button>
+          <button onclick="scrollToSection('pricing')">Pricing</button>
+          <button onclick="scrollToSection('contact')" class="btn btn-primary">Get Started</button>
         </div>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+          <svg class="icon" viewBox="0 0 24 24">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="mobile-menu" id="mobileMenu">
+        <button onclick="scrollToSection('how'); toggleMobileMenu()">How It Works</button>
+        <button onclick="scrollToSection('projects'); toggleMobileMenu()">Case Studies</button>
+        <button onclick="scrollToSection('pricing'); toggleMobileMenu()">Pricing</button>
+        <button onclick="scrollToSection('contact'); toggleMobileMenu()" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Get Started</button>
+      </div>
     </div>
-    
-    <!-- Navigation -->
-    <nav class="nav-fixed">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex items-center justify-between h-16">
-                <a href="#" class="flex items-center gap-2">
-                    <img 
-                        src="https://packdez.com/assets/logo/packdez-logo-512x512.png" 
-                        alt="Packdez"
-                        class="h-8 w-8"
-                    />
-                    <span class="text-xl font-bold">Packdez</span>
-                </a>
-                
-                <div class="desktop-only flex items-center gap-6">
-                    <a href="#work" class="text-sm font-medium text-muted-foreground hover:text-primary">Work</a>
-                    <a href="#reviews" class="text-sm font-medium text-muted-foreground hover:text-primary">Reviews</a>
-                    <a href="#pricing" class="text-sm font-medium text-muted-foreground hover:text-primary">Pricing</a>
-                    <a href="#faq" class="text-sm font-medium text-muted-foreground hover:text-primary">FAQ</a>
-                    <a href="#audit" class="btn btn-primary" style="padding: 0.5rem 1.25rem;">Get Free Audit</a>
-                </div>
-                
-                <button class="mobile-only" onclick="toggleMobileMenu()">
-                    <i data-lucide="menu" id="menu-icon"></i>
-                </button>
-            </div>
-            
-            <div id="mobile-menu" class="mobile-menu">
-                <a href="#work" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">Work</a>
-                <a href="#reviews" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">Reviews</a>
-                <a href="#pricing" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">Pricing</a>
-                <a href="#faq" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">FAQ</a>
-                <a href="#audit" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">Get Free Audit</a>
-            </div>
+  </nav>
+
+  <section class="hero">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="hero-content">
+      <div class="badge">
+        <div class="pulse-dot"></div>
+        <span>Trusted by 50+ remote-first companies</span>
+      </div>
+      <h1>Your operations deserve better<br><span class="text-primary">than scattered spreadsheets</span></h1>
+      <p class="hero-desc">We transform your Google Sheets into intelligent systems that actually work for your remote team. No learning curve. No migration headaches.</p>
+      <div class="hero-cta">
+        <button onclick="scrollToSection('contact')" class="btn btn-primary btn-lg">
+          See What's Possible
+          <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <button onclick="scrollToSection('how')" class="btn btn-outline btn-lg">How It Works</button>
+      </div>
+      <div class="hero-checks">
+        <div class="check-item">
+          <svg class="icon" viewBox="0 0 24 24" style="color: hsl(var(--primary));"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span>Setup in 7 days</span>
         </div>
-    </nav>
-    
-    <!-- Hero Section -->
-    <section class="section-padding" style="padding-top: 8rem; padding-bottom: 4rem;">
-        <div class="max-w-4xl mx-auto px-4">
-            <div class="text-center fade-in">
-                <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight" style="letter-spacing: -0.02em;">
-                    We build operational systems in Google Sheets that actually work.
-                </h1>
-                
-                <p class="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto" style="line-height: 1.5;">
-                    For operations, finance, and growth teams who need automation they can trust—not templates, not hacks, not bloatware.
-                </p>
-                
-                <a href="#audit" class="btn btn-primary text-lg">
-                    Get a Free Automation Audit
-                </a>
-                
-                <p class="text-sm text-muted-foreground mt-4">
-                    30-minute call. No obligation. See exactly what can be automated.
-                </p>
-            </div>
+        <div class="check-item">
+          <svg class="icon" viewBox="0 0 24 24" style="color: hsl(var(--primary));"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span>No expensive software</span>
         </div>
-    </section>
-    
-    <!-- Problem Awareness -->
-    <section class="section-padding bg-muted">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
-                Your Sheets are holding you back.
-            </h2>
-            <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
-                You already rely on Google Sheets. But manual processes cost you time, accuracy, and scalability.
-            </p>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="card-flat">
-                    <i data-lucide="copy" class="problem-icon"></i>
-                    <h3 class="text-lg font-bold mb-2">Copy-pasting between tools</h3>
-                    <p class="text-muted-foreground">Data lives in Stripe, your CRM, Gmail, and five other places. You're the integration layer.</p>
-                </div>
-                
-                <div class="card-flat">
-                    <i data-lucide="alert-triangle" class="problem-icon"></i>
-                    <h3 class="text-lg font-bold mb-2">Broken formulas and version chaos</h3>
-                    <p class="text-muted-foreground">Someone overwrites a formula. The report breaks. No one knows which version is correct.</p>
-                </div>
-                
-                <div class="card-flat">
-                    <i data-lucide="file-text" class="problem-icon"></i>
-                    <h3 class="text-lg font-bold mb-2">Weekly reports built by hand</h3>
-                    <p class="text-muted-foreground">Every Monday, someone spends 3 hours pulling data, formatting, and emailing the same report.</p>
-                </div>
-                
-                <div class="card-flat">
-                    <i data-lucide="eye-off" class="problem-icon"></i>
-                    <h3 class="text-lg font-bold mb-2">No real-time visibility</h3>
-                    <p class="text-muted-foreground">You can't see what's happening until someone manually updates the Sheet. Decisions are always delayed.</p>
-                </div>
-                
-                <div class="card-flat">
-                    <i data-lucide="trending-down" class="problem-icon"></i>
-                    <h3 class="text-lg font-bold mb-2">Processes that don't scale</h3>
-                    <p class="text-muted-foreground">What worked for 10 orders breaks at 100. Manual workflows collapse under growth.</p>
-                </div>
-                
-                <div class="card-flat">
-                    <i data-lucide="users" class="problem-icon"></i>
-                    <h3 class="text-lg font-bold mb-2">Team bottlenecks</h3>
-                    <p class="text-muted-foreground">Only one person knows how the Sheet works. When they're out, everything stops.</p>
-                </div>
-            </div>
+        <div class="check-item">
+          <svg class="icon" viewBox="0 0 24 24" style="color: hsl(var(--primary));"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span>Built for remote teams</span>
         </div>
-    </section>
-    
-    <!-- What We Do -->
-    <section class="section-padding">
-        <div class="max-w-5xl mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
-                What Packdez actually builds.
-            </h2>
-            <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
-                We design and build automated operational systems using Google Sheets, Apps Script, Zapier, and APIs.
-            </p>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="card">
-                    <div class="flex items-start gap-4 mb-4">
-                        <div style="width: 3rem; height: 3rem; background-color: hsl(146 55% 36% / 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                            <i data-lucide="bar-chart-3" style="width: 1.5rem; height: 1.5rem; color: hsl(146 55% 36%);"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2">Automated reporting systems</h3>
-                            <p class="text-muted-foreground mb-3">
-                                Live dashboards that pull data from your CRM, payment processor, and analytics tools. Updates happen automatically.
-                            </p>
-                            <p class="text-sm font-medium">
-                                Typical outcome: 6 hours/week → 15 minutes/week
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="flex items-start gap-4 mb-4">
-                        <div style="width: 3rem; height: 3rem; background-color: hsl(146 55% 36% / 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                            <i data-lucide="repeat" style="width: 1.5rem; height: 1.5rem; color: hsl(146 55% 36%);"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2">Operations automation</h3>
-                            <p class="text-muted-foreground mb-3">
-                                Order-to-fulfillment workflows, inventory tracking, client onboarding. Manual steps become automatic.
-                            </p>
-                            <p class="text-sm font-medium">
-                                Typical outcome: 95% fewer errors, 10x faster processing
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="flex items-start gap-4 mb-4">
-                        <div style="width: 3rem; height: 3rem; background-color: hsl(146 55% 36% / 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                            <i data-lucide="file-check" style="width: 1.5rem; height: 1.5rem; color: hsl(146 55% 36%);"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2">Custom internal tools</h3>
-                            <p class="text-muted-foreground mb-3">
-                                Apps Script-powered interfaces for approvals, data validation, and team workflows. Built in Sheets, no external software.
-                            </p>
-                            <p class="text-sm font-medium">
-                                Typical outcome: Replace 2-3 SaaS subscriptions
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="flex items-start gap-4 mb-4">
-                        <div style="width: 3rem; height: 3rem; background-color: hsl(146 55% 36% / 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                            <i data-lucide="zap" style="width: 1.5rem; height: 1.5rem; color: hsl(146 55% 36%);"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2">API integrations</h3>
-                            <p class="text-muted-foreground mb-3">
-                                Connect your Sheets to Stripe, Slack, HubSpot, QuickBooks, or any tool with an API. Real-time sync, no middleware.
-                            </p>
-                            <p class="text-sm font-medium">
-                                Typical outcome: Real-time data, zero manual entry
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Proof / Work Examples -->
-    <section id="work" class="section-padding bg-muted">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
-                Systems we've built.
-            </h2>
-            <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
-                Real projects. Real outcomes. No fluff.
-            </p>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="card" style="padding: 0; overflow: hidden;">
-                    <div class="relative aspect-video cursor-pointer" onclick="openVideo('HsMaIpEOlF4')">
-                        <img 
-                            src="https://img.youtube.com/vi/HsMaIpEOlF4/maxresdefault.jpg"
-                            alt="Email CRM System"
-                            class="w-full h-full object-cover"
-                            style="transition: transform 0.3s;"
-                            onmouseover="this.style.transform='scale(1.05)'"
-                            onmouseout="this.style.transform='scale(1)'"
-                        />
-                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                            <div class="w-14 h-14 bg-primary rounded-full flex items-center justify-center">
-                                <i data-lucide="play" class="w-6 h-6 text-white" style="margin-left: 2px;"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="padding: 1.5rem;">
-                        <h3 class="text-lg font-bold mb-2">Email marketing CRM</h3>
-                        <div class="space-y-2 text-sm">
-                            <div>
-                                <span class="font-semibold">Before:</span>
-                                <span class="text-muted-foreground"> Manual campaign tracking across 3 tools</span>
-                            </div>
-                            <div>
-                                <span class="font-semibold">After:</span>
-                                <span class="text-muted-foreground"> Automated contact sync, bulk emails, open rate tracking</span>
-                            </div>
-                            <div class="pt-2 border-t border-border">
-                                <span class="metric" style="font-size: 1.5rem;">$3,600/year</span>
-                                <span class="text-sm text-muted-foreground block">saved in software costs</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card" style="padding: 0; overflow: hidden;">
-                    <div class="relative aspect-video cursor-pointer" onclick="openVideo('4fjE3eJ01T4')">
-                        <img 
-                            src="https://img.youtube.com/vi/4fjE3eJ01T4/maxresdefault.jpg"
-                            alt="Invoice System"
-                            class="w-full h-full object-cover"
-                            style="transition: transform 0.3s;"
-                            onmouseover="this.style.transform='scale(1.05)'"
-                            onmouseout="this.style.transform='scale(1)'"
-                        />
-                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                            <div class="w-14 h-14 bg-primary rounded-full flex items-center justify-center">
-                                <i data-lucide="play" class="w-6 h-6 text-white" style="margin-left: 2px;"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="padding: 1.5rem;">
-                        <h3 class="text-lg font-bold mb-2">Branded invoice generator</h3>
-                        <div class="space-y-2 text-sm">
-                            <div>
-                                <span class="font-semibold">Before:</span>
-                                <span class="text-muted-foreground"> 2 hours per invoice, manual calculations</span>
-                            </div>
-                            <div>
-                                <span class="font-semibold">After:</span>
-                                <span class="text-muted-foreground"> One-click PDF generation with branding</span>
-                            </div>
-                            <div class="pt-2 border-t border-border">
-                                <span class="metric" style="font-size: 1.5rem;">2 min</span>
-                                <span class="text-sm text-muted-foreground block">per invoice (was 2 hours)</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card" style="padding: 0; overflow: hidden;">
-                    <div class="relative aspect-video cursor-pointer" onclick="openVideo('-svuBj0WpkE')">
-                        <img 
-                            src="https://img.youtube.com/vi/-svuBj0WpkE/maxresdefault.jpg"
-                            alt="Healthcare Dashboard"
-                            class="w-full h-full object-cover"
-                            style="transition: transform 0.3s;"
-                            onmouseover="this.style.transform='scale(1.05)'"
-                            onmouseout="this.style.transform='scale(1)'"
-                        />
-                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                            <div class="w-14 h-14 bg-primary rounded-full flex items-center justify-center">
-                                <i data-lucide="play" class="w-6 h-6 text-white" style="margin-left: 2px;"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="padding: 1.5rem;">
-                        <h3 class="text-lg font-bold mb-2">Healthcare operations dashboard</h3>
-                        <div class="space-y-2 text-sm">
-                            <div>
-                                <span class="font-semibold">Before:</span>
-                                <span class="text-muted-foreground"> Patient data scattered across 5 systems</span>
-                            </div>
-                            <div>
-                                <span class="font-semibold">After:</span>
-                                <span class="text-muted-foreground"> Real-time unified dashboard, automated alerts</span>
-                            </div>
-                            <div class="pt-2 border-t border-border">
-                                <span class="metric" style="font-size: 1.5rem;">100%</span>
-                                <span class="text-sm text-muted-foreground block">accuracy, instant visibility</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Reviews Section -->
-    <section id="reviews" class="section-padding">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
-                What clients say.
-            </h2>
-            <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
-                Real feedback from operations teams who've automated their workflows.
-            </p>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="card-flat">
-                    <div class="flex gap-1 mb-3">
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                    </div>
-                    <p class="text-muted-foreground mb-4" style="line-height: 1.6;">
-                        "We were spending $400/month on three different tools. Packdez built us one system that does everything. Paid for itself in two months."
-                    </p>
-                    <div>
-                        <p class="font-bold text-sm">Sarah Chen</p>
-                        <p class="text-sm text-muted-foreground">Operations Manager, TechStart</p>
-                    </div>
-                </div>
-                
-                <div class="card-flat">
-                    <div class="flex gap-1 mb-3">
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                    </div>
-                    <p class="text-muted-foreground mb-4" style="line-height: 1.6;">
-                        "Our weekly reporting went from 6 hours to 15 minutes. The system just works. No bugs, no downtime, no surprises."
-                    </p>
-                    <div>
-                        <p class="font-bold text-sm">Michael Okonkwo</p>
-                        <p class="text-sm text-muted-foreground">Finance Director, GrowthHub</p>
-                    </div>
-                </div>
-                
-                <div class="card-flat">
-                    <div class="flex gap-1 mb-3">
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                    </div>
-                    <p class="text-muted-foreground mb-4" style="line-height: 1.6;">
-                        "Fast delivery, clear communication, and the system actually does what they said it would. Rare to find that level of execution."
-                    </p>
-                    <div>
-                        <p class="font-bold text-sm">James Mwangi</p>
-                        <p class="text-sm text-muted-foreground">Founder, Logistics Kenya</p>
-                    </div>
-                </div>
-                
-                <div class="card-flat">
-                    <div class="flex gap-1 mb-3">
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                    </div>
-                    <p class="text-muted-foreground mb-4" style="line-height: 1.6;">
-                        "We tried building it ourselves. Wasted three months. Packdez delivered a better system in 8 days. Worth every penny."
-                    </p>
-                    <div>
-                        <p class="font-bold text-sm">Amara Nwosu</p>
-                        <p class="text-sm text-muted-foreground">COO, Healthcare Plus</p>
-                    </div>
-                </div>
-                
-                <div class="card-flat">
-                    <div class="flex gap-1 mb-3">
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                    </div>
-                    <p class="text-muted-foreground mb-4" style="line-height: 1.6;">
-                        "The documentation is excellent. Our team can actually understand and maintain the system. That's a first for us."
-                    </p>
-                    <div>
-                        <p class="font-bold text-sm">David Adebayo</p>
-                        <p class="text-sm text-muted-foreground">Head of Operations, Invoice Pro</p>
-                    </div>
-                </div>
-                
-                <div class="card-flat">
-                    <div class="flex gap-1 mb-3">
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                        <i data-lucide="star" class="star-icon"></i>
-                    </div>
-                    <p class="text-muted-foreground mb-4" style="line-height: 1.6;">
-                        "Fixed price, clear timeline, no scope creep. They delivered exactly what they promised. Refreshing experience."
-                    </p>
-                    <div>
-                        <p class="font-bold text-sm">Grace Kimani</p>
-                        <p class="text-sm text-muted-foreground">CEO, DataFlow Solutions</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- How It Works -->
-    <section id="process" class="section-padding bg-muted">
-        <div class="max-w-5xl mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
-                How we work.
-            </h2>
-            <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
-                Straightforward process. Fixed timeline. No surprises.
-            </p>
-            
-            <div class="grid md:grid-cols-4 gap-6">
-                <div class="text-center">
-                    <div style="width: 3.5rem; height: 3.5rem; background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 65% 45%)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 1.5rem; font-weight: 800;">
-                        1
-                    </div>
-                    <h3 class="text-lg font-bold mb-2">Discovery call</h3>
-                    <p class="text-sm text-muted-foreground">
-                        30 minutes. We map your current workflow and identify automation opportunities.
-                    </p>
-                </div>
-                
-                <div class="text-center">
-                    <div style="width: 3.5rem; height: 3.5rem; background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 65% 45%)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 1.5rem; font-weight: 800;">
-                        2
-                    </div>
-                    <h3 class="text-lg font-bold mb-2">Proposal</h3>
-                    <p class="text-sm text-muted-foreground">
-                        Within 24 hours: scope, timeline, fixed price. No hourly billing.
-                    </p>
-                </div>
-                
-                <div class="text-center">
-                    <div style="width: 3.5rem; height: 3.5rem; background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 65% 45%)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 1.5rem; font-weight: 800;">
-                        3
-                    </div>
-                    <h3 class="text-lg font-bold mb-2">Build</h3>
-                    <p class="text-sm text-muted-foreground">
-                        7-10 days. You see progress daily. Revisions included.
-                    </p>
-                </div>
-                
-                <div class="text-center">
-                    <div style="width: 3.5rem; height: 3.5rem; background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 65% 45%)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 1.5rem; font-weight: 800;">
-                        4
-                    </div>
-                    <h3 class="text-lg font-bold mb-2">Launch</h3>
-                    <p class="text-sm text-muted-foreground">
-                        Training, documentation, 30 days of support. Then it's yours.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Pricing Section -->
-    <section id="pricing" class="section-padding">
-        <div class="max-w-5xl mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
-                Transparent pricing.
-            </h2>
-            <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
-                Fixed prices. No hourly rates. No surprises. Most projects pay for themselves within 3 months.
-            </p>
-            
-            <div class="pricing-table">
-                <div class="pricing-row pricing-header">
-                    <div class="pricing-cell"></div>
-                    <div class="pricing-cell pricing-cell-center">Starter</div>
-                    <div class="pricing-cell pricing-cell-center">Professional</div>
-                    <div class="pricing-cell pricing-cell-center">Enterprise</div>
-                </div>
-                
-                <div class="pricing-row">
-                    <div class="pricing-cell"><strong>Price</strong></div>
-                    <div class="pricing-cell pricing-cell-center"><strong>$800</strong></div>
-                    <div class="pricing-cell pricing-cell-center"><strong>$2,500</strong></div>
-                    <div class="pricing-cell pricing-cell-center"><strong>Custom</strong></div>
-                </div>
-                
-                <div class="pricing-row">
-                    <div class="pricing-cell">Automation workflows</div>
-                    <div class="pricing-cell pricing-cell-center">Up to 3</div>
-                    <div class="pricing-cell pricing-cell-center">Unlimited</div>
-                    <div class="pricing-cell pricing-cell-center">Unlimited</div>
-                </div>
-                
-                <div class="pricing-row">
-                    <div class="pricing-cell">API integrations</div>
-                    <div class="pricing-cell pricing-cell-center">1 tool</div>
-                    <div class="pricing-cell pricing-cell-center">Multiple tools</div>
-                    <div class="pricing-cell pricing-cell-center">Complex integrations</div>
-                </div>
-                
-                <div class="pricing-row">
-                    <div class="pricing-cell">Custom dashboards</div>
-                    <div class="pricing-cell pricing-cell-center">Basic</div>
-                    <div class="pricing-cell pricing-cell-center">Advanced</div>
-                    <div class="pricing-cell pricing-cell-center">Enterprise-grade</div>
-                </div>
-                
-                <div class="pricing-row">
-                    <div class="pricing-cell">Delivery time</div>
-                    <div class="pricing-cell pricing-cell-center">2 weeks</div>
-                    <div class="pricing-cell pricing-cell-center">7-10 days</div>
-                    <div class="pricing-cell pricing-cell-center">Custom timeline</div>
-                </div>
-                
-                <div class="pricing-row">
-                    <div class="pricing-cell">Support period</div>
-                    <div class="pricing-cell pricing-cell-center">15 days</div>
-                    <div class="pricing-cell pricing-cell-center">30 days</div>
-                    <div class="pricing-cell pricing-cell-center">Ongoing</div>
-                </div>
-                
-                <div class="pricing-row">
-                    <div class="pricing-cell">Team training</div>
-                    <div class="pricing-cell pricing-cell-center">Documentation</div>
-                    <div class="pricing-cell pricing-cell-center">Live training</div>
-                    <div class="pricing-cell pricing-cell-center">Dedicated support</div>
-                </div>
-                
-                <div class="pricing-row">
-                    <div class="pricing-cell"></div>
-                    <div class="pricing-cell pricing-cell-center" style="padding: 1.5rem;">
-                        <a href="#audit" class="btn btn-outline" style="padding: 0.625rem 1.25rem; font-size: 0.875rem;">Get Started</a>
-                    </div>
-                    <div class="pricing-cell pricing-cell-center" style="padding: 1.5rem;">
-                        <a href="#audit" class="btn btn-primary" style="padding: 0.625rem 1.25rem; font-size: 0.875rem;">Get Started</a>
-                    </div>
-                    <div class="pricing-cell pricing-cell-center" style="padding: 1.5rem;">
-                        <a href="#audit" class="btn btn-outline" style="padding: 0.625rem 1.25rem; font-size: 0.875rem;">Contact Us</a>
-                    </div>
-                </div>
-            </div>
-            
-            <p class="text-center text-sm text-muted-foreground mt-8">
-                All plans include full documentation, source code access, and no ongoing fees.
-            </p>
-        </div>
-    </section>
-    
-    <!-- Why Packdez -->
-    <section class="section-padding bg-muted">
-        <div class="max-w-5xl mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
-                Why Packdez.
-            </h2>
-            <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
-                We're not a general automation agency. We specialize in one thing: operational systems in Google Sheets.
-            </p>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="card-flat">
-                    <h3 class="text-lg font-bold mb-3">Built for Google Sheets</h3>
-                    <p class="text-muted-foreground">
-                        We don't force you into new platforms. We make the tools you already use work harder. Your team knows Sheets—no learning curve, no adoption friction.
-                    </p>
-                </div>
-                
-                <div class="card-flat">
-                    <h3 class="text-lg font-bold mb-3">Systems, not templates</h3>
-                    <p class="text-muted-foreground">
-                        Every system is custom-built for your workflow. We don't sell pre-made templates that force you to adapt. We adapt to you.
-                    </p>
-                </div>
-                
-                <div class="card-flat">
-                    <h3 class="text-lg font-bold mb-3">Reliability over hacks</h3>
-                    <p class="text-muted-foreground">
-                        We build for long-term stability. Clean logic, documented workflows, error handling. These systems run for years, not weeks.
-                    </p>
-                </div>
-                
-                <div class="card-flat">
-                    <h3 class="text-lg font-bold mb-3">Fixed pricing, fast delivery</h3>
-                    <p class="text-muted-foreground">
-                        No hourly rates. No scope creep. You know the cost upfront. Most projects deliver in 7-10 days, not months.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Primary CTA -->
-    <section id="audit" class="section-padding">
-        <div class="max-w-3xl mx-auto px-4">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                    Get a free automation audit.
-                </h2>
-                <p class="text-lg text-muted-foreground">
-                    30-minute call. We'll identify what can be automated, estimate time savings, and give you a fixed price.
-                </p>
-            </div>
-            
-            <div class="card-flat max-w-2xl mx-auto">
-                <form onsubmit="handleSubmit(event)" class="space-y-5">
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <input type="text" id="name" placeholder="Your name" class="input" required />
-                        <input type="email" id="email" placeholder="Work email" class="input" required />
-                    </div>
-                    <input type="text" id="company" placeholder="Company name" class="input" />
-                    <textarea id="message" placeholder="Describe your current workflow and what's slowing you down" class="textarea" required></textarea>
-                    <button type="submit" id="submit-btn" class="btn btn-primary w-full text-lg">
-                        Request Free Audit
-                    </button>
-                    <p class="text-sm text-muted-foreground text-center">
-                        We'll respond within 24 hours with available times.
-                    </p>
-                </form>
-            </div>
-        </div>
-    </section>
-    
-    <!-- FAQ -->
-    <section id="faq" class="section-padding bg-muted">
-        <div class="max-w-3xl mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
-                Common questions.
-            </h2>
-            
-            <div class="space-y-4">
-                <div class="card-flat">
-                    <button onclick="toggleFaq(0)" class="w-full flex items-start justify-between text-left">
-                        <span class="font-bold text-lg pr-4">How long does it take?</span>
-                        <span class="text-primary text-xl font-bold" id="faq-icon-0" style="flex-shrink: 0;">+</span>
-                    </button>
-                    <div id="faq-answer-0" class="mt-3 text-muted-foreground" style="display: none;">
-                        Most projects are delivered in 7-10 days. You'll see a working prototype within 72 hours. We don't drag projects out.
-                    </div>
-                </div>
-                
-                <div class="card-flat">
-                    <button onclick="toggleFaq(1)" class="w-full flex items-start justify-between text-left">
-                        <span class="font-bold text-lg pr-4">What if I already have a Sheet?</span>
-                        <span class="text-primary text-xl font-bold" id="faq-icon-1" style="flex-shrink: 0;">+</span>
-                    </button>
-                    <div id="faq-answer-1" class="mt-3 text-muted-foreground" style="display: none;">
-                        We can work with your existing Sheets or build new ones. Most clients have Sheets that need automation added, not replacement.
-                    </div>
-                </div>
-                
-                <div class="card-flat">
-                    <button onclick="toggleFaq(2)" class="w-full flex items-start justify-between text-left">
-                        <span class="font-bold text-lg pr-4">What tools do you integrate with?</span>
-                        <span class="text-primary text-xl font-bold" id="faq-icon-2" style="flex-shrink: 0;">+</span>
-                    </button>
-                    <div id="faq-answer-2" class="mt-3 text-muted-foreground" style="display: none;">
-                        Zapier, Stripe, Slack, HubSpot, QuickBooks, Gmail, Calendar, and any tool with an API. If it has data, we can connect it.
-                    </div>
-                </div>
-                
-                <div class="card-flat">
-                    <button onclick="toggleFaq(3)" class="w-full flex items-start justify-between text-left">
-                        <span class="font-bold text-lg pr-4">How much does it cost?</span>
-                        <span class="text-primary text-xl font-bold" id="faq-icon-3" style="flex-shrink: 0;">+</span>
-                    </button>
-                    <div id="faq-answer-3" class="mt-3 text-muted-foreground" style="display: none;">
-                        Most projects range from $800 to $3,500 depending on complexity. Fixed price, quoted upfront. No hourly billing or surprise costs.
-                    </div>
-                </div>
-                
-                <div class="card-flat">
-                    <button onclick="toggleFaq(4)" class="w-full flex items-start justify-between text-left">
-                        <span class="font-bold text-lg pr-4">What happens after delivery?</span>
-                        <span class="text-primary text-xl font-bold" id="faq-icon-4" style="flex-shrink: 0;">+</span>
-                    </button>
-                    <div id="faq-answer-4" class="mt-3 text-muted-foreground" style="display: none;">
-                        You get full documentation, team training, and 30 days of support. After that, the system is yours. We offer optional maintenance packages if needed.
-                    </div>
-                </div>
-                
-                <div class="card-flat">
-                    <button onclick="toggleFaq(5)" class="w-full flex items-start justify-between text-left">
-                        <span class="font-bold text-lg pr-4">Is this secure?</span>
-                        <span class="text-primary text-xl font-bold" id="faq-icon-5" style="flex-shrink: 0;">+</span>
-                    </button>
-                    <div id="faq-answer-5" class="mt-3 text-muted-foreground" style="display: none;">
-                        All systems run in your Google Workspace with your permissions. We follow Google's security best practices. You control all access.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Footer -->
-    <footer class="py-12 border-t border-border px-4">
-        <div class="max-w-6xl mx-auto">
-            <div class="grid md:grid-cols-3 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center gap-2 mb-3">
-                        <img 
-                            src="https://packdez.com/assets/logo/packdez-logo-512x512.png" 
-                            alt="Packdez"
-                            class="h-7 w-7"
-                        />
-                        <h3 class="text-lg font-bold">Packdez</h3>
-                    </div>
-                    <p class="text-sm text-muted-foreground mb-4">
-                        Operational systems in Google Sheets. Built for teams that need automation they can trust.
-                    </p>
-                    <div class="flex gap-3">
-                        <a href="https://x.com/packdezHQ" target="_blank" rel="noopener noreferrer" class="w-9 h-9 bg-muted hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all">
-                            <i data-lucide="twitter" class="w-4 h-4"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/company/packdez/" target="_blank" rel="noopener noreferrer" class="w-9 h-9 bg-muted hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all">
-                            <i data-lucide="linkedin" class="w-4 h-4"></i>
-                        </a>
-                        <a href="https://youtube.com/@packdezhqz?si=EXj27rVMq27WlWQp" target="_blank" rel="noopener noreferrer" class="w-9 h-9 bg-muted hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all">
-                            <i data-lucide="youtube" class="w-4 h-4"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="font-bold mb-3 text-sm">What We Build</h4>
-                    <ul class="space-y-2 text-sm text-muted-foreground">
-                        <li>Automated reporting systems</li>
-                        <li>Operations automation</li>
-                        <li>Custom internal tools</li>
-                        <li>API integrations</li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-bold mb-3 text-sm">Contact</h4>
-                    <ul class="space-y-2 text-sm text-muted-foreground">
-                        <li>hello@packdez.com</li>
-                        <li>Response within 24 hours</li>
-                        <li>Delivery in 7-10 days</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="pt-6 border-t border-border text-center text-sm text-muted-foreground">
-                <p>© 2024 Packdez. Operational systems for growing teams.</p>
-            </div>
-        </div>
-    </footer>
-    
-    <!-- Video Modal -->
-    <div id="video-modal" class="video-modal" onclick="closeVideo()">
-        <div class="video-container" onclick="event.stopPropagation()">
-            <iframe id="video-iframe" src="" class="w-full h-full" allow="autoplay; picture-in-picture" allowfullscreen></iframe>
-        </div>
+      </div>
     </div>
-    
-    <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
-        
-        // Conversion popup logic
-        let popupShown = false;
-        window.addEventListener('scroll', function() {
-            if (!popupShown && window.scrollY > 1500) {
-                document.getElementById('conversion-popup').classList.add('active');
-                popupShown = true;
-                lucide.createIcons();
-            }
-        });
-        
-        function closePopup() {
-            document.getElementById('conversion-popup').classList.remove('active');
-        }
-        
-        function scrollToAudit() {
-            document.getElementById('audit').scrollIntoView({ behavior: 'smooth' });
-        }
-        
-        // Mobile menu
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('active');
-        }
-        
-        function closeMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.remove('active');
-        }
-        
-        // Video modal
-        function openVideo(videoId) {
-            const modal = document.getElementById('video-modal');
-            const iframe = document.getElementById('video-iframe');
-            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-            modal.classList.add('active');
-        }
-        
-        function closeVideo() {
-            const modal = document.getElementById('video-modal');
-            const iframe = document.getElementById('video-iframe');
-            iframe.src = '';
-            modal.classList.remove('active');
-        }
-        
-        // FAQ toggle
-        function toggleFaq(index) {
-            const answer = document.getElementById(`faq-answer-${index}`);
-            const icon = document.getElementById(`faq-icon-${index}`);
-            
-            if (answer.style.display === 'none') {
-                answer.style.display = 'block';
-                icon.textContent = '−';
-            } else {
-                answer.style.display = 'none';
-                icon.textContent = '+';
-            }
-        }
-        
-        // Toast
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.className = 'toast active';
-            toast.style.backgroundColor = type === 'success' ? 'hsl(146 55% 36%)' : 'hsl(0 84% 60%)';
-            setTimeout(() => {
-                toast.classList.remove('active');
-            }, 3000);
-        }
-        
-        // Form submission
-        async function handleSubmit(event) {
-            event.preventDefault();
-            
-            const submitBtn = document.getElementById('submit-btn');
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-            
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                company: document.getElementById('company').value,
-                message: document.getElementById('message').value,
-                submittedAt: new Date().toISOString()
-            };
-            
-            const scriptBaseURL = "https://corsproxy.io/?" + encodeURIComponent(
-                "https://script.google.com/macros/s/AKfycbznvN_BiRWk1_GnLdRj4zzGnD0oGnq5d1LXpi2hBeBn1ZYzPp6IsMgigPbCiq0nr4Z4tA/exec"
-            );
-            
-            try {
-                const response = await fetch(scriptBaseURL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-                    body: new URLSearchParams(formData).toString(),
-                });
-                
-                if (response.ok) {
-                    showToast("Thanks. We'll contact you within 24 hours.", 'success');
-                    document.getElementById('name').value = '';
-                    document.getElementById('email').value = '';
-                    document.getElementById('company').value = '';
-                    document.getElementById('message').value = '';
-                } else {
-                    showToast('Something went wrong. Please try again.', 'error');
-                }
-            } catch (err) {
-                showToast('Network error. Please try again.', 'error');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Request Free Audit';
-            }
-        }
-        
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-    </script>
+  </section>
+
+  <section class="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div><div class="stat-value">50+</div><div class="stat-label">Remote teams automated</div></div>
+        <div><div class="stat-value">12hrs</div><div class="stat-label">Average time saved weekly</div></div>
+        <div><div class="stat-value">7 days</div><div class="stat-label">From kickoff to launch</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-bg">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Sound familiar?</h2>
+        <p class="section-desc">You're not alone. Most remote teams face the same operational chaos.</p>
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <h3>Data scattered everywhere</h3>
+          <p>Your team juggles 5 different tools just to track one project</p>
+        </div>
+        <div class="card">
+          <svg class="icon" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          <h3>Manual work killing productivity</h3>
+          <p>Hours wasted on copy-paste between sheets and systems</p>
+        </div>
+        <div class="card">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <h3>Delayed decisions</h3>
+          <p>By the time you compile reports, the data is already outdated</p>
+        </div>
+        <div class="card">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <h3>Team alignment issues</h3>
+          <p>Everyone has their own version of "the truth"</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="position: relative; overflow: hidden;">
+    <div style="position: absolute; inset: 0; background: linear-gradient(135deg, hsla(var(--primary), 0.05), hsla(221, 83%, 53%, 0.05));"></div>
+    <div class="container" style="position: relative; z-index: 10;">
+      <div class="roi-card">
+        <div class="roi-header">
+          <div class="roi-icon-wrap">
+            <svg class="icon" viewBox="0 0 24 24" style="width: 24px; height: 24px;"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <div>
+            <h3 style="font-size: 1.75rem; margin-bottom: 0.25rem;">Calculate Your ROI</h3>
+            <p style="color: hsl(var(--muted-fg)); margin: 0;">See how much time and money you could save</p>
+          </div>
+        </div>
+        <div class="slider-group">
+          <label>Hours spent on manual work per week: <span id="hoursValue">10</span></label>
+          <input type="range" id="hoursSlider" min="1" max="40" value="10" oninput="updateROI()">
+        </div>
+        <div class="slider-group">
+          <label>Average hourly rate: $<span id="rateValue">50</span></label>
+          <input type="range" id="rateSlider" min="20" max="200" step="10" value="50" oninput="updateROI()">
+        </div>
+        <div class="slider-group">
+          <label>Team size: <span id="teamValue">5</span> people</label>
+          <input type="range" id="teamSlider" min="1" max="20" value="5" oninput="updateROI()">
+        </div>
+        <div class="roi-results">
+          <div><div class="roi-result-item" id="weekSaved">50hrs</div><div class="roi-result-label">Saved per week</div></div>
+          <div><div class="roi-result-item" id="monthSaved">$10,000</div><div class="roi-result-label">Saved per month</div></div>
+          <div><div class="roi-result-item" id="yearSaved">$130,000</div><div class="roi-result-label">Saved per year</div></div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+          <button onclick="scrollToSection('contact')" class="btn btn-primary btn-lg">
+            Get Started - ROI in 7 Days
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">The solution? Automate the chaos.</h2>
+        <p class="section-desc">We build custom systems that connect your sheets, automate your workflows, and give you back your time.</p>
+      </div>
+      <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+        <div class="card" style="text-align: center;">
+          <div style="width: 64px; height: 64px; background: hsla(var(--primary), 0.1); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+            <svg class="icon" viewBox="0 0 24 24" style="width: 32px; height: 32px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3>Instant automation</h3>
+          <p>Tasks that took hours now happen in seconds</p>
+        </div>
+        <div class="card" style="text-align: center;">
+          <div style="width: 64px; height: 64px; background: hsla(var(--primary), 0.1); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+            <svg class="icon" viewBox="0 0 24 24" style="width: 32px; height: 32px;"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          </div>
+          <h3>Real-time sync</h3>
+          <p>Everyone sees the same data, updated automatically</p>
+        </div>
+        <div class="card" style="text-align: center;">
+          <div style="width: 64px; height: 64px; background: hsla(var(--primary), 0.1); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+            <svg class="icon" viewBox="0 0 24 24" style="width: 32px; height: 32px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Built on what you know</h3>
+          <p>Still Google Sheets. Just supercharged.</p>
+        </div>
+        <div class="card" style="text-align: center;">
+          <div style="width: 64px; height: 64px; background: hsla(var(--primary), 0.1); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+            <svg class="icon" viewBox="0 0 24 24" style="width: 32px; height: 32px;"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+          </div>
+          <h3>Actually use it</h3>
+          <p>No training needed. Your team already knows how.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top: 1px solid hsl(var(--border)); border-bottom: 1px solid hsl(var(--border));">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">How We Work</h2>
+        <p class="section-desc">From kickoff to launch in just 7-10 days</p>
+      </div>
+      <div style="max-width: 56rem; margin: 0 auto;">
+        <div style="display: flex; gap: 2rem; margin-bottom: 3rem; align-items: start;">
+          <div style="flex-shrink: 0; width: 64px; height: 64px; background: hsla(var(--primary), 0.1); border: 2px solid hsla(var(--primary), 0.2); border-radius: var(--radius); display: flex; align-items: center; justify-content: center;">
+            <svg class="icon" viewBox="0 0 24 24" style="width: 32px; height: 32px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div style="flex: 1;">
+            <div style="margin-bottom: 0.5rem;">
+              <span class="badge" style="background: hsla(var(--primary), 0.1); border: 1px solid hsla(var(--primary), 0.5); margin-right: 0.5rem;">01</span>
+              <span class="badge" style="background: hsl(var(--muted)); border: 1px solid hsl(var(--border));">Day 1</span>
+            </div>
+            <h3 style="margin-bottom: 0.5rem;">Discovery Call</h3>
+            <p style="color: hsl(var(--muted-fg));">We dive deep into your workflow, pain points, and goals. No sales pitch—just understanding your needs.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 2rem; margin-bottom: 3rem; align-items: start;">
+          <div style="flex-shrink: 0; width: 64px; height: 64px; background: hsla(var(--primary), 0.1); border: 2px solid hsla(var(--primary), 0.2); border-radius: var(--radius); display: flex; align-items: center; justify-content: center;">
+            <svg class="icon" viewBox="0 0 24 24" style="width: 32px; height: 32px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <div style="flex: 1;">
+            <div style="margin-bottom: 0.5rem;">
+              <span class="badge" style="background: hsla(var(--primary), 0.1); border: 1px solid hsla(var(--primary), 0.5); margin-right: 0.5rem;">02</span>
+              <span class="badge" style="background: hsl(var(--muted)); border: 1px solid hsl(var(--border));">Day 2-3</span>
+            </div>
+            <h3 style="margin-bottom: 0.5rem;">Proposal & Scope</h3>
+            <p style="color: hsl(var(--muted-fg));">You get a fixed-price proposal with clear deliverables. We agree on exactly what we're building.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 2rem; margin-bottom: 3rem; align-items: start;">
+          <div style="flex-shrink: 0; width: 64px; height: 64px; background: hsla(var(--primary), 0.1); border: 2px solid hsla(var(--primary), 0.2); border-radius: var(--radius); display: flex; align-items: center; justify-content: center;">
+            <svg class="icon" viewBox="0 0 24 24" style="width: 32px; height: 32px;"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6m8.66-13.66l-4.24 4.24m-4.24 4.24l-4.24 4.24m13.66 0l-4.24-4.24m-4.24-4.24l-4.24-4.24"/></svg>
+          </div>
+          <div style="flex: 1;">
+            <div style="margin-bottom: 0.5rem;">
+              <span class="badge" style="background: hsla(var(--primary), 0.1); border: 1px solid hsla(var(--primary), 0.5); margin-right: 0.5rem;">03</span>
+              <span class="badge" style="background: hsl(var(--muted)); border: 1px solid hsl(var(--border));">Day 4-8</span>
+            </div>
+            <h3 style="margin-bottom: 0.5rem;">Build & Iterate</h3>
+            <p style="color: hsl(var(--muted-fg));">We build your system with daily updates. You review, we refine. Unlimited revisions until it's perfect.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 2rem; margin-bottom: 3rem; align-items: start;">
+          <div style="flex-shrink: 0; width: 64px; height: 64px; background: hsla(var(--primary), 0.1); border: 2px solid hsla(var(--primary), 0.2); border-radius: var(--radius); display: flex; align-items: center; justify-content: center;">
+            <svg class="icon" viewBox="0 0 24 24" style="width: 32px; height: 32px;"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+          </div>
+          <div style="flex: 1;">
+            <div style="margin-bottom: 0.5rem;">
+              <span class="badge" style="background: hsla(var(--primary), 0.1); border: 1px solid hsla(var(--primary), 0.5); margin-right: 0.5rem;">04</span>
+              <span class="badge" style="background: hsl(var(--muted)); border: 1px solid hsl(var(--border));">Day 9-10</span>
+            </div>
+            <h3 style="margin-bottom: 0.5rem;">Launch & Support</h3>
+            <p style="color: hsl(var(--muted-fg));">We train your team, launch your system, and provide 30 days of free support. You're never left hanging.</p>
+          </div>
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <button onclick="scrollToSection('contact')" class="btn btn-primary btn-lg">
+          Start Your Project Today
+          <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="section-bg">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Real teams. Real results.</h2>
+        <p class="section-desc">See how we've helped companies like yours escape spreadsheet hell</p>
+      </div>
+      <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-bottom: 3rem;">
+        <div class="project-card">
+          <div class="project-visual" onclick="openVideo('https://www.youtube.com/embed/HsMaIpEOlF4')">
+            <img src="https://img.youtube.com/vi/HsMaIpEOlF4/maxresdefault.jpg" alt="Sales CRM"/>
+            <div class="video-overlay">
+              <div class="play-btn"><svg viewBox="0 0 24 24" style="width: 28px; height: 28px; fill: hsl(var(--primary));"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            </div>
+          </div>
+          <div class="project-info">
+            <h3>Sales team finally in sync</h3>
+            <div style="margin-bottom: 0.5rem; font-size: 0.875rem;"><strong>Problem:</strong> <span style="color: hsl(var(--muted-fg));">Leads were falling through the cracks</span></div>
+            <div style="margin-bottom: 1rem; font-size: 0.875rem;"><strong>Solution:</strong> <span style="color: hsl(var(--muted-fg));">Automated CRM that tracks every interaction</span></div>
+            <div style="padding-top: 1rem; border-top: 1px solid hsl(var(--border)); font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary));">40% more deals closed</div>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-visual" onclick="openVideo('https://www.youtube.com/embed/4fjE3eJ01T4')">
+            <img src="https://img.youtube.com/vi/4fjE3eJ01T4/maxresdefault.jpg" alt="Invoicing"/>
+            <div class="video-overlay">
+              <div class="play-btn"><svg viewBox="0 0 24 24" style="width: 28px; height: 28px; fill: hsl(var(--primary));"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            </div>
+          </div>
+          <div class="project-info">
+            <h3>Invoicing without the headache</h3>
+            <div style="margin-bottom: 0.5rem; font-size: 0.875rem;"><strong>Problem:</strong> <span style="color: hsl(var(--muted-fg));">Billing took 2 hours per client</span></div>
+            <div style="margin-bottom: 1rem; font-size: 0.875rem;"><strong>Solution:</strong> <span style="color: hsl(var(--muted-fg));">One-click invoice generation with auto-send</span></div>
+            <div style="padding-top: 1rem; border-top: 1px solid hsl(var(--border)); font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary));">95% time saved</div>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-visual" onclick="openVideo('https://www.youtube.com/embed/-svuBj0WpkE')">
+            <img src="https://img.youtube.com/vi/-svuBj0WpkE/maxresdefault.jpg" alt="Dashboard"/>
+            <div class="video-overlay">
+              <div class="play-btn"><svg viewBox="0 0 24 24" style="width: 28px; height: 28px; fill: hsl(var(--primary));"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            </div>
+          </div>
+          <div class="project-info">
+            <h3>Real-time ops visibility</h3>
+            <div style="margin-bottom: 0.5rem; font-size: 0.875rem;"><strong>Problem:</strong> <span style="color: hsl(var(--muted-fg));">Management flying blind on metrics</span></div>
+            <div style="margin-bottom: 1rem; font-size: 0.875rem;"><strong>Solution:</strong> <span style="color: hsl(var(--muted-fg));">Live dashboard that updates itself</span></div>
+            <div style="padding-top: 1rem; border-top: 1px solid hsl(var(--border)); font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary));">Decisions in minutes, not days</div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <button onclick="scrollToSection('contact')" class="btn btn-primary btn-lg">
+          Get Your Custom System
+          <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: hsla(var(--muted), 0.3);">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">What Our Clients Say</h2>
+        <p class="section-desc">Real feedback from real remote teams</p>
+      </div>
+      <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+        <div class="review-card">
+          <div class="stars">
+            <svg class="star" width="20" height="20" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg class="star" width="20" height="20" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg class="star" width="20" height="20" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg class="star" width="20" height="20" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg class="star" width="20" height="20" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p style="color: hsl(var(--muted-fg)); margin-bottom: 1.5rem;">"Packdez transformed our chaotic spreadsheets into a streamlined system. We've saved 15 hours per week and our team actually enjoys using it!"</p>
+          <div class="reviewer">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah" class="reviewer-img" alt="Sarah Mitchell"/>
+            <div><div style="font-weight: 700;">Sarah Mitchell</div><div style="font-size: 0.875rem; color: hsl(var(--muted-fg));">Operations Director, TechFlow Inc</div></div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="stars">
+            <svg class="star" width="20" height="20" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg class="star" width="20" height="20" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg class="star" width="20" height="20" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg class="star" width="20" height="20" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg class="star" width="20" height="20" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p style="color: hsl(var(--muted-fg)); margin-bottom: 1.5rem;">"Best investment we've made this year. The ROI was immediate and the team was incredibly responsive. Can't recommend them enough."</p>
+          <div class="reviewer">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Marcus" class="reviewer-img" alt="Marcus Chen"/>
+            <div><div style="font-weight: 700;">Marcus Chen</div><div style="font-size: 0.875rem; color: hsl(var(--muted-fg));">CEO, RemoteFirst Co</div></div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="stars">
+            <svg class="star" width="20" height="20" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg class="star" width="20" height="20" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg class="star" width="20" height="20" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg class="star" width="20" height="20" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg class="star" width="20" height="20" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p style="color: hsl(var(--muted-fg)); margin-bottom: 1.5rem;">"Finally, a solution that works with our existing tools instead of forcing us to migrate. Setup was painless and support has been fantastic."</p>
+          <div class="reviewer">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Emily" class="reviewer-img" alt="Emily Rodriguez"/>
+            <div><div style="font-weight: 700;">Emily Rodriguez</div><div style="font-size: 0.875rem; color: hsl(var(--muted-fg));">Project Manager, CloudSync Solutions</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Simple, transparent pricing</h2>
+        <p class="section-desc">One fixed price. No hourly rates. No surprises.</p>
+      </div>
+      <div class="card" style="max-width: 80rem; margin: 0 auto; background: linear-gradient(135deg, hsla(var(--primary), 0.05), hsla(221, 83%, 53%, 0.05)); border: 2px solid hsla(var(--primary), 0.2); padding: 3rem;">
+        <div style="display: grid; gap: 3rem; align-items: center;">
+          <div>
+            <div class="badge" style="margin-bottom: 1rem;">CUSTOM SYSTEM</div>
+            <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">Starting at $800</div>
+            <p style="color: hsl(var(--muted-fg)); margin-bottom: 2rem;">We scope your project, give you a fixed price upfront, and deliver in 7-10 days.</p>
+            <ul style="list-style: none; margin-bottom: 2rem;">
+              <li style="display: flex; align-items: start; gap: 0.75rem; margin-bottom: 0.75rem;">
+                <svg class="icon" viewBox="0 0 24 24" style="color: hsl(var(--primary)); flex-shrink: 0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Custom automation tailored to your workflow</span>
+              </li>
+              <li style="display: flex; align-items: start; gap: 0.75rem; margin-bottom: 0.75rem;">
+                <svg class="icon" viewBox="0 0 24 24" style="color: hsl(var(--primary)); flex-shrink: 0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Unlimited revisions during development</span>
+              </li>
+              <li style="display: flex; align-items: start; gap: 0.75rem; margin-bottom: 0.75rem;">
+                <svg class="icon" viewBox="0 0 24 24" style="color: hsl(var(--primary)); flex-shrink: 0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>30 days of free support after launch</span>
+              </li>
+              <li style="display: flex; align-items: start; gap: 0.75rem; margin-bottom: 0.75rem;">
+                <svg class="icon" viewBox="0 0 24 24" style="color: hsl(var(--primary)); flex-shrink: 0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Training for your team included</span>
+              </li>
+              <li style="display: flex; align-items: start; gap: 0.75rem; margin-bottom: 0.75rem;">
+                <svg class="icon" viewBox="0 0 24 24" style="color: hsl(var(--primary)); flex-shrink: 0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>No ongoing fees or subscriptions</span>
+              </li>
+            </ul>
+            <button onclick="scrollToSection('contact')" class="btn btn-primary btn-lg">Get Your Free Consultation</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top: 1px solid hsl(var(--border)); border-bottom: 1px solid hsl(var(--border));">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-desc">Everything you need to know</p>
+      </div>
+      <div style="max-width: 48rem; margin: 0 auto;">
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span>How long does a typical project take?</span>
+            <svg class="icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">Most projects are completed in 7-10 days from kickoff to launch. This includes discovery, development, revisions, and training. More complex systems may take 2-3 weeks.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span>Do I need to migrate away from Google Sheets?</span>
+            <svg class="icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">No! That's the beauty of our approach. We enhance your existing Google Sheets with automation and integrations. Your team continues using the tools they already know.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span>What if I need changes after launch?</span>
+            <svg class="icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">You get 30 days of free support after launch for any bugs or adjustments. After that, we offer affordable maintenance packages or one-off updates as needed.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span>Is there a monthly subscription fee?</span>
+            <svg class="icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">No monthly fees! You pay a one-time fixed price for the development. The only ongoing costs are your existing Google Workspace subscription (which you already have).</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span>What types of automations can you build?</span>
+            <svg class="icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">We can automate almost anything: CRM systems, invoice generation, data syncing, email notifications, dashboards, form processing, reporting, and more. If it involves Google Sheets, we can probably automate it.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span>Do you provide training for my team?</span>
+            <svg class="icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">Yes! Training is included in every project. We'll walk your team through how to use the new system and provide documentation for future reference.</div>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 3rem;">
+        <p style="color: hsl(var(--muted-fg)); margin-bottom: 1rem;">Still have questions?</p>
+        <button onclick="scrollToSection('contact')" class="btn btn-outline btn-lg">
+          Get in Touch
+          <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section-bg">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Let's talk about your operations</h2>
+        <p class="section-desc">Tell us what's not working. We'll show you how to fix it.</p>
+      </div>
+      <div class="card" style="max-width: 64rem; margin: 0 auto; padding: 2.5rem;">
+        <form onsubmit="handleContactForm(event)">
+          <div style="display: grid; gap: 1.5rem; margin-bottom: 1.5rem;">
+            <div class="form-group"><label for="name">Name</label><input type="text" id="name" name="name" required placeholder="Your name"></div>
+            <div class="form-group"><label for="email">Work Email</label><input type="email" id="email" name="email" required placeholder="you@company.com"></div>
+            <div class="form-group"><label for="company">Company</label><input type="text" id="company" name="company" placeholder="Your company name"></div>
+            <div class="form-group"><label for="message">What are you trying to solve?</label><textarea id="message" name="message" required placeholder="Tell us about your current workflow and pain points..."></textarea></div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; height: 56px; font-size: 1.125rem;">
+            Get Your Free Consultation
+            <svg class="icon" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+          <p style="text-align: center; font-size: 0.875rem; color: hsl(var(--muted-fg)); margin-top: 1rem;">We'll respond within 24 hours with ideas specific to your situation</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+            <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez" style="height: 32px; width: 32px;">
+            <span style="font-size: 1.25rem; font-weight: 700;">Packdez</span>
+          </div>
+          <p style="color: hsl(var(--muted-fg)); margin-bottom: 1.5rem; max-width: 28rem;">Transforming Google Sheets into intelligent systems for remote-first companies.</p>
+          <div class="social-links">
+            <a href="https://x.com/packdezHQ" target="_blank" rel="noopener" class="social-link">
+              <svg class="icon" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/packdez/" target="_blank" rel="noopener" class="social-link">
+              <svg class="icon" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="https://youtube.com/@packdezhqz?si=EXj27rVMq27WlWQp" target="_blank" rel="noopener" class="social-link">
+              <svg class="icon" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM10 15l5-3-5-3v6z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div>
+          <h4 style="font-weight: 700; margin-bottom: 1rem;">Quick Links</h4>
+          <ul style="list-style: none;">
+            <li style="margin-bottom: 0.5rem;"><button onclick="scrollToSection('how')" style="color: hsl(var(--muted-fg)); background: none; border: none; cursor: pointer; padding: 0; font-size: 1rem;">How It Works</button></li>
+            <li style="margin-bottom: 0.5rem;"><button onclick="scrollToSection('projects')" style="color: hsl(var(--muted-fg)); background: none; border: none; cursor: pointer; padding: 0; font-size: 1rem;">Case Studies</button></li>
+            <li style="margin-bottom: 0.5rem;"><button onclick="scrollToSection('pricing')" style="color: hsl(var(--muted-fg)); background: none; border: none; cursor: pointer; padding: 0; font-size: 1rem;">Pricing</button></li>
+            <li style="margin-bottom: 0.5rem;"><button onclick="scrollToSection('contact')" style="color: hsl(var(--muted-fg)); background: none; border: none; cursor: pointer; padding: 0; font-size: 1rem;">Contact</button></li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="font-weight: 700; margin-bottom: 1rem;">Solutions</h4>
+          <ul style="list-style: none; color: hsl(var(--muted-fg));">
+            <li style="margin-bottom: 0.5rem;">CRM Systems</li>
+            <li style="margin-bottom: 0.5rem;">Invoice Automation</li>
+            <li style="margin-bottom: 0.5rem;">Live Dashboards</li>
+            <li style="margin-bottom: 0.5rem;">Workflow Automation</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom"><p>© <span id="year"></span> Packdez. Built for remote-first teams.</p></div>
+    </div>
+  </footer>
+
+  <button onclick="openROIModal()" class="btn btn-primary floating-btn">
+    <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+    <span style="display: none;">Calculate ROI</span>
+  </button>
+
+  <div class="modal" id="videoModal" onclick="closeModal(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal(event)">×</button>
+      <iframe id="videoFrame" src="" allow="autoplay; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="modal" id="roiModal" onclick="closeROIModal(event)">
+    <div class="modal-content" style="max-width: 64rem; padding: 2rem;">
+      <button class="modal-close" onclick="closeROIModal(event)">×</button>
+      <h3 style="font-size: 1.75rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
+        <svg class="icon" viewBox="0 0 24 24" style="color: hsl(var(--primary));"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        ROI Calculator
+      </h3>
+      <div class="slider-group"><label>Hours spent on manual work per week: <span id="modalHoursValue">10</span></label><input type="range" id="modalHoursSlider" min="1" max="40" value="10" oninput="updateModalROI()"></div>
+      <div class="slider-group"><label>Average hourly rate: $<span id="modalRateValue">50</span></label><input type="range" id="modalRateSlider" min="20" max="200" step="10" value="50" oninput="updateModalROI()"></div>
+      <div class="slider-group"><label>Team size: <span id="modalTeamValue">5</span> people</label><input type="range" id="modalTeamSlider" min="1" max="20" value="5" oninput="updateModalROI()"></div>
+      <div class="roi-results">
+        <div><div class="roi-result-item" id="modalWeekSaved">50hrs</div><div class="roi-result-label">Saved per week</div></div>
+        <div><div class="roi-result-item" id="modalMonthSaved">$10,000</div><div class="roi-result-label">Saved per month</div></div>
+        <div><div class="roi-result-item" id="modalYearSaved">$130,000</div><div class="roi-result-label">Saved per year</div></div>
+      </div>
+      <div style="text-align: center; margin-top: 2rem;">
+        <button onclick="closeROIModal(); scrollToSection('contact');" class="btn btn-primary btn-lg" style="width: 100%;">
+          Get Started - See ROI in 7 Days
+          <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    function scrollToSection(id) { const element = document.getElementById(id); if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
+    function openVideo(url) { const modal = document.getElementById('videoModal'); const frame = document.getElementById('videoFrame'); frame.src = url + '?autoplay=1'; modal.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeModal(event) { if (event.target.id === 'videoModal' || event.target.classList.contains('modal-close') || event.target.textContent === '×') { const modal = document.getElementById('videoModal'); const frame = document.getElementById('videoFrame'); frame.src = ''; modal.classList.remove('active'); document.body.style.overflow = ''; } }
+    function openROIModal() { document.getElementById('roiModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeROIModal(event) { if (!event || event.target.id === 'roiModal' || event.target.classList.contains('modal-close') || event.target.textContent === '×') { document.getElementById('roiModal').classList.remove('active'); document.body.style.overflow = ''; } }
+    function toggleFAQ(button) { const item = button.parentElement; const wasActive = item.classList.contains('active'); document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active')); if (!wasActive) item.classList.add('active'); }
+    function updateROI() { const hours = document.getElementById('hoursSlider').value; const rate = document.getElementById('rateSlider').value; const team = document.getElementById('teamSlider').value; document.getElementById('hoursValue').textContent = hours; document.getElementById('rateValue').textContent = rate; document.getElementById('teamValue').textContent = team; const weekSaved = hours * team; const monthSaved = hours * rate * team * 4; const yearSaved = hours * rate * team * 52; document.getElementById('weekSaved').textContent = weekSaved + 'hrs'; document.getElementById('monthSaved').textContent = '$' + monthSaved.toLocaleString(); document.getElementById('yearSaved').textContent = '$' + yearSaved.toLocaleString(); }
+    function updateModalROI() { const hours = document.getElementById('modalHoursSlider').value; const rate = document.getElementById('modalRateSlider').value; const team = document.getElementById('modalTeamSlider').value; document.getElementById('modalHoursValue').textContent = hours; document.getElementById('modalRateValue').textContent = rate; document.getElementById('modalTeamValue').textContent = team; const weekSaved = hours * team; const monthSaved = hours * rate * team * 4; const yearSaved = hours * rate * team * 52; document.getElementById('modalWeekSaved').textContent = weekSaved + 'hrs'; document.getElementById('modalMonthSaved').textContent = '$' + monthSaved.toLocaleString(); document.getElementById('modalYearSaved').textContent = '$' + yearSaved.toLocaleString(); }
+    function showToast(message) { const toast = document.getElementById('toast'); toast.textContent = message; toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); }, 3000); }
+    const scriptBaseURL = "https://corsproxy.io/?" + encodeURIComponent("https://script.google.com/macros/s/AKfycbznvN_BiRWk1_GnLdRj4zzGnD0oGnq5d1LXpi2hBeBn1ZYzPp6IsMgigPbCiq0nr4Z4tA/exec");
+    async function handleContactForm(event) { event.preventDefault(); const form = event.target; const formData = new FormData(form); const payload = { name: formData.get('name'), email: formData.get('email'), company: formData.get('company'), message: formData.get('message'), submittedAt: new Date().toISOString() }; const submitBtn = form.querySelector('button[type="submit"]'); const originalHTML = submitBtn.innerHTML; submitBtn.disabled = true; submitBtn.innerHTML = 'Sending...'; try { const response = await fetch(scriptBaseURL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }, body: new URLSearchParams(payload).toString(), }); if (response.ok) { showToast("Thanks! We'll get back to you within 24 hours."); form.reset(); } else { showToast('Something went wrong. Please try again.'); } } catch (err) { showToast('Network error. Please try again.'); } finally { submitBtn.disabled = false; submitBtn.innerHTML = originalHTML; } }
+    document.addEventListener('keydown', function(event) { if (event.key === 'Escape') { const videoModal = document.getElementById('videoModal'); const roiModal = document.getElementById('roiModal'); if (videoModal.classList.contains('active')) closeModal({ target: videoModal }); if (roiModal.classList.contains('active')) closeROIModal({ target: roiModal }); } });
+    if (window.innerWidth >= 640) document.querySelector('.floating-btn span').style.display = 'inline';
+  </script>
 </body>
 </html>
