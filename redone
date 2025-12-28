@@ -1,0 +1,962 @@
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { 
+  Sparkles, 
+  ArrowRight,
+  CheckCircle,
+  Play,
+  Menu,
+  X,
+  Zap,
+  Clock,
+  DollarSign,
+  Shield,
+  Twitter,
+  Linkedin,
+  Youtube,
+  Star,
+  TrendingUp,
+  Users,
+  Target,
+  Rocket,
+  BarChart3,
+  FileText,
+  Calendar,
+  MessageSquare,
+  Gift,
+  ChevronRight
+} from 'lucide-react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { toast, Toaster } from 'sonner';
+
+// Special Offer Popup - Appears after scrolling
+const SpecialOfferPopup = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [hasShown, setHasShown] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!hasShown && window.scrollY > 1200) {
+        setIsVisible(true);
+        setHasShown(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [hasShown]);
+
+  if (!isVisible) return null;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8, y: 100 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.8 }}
+        className="fixed bottom-8 right-8 z-50 max-w-md"
+      >
+        <Card className="border-2 border-primary shadow-2xl overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-2xl" />
+          <CardContent className="p-6 relative">
+            <button
+              onClick={() => setIsVisible(false)}
+              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors z-10"
+            >
+              <X className="h-4 w-4" />
+            </button>
+            
+            <div className="flex items-start gap-4 mb-4">
+              <div className="w-14 h-14 bg-gradient-to-br from-primary to-chart-2 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                <Gift className="h-7 w-7 text-white" />
+              </div>
+              <div>
+                <Badge className="mb-2 bg-primary text-white">Limited Time Offer</Badge>
+                <h3 className="font-bold text-xl mb-2">Get 20% Off Your First Project!</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Book a free consultation this week and save $500+ on your automation system.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-muted/50 rounded-lg p-3 mb-4">
+              <div className="flex items-center gap-2 text-sm">
+                <Clock className="h-4 w-4 text-primary" />
+                <span className="font-semibold">Offer expires in 3 days</span>
+              </div>
+            </div>
+
+            <Button 
+              className="w-full shadow-lg" 
+              onClick={() => {
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                setIsVisible(false);
+              }}
+            >
+              Claim Your Discount
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </CardContent>
+        </Card>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
+
+export default function SitePage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [videoUrl, setVideoUrl] = useState('');
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [formData, setFormData] = useState({ name: '', email: '', company: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { scrollYProgress } = useScroll();
+  const heroY = useTransform(scrollYProgress, [0, 0.3], [0, 100]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    setMobileMenuOpen(false);
+  };
+
+  const openVideo = (url: string) => {
+    setVideoUrl(url + '?autoplay=1');
+    setIsVideoOpen(true);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const scriptBaseURL = "https://corsproxy.io/?" + encodeURIComponent(
+      "https://script.google.com/macros/s/AKfycbznvN_BiRWk1_GnLdRj4zzGnD0oGnq5d1LXpi2hBeBn1ZYzPp6IsMgigPbCiq0nr4Z4tA/exec"
+    );
+
+    try {
+      const response = await fetch(scriptBaseURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+        body: new URLSearchParams({
+          ...formData,
+          submittedAt: new Date().toISOString()
+        }).toString(),
+      });
+
+      if (response.ok) {
+        toast.success("Thanks! We'll contact you within 24 hours 🎉");
+        setFormData({ name: '', email: '', company: '', message: '' });
+      } else {
+        toast.error('Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      toast.error('Network error. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const reviews = [
+    {
+      name: 'Sarah Johnson',
+      role: 'CEO, TechStart Africa',
+      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop',
+      rating: 5,
+      text: 'Packdez saved us over $40,000 annually by replacing 3 expensive SaaS tools with a custom Google Sheets system. The ROI was immediate.'
+    },
+    {
+      name: 'Michael Okonkwo',
+      role: 'Operations Manager, CleanCo',
+      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop',
+      rating: 5,
+      text: 'From chaos to complete automation in 8 days. Our team actually enjoys using the system because it\'s built exactly how we work.'
+    },
+    {
+      name: 'Amara Nwosu',
+      role: 'Founder, Healthcare Plus',
+      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop',
+      rating: 5,
+      text: 'The dashboard they built gives us real-time insights we never had before. It\'s like having a data analyst on staff without the cost.'
+    },
+    {
+      name: 'David Chen',
+      role: 'Finance Director, Invoice Pro',
+      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop',
+      rating: 5,
+      text: 'Our invoicing used to take 2 hours daily. Now it takes 5 minutes. That\'s 40+ hours saved every month. Incredible value.'
+    },
+    {
+      name: 'Grace Adebayo',
+      role: 'Marketing Lead, GrowthHub',
+      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop',
+      rating: 5,
+      text: 'Best investment we made this year. The email CRM they built tracks everything automatically. No more lost leads or missed follow-ups.'
+    },
+    {
+      name: 'James Mwangi',
+      role: 'Director, Logistics Kenya',
+      image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop',
+      rating: 5,
+      text: 'Fast, professional, and incredibly effective. They understood our complex workflow and simplified it beautifully.'
+    }
+  ];
+
+  const projects = [
+    {
+      title: 'Email Marketing CRM',
+      category: 'CRM System',
+      video: 'HsMaIpEOlF4',
+      description: 'Complete email campaign management with contact tracking, bulk sending, and open rate monitoring.',
+      impact: 'Saved $3,600/year',
+      icon: Users
+    },
+    {
+      title: 'Branded Invoice Generator',
+      category: 'Finance',
+      video: '4fjE3eJ01T4',
+      description: 'Automated invoice creation with branding, calculations, and PDF generation in seconds.',
+      impact: '95% time saved',
+      icon: FileText
+    },
+    {
+      title: 'Healthcare Dashboard',
+      category: 'Analytics',
+      video: '-svuBj0WpkE',
+      description: 'Real-time Looker Studio dashboard tracking patients, appointments, and revenue automatically.',
+      impact: '100% accuracy',
+      icon: BarChart3
+    }
+  ];
+
+  return (
+    <>
+      <Toaster position="top-center" richColors />
+      <SpecialOfferPopup />
+
+      {/* Soft gradient background */}
+      <div className="fixed inset-0 -z-10 bg-gradient-to-br from-background via-primary/5 to-background" />
+      <div className="fixed inset-0 -z-10 opacity-30">
+        <div className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-chart-2/20 rounded-full blur-3xl" />
+      </div>
+
+      {/* Navigation */}
+      <motion.nav
+        className="fixed top-0 left-0 right-0 z-40 backdrop-blur-xl bg-background/80 border-b border-border/50"
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-20">
+            <motion.a 
+              href="#" 
+              className="flex items-center gap-2 group"
+              whileHover={{ scale: 1.05 }}
+            >
+              <img 
+                src="https://packdez.com/assets/logo/packdez-logo-512x512.png" 
+                alt="Packdez"
+                className="h-10 w-10 transition-transform duration-300 group-hover:rotate-12"
+              />
+              <span className="text-2xl font-bold bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent">
+                Packdez
+              </span>
+            </motion.a>
+
+            <div className="hidden md:flex items-center gap-8">
+              {['Work', 'Process', 'Pricing', 'Reviews'].map((item) => (
+                <button
+                  key={item}
+                  onClick={() => scrollToSection(item.toLowerCase())}
+                  className="text-sm font-semibold text-muted-foreground hover:text-primary transition-colors relative group"
+                >
+                  {item}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+                </button>
+              ))}
+              <Button onClick={() => scrollToSection('contact')} size="sm" className="shadow-lg">
+                Get Started
+              </Button>
+            </div>
+
+            <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+              {mobileMenuOpen ? <X /> : <Menu />}
+            </Button>
+          </div>
+
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="md:hidden border-t border-border/50 overflow-hidden"
+              >
+                <div className="py-4 space-y-3">
+                  {['Work', 'Process', 'Pricing', 'Reviews', 'Contact'].map((item) => (
+                    <button
+                      key={item}
+                      onClick={() => scrollToSection(item.toLowerCase())}
+                      className="block w-full text-left py-2 font-semibold hover:text-primary transition-colors"
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.nav>
+
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <motion.div 
+          style={{ y: heroY, opacity: heroOpacity }}
+          className="container mx-auto px-4 text-center relative"
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <Badge variant="outline" className="mb-6 py-2 px-4 border-primary/50 bg-primary/10">
+              <Sparkles className="w-4 h-4 mr-2 text-primary" />
+              Trusted by 50+ African businesses
+            </Badge>
+          </motion.div>
+
+          <motion.h1
+            className="text-5xl md:text-7xl font-black mb-6 leading-tight"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            Transform Google Sheets Into
+            <br />
+            <span className="bg-gradient-to-r from-primary via-chart-2 to-primary bg-clip-text text-transparent">
+              Powerful Business Systems
+            </span>
+          </motion.h1>
+
+          <motion.p
+            className="text-xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            Stop paying for expensive software. We build custom CRMs, dashboards, and automation 
+            systems using tools you already own. Get results in 7 days, not months.
+          </motion.p>
+
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            <Button size="lg" onClick={() => scrollToSection('contact')} className="text-lg px-8 shadow-2xl">
+              Start Your Project
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+            <Button size="lg" variant="outline" onClick={() => scrollToSection('work')}>
+              View Our Work
+            </Button>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            {[
+              { icon: DollarSign, value: '$500K+', label: 'Client Savings' },
+              { icon: Clock, value: '7 Days', label: 'Avg. Delivery' },
+              { icon: Star, value: '95%', label: 'Satisfaction' }
+            ].map((stat, i) => (
+              <motion.div 
+                key={i}
+                whileHover={{ scale: 1.05, y: -5 }}
+                transition={{ type: "spring", stiffness: 400 }}
+              >
+                <Card className="border-2 backdrop-blur-sm bg-background/50">
+                  <CardContent className="p-6 text-center">
+                    <stat.icon className="h-8 w-8 text-primary mx-auto mb-3" />
+                    <div className="text-3xl font-black text-primary mb-1">{stat.value}</div>
+                    <div className="text-sm text-muted-foreground font-semibold">{stat.label}</div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Benefits Grid */}
+      <section className="py-24">
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl font-black mb-4">Why Choose Packdez?</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              We make automation simple, affordable, and actually useful.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            {[
+              { icon: Zap, title: 'Fast Delivery', desc: '7-10 days from call to working system' },
+              { icon: DollarSign, title: 'One-Time Cost', desc: 'No monthly subscriptions or hidden fees' },
+              { icon: Target, title: 'Custom Built', desc: 'Designed around your exact workflow' },
+              { icon: Shield, title: 'Risk-Free', desc: '100% refund if we don\'t save you 10hrs/month' }
+            ].map((benefit, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -8 }}
+              >
+                <Card className="h-full border-2 backdrop-blur-sm bg-background/50 hover:border-primary/50 transition-all">
+                  <CardContent className="p-6">
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary to-chart-2 rounded-xl flex items-center justify-center mb-4">
+                      <benefit.icon className="h-6 w-6 text-white" />
+                    </div>
+                    <h3 className="text-lg font-bold mb-2">{benefit.title}</h3>
+                    <p className="text-sm text-muted-foreground">{benefit.desc}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="work" className="py-24 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <Badge className="mb-4">Real Projects</Badge>
+            <h2 className="text-4xl md:text-5xl font-black mb-4">See What We've Built</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Real systems, real results, real businesses transformed.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {projects.map((project, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -8 }}
+              >
+                <Card className="h-full border-2 backdrop-blur-sm bg-background/50 overflow-hidden group hover:border-primary/50 transition-all">
+                  <div 
+                    className="relative aspect-video cursor-pointer overflow-hidden"
+                    onClick={() => openVideo(`https://www.youtube.com/embed/${project.video}`)}
+                  >
+                    <img 
+                      src={`https://img.youtube.com/vi/${project.video}/maxresdefault.jpg`}
+                      alt={project.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                      <motion.div 
+                        className="w-14 h-14 bg-primary rounded-full flex items-center justify-center"
+                        whileHover={{ scale: 1.2 }}
+                      >
+                        <Play className="h-6 w-6 text-white ml-0.5" fill="currentColor" />
+                      </motion.div>
+                    </div>
+                  </div>
+
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-2 mb-3">
+                      <project.icon className="h-5 w-5 text-primary" />
+                      <Badge variant="outline">{project.category}</Badge>
+                    </div>
+                    <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                    <p className="text-sm text-muted-foreground mb-4">{project.description}</p>
+                    <div className="flex items-center gap-2 text-primary font-bold">
+                      <TrendingUp className="h-4 w-4" />
+                      <span className="text-sm">{project.impact}</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Process Section */}
+      <section id="process" className="py-24">
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <Badge className="mb-4">Simple Process</Badge>
+            <h2 className="text-4xl md:text-5xl font-black mb-4">From Idea to System in 4 Steps</h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            {[
+              { icon: MessageSquare, title: 'Discovery Call', desc: '30-min call to understand your needs' },
+              { icon: FileText, title: 'Custom Proposal', desc: 'Fixed pricing and timeline in 24hrs' },
+              { icon: Rocket, title: 'Build & Test', desc: 'See daily progress over 5-7 days' },
+              { icon: CheckCircle, title: 'Launch & Support', desc: 'Training + 30 days free support' }
+            ].map((step, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <Card className="relative border-2 backdrop-blur-sm bg-background/50 overflow-hidden">
+                  <div className="absolute top-0 right-0 text-8xl font-black text-primary/5">
+                    {i + 1}
+                  </div>
+                  <CardContent className="p-6 relative">
+                    <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                      <step.icon className="h-6 w-6 text-primary" />
+                    </div>
+                    <h3 className="text-lg font-bold mb-2">{step.title}</h3>
+                    <p className="text-sm text-muted-foreground">{step.desc}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section - Modern Design */}
+      <section id="pricing" className="py-24 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <Badge className="mb-4">Transparent Pricing</Badge>
+            <h2 className="text-4xl md:text-5xl font-black mb-4">Choose Your Plan</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              One-time payment. No subscriptions. Own it forever.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {[
+              {
+                name: 'Starter',
+                price: '$800',
+                popular: false,
+                description: 'Perfect for small teams getting started',
+                features: [
+                  'Basic automation setup',
+                  'Up to 3 workflows',
+                  '1 integration',
+                  'Email support',
+                  '2 weeks delivery',
+                  '15 days support'
+                ]
+              },
+              {
+                name: 'Professional',
+                price: '$2,500',
+                popular: true,
+                description: 'Most popular for growing businesses',
+                features: [
+                  'Advanced automation',
+                  'Unlimited workflows',
+                  'Multiple integrations',
+                  'Custom dashboards',
+                  'Priority support',
+                  '7 days delivery',
+                  '30 days support',
+                  'Team training included'
+                ]
+              },
+              {
+                name: 'Enterprise',
+                price: 'Custom',
+                popular: false,
+                description: 'For complex business operations',
+                features: [
+                  'Everything in Pro',
+                  'Dedicated support team',
+                  'Complex integrations',
+                  'Custom development',
+                  'Lifetime support',
+                  'SLA guarantee',
+                  'Ongoing maintenance',
+                  'Priority updates'
+                ]
+              }
+            ].map((plan, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -8 }}
+                className="relative"
+              >
+                {plan.popular && (
+                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-10">
+                    <Badge className="bg-gradient-to-r from-primary to-chart-2 text-white shadow-lg px-4 py-1">
+                      Most Popular
+                    </Badge>
+                  </div>
+                )}
+                <Card className={`h-full ${plan.popular ? 'border-primary border-2 shadow-2xl scale-105' : 'border-2'} backdrop-blur-sm bg-background/50 transition-all`}>
+                  <CardContent className="p-8">
+                    <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
+                    <p className="text-sm text-muted-foreground mb-6">{plan.description}</p>
+                    
+                    <div className="mb-8">
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-5xl font-black bg-gradient-to-r from-primary to-chart-2 bg-clip-text text-transparent">
+                          {plan.price}
+                        </span>
+                        {plan.price !== 'Custom' && (
+                          <span className="text-muted-foreground">one-time</span>
+                        )}
+                      </div>
+                    </div>
+
+                    <ul className="space-y-4 mb-8">
+                      {plan.features.map((feature, j) => (
+                        <li key={j} className="flex items-start gap-3">
+                          <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                          <span className="text-sm">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <Button 
+                      className={`w-full ${plan.popular ? '' : 'variant-outline'}`}
+                      variant={plan.popular ? 'default' : 'outline'}
+                      onClick={() => scrollToSection('contact')}
+                    >
+                      Get Started
+                      <ChevronRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            className="mt-16 text-center"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <Card className="max-w-2xl mx-auto border-2 border-primary/20 backdrop-blur-sm bg-background/50">
+              <CardContent className="p-8">
+                <Shield className="h-12 w-12 text-primary mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">Our Guarantee</h3>
+                <p className="text-muted-foreground">
+                  If we don't save you at least 10 hours per month, we'll refund 100% of your investment. No questions asked.
+                </p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Reviews Section */}
+      <section id="reviews" className="py-24">
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <Badge className="mb-4">Client Success</Badge>
+            <h2 className="text-4xl md:text-5xl font-black mb-4">What Our Clients Say</h2>
+            <div className="flex items-center justify-center gap-2 mb-4">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="h-6 w-6 fill-primary text-primary" />
+              ))}
+              <span className="text-lg font-bold ml-2">4.9/5 from 50+ reviews</span>
+            </div>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+            {reviews.map((review, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+                whileHover={{ y: -5 }}
+              >
+                <Card className="h-full border-2 backdrop-blur-sm bg-background/50 hover:border-primary/50 transition-all">
+                  <CardContent className="p-6">
+                    <div className="flex gap-1 mb-4">
+                      {[...Array(review.rating)].map((_, j) => (
+                        <Star key={j} className="h-4 w-4 fill-primary text-primary" />
+                      ))}
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
+                      "{review.text}"
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <img 
+                        src={review.image} 
+                        alt={review.name}
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
+                      <div>
+                        <div className="font-bold text-sm">{review.name}</div>
+                        <div className="text-xs text-muted-foreground">{review.role}</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-24 bg-gradient-to-br from-primary/10 via-background to-chart-2/10">
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="text-center max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl font-black mb-6">
+              Ready to Transform Your Business?
+            </h2>
+            <p className="text-xl text-muted-foreground mb-8">
+              Join 50+ businesses saving time and money with custom automation systems.
+            </p>
+            <Button 
+              size="lg" 
+              onClick={() => scrollToSection('contact')} 
+              className="text-lg px-10 shadow-2xl"
+            >
+              Start Your Free Consultation
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Contact Form */}
+      <section id="contact" className="py-24 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <Badge className="mb-4">Get Started</Badge>
+            <h2 className="text-4xl md:text-5xl font-black mb-4">Book Your Free Discovery Call</h2>
+            <p className="text-xl text-muted-foreground">
+              Tell us about your business and we'll show you what's possible.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <Card className="max-w-2xl mx-auto border-2 shadow-2xl backdrop-blur-sm bg-background/50">
+              <CardContent className="p-8">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold">Your Name *</label>
+                    <Input
+                      placeholder="John Smith"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      required
+                      className="h-12"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold">Email Address *</label>
+                    <Input
+                      type="email"
+                      placeholder="john@company.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      required
+                      className="h-12"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold">Company Name</label>
+                    <Input
+                      placeholder="Your Company"
+                      value={formData.company}
+                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                      className="h-12"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold">What do you want to automate? *</label>
+                    <Textarea
+                      placeholder="Tell us about your workflow and what you want to improve..."
+                      className="min-h-32 resize-none"
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      required
+                    />
+                  </div>
+
+                  <Button 
+                    type="submit" 
+                    size="lg" 
+                    className="w-full h-14 text-lg" 
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? 'Sending...' : 'Send My Request'}
+                    <ArrowRight className="ml-2" />
+                  </Button>
+
+                  <p className="text-center text-sm text-muted-foreground">
+                    We'll respond within 24 hours with next steps.
+                  </p>
+                </form>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-16 border-t border-border">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-4 gap-12 mb-12">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <img 
+                  src="https://packdez.com/assets/logo/packdez-logo-512x512.png" 
+                  alt="Packdez"
+                  className="h-8 w-8"
+                />
+                <h3 className="text-xl font-black">Packdez</h3>
+              </div>
+              <p className="text-sm text-muted-foreground mb-6">
+                Transforming Google Sheets into powerful business systems.
+              </p>
+              <div className="flex gap-3">
+                {[
+                  { icon: Twitter, url: 'https://x.com/packdezHQ' },
+                  { icon: Linkedin, url: 'https://www.linkedin.com/company/packdez/' },
+                  { icon: Youtube, url: 'https://youtube.com/@packdezhqz?si=EXj27rVMq27WlWQp' }
+                ].map((social, i) => (
+                  <motion.a
+                    key={i}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 bg-muted hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all"
+                    whileHover={{ scale: 1.1, y: -2 }}
+                  >
+                    <social.icon className="h-4 w-4" />
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-bold mb-4">Quick Links</h4>
+              <ul className="space-y-2">
+                {['Work', 'Process', 'Pricing', 'Reviews', 'Contact'].map((item) => (
+                  <li key={item}>
+                    <button
+                      onClick={() => scrollToSection(item.toLowerCase())}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {item}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-bold mb-4">What We Build</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>CRM Systems</li>
+                <li>Invoice Generators</li>
+                <li>Analytics Dashboards</li>
+                <li>Project Trackers</li>
+                <li>Custom Forms</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-bold mb-4">Contact</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>Email: hello@packdez.com</li>
+                <li>Response: Within 24 hours</li>
+                <li>Delivery: 7-10 days</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="pt-8 border-t border-border text-center text-sm text-muted-foreground">
+            <p>© {new Date().getFullYear()} Packdez. Empowering African businesses with smart automation.</p>
+          </div>
+        </div>
+      </footer>
+
+      {/* Video Modal */}
+      <Dialog open={isVideoOpen} onOpenChange={setIsVideoOpen}>
+        <DialogContent className="max-w-5xl p-0 bg-black border-none">
+          <div className="aspect-video">
+            <iframe
+              src={videoUrl}
+              className="w-full h-full"
+              allow="autoplay; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
