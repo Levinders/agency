@@ -1,1829 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
-    <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-5KLXPS5M');</script>
-  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <meta name="keywords" content="automation, google sheets, CRM, agency in Africa, workflow automation, Packdez">
+  <title>Packdez — Google Sheets Automation Agency</title>
+  <meta name="description" content="Packdez builds custom Google Sheets automation systems for operations, finance, and growth teams." />
   <link rel="canonical" href="https://packdez.com" />
-  <meta name="robots" content="index,follow" />
-
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Packdez",
-  "url": "https://packdez.com/",
-  "logo": "https://packdez.com/assets/logo/packdez-logo-512x512.png",
-  "sameAs": [
-    "https://www.linkedin.com/company/packdez/",
-    "https://x.com/packdezHQ"
-  ]
-}
-</script>
-
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Packdez - Custom Google Sheets Automation & Business Systems</title>
-  <meta name="description" content="We build custom automation systems using Google Sheets. Transform your spreadsheets into powerful CRMs, dashboards, and workflow tools tailored to your business.">
- 
-  <link rel="icon" type="image/png" sizes="32x32" href="https://packdez.com/assets/logo/packdez-logo-512x512.png">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
 
+  <style>
     :root {
       --primary: 220 90% 56%;
       --primary-dark: 220 85% 48%;
       --primary-light: 220 90% 96%;
-      --accent: 142 76% 36%;
-      --accent-light: 142 76% 96%;
-      
+
       --bg: 0 0% 100%;
       --surface: 220 20% 98%;
       --card: 0 0% 100%;
       --border: 220 13% 91%;
-      
+
       --fg: 220 20% 10%;
-      --muted-fg: 220 9% 46%;
-      
-      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-      --font-display: 'Outfit', 'Inter', sans-serif;
+      --muted: 220 9% 46%;
+
       --radius: 0.75rem;
     }
 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: var(--font-sans);
+      font-family: Inter, system-ui, sans-serif;
       background: hsl(var(--bg));
       color: hsl(var(--fg));
       line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
-    h1, h2, h3, h4, h5, h6 {
-      font-family: var(--font-display);
-      font-weight: 700;
-      line-height: 1.2;
-      color: hsl(var(--fg));
+    h1, h2, h3 {
+      font-family: Outfit, Inter, sans-serif;
+      line-height: 1.15;
     }
 
-    /* Subtle Grid Background */
-    .grid-bg {
-      position: fixed;
-      inset: 0;
-      background-image: 
-        linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
-        linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px);
-      background-size: 60px 60px;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.4;
+    section {
+      padding: 6rem 1.5rem;
+      max-width: 1200px;
+      margin: auto;
     }
 
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      position: relative;
-      z-index: 1;
-    }
+    .muted { color: hsl(var(--muted)); }
 
-    /* Navigation */
+    /* NAV */
     nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: hsla(var(--bg), 0.8);
-      backdrop-filter: blur(12px);
+      inset: 0 0 auto 0;
+      height: 72px;
+      background: hsla(var(--bg), 0.9);
+      backdrop-filter: blur(10px);
       border-bottom: 1px solid hsl(var(--border));
       z-index: 50;
-      transition: all 0.3s ease;
     }
 
-    nav.scrolled {
-      background: hsla(var(--bg), 0.95);
-      box-shadow: 0 2px 20px hsla(var(--fg), 0.04);
-    }
-
-    .nav-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 72px;
+    .nav-inner {
+      max-width: 1200px;
+      height: 100%;
+      margin: auto;
       padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.625rem;
+      font-weight: 800;
+      font-size: 1.3rem;
       text-decoration: none;
       color: hsl(var(--fg));
-      font-weight: 800;
-      font-size: 1.35rem;
-      font-family: var(--font-display);
-      transition: opacity 0.2s ease;
     }
 
-    .logo:hover {
-      opacity: 0.8;
-    }
-
-    .logo-img {
-      height: 36px;
-      width: auto;
-    }
-
-    .nav-links {
-      display: none;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .nav-links a {
-      color: hsl(var(--muted-fg));
-      text-decoration: none;
-      font-size: 0.9375rem;
-      font-weight: 600;
-      transition: color 0.2s ease;
-      cursor: pointer;
-    }
-
-    .nav-links a:hover {
-      color: hsl(var(--primary));
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      border-radius: var(--radius);
-      font-weight: 600;
-      font-size: 0.9375rem;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      border: none;
-      cursor: pointer;
-      white-space: nowrap;
-      font-family: var(--font-sans);
-    }
-
-    .btn-primary {
+    .nav-cta {
       background: hsl(var(--primary));
       color: white;
-    }
-
-    .btn-primary:hover {
-      background: hsl(var(--primary-dark));
-      transform: translateY(-1px);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: hsl(var(--fg));
-      border: 1.5px solid hsl(var(--border));
-    }
-
-    .btn-outline:hover {
-      border-color: hsl(var(--primary));
-      background: hsl(var(--primary-light));
-    }
-
-    .mobile-menu-btn {
-      display: block;
-      background: transparent;
-      border: none;
-      color: hsl(var(--fg));
-      cursor: pointer;
-      padding: 0.5rem;
-    }
-
-    .mobile-menu {
-      display: none;
-      border-top: 1px solid hsl(var(--border));
-      background: hsl(var(--bg));
-      padding: 1.5rem;
-    }
-
-    .mobile-menu.active {
-      display: block;
-    }
-
-    .mobile-menu a {
-      display: block;
-      padding: 0.875rem 0;
-      color: hsl(var(--fg));
-      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius);
       font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
+      text-decoration: none;
     }
 
-    .mobile-menu a:hover {
-      color: hsl(var(--primary));
-    }
-
-    .mobile-menu .btn {
-      width: 100%;
-      margin-top: 1rem;
-    }
-
-    /* Hero Section */
+    /* HERO */
     .hero {
-      padding: 8rem 0 5rem;
-      margin-top: 72px;
+      padding-top: 10rem;
       text-align: center;
     }
 
-    .hero-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
+    .hero-badge {
+      display: inline-block;
       background: hsl(var(--primary-light));
       color: hsl(var(--primary));
-      padding: 0.5rem 1rem;
+      padding: 0.4rem 0.9rem;
       border-radius: 999px;
-      font-size: 0.875rem;
       font-weight: 600;
+      font-size: 0.85rem;
       margin-bottom: 1.5rem;
-      border: 1px solid hsl(var(--primary) / 0.2);
     }
 
     .hero h1 {
-      font-size: 3rem;
-      max-width: 950px;
-      margin: 0 auto 1.25rem;
-      font-weight: 800;
-      letter-spacing: -0.025em;
-      line-height: 1.1;
-    }
-
-    .hero .subtitle {
-      font-size: 1.25rem;
-      color: hsl(var(--muted-fg));
-      max-width: 720px;
-      margin: 0 auto 2.5rem;
-      line-height: 1.6;
-      font-weight: 400;
-    }
-
-    .hero-cta {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 4rem;
-    }
-
-    .trust-logos {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 3rem;
-      flex-wrap: wrap;
-      padding: 2.5rem;
-      background: hsl(var(--surface));
-      border-radius: var(--radius);
+      font-size: clamp(2.6rem, 5vw, 3.8rem);
       max-width: 900px;
-      margin: 0 auto;
-      border: 1px solid hsl(var(--border));
+      margin: auto;
+      font-weight: 800;
     }
 
-    .trust-logos img {
-      height: 32px;
-      width: auto;
-      opacity: 0.5;
-      transition: opacity 0.2s ease;
-      filter: grayscale(100%);
+    .hero p {
+      max-width: 700px;
+      margin: 1.5rem auto 2.5rem;
+      font-size: 1.15rem;
     }
 
-    .trust-logos img:hover {
-      opacity: 0.8;
-    }
-
-    /* Stats Section */
-    .stats-section {
-      padding: 4rem 0;
-      background: hsl(var(--surface));
-      border-top: 1px solid hsl(var(--border));
-      border-bottom: 1px solid hsl(var(--border));
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .stat-card {
-      text-align: center;
-      padding: 2rem;
-    }
-
-    .stat-card .number {
-      font-size: 3rem;
-      font-weight: 900;
-      color: hsl(var(--primary));
-      font-family: var(--font-display);
-      margin-bottom: 0.5rem;
-      line-height: 1;
-    }
-
-    .stat-card .label {
-      font-size: 1rem;
-      color: hsl(var(--muted-fg));
-      font-weight: 500;
-    }
-
-    /* Section Styles */
-    section {
-      padding: 5rem 0;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 3.5rem;
-    }
-
-    .section-label {
+    .primary-btn {
       display: inline-block;
-      color: hsl(var(--primary));
-      font-size: 0.875rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 1rem;
-    }
-
-    .section-title {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-
-    .section-desc {
-      font-size: 1.125rem;
-      color: hsl(var(--muted-fg));
-      max-width: 680px;
-      margin: 0 auto;
-      line-height: 1.7;
-    }
-
-    /* Services Grid */
-    .services-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .service-card {
-      background: hsl(var(--card));
-      padding: 2rem;
-      border-radius: var(--radius);
-      border: 1px solid hsl(var(--border));
-      transition: all 0.2s ease;
-    }
-
-    .service-card:hover {
-      border-color: hsl(var(--primary));
-      box-shadow: 0 8px 24px hsla(var(--fg), 0.06);
-      transform: translateY(-2px);
-    }
-
-    .service-icon {
-      width: 48px;
-      height: 48px;
-      background: hsl(var(--primary-light));
-      color: hsl(var(--primary));
-      border-radius: var(--radius);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.25rem;
-      font-size: 1.5rem;
-    }
-
-    .service-card h3 {
-      font-size: 1.25rem;
-      margin-bottom: 0.75rem;
-      font-weight: 700;
-    }
-
-    .service-card p {
-      color: hsl(var(--muted-fg));
-      line-height: 1.6;
-      font-size: 0.9375rem;
-    }
-
-    /* Projects Section - Tab Interface */
-    .projects-section {
-      background: hsl(var(--surface));
-    }
-
-    .projects-tabs {
-      display: flex;
-      gap: 0.5rem;
-      justify-content: center;
-      margin-bottom: 3rem;
-      flex-wrap: wrap;
-      padding: 0.5rem;
-      background: hsl(var(--card));
-      border-radius: var(--radius);
-      border: 1px solid hsl(var(--border));
-      max-width: fit-content;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .tab-btn {
-      padding: 0.75rem 1.5rem;
-      background: transparent;
-      border: none;
-      border-radius: calc(var(--radius) - 0.25rem);
-      font-size: 0.9375rem;
-      font-weight: 600;
-      color: hsl(var(--muted-fg));
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: var(--font-sans);
-    }
-
-    .tab-btn:hover {
-      color: hsl(var(--fg));
-      background: hsl(var(--surface));
-    }
-
-    .tab-btn.active {
       background: hsl(var(--primary));
       color: white;
-    }
-
-    .projects-container {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .project-content {
-      display: none;
-      animation: fadeIn 0.4s ease;
-    }
-
-    .project-content.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .project-showcase {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 3rem;
-      align-items: center;
-      background: hsl(var(--card));
-      padding: 3rem;
-      border-radius: var(--radius);
-      border: 1px solid hsl(var(--border));
-    }
-
-    .project-media {
-      position: relative;
-      border-radius: var(--radius);
-      overflow: hidden;
-      border: 1px solid hsl(var(--border));
-      cursor: pointer;
-      aspect-ratio: 16/9;
-      background: hsl(var(--surface));
-    }
-
-    .project-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-
-    .project-media:hover img {
-      transform: scale(1.05);
-    }
-
-    .play-button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 64px;
-      height: 64px;
-      background: hsl(var(--primary));
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 16px hsla(var(--primary), 0.4);
-    }
-
-    .project-media:hover .play-button {
-      transform: translate(-50%, -50%) scale(1.1);
-    }
-
-    .project-info {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .project-tag {
-      display: inline-block;
-      background: hsl(var(--primary-light));
-      color: hsl(var(--primary));
-      padding: 0.375rem 0.875rem;
-      border-radius: 999px;
-      font-size: 0.8125rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      width: fit-content;
-    }
-
-    .project-info h3 {
-      font-size: 2rem;
-      font-weight: 800;
-      margin-bottom: 0.5rem;
-    }
-
-    .project-info .description {
-      color: hsl(var(--muted-fg));
-      line-height: 1.7;
-      font-size: 1.0625rem;
-    }
-
-    .project-features {
-      display: flex;
-      flex-direction: column;
-      gap: 0.875rem;
-    }
-
-    .feature {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.9375rem;
-    }
-
-    .feature-icon {
-      width: 20px;
-      height: 20px;
-      background: hsl(var(--accent-light));
-      color: hsl(var(--accent));
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-size: 0.75rem;
-      font-weight: 700;
-    }
-
-    .project-stats {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid hsl(var(--border));
-    }
-
-    .project-stat {
-      text-align: center;
-    }
-
-    .project-stat .value {
-      font-size: 1.75rem;
-      font-weight: 800;
-      color: hsl(var(--primary));
-      font-family: var(--font-display);
-      margin-bottom: 0.25rem;
-    }
-
-    .project-stat .label {
-      font-size: 0.875rem;
-      color: hsl(var(--muted-fg));
-      font-weight: 500;
-    }
-
-    /* Process Section */
-    .process-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .process-card {
-      background: hsl(var(--card));
-      padding: 2rem;
-      border-radius: var(--radius);
-      border: 1px solid hsl(var(--border));
-      display: flex;
-      gap: 1.5rem;
-      transition: all 0.2s ease;
-    }
-
-    .process-card:hover {
-      border-color: hsl(var(--primary));
-      box-shadow: 0 4px 16px hsla(var(--fg), 0.04);
-    }
-
-    .process-number {
-      width: 48px;
-      height: 48px;
-      background: hsl(var(--primary));
-      color: white;
-      border-radius: var(--radius);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      font-weight: 800;
-      font-family: var(--font-display);
-      flex-shrink: 0;
-    }
-
-    .process-content h3 {
-      font-size: 1.25rem;
-      margin-bottom: 0.625rem;
-      font-weight: 700;
-    }
-
-    .process-content p {
-      color: hsl(var(--muted-fg));
-      line-height: 1.6;
-      font-size: 0.9375rem;
-    }
-
-    /* CTA Section */
-    .cta-section {
-      padding: 5rem 0;
-      background: hsl(var(--primary));
-      color: white;
-      text-align: center;
-    }
-
-    .cta-section h2 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      font-weight: 800;
-      color: white;
-    }
-
-    .cta-section p {
-      font-size: 1.125rem;
-      margin-bottom: 2.5rem;
-      opacity: 0.95;
-      max-width: 680px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .cta-section .btn {
-      background: white;
-      color: hsl(var(--primary));
-      font-size: 1rem;
       padding: 1rem 2rem;
-      font-weight: 700;
-    }
-
-    .cta-section .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px hsla(0, 0%, 0%, 0.15);
-    }
-
-    /* FAQ Section */
-    .faq-grid {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .faq-item {
-      background: hsl(var(--card));
-      border: 1px solid hsl(var(--border));
       border-radius: var(--radius);
-      margin-bottom: 1rem;
-      overflow: hidden;
-      transition: all 0.2s ease;
-    }
-
-    .faq-item:hover {
-      border-color: hsl(var(--primary));
-    }
-
-    .faq-question {
-      width: 100%;
-      text-align: left;
-      padding: 1.25rem 1.5rem;
-      background: transparent;
-      border: none;
-      color: hsl(var(--fg));
-      font-family: inherit;
-      font-size: 1rem;
       font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      text-decoration: none;
     }
 
-    .faq-icon {
-      color: hsl(var(--primary));
-      transition: transform 0.2s ease;
-      font-size: 1.25rem;
-      font-weight: 700;
-    }
-
-    .faq-item.active .faq-icon {
-      transform: rotate(45deg);
-    }
-
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-
-    .faq-item.active .faq-answer {
-      max-height: 400px;
-    }
-
-    .faq-answer-content {
-      padding: 0 1.5rem 1.5rem;
-      color: hsl(var(--muted-fg));
-      line-height: 1.6;
-      font-size: 0.9375rem;
-    }
-
-    /* Contact Section */
-    .contact-section {
-      padding: 5rem 0;
-      background: hsl(var(--surface));
-    }
-
-    .contact-form {
-      max-width: 600px;
-      margin: 0 auto;
-      background: hsl(var(--card));
-      padding: 3rem;
-      border-radius: var(--radius);
-      border: 1px solid hsl(var(--border));
-    }
-
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .form-group label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: hsl(var(--fg));
-      font-size: 0.9375rem;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 0.875rem 1rem;
-      border: 1.5px solid hsl(var(--border));
-      border-radius: var(--radius);
-      font-size: 0.9375rem;
-      font-family: inherit;
-      background: hsl(var(--bg));
-      color: hsl(var(--fg));
-      transition: all 0.2s ease;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: hsl(var(--primary));
-      box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 120px;
-    }
-
-    /* Footer */
-    footer {
-      background: hsl(var(--fg));
-      color: white;
-      padding: 4rem 0 2rem;
-    }
-
-    .footer-content {
+    /* SERVICES */
+    .grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 3rem;
-      margin-bottom: 3rem;
+      gap: 2rem;
     }
 
-    .footer-brand h3 {
-      font-size: 1.5rem;
-      margin-bottom: 0.75rem;
+    .grid-3 {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .card {
+      background: hsl(var(--card));
+      border: 1px solid hsl(var(--border));
+      border-radius: var(--radius);
+      padding: 2rem;
+    }
+
+    .card h3 { margin-bottom: 0.5rem; }
+
+    /* FEATURED PROJECT */
+    .featured {
+      background: hsl(var(--surface));
+      border-radius: var(--radius);
+      padding: 3rem;
+    }
+
+    .featured h3 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    /* PROCESS */
+    .process-step {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      width: 42px;
+      height: 42px;
+      background: hsl(var(--primary));
       color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-weight: 800;
     }
 
-    .footer-brand p {
-      color: rgba(255, 255, 255, 0.7);
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-      font-size: 0.9375rem;
-    }
-
-    .footer-social {
-      display: flex;
-      gap: 0.75rem;
-    }
-
-    .footer-social a {
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: var(--radius);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      transition: all 0.2s ease;
-      text-decoration: none;
-    }
-
-    .footer-social a:hover {
+    /* CTA */
+    .cta {
       background: hsl(var(--primary));
-    }
-
-    .footer-links h4 {
-      font-size: 1rem;
-      margin-bottom: 1rem;
       color: white;
-      font-weight: 700;
-    }
-
-    .footer-links ul {
-      list-style: none;
-    }
-
-    .footer-links li {
-      margin-bottom: 0.625rem;
-    }
-
-    .footer-links a {
-      color: rgba(255, 255, 255, 0.7);
-      text-decoration: none;
-      transition: color 0.2s ease;
-      cursor: pointer;
-      font-size: 0.9375rem;
-    }
-
-    .footer-links a:hover {
-      color: white;
-    }
-
-    .footer-bottom {
-      padding-top: 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
       text-align: center;
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 0.875rem;
-    }
-
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(4px);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-    }
-
-    .modal.active {
-      display: flex;
-    }
-
-    .modal-content {
-      position: relative;
-      width: 100%;
-      max-width: 1100px;
-      background: hsl(var(--card));
       border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
     }
 
-    .modal-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      width: 40px;
-      height: 40px;
-      background: rgba(0, 0, 0, 0.7);
-      border: none;
-      border-radius: var(--radius);
-      color: white;
-      cursor: pointer;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-      font-size: 1.25rem;
-    }
+    .cta h2 { color: white; }
 
-    .modal-close:hover {
-      background: hsl(var(--primary));
-    }
-
-    .modal iframe {
-      width: 100%;
-      aspect-ratio: 16/9;
-      border: none;
-    }
-
-    /* Toast */
-    .toast {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background: hsl(var(--card));
-      border: 1px solid hsl(var(--border));
-      border-radius: var(--radius);
-      padding: 1rem 1.5rem;
-      box-shadow: 0 8px 24px hsla(var(--fg), 0.12);
-      z-index: 100;
-      display: none;
-      font-weight: 600;
-      max-width: 380px;
-      font-size: 0.9375rem;
-    }
-
-    .toast.active {
-      display: block;
-      animation: slideIn 0.3s ease;
-    }
-
-    @keyframes slideIn {
-      from {
-        transform: translateX(400px);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
-    }
-
-    /* Icons */
-    .icon {
-      width: 20px;
-      height: 20px;
-      stroke: currentColor;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      fill: none;
-    }
-
-    /* Responsive */
-    @media (min-width: 768px) {
-      .nav-links { display: flex; }
-      .mobile-menu-btn { display: none; }
-      .hero h1 { font-size: 3.75rem; }
-      .section-title { font-size: 3rem; }
-      .stats-grid { grid-template-columns: repeat(3, 1fr); }
-      .services-grid { grid-template-columns: repeat(2, 1fr); }
-      .project-showcase { grid-template-columns: 1fr 1fr; gap: 4rem; }
-      .footer-content { grid-template-columns: 2fr 1fr 1fr; }
-    }
-
-    @media (min-width: 1024px) {
-      .hero h1 { font-size: 4rem; }
-      .services-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-
-    @media (max-width: 767px) {
-      .hero-cta { flex-direction: column; }
-      .hero-cta .btn { width: 100%; }
-      .project-stats { grid-template-columns: 1fr; }
+    /* FOOTER */
+    footer {
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: hsl(var(--muted));
+      border-top: 1px solid hsl(var(--border));
     }
   </style>
 </head>
+
 <body>
-  
-  <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5KLXPS5M"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 
-  <!-- Grid Background -->
-  <div class="grid-bg"></div>
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#">Packdez</a>
+    <a class="nav-cta" href="YOUR_CALENDLY_LINK">Book Consultation</a>
+  </div>
+</nav>
 
-  <!-- Navigation -->
-  <nav id="navbar">
-    <div class="container">
-      <div class="nav-container">
-        <a href="" class="logo">
-          <img 
-            src="https://packdez.com/assets/logo/packdez-logo-512x512.png" 
-            alt="Packdez Logo"
-            class="logo-img"
-          />
-          <span>Packdez</span>
-        </a>
+<!-- HERO -->
+<section class="hero">
+  <span class="hero-badge">Google Sheets Automation Agency</span>
+  <h1>We turn Google Sheets into reliable business systems</h1>
+  <p class="muted">
+    Packdez designs and builds custom automation using Google Sheets,
+    Apps Script, and integrations—so your operations run smoothly at scale.
+  </p>
+  <a class="primary-btn" href="YOUR_CALENDLY_LINK">Book a Free Consultation</a>
+</section>
 
-        <div class="nav-links">
-          <a onclick="scrollToSection('services')">Services</a>
-          <a onclick="scrollToSection('projects')">Projects</a>
-          <a onclick="scrollToSection('process')">Process</a>
-          <a onclick="scrollToSection('contact')" class="btn btn-primary">Get Started</a>
-        </div>
-
-        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-          <svg class="icon" viewBox="0 0 24 24">
-            <line x1="3" y1="12" x2="21" y2="12"/>
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <line x1="3" y1="18" x2="21" y2="18"/>
-          </svg>
-        </button>
-      </div>
-
-      <div class="mobile-menu" id="mobileMenu">
-        <a onclick="scrollToSection('services'); toggleMobileMenu()">Services</a>
-        <a onclick="scrollToSection('projects'); toggleMobileMenu()">Projects</a>
-        <a onclick="scrollToSection('process'); toggleMobileMenu()">Process</a>
-        <a onclick="scrollToSection('contact'); toggleMobileMenu()" class="btn btn-primary">Get Started</a>
-      </div>
+<!-- SERVICES -->
+<section>
+  <h2>What we build</h2>
+  <div class="grid grid-3" style="margin-top:3rem">
+    <div class="card">
+      <h3>Workflow Automation</h3>
+      <p class="muted">Remove manual steps and human error from daily operations.</p>
     </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-label">
-        <svg class="icon" width="16" height="16" viewBox="0 0 24 24">
-          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-        </svg>
-        Trusted by businesses worldwide
-      </div>
-      <h1>
-        Transform Your Google Sheets Into Powerful Business Systems
-      </h1>
-      <p class="subtitle">
-        We build custom automation solutions that turn your spreadsheets into intelligent CRMs, dashboards, and workflow tools—designed specifically for how your business operates.
-      </p>
-      <div class="hero-cta">
-        <a onclick="scrollToSection('contact')" class="btn btn-primary">
-          Start Your Project
-          <svg class="icon" width="20" height="20" viewBox="0 0 24 24">
-            <line x1="5" y1="12" x2="19" y2="12"/>
-            <polyline points="12 5 19 12 12 19"/>
-          </svg>
-        </a>
-        <a onclick="scrollToSection('projects')" class="btn btn-outline">View Our Work</a>
-      </div>
-      <div class="trust-logos">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Google_Sheets_logo_%282014-2020%29.svg" alt="Google Sheets">
-        <img src="https://www.gstatic.com/images/branding/product/2x/apps_script_48dp.png" alt="Apps Script">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Google_Drive_logo.png" alt="Google Drive">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail">
-      </div>
+    <div class="card">
+      <h3>Custom CRMs</h3>
+      <p class="muted">Tailored systems built directly in Google Sheets.</p>
     </div>
-  </section>
-
-  <!-- Stats Section -->
-  <section class="stats-section">
-    <div class="container">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="number">50+</div>
-          <div class="label">Projects Delivered</div>
-        </div>
-        <div class="stat-card">
-          <div class="number">7 Days</div>
-          <div class="label">Average Turnaround</div>
-        </div>
-        <div class="stat-card">
-          <div class="number">95%</div>
-          <div class="label">Client Satisfaction</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Services Section -->
-  <section id="services">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">What We Build</span>
-        <h2 class="section-title">Custom Solutions for Your Business</h2>
-        <p class="section-desc">Every business is unique. We create tailored automation systems that fit your specific workflow and requirements.</p>
-      </div>
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-icon">⚡</div>
-          <h3>Invoice & Billing Systems</h3>
-          <p>Generate professional invoices automatically with custom branding, calculations, and PDF exports.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">👥</div>
-          <h3>Custom CRM Solutions</h3>
-          <p>Track leads, manage customer relationships, and monitor your sales pipeline in one organized system.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">📊</div>
-          <h3>Real-Time Dashboards</h3>
-          <p>Visualize your data with Looker Studio dashboards that update automatically from your Google Sheets.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">📝</div>
-          <h3>Smart Forms & Data Collection</h3>
-          <p>Create intelligent forms with validation, conditional logic, and automated data routing.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🗄️</div>
-          <h3>Project & Time Tracking</h3>
-          <p>Monitor project progress, log hours, and generate reports automatically for your team.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">📈</div>
-          <h3>Workflow Automation</h3>
-          <p>Automate repetitive tasks, notifications, and data processing to save time and reduce errors.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects Section -->
-  <section id="projects" class="projects-section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">Our Work</span>
-        <h2 class="section-title">Real Projects, Real Results</h2>
-        <p class="section-desc">Explore the custom systems we've built for businesses across different industries.</p>
-      </div>
-
-      <div class="projects-tabs">
-        <button class="tab-btn active" onclick="switchProject(0)">Email CRM</button>
-        <button class="tab-btn" onclick="switchProject(1)">Invoice System</button>
-        <button class="tab-btn" onclick="switchProject(2)">Analytics Dashboard</button>
-        <button class="tab-btn" onclick="switchProject(3)">Operations CRM</button>
-      </div>
-
-      <div class="projects-container">
-        <!-- Project 1 -->
-        <div class="project-content active" id="project-0">
-          <div class="project-showcase">
-            <div class="project-media" onclick="openVideo('https://www.youtube.com/embed/HsMaIpEOlF4')">
-              <img src="https://img.youtube.com/vi/HsMaIpEOlF4/hqdefault.jpg" alt="Email CRM">
-              <div class="play-button">
-                <svg class="icon" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
-                  <polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/>
-                </svg>
-              </div>
-            </div>
-            <div class="project-info">
-              <span class="project-tag">CRM System</span>
-              <h3>Email Marketing CRM</h3>
-              <p class="description">A comprehensive email campaign management system built entirely in Google Sheets. Manage contacts, send bulk emails, and track engagement metrics—all without expensive email marketing platforms.</p>
-              <div class="project-features">
-                <div class="feature">
-                  <div class="feature-icon">✓</div>
-                  <span>Contact management with custom fields</span>
-                </div>
-                <div class="feature">
-                  <div class="feature-icon">✓</div>
-                  <span>Bulk email sending with personalization</span>
-                </div>
-                <div class="feature">
-                  <div class="feature-icon">✓</div>
-                  <span>Open rate and click tracking</span>
-                </div>
-                <div class="feature">
-                  <div class="feature-icon">✓</div>
-                  <span>Campaign performance analytics</span>
-                </div>
-              </div>
-              <div class="project-stats">
-                <div class="project-stat">
-                  <div class="value">12hrs</div>
-                  <div class="label">Saved per week</div>
-                </div>
-                <div class="project-stat">
-                  <div class="value">$3.6K</div>
-                  <div class="label">Annual savings</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Project 2 -->
-        <div class="project-content" id="project-1">
-          <div class="project-showcase">
-            <div class="project-media" onclick="openVideo('https://www.youtube.com/embed/4fjE3eJ01T4')">
-              <img src="https://img.youtube.com/vi/4fjE3eJ01T4/hqdefault.jpg" alt="Invoice Generator">
-              <div class="play-button">
-                <svg class="icon" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
-                  <polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/>
-                </svg>
-              </div>
-            </div>
-            <div class="project-info">
-              <span class="project-tag">Invoicing</span>
-              <h3>Automated Invoice Generator</h3>
-              <p class="description">Professional invoice creation system with custom branding and automatic PDF generation. Transform invoice processing from a 2-hour task into a 2-minute operation.</p>
-              <div class="project-features">
-                <div class="feature">
-                  <div class="feature-icon">✓</div>
-                  <span>Custom branded invoice templates</span>
-                </div>
-                <div class="feature">
-                  <div class="feature-icon">✓</div>
-                  <span>Automatic calculations and tax handling</span>
-                </div>
-                <div class="feature">
-                  <div class="feature-icon">✓</div>
-                  <span>PDF generation and email delivery</span>
-                </div>
-                <div class="feature">
-                  <div class="feature-icon">✓</div>
-                  <span>Payment tracking and reminders</span>
-                </div>
-              </div>
-              <div class="project-stats">
-                <div class="project-stat">
-                  <div class="value">95%</div>
-                  <div class="label">Time saved</div>
-                </div>
-                <div class="project-stat">
-                  <div class="value">Zero</div>
-                  <div class="label">Calculation errors</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Project 3 -->
-        <div class="project-content" id="project-2">
-          <div class="project-showcase">
-            <div class="project-media" onclick="openVideo('https://www.youtube.com/embed/-svuBj0WpkE')">
-              <img src="https://img.youtube.com/vi/-svuBj0WpkE/hqdefault.jpg" alt="Healthcare Analytics">
-              <div class="play-button">
-                <svg class="icon" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
-                  <polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/>
-                </svg>
-              </div>
-            </div>
-            <div class="project-info">
-              <span class="project-tag">Dashboard</span>
-              <h3>Healthcare Analytics Dashboard</h3>
-              <p class="description">Real-time Looker Studio dashboard connected to Google Sheets for healthcare operations. Track patient data, appointments, revenue, and operational metrics with automatic updates.</p>
-              <div class="project-features">
-                <div class="feature">
-                  <div class="feature-icon">✓</div>
-                  <span>Real-time data synchronization</span>
-                </div>
-                <div class="feature">
-                  <div class="feature-icon">✓</div>
-                  <span>Patient and appointment tracking</span>
-                </div>
-                <div class="feature">
-                  <div class="feature-icon">✓</div>
-                  <span>Revenue and financial metrics</span>
-                </div>
-                <div class="feature">
-                  <div class="feature-icon">✓</div>
-                  <span>Mobile and desktop optimized</span>
-                </div>
-              </div>
-              <div class="project-stats">
-                <div class="project-stat">
-                  <div class="value">Real-time</div>
-                  <div class="label">Data updates</div>
-                </div>
-                <div class="project-stat">
-                  <div class="value">100%</div>
-                  <div class="label">Data accuracy</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Project 4 -->
-        <div class="project-content" id="project-3">
-          <div class="project-showcase">
-            <div class="project-media" onclick="openVideo('https://www.youtube.com/embed/ykFwXvWZ6lc')">
-              <img src="https://img.youtube.com/vi/ykFwXvWZ6lc/hqdefault.jpg" alt="Operations CRM">
-              <div class="play-button">
-                <svg class="icon" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
-                  <polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/>
-                </svg>
-              </div>
-            </div>
-            <div class="project-info">
-              <span class="project-tag">Operations</span>
-              <h3>Cleaning Business Operations System</h3>
-              <p class="description">Complete operations management for an Airbnb cleaning business. Coordinate bookings, assign staff, manage inventory, and automate client communications—all from one system.</p>
-              <div class="project-features">
-                <div class="feature">
-                  <div class="feature-icon">✓</div>
-                  <span>Booking and scheduling management</span>
-                </div>
-                <div class="feature">
-                  <div class="feature-icon">✓</div>
-                  <span>Staff assignment and tracking</span>
-                </div>
-                <div class="feature">
-                  <div class="feature-icon">✓</div>
-                  <span>Inventory and supply management</span>
-                </div>
-                <div class="feature">
-                  <div class="feature-icon">✓</div>
-                  <span>Automated client notifications</span>
-                </div>
-              </div>
-              <div class="project-stats">
-                <div class="project-stat">
-                  <div class="value">20hrs</div>
-                  <div class="label">Saved weekly</div>
-                </div>
-                <div class="project-stat">
-                  <div class="value">3x</div>
-                  <div class="label">More bookings</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Process Section -->
-  <section id="process">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">How We Work</span>
-        <h2 class="section-title">Simple, Transparent Process</h2>
-        <p class="section-desc">From discovery to delivery, we make the entire process straightforward and efficient.</p>
-      </div>
-      <div class="process-grid">
-        <div class="process-card">
-          <div class="process-number">1</div>
-          <div class="process-content">
-            <h3>Discovery Call</h3>
-            <p>We start with a free consultation to understand your workflow, challenges, and goals. No commitment required.</p>
-          </div>
-        </div>
-        <div class="process-card">
-          <div class="process-number">2</div>
-          <div class="process-content">
-            <h3>Custom Proposal</h3>
-            <p>Receive a detailed proposal with scope, timeline, and fixed pricing within 24 hours. Complete transparency from the start.</p>
-          </div>
-        </div>
-        <div class="process-card">
-          <div class="process-number">3</div>
-          <div class="process-content">
-            <h3>Development & Testing</h3>
-            <p>We build your system in 7-10 days with regular updates. You'll review progress and provide feedback throughout.</p>
-          </div>
-        </div>
-        <div class="process-card">
-          <div class="process-number">4</div>
-          <div class="process-content">
-            <h3>Launch & Support</h3>
-            <p>We train your team, provide documentation, and offer 30 days of free support to ensure smooth adoption.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="cta-section">
-    <div class="container">
-      <h2>Ready to Streamline Your Workflow?</h2>
-      <p>Let's discuss how we can build a custom solution tailored to your business needs.</p>
-      <a onclick="scrollToSection('contact')" class="btn">
-        Schedule a Free Consultation
-        <svg class="icon" width="20" height="20" viewBox="0 0 24 24">
-          <line x1="5" y1="12" x2="19" y2="12"/>
-          <polyline points="12 5 19 12 12 19"/>
-        </svg>
-      </a>
-    </div>
-  </section>
-
-  <!-- FAQ Section -->
-  <section id="faq">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">FAQ</span>
-        <h2 class="section-title">Common Questions</h2>
-        <p class="section-desc">Everything you need to know about working with us.</p>
-      </div>
-      <div class="faq-grid">
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFAQ(this)">
-            <span>What is the typical project timeline?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <div class="faq-answer-content">
-              Most projects are completed within 7-10 days from the initial consultation. We provide a prototype within 72 hours so you can see progress immediately. Complex projects may take longer, and we'll communicate the timeline upfront.
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFAQ(this)">
-            <span>How much does a custom system cost?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <div class="faq-answer-content">
-              Projects typically range from $200-$3,500 depending on complexity and requirements. We provide fixed pricing upfront with no hidden costs. Every project includes 30 days of free support and adjustments.
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFAQ(this)">
-            <span>Do I need technical knowledge to use the system?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <div class="faq-answer-content">
-              Not at all. We build systems in Google Sheets, which most teams already use daily. We provide complete training and documentation to ensure your team can use and maintain the system confidently.
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFAQ(this)">
-            <span>Can the system integrate with other tools?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <div class="faq-answer-content">
-              Yes. We can integrate with Gmail, Google Drive, Slack, payment processors, and most tools that offer APIs or webhooks. We'll discuss integration requirements during the discovery call.
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFAQ(this)">
-            <span>What if I need changes after launch?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <div class="faq-answer-content">
-              Every project includes 30 days of free support and adjustments. After that, we offer affordable maintenance packages. You can also manage changes yourself—we provide full documentation and training.
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFAQ(this)">
-            <span>How do you handle complex workflows?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <div class="faq-answer-content">
-              Complex workflows are our specialty. We break them down into manageable components, simplify where possible, and build systems that handle everything efficiently. The discovery call helps us understand your specific needs.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="contact-section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">Get Started</span>
-        <h2 class="section-title">Let's Build Something Great</h2>
-        <p class="section-desc">Tell us about your project and we'll get back to you within 24 hours.</p>
-      </div>
-      <div class="contact-form">
-        <form onsubmit="handleContactForm(event)">
-          <div class="form-group">
-            <label>Your Name *</label>
-            <input type="text" required placeholder="John Smith">
-          </div>
-          <div class="form-group">
-            <label>Email Address *</label>
-            <input type="email" required placeholder="john@company.com">
-          </div>
-          <div class="form-group">
-            <label>Company Name</label>
-            <input type="text" placeholder="Your Company">
-          </div>
-          <div class="form-group">
-            <label>Project Details *</label>
-            <textarea required placeholder="Tell us about what you'd like to automate or build..."></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">
-            Send Message
-            <svg class="icon" width="20" height="20" viewBox="0 0 24 24">
-              <line x1="5" y1="12" x2="19" y2="12"/>
-              <polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </button>
-          <p style="text-align: center; margin-top: 1rem; font-size: 0.875rem; color: hsl(var(--muted-fg));">We'll respond within 24 hours</p>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <h3>Packdez</h3>
-          <p>We transform Google Sheets into powerful business systems through custom automation and intelligent design.</p>
-          <div class="footer-social">
-            <a href="https://x.com/packdezHQ" target="_blank" rel="noopener" aria-label="Twitter">
-              <svg class="icon" viewBox="0 0 24 24">
-                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
-              </svg>
-            </a>
-            <a href="https://www.linkedin.com/company/packdez/" target="_blank" rel="noopener" aria-label="LinkedIn">
-              <svg class="icon" viewBox="0 0 24 24">
-                <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
-                <circle cx="4" cy="4" r="2"/>
-              </svg>
-            </a>
-            <a href="https://youtube.com/@packdezhqz?si=EXj27rVMq27WlWQp" target="_blank" rel="noopener" aria-label="YouTube">
-              <svg class="icon" viewBox="0 0 24 24">
-                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM10 15l5-3-5-3v6z"/>
-              </svg>
-            </a>
-          </div>
-        </div>
-        <div class="footer-links">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a onclick="scrollToSection('services')">Services</a></li>
-            <li><a onclick="scrollToSection('projects')">Projects</a></li>
-            <li><a onclick="scrollToSection('process')">Process</a></li>
-            <li><a onclick="scrollToSection('faq')">FAQ</a></li>
-          </ul>
-        </div>
-        <div class="footer-links">
-          <h4>Services</h4>
-          <ul>
-            <li><a>CRM Systems</a></li>
-            <li><a>Invoice Automation</a></li>
-            <li><a>Dashboards</a></li>
-            <li><a>Workflow Automation</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© <span id="year"></span> Packdez. Empowering businesses with intelligent automation.</p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Video Modal -->
-  <div class="modal" id="videoModal" onclick="closeModal(event)">
-    <div class="modal-content">
-      <button class="modal-close" onclick="closeModal(event)">×</button>
-      <iframe id="videoFrame" src="" allow="autoplay; picture-in-picture" allowfullscreen></iframe>
+    <div class="card">
+      <h3>Dashboards & Reporting</h3>
+      <p class="muted">Live metrics connected to your real data.</p>
     </div>
   </div>
+</section>
 
-  <!-- Toast Notification -->
-  <div class="toast" id="toast"></div>
+<!-- FEATURED PROJECT -->
+<section>
+  <div class="featured">
+    <h3>Featured project</h3>
+    <p class="muted">
+      Built a complete operations system for a service business—automating bookings,
+      staff assignments, invoicing, and reporting.
+    </p>
+    <p><strong>Result:</strong> 20+ hours saved per week, zero manual tracking.</p>
+  </div>
+</section>
 
-  <script>
-    // Set year
-    document.getElementById('year').textContent = new Date().getFullYear();
+<!-- PROCESS -->
+<section>
+  <h2>How we work</h2>
+  <div class="grid" style="margin-top:3rem">
+    <div class="process-step">
+      <div class="step-num">1</div>
+      <p><strong>Discovery</strong><br/>Understand your workflows and constraints.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">2</div>
+      <p><strong>Design</strong><br/>Design scalable automation architecture.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">3</div>
+      <p><strong>Build & Launch</strong><br/>Deliver clean, documented systems.</p>
+    </div>
+  </div>
+</section>
 
-    // Navbar scroll effect
-    window.addEventListener('scroll', function() {
-      const navbar = document.getElementById('navbar');
-      if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
-    });
+<!-- CTA -->
+<section class="cta">
+  <h2>Ready to automate your workflows?</h2>
+  <p>Schedule a free consultation and see what can be automated.</p>
+  <a class="primary-btn" href="YOUR_CALENDLY_LINK">Book a Consultation</a>
+</section>
 
-    // Scroll to section
-    function scrollToSection(id) {
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }
+<!-- FOOTER -->
+<footer>
+  © <script>document.write(new Date().getFullYear())</script> Packdez · Google Sheets Automation
+</footer>
 
-    // Mobile Menu Toggle
-    function toggleMobileMenu() {
-      const menu = document.getElementById('mobileMenu');
-      menu.classList.toggle('active');
-    }
-
-    // Project Tabs
-    function switchProject(index) {
-      // Update tabs
-      const tabs = document.querySelectorAll('.tab-btn');
-      tabs.forEach((tab, i) => {
-        if (i === index) {
-          tab.classList.add('active');
-        } else {
-          tab.classList.remove('active');
-        }
-      });
-
-      // Update content
-      const contents = document.querySelectorAll('.project-content');
-      contents.forEach((content, i) => {
-        if (i === index) {
-          content.classList.add('active');
-        } else {
-          content.classList.remove('active');
-        }
-      });
-    }
-
-    // Video Modal
-    function openVideo(url) {
-      const modal = document.getElementById('videoModal');
-      const frame = document.getElementById('videoFrame');
-      frame.src = url + '?autoplay=1';
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal(event) {
-      if (event.target.classList.contains('modal') || 
-          event.target.classList.contains('modal-close') ||
-          event.target.textContent === '×') {
-        const modal = document.getElementById('videoModal');
-        const frame = document.getElementById('videoFrame');
-        frame.src = '';
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-      }
-    }
-
-    document.addEventListener('keydown', function(event) {
-      if (event.key === 'Escape') {
-        const modal = document.getElementById('videoModal');
-        if (modal.classList.contains('active')) {
-          const frame = document.getElementById('videoFrame');
-          frame.src = '';
-          modal.classList.remove('active');
-          document.body.style.overflow = '';
-        }
-      }
-    });
-
-    // FAQ Toggle
-    function toggleFAQ(button) {
-      const item = button.parentElement;
-      const wasActive = item.classList.contains('active');
-      
-      document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-      
-      if (!wasActive) {
-        item.classList.add('active');
-      }
-    }
-
-    // Toast Notification
-    function showToast(message) {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.classList.add('active');
-      
-      setTimeout(() => {
-        toast.classList.remove('active');
-      }, 5000);
-    }
-
-    // Contact Form Handler
-    const scriptBaseURL =
-      "https://corsproxy.io/?" + encodeURIComponent(
-        "https://script.google.com/macros/s/AKfycbznvN_BiRWk1_GnLdRj4zzGnD0oGnq5d1LXpi2hBeBn1ZYzPp6IsMgigPbCiq0nr4Z4tA/exec"
-      );
-
-    async function handleContactForm(event) {
-      event.preventDefault();
-      const form = event.target;
-
-      const controls = Array.from(form.querySelectorAll('input, textarea'));
-      const nameInput = controls[0];
-      const emailInput = controls[1];
-      const companyInput = controls[2];
-      const messageInput = controls[3];
-
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const originalBtnHTML = submitBtn.innerHTML;
-
-      const name = (nameInput.value || '').trim();
-      const email = (emailInput.value || '').trim();
-      const company = (companyInput.value || '').trim();
-      const message = (messageInput.value || '').trim();
-
-      if (!name || !email || !message) {
-        showToast('Please fill in all required fields.');
-        return;
-      }
-      if (!/^\S+@\S+\.\S+$/.test(email)) {
-        showToast('Please enter a valid email address.');
-        return;
-      }
-
-      const payload = {
-        name,
-        email,
-        company,
-        message,
-        submittedAt: new Date().toISOString()
-      };
-
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = 'Sending...';
-
-      try {
-        const response = await fetch(scriptBaseURL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-          },
-          body: new URLSearchParams(payload).toString(),
-        });
-
-        if (response.ok) {
-          showToast('Thank you! We\'ll be in touch within 24 hours.');
-          form.reset();
-        } else {
-          showToast('Something went wrong. Please try again.');
-        }
-      } catch (err) {
-        showToast('Network error. Please try again.');
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnHTML;
-      }
-    }
-  </script>
 </body>
 </html>
