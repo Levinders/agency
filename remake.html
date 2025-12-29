@@ -290,7 +290,7 @@
 .pricing-section {
   max-width: 1200px;
   margin: 0 auto;
-  padding: clamp(64px, 8vw, 96px) 16px;
+  padding: clamp(64px, 8vw, 96px) 20px;
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
   gap: clamp(32px, 6vw, 64px);
@@ -1261,7 +1261,7 @@
                         <h3 class="text-lg font-bold">Packdez</h3>
                     </div>
                     <p class="text-sm text-muted-foreground mb-4">
-                        Operational systems in Google Sheets. Built for teams that need automation they can trust.
+                        Stay connected
                     </p>
                     <div class="flex gap-3">
                         <a href="https://x.com/packdezHQ" target="_blank" rel="noopener noreferrer" class="w-9 h-9 bg-muted hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all">
@@ -1297,8 +1297,9 @@
             </div>
             
             <div class="pt-6 border-t border-border text-center text-sm text-muted-foreground">
-                <p>© 2024 Packdez. Operational systems for growing teams.</p>
+              <p>© <span id="year"></span> Packdez</p>
             </div>
+
         </div>
     </footer>
     
@@ -1463,6 +1464,14 @@ function updateROI() {
 }
 
 updateROI();
+
+
+
+/* =============================
+   update year in copywrite in the footer section
+   ============================= */
+  document.getElementById('year').textContent = new Date().getFullYear();
+
 
     </script>
 </body>
