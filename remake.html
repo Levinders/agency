@@ -531,49 +531,7 @@
 <body>
     <div id="toast" class="toast"></div>
     
-    <!-- Conversion Popup -->
-    <div id="conversion-popup" class="conversion-popup">
-        <div style="padding: 2rem; position: relative;">
-            <button onclick="closePopup()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; cursor: pointer; color: hsl(220 9% 46%);">
-                <i data-lucide="x" style="width: 1.25rem; height: 1.25rem;"></i>
-            </button>
-            
-            <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1.5rem;">
-                <div style="width: 3rem; height: 3rem; background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 65% 45%)); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                    <i data-lucide="zap" style="width: 1.5rem; height: 1.5rem; color: white;"></i>
-                </div>
-                <div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Most teams save 10+ hours per week</h3>
-                    <p style="color: hsl(220 9% 46%); font-size: 0.9375rem;">See exactly what you can automate in a free 30-minute audit.</p>
-                </div>
-            </div>
-            
-            <div style="background-color: hsl(146 55% 36% / 0.05); border-radius: 0.5rem; padding: 1rem; margin-bottom: 1.5rem;">
-                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
-                    <i data-lucide="check-circle" style="width: 1.25rem; height: 1.25rem; color: hsl(146 55% 36%);"></i>
-                    <span style="font-size: 0.875rem; font-weight: 600;">No obligation, no sales pitch</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
-                    <i data-lucide="check-circle" style="width: 1.25rem; height: 1.25rem; color: hsl(146 55% 36%);"></i>
-                    <span style="font-size: 0.875rem; font-weight: 600;">Get actionable recommendations</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 0.75rem;">
-                    <i data-lucide="check-circle" style="width: 1.25rem; height: 1.25rem; color: hsl(146 55% 36%);"></i>
-                    <span style="font-size: 0.875rem; font-weight: 600;">See estimated time savings</span>
-                </div>
-            </div>
-            
-            <button onclick="scrollToAudit(); closePopup();" class="btn btn-primary" style="width: 100%; justify-content: center;">
-                Get Your Free Audit
-                <i data-lucide="arrow-right" style="width: 1rem; height: 1rem;"></i>
-            </button>
-            
-            <p style="text-align: center; font-size: 0.8125rem; color: hsl(220 9% 46%); margin-top: 0.75rem;">
-                Response within 24 hours
-            </p>
-        </div>
-    </div>
-    
+   
     <!-- Navigation -->
     <nav class="nav-fixed">
         <div class="max-w-6xl mx-auto px-4">
@@ -595,18 +553,8 @@
                     <a href="#audit" class="btn btn-primary" style="padding: 0.5rem 1.25rem;">Get Free Audit</a>
                 </div>
                 
-                <button class="mobile-only" onclick="toggleMobileMenu()">
-                    <i data-lucide="menu" id="menu-icon"></i>
-                </button>
-            </div>
-            
-            <div id="mobile-menu" class="mobile-menu">
-                <a href="#work" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">Work</a>
-                <a href="#reviews" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">Reviews</a>
-                <a href="#pricing" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">Pricing</a>
-                <a href="#faq" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">FAQ</a>
-                <a href="#audit" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">Get Free Audit</a>
-            </div>
+           </div>
+
         </div>
     </nav>
     
@@ -1374,25 +1322,7 @@
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
-        
-        // Conversion popup logic
-        let popupShown = false;
-        window.addEventListener('scroll', function() {
-            if (!popupShown && window.scrollY > 1500) {
-                document.getElementById('conversion-popup').classList.add('active');
-                popupShown = true;
-                lucide.createIcons();
-            }
-        });
-        
-        function closePopup() {
-            document.getElementById('conversion-popup').classList.remove('active');
-        }
-        
-        function scrollToAudit() {
-            document.getElementById('audit').scrollIntoView({ behavior: 'smooth' });
-        }
-        
+                
         // Mobile menu
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
