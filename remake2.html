@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packdez - Google Sheets Automation Specialists</title>
+    <meta name="description" content="We build automated operational systems in Google Sheets for growing teams. No templates. No bloat. Just reliable systems that work.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 220 20% 10%;
+            --primary: 146 55% 36%;
+            --primary-foreground: 0 0% 100%;
+            --muted: 220 14% 96%;
+            --muted-foreground: 220 9% 46%;
+            --border: 220 13% 91%;
+            --destructive: 0 84% 60%;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+            scroll-behavior: smooth;
+            line-height: 1.6;
+        }
+        
+        .bg-primary { background-color: hsl(146 55% 36%); }
+        .text-primary { color: hsl(146 55% 36%); }
+        .border-primary { border-color: hsl(146 55% 36%); }
+        .bg-muted { background-color: hsl(220 14% 96%); }
+        .text-muted-foreground { color: hsl(220 9% 46%); }
+        .border-border { border-color: hsl(220 13% 91%); }
+        .text-destructive { color: hsl(0 84% 60%); }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background-color: hsl(146 55% 36%);
+            color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary:hover {
+            background-color: hsl(146 55% 32%);
+            box-shadow: 0 4px 12px rgba(46, 140, 78, 0.3);
+            transform: translateY(-1px);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid hsl(220 13% 91%);
+            color: hsl(220 20% 10%);
+        }
+        
+        .btn-outline:hover {
+            background-color: hsl(220 14% 96%);
+            border-color: hsl(146 55% 36%);
+        }
+        
+        .card {
+            background-color: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card:hover {
+            border-color: hsl(146 55% 36% / 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transform: translateY(-2px);
+        }
+        
+        .card-flat {
+            background-color: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.75rem;
+            padding: 2rem;
+        }
+        
+        .input, .textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.2s;
+            font-family: inherit;
+            background-color: white;
+        }
+        
+        .textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .input:focus, .textarea:focus {
+            outline: none;
+            border-color: hsl(146 55% 36%);
+            box-shadow: 0 0 0 3px hsl(146 55% 36% / 0.1);
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            border-radius: 0.375rem;
+            background-color: hsl(146 55% 36% / 0.1);
+            color: hsl(146 55% 36%);
+            border: 1px solid hsl(146 55% 36% / 0.2);
+        }
+        
+        .nav-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid hsl(220 13% 91%);
+        }
+        
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 100;
+            background-color: rgba(0, 0, 0, 0.9);
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            animation: fadeIn 0.2s ease;
+        }
+        
+        .video-modal.active { display: flex; }
+        
+        .video-container {
+            width: 100%;
+            max-width: 1200px;
+            aspect-ratio: 16/9;
+            background-color: black;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .mobile-menu {
+            display: none;
+            background-color: white;
+            border-top: 1px solid hsl(220 13% 91%);
+            padding: 1rem;
+        }
+        
+        .mobile-menu.active { display: block; }
+        
+        /* Conversion Popup */
+        .conversion-popup {
+            display: none;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 90;
+            width: 90%;
+            max-width: 420px;
+            background-color: white;
+            border: 2px solid hsl(146 55% 36%);
+            border-radius: 1rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .conversion-popup.active { display: block; }
+        
+        @media (max-width: 768px) {
+            .desktop-only { display: none !important; }
+            .conversion-popup {
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
+                max-width: none;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .mobile-only { display: none !important; }
+        }
+        
+        .toast {
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: hsl(146 55% 36%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .toast.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        .section-padding {
+            padding: 5rem 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .section-padding {
+                padding: 3rem 1rem;
+            }
+        }
+        
+        .metric {
+            font-size: 2rem;
+            font-weight: 800;
+            color: hsl(146 55% 36%);
+            line-height: 1.2;
+        }
+        
+        .problem-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            color: hsl(0 84% 60%);
+            margin-bottom: 1rem;
+        }
+        
+        .check-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: hsl(146 55% 36%);
+            flex-shrink: 0;
+            margin-top: 0.125rem;
+        }
+        
+        .star-icon {
+            width: 1rem;
+            height: 1rem;
+            color: hsl(43 96% 56%);
+            fill: hsl(43 96% 56%);
+        }
+        
+        .pricing-table {
+            background-color: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+        
+        .pricing-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            border-bottom: 1px solid hsl(220 13% 91%);
+            align-items: center;
+            min-height: 3.5rem;
+        }
+        
+        .pricing-row:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-header {
+            background-color: hsl(220 14% 96%);
+            font-weight: 700;
+        }
+        
+        .pricing-cell {
+            padding: 1rem 1.5rem;
+            border-right: 1px solid hsl(220 13% 91%);
+        }
+        
+        .pricing-cell:last-child {
+            border-right: none;
+        }
+        
+        .pricing-cell-center {
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .pricing-row {
+                grid-template-columns: 1fr;
+            }
+            .pricing-cell {
+                border-right: none;
+                border-bottom: 1px solid hsl(220 13% 91%);
+            }
+            .pricing-cell:last-child {
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="toast" class="toast"></div>
+    
+    <!-- Conversion Popup -->
+    <div id="conversion-popup" class="conversion-popup">
+        <div style="padding: 2rem; position: relative;">
+            <button onclick="closePopup()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; cursor: pointer; color: hsl(220 9% 46%);">
+                <i data-lucide="x" style="width: 1.25rem; height: 1.25rem;"></i>
+            </button>
+            
+            <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1.5rem;">
+                <div style="width: 3rem; height: 3rem; background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 65% 45%)); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    <i data-lucide="zap" style="width: 1.5rem; height: 1.5rem; color: white;"></i>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Most teams save 10+ hours per week</h3>
+                    <p style="color: hsl(220 9% 46%); font-size: 0.9375rem;">See exactly what you can automate in a free 30-minute audit.</p>
+                </div>
+            </div>
+            
+            <div style="background-color: hsl(146 55% 36% / 0.05); border-radius: 0.5rem; padding: 1rem; margin-bottom: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                    <i data-lucide="check-circle" style="width: 1.25rem; height: 1.25rem; color: hsl(146 55% 36%);"></i>
+                    <span style="font-size: 0.875rem; font-weight: 600;">No obligation, no sales pitch</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                    <i data-lucide="check-circle" style="width: 1.25rem; height: 1.25rem; color: hsl(146 55% 36%);"></i>
+                    <span style="font-size: 0.875rem; font-weight: 600;">Get actionable recommendations</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <i data-lucide="check-circle" style="width: 1.25rem; height: 1.25rem; color: hsl(146 55% 36%);"></i>
+                    <span style="font-size: 0.875rem; font-weight: 600;">See estimated time savings</span>
+                </div>
+            </div>
+            
+            <button onclick="scrollToAudit(); closePopup();" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                Get Your Free Audit
+                <i data-lucide="arrow-right" style="width: 1rem; height: 1rem;"></i>
+            </button>
+            
+            <p style="text-align: center; font-size: 0.8125rem; color: hsl(220 9% 46%); margin-top: 0.75rem;">
+                Response within 24 hours
+            </p>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="nav-fixed">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <a href="#" class="flex items-center gap-2">
+                    <img 
+                        src="https://packdez.com/assets/logo/packdez-logo-512x512.png" 
+                        alt="Packdez"
+                        class="h-8 w-8"
+                    />
+                    <span class="text-xl font-bold">Packdez</span>
+                </a>
+                
+                <div class="desktop-only flex items-center gap-6">
+                    <a href="#work" class="text-sm font-medium text-muted-foreground hover:text-primary">Work</a>
+                    <a href="#reviews" class="text-sm font-medium text-muted-foreground hover:text-primary">Reviews</a>
+                    <a href="#pricing" class="text-sm font-medium text-muted-foreground hover:text-primary">Pricing</a>
+                    <a href="#faq" class="text-sm font-medium text-muted-foreground hover:text-primary">FAQ</a>
+                    <a href="#audit" class="btn btn-primary" style="padding: 0.5rem 1.25rem;">Get Free Audit</a>
+                </div>
+                
+                <button class="mobile-only" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" id="menu-icon"></i>
+                </button>
+            </div>
+            
+            <div id="mobile-menu" class="mobile-menu">
+                <a href="#work" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">Work</a>
+                <a href="#reviews" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">Reviews</a>
+                <a href="#pricing" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">Pricing</a>
+                <a href="#faq" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">FAQ</a>
+                <a href="#audit" onclick="closeMobileMenu()" class="block w-full text-left py-2 font-semibold">Get Free Audit</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="section-padding" style="padding-top: 8rem; padding-bottom: 4rem;">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center fade-in">
+                <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight" style="letter-spacing: -0.02em;">
+                    Stop managing spreadsheets Start running systems
+                </h1>
+                
+                <p class="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto" style="line-height: 1.5;">
+                    We turn Google Sheets into reliable operational systems for teams who are done with manual work, broken formulas, and fragile automations.
+                </p>
+                
+                <a href="#audit" class="btn btn-primary text-lg">
+                    Get a free automation audit
+                </a>
+                
+                <p class="text-sm text-muted-foreground mt-4">
+                    30 minutes. No obligation. You’ll leave with a clear automation plan.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Problem Awareness -->
+    <section class="section-padding bg-muted">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
+                Your Sheets aren’t broken — your process is.
+            </h2>
+            <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
+                Google Sheets is powerful. But without structure, automation, and ownership, it becomes a bottleneck instead of a system.
+            </p>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card-flat">
+                    <i data-lucide="copy" class="problem-icon"></i>
+                    <h3 class="text-lg font-bold mb-2">Copy pasting between tools</h3>
+                    <p class="text-muted-foreground">Data lives in Stripe, your CRM, email, and dashboards — and someone has to move it by hand.</p>
+                </div>
+                
+                <div class="card-flat">
+                    <i data-lucide="alert-triangle" class="problem-icon"></i>
+                    <h3 class="text-lg font-bold mb-2">Broken formulas & version chaos</h3>
+                    <p class="text-muted-foreground">Someone overwrites a formula. The spreadsheet breaks. No one knows which version is correct.</p>
+                </div>
+                
+                <div class="card-flat">
+                    <i data-lucide="file-text" class="problem-icon"></i>
+                    <h3 class="text-lg font-bold mb-2">Reports rebuilt every week</h3>
+                    <p class="text-muted-foreground">Every Monday, someone spends 3 hours pulling data to email reports — instead of updating automatically.</p>
+                </div>
+                
+                <div class="card-flat">
+                    <i data-lucide="eye-off" class="problem-icon"></i>
+                    <h3 class="text-lg font-bold mb-2">Delayed visibility</h3>
+                    <p class="text-muted-foreground">You only see what’s happening after someone updates the Sheet. Decisions are always one step behind.</p>
+                </div>
+                
+                <div class="card-flat">
+                    <i data-lucide="trending-down" class="problem-icon"></i>
+                    <h3 class="text-lg font-bold mb-2">Collapsed process under growth</h3>
+                    <p class="text-muted-foreground">What worked for 100 orders breaks at 1000. Manual workflows collapse under growth.</p>
+                </div>
+                
+                <div class="card-flat">
+                    <i data-lucide="users" class="problem-icon"></i>
+                    <h3 class="text-lg font-bold mb-2">Single person dependency</h3>
+                    <p class="text-muted-foreground">Only one person understands how the Sheet works. When they're unavailable, everything stalls.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- What We Do -->
+    <section class="section-padding">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
+                What we actually build for teams like yours
+            </h2>
+            <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
+                Not tools. Not templates. Real operational systems built inside Google Sheets.
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div style="width: 3rem; height: 3rem; background-color: hsl(146 55% 36% / 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <i data-lucide="bar-chart-3" style="width: 1.5rem; height: 1.5rem; color: hsl(146 55% 36%);"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Automated reporting systems</h3>
+                            <p class="text-muted-foreground mb-3">
+                                Live dashboards that pull from your tools automatically — so reports are always accurate and never rebuilt by hand.
+                            </p>
+                            <p class="text-sm font-medium">
+                                Typical result: 6 hours/week → 15 minutes/week
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div style="width: 3rem; height: 3rem; background-color: hsl(146 55% 36% / 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <i data-lucide="repeat" style="width: 1.5rem; height: 1.5rem; color: hsl(146 55% 36%);"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Operations automation</h3>
+                            <p class="text-muted-foreground mb-3">
+                                Order-to-fulfillment workflows, inventory tracking, client onboarding. Manual steps become automatic.
+                            </p>
+                            <p class="text-sm font-medium">
+                                Typical outcome: 95% fewer errors, 10x faster processing
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div style="width: 3rem; height: 3rem; background-color: hsl(146 55% 36% / 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <i data-lucide="file-check" style="width: 1.5rem; height: 1.5rem; color: hsl(146 55% 36%);"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Custom internal tools</h3>
+                            <p class="text-muted-foreground mb-3">
+                                Apps Script-powered interfaces for approvals, data validation, and team workflows. Built in Sheets, no external software.
+                            </p>
+                            <p class="text-sm font-medium">
+                                Typical outcome: Replace 2-3 SaaS subscriptions
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div style="width: 3rem; height: 3rem; background-color: hsl(146 55% 36% / 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <i data-lucide="zap" style="width: 1.5rem; height: 1.5rem; color: hsl(146 55% 36%);"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">API integrations</h3>
+                            <p class="text-muted-foreground mb-3">
+                                Connect your Sheets to Stripe, Slack, HubSpot, QuickBooks, or any tool with an API. Real-time sync, no middleware.
+                            </p>
+                            <p class="text-sm font-medium">
+                                Typical outcome: Real-time data, zero manual entry
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Proof / Work Examples -->
+    <section id="work" class="section-padding bg-muted">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
+                Before and after. Clear outcomes. No fluff.
+            </h2>
+            <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
+                Real projects. Real outcomes. No fluff.
+            </p>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card" style="padding: 0; overflow: hidden;">
+                    <div class="relative aspect-video cursor-pointer" onclick="openVideo('HsMaIpEOlF4')">
+                        <img 
+                            src="https://img.youtube.com/vi/HsMaIpEOlF4/maxresdefault.jpg"
+                            alt="Email CRM System"
+                            class="w-full h-full object-cover"
+                            style="transition: transform 0.3s;"
+                            onmouseover="this.style.transform='scale(1.05)'"
+                            onmouseout="this.style.transform='scale(1)'"
+                        />
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                            <div class="w-14 h-14 bg-primary rounded-full flex items-center justify-center">
+                                <i data-lucide="play" class="w-6 h-6 text-white" style="margin-left: 2px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h3 class="text-lg font-bold mb-2">Email marketing CRM</h3>
+                        <div class="space-y-2 text-sm">
+                            <div>
+                                <span class="font-semibold">Before:</span>
+                                <span class="text-muted-foreground"> Manual campaign tracking across 3 tools</span>
+                            </div>
+                            <div>
+                                <span class="font-semibold">After:</span>
+                                <span class="text-muted-foreground"> Automated contact sync, bulk emails, open rate tracking</span>
+                            </div>
+                            <div class="pt-2 border-t border-border">
+                                <span class="metric" style="font-size: 1.5rem;">$3,600/year</span>
+                                <span class="text-sm text-muted-foreground block">saved in software costs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card" style="padding: 0; overflow: hidden;">
+                    <div class="relative aspect-video cursor-pointer" onclick="openVideo('4fjE3eJ01T4')">
+                        <img 
+                            src="https://img.youtube.com/vi/4fjE3eJ01T4/maxresdefault.jpg"
+                            alt="Invoice System"
+                            class="w-full h-full object-cover"
+                            style="transition: transform 0.3s;"
+                            onmouseover="this.style.transform='scale(1.05)'"
+                            onmouseout="this.style.transform='scale(1)'"
+                        />
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                            <div class="w-14 h-14 bg-primary rounded-full flex items-center justify-center">
+                                <i data-lucide="play" class="w-6 h-6 text-white" style="margin-left: 2px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h3 class="text-lg font-bold mb-2">Branded invoice generator</h3>
+                        <div class="space-y-2 text-sm">
+                            <div>
+                                <span class="font-semibold">Before:</span>
+                                <span class="text-muted-foreground"> 2 hours per invoice, manual calculations</span>
+                            </div>
+                            <div>
+                                <span class="font-semibold">After:</span>
+                                <span class="text-muted-foreground"> One-click PDF generation with branding</span>
+                            </div>
+                            <div class="pt-2 border-t border-border">
+                                <span class="metric" style="font-size: 1.5rem;">2 min</span>
+                                <span class="text-sm text-muted-foreground block">per invoice (was 2 hours)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card" style="padding: 0; overflow: hidden;">
+                    <div class="relative aspect-video cursor-pointer" onclick="openVideo('-svuBj0WpkE')">
+                        <img 
+                            src="https://img.youtube.com/vi/-svuBj0WpkE/maxresdefault.jpg"
+                            alt="Healthcare Dashboard"
+                            class="w-full h-full object-cover"
+                            style="transition: transform 0.3s;"
+                            onmouseover="this.style.transform='scale(1.05)'"
+                            onmouseout="this.style.transform='scale(1)'"
+                        />
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                            <div class="w-14 h-14 bg-primary rounded-full flex items-center justify-center">
+                                <i data-lucide="play" class="w-6 h-6 text-white" style="margin-left: 2px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h3 class="text-lg font-bold mb-2">Healthcare operations dashboard</h3>
+                        <div class="space-y-2 text-sm">
+                            <div>
+                                <span class="font-semibold">Before:</span>
+                                <span class="text-muted-foreground"> Patient data scattered across 5 systems</span>
+                            </div>
+                            <div>
+                                <span class="font-semibold">After:</span>
+                                <span class="text-muted-foreground"> Real-time unified dashboard, automated alerts</span>
+                            </div>
+                            <div class="pt-2 border-t border-border">
+                                <span class="metric" style="font-size: 1.5rem;">100%</span>
+                                <span class="text-sm text-muted-foreground block">accuracy, instant visibility</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Reviews Section -->
+    <section id="reviews" class="section-padding">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
+                What clients say.
+            </h2>
+            <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
+                Real feedback from operations teams who've automated their workflows.
+            </p>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card-flat">
+                    <div class="flex gap-1 mb-3">
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                    </div>
+                    <p class="text-muted-foreground mb-4" style="line-height: 1.6;">
+                        "We were spending $400/month on three different tools. Packdez built us one system that does everything. Paid for itself in two months."
+                    </p>
+                    <div>
+                        <p class="font-bold text-sm">Sarah Chen</p>
+                        <p class="text-sm text-muted-foreground">Operations Manager, TechStart</p>
+                    </div>
+                </div>
+                
+                <div class="card-flat">
+                    <div class="flex gap-1 mb-3">
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                    </div>
+                    <p class="text-muted-foreground mb-4" style="line-height: 1.6;">
+                        "Our weekly reporting went from 6 hours to 15 minutes. The system just works. No bugs, no downtime, no surprises."
+                    </p>
+                    <div>
+                        <p class="font-bold text-sm">Michael Okonkwo</p>
+                        <p class="text-sm text-muted-foreground">Finance Director, GrowthHub</p>
+                    </div>
+                </div>
+                
+                <div class="card-flat">
+                    <div class="flex gap-1 mb-3">
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                    </div>
+                    <p class="text-muted-foreground mb-4" style="line-height: 1.6;">
+                        "Fast delivery, clear communication, and the system actually does what they said it would. Rare to find that level of execution."
+                    </p>
+                    <div>
+                        <p class="font-bold text-sm">James Mwangi</p>
+                        <p class="text-sm text-muted-foreground">Founder, Logistics Kenya</p>
+                    </div>
+                </div>
+                
+                <div class="card-flat">
+                    <div class="flex gap-1 mb-3">
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                    </div>
+                    <p class="text-muted-foreground mb-4" style="line-height: 1.6;">
+                        "We tried building it ourselves. Wasted three months. Packdez delivered a better system in 8 days. Worth every penny."
+                    </p>
+                    <div>
+                        <p class="font-bold text-sm">Amara Nwosu</p>
+                        <p class="text-sm text-muted-foreground">COO, Healthcare Plus</p>
+                    </div>
+                </div>
+                
+                <div class="card-flat">
+                    <div class="flex gap-1 mb-3">
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                    </div>
+                    <p class="text-muted-foreground mb-4" style="line-height: 1.6;">
+                        "The documentation is excellent. Our team can actually understand and maintain the system. That's a first for us."
+                    </p>
+                    <div>
+                        <p class="font-bold text-sm">David Adebayo</p>
+                        <p class="text-sm text-muted-foreground">Head of Operations, Invoice Pro</p>
+                    </div>
+                </div>
+                
+                <div class="card-flat">
+                    <div class="flex gap-1 mb-3">
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                        <i data-lucide="star" class="star-icon"></i>
+                    </div>
+                    <p class="text-muted-foreground mb-4" style="line-height: 1.6;">
+                        "Fixed price, clear timeline, no scope creep. They delivered exactly what they promised. Refreshing experience."
+                    </p>
+                    <div>
+                        <p class="font-bold text-sm">Grace Kimani</p>
+                        <p class="text-sm text-muted-foreground">CEO, DataFlow Solutions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works -->
+    <section id="process" class="section-padding bg-muted">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
+                A simple, predictable process
+            </h2>
+            <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
+                Fixed timeline. No scope creep. You always know what’s happening next.
+            </p>
+            
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div style="width: 3.5rem; height: 3.5rem; background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 65% 45%)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 1.5rem; font-weight: 800;">
+                        1
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Discovery call</h3>
+                    <p class="text-sm text-muted-foreground">
+                        We map your workflow and identify what should (and shouldn’t) be automated.
+                    </p>
+                </div>
+                
+                <div class="text-center">
+                    <div style="width: 3.5rem; height: 3.5rem; background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 65% 45%)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 1.5rem; font-weight: 800;">
+                        2
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Clear proposal</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Fixed scope, fixed price, clear timeline — usually within 24 hours.
+                    </p>
+                </div>
+                
+                <div class="text-center">
+                    <div style="width: 3.5rem; height: 3.5rem; background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 65% 45%)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 1.5rem; font-weight: 800;">
+                        3
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Build & iterate</h3>
+                    <p class="text-sm text-muted-foreground">
+                        You see progress early. We refine until it fits how your team actually works.
+                    </p>
+                </div>
+                
+                <div class="text-center">
+                    <div style="width: 3.5rem; height: 3.5rem; background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 65% 45%)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 1.5rem; font-weight: 800;">
+                        4
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Launch & handover</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Training, documentation, and ownership transfer. No dependency on us.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing Section -->
+    <section id="pricing" class="section-padding">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
+                Transparent pricing.
+            </h2>
+            <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
+                Fixed prices. No hourly rates. No surprises. Most projects pay for themselves within 3 months.
+            </p>
+            
+            <div class="pricing-table">
+                <div class="pricing-row pricing-header">
+                    <div class="pricing-cell"></div>
+                    <div class="pricing-cell pricing-cell-center">Starter</div>
+                    <div class="pricing-cell pricing-cell-center">Professional</div>
+                    <div class="pricing-cell pricing-cell-center">Enterprise</div>
+                </div>
+                
+                <div class="pricing-row">
+                    <div class="pricing-cell"><strong>Price</strong></div>
+                    <div class="pricing-cell pricing-cell-center"><strong>$800</strong></div>
+                    <div class="pricing-cell pricing-cell-center"><strong>$2,500</strong></div>
+                    <div class="pricing-cell pricing-cell-center"><strong>Custom</strong></div>
+                </div>
+                
+                <div class="pricing-row">
+                    <div class="pricing-cell">Automation workflows</div>
+                    <div class="pricing-cell pricing-cell-center">Up to 3</div>
+                    <div class="pricing-cell pricing-cell-center">Unlimited</div>
+                    <div class="pricing-cell pricing-cell-center">Unlimited</div>
+                </div>
+                
+                <div class="pricing-row">
+                    <div class="pricing-cell">API integrations</div>
+                    <div class="pricing-cell pricing-cell-center">1 tool</div>
+                    <div class="pricing-cell pricing-cell-center">Multiple tools</div>
+                    <div class="pricing-cell pricing-cell-center">Complex integrations</div>
+                </div>
+                
+                <div class="pricing-row">
+                    <div class="pricing-cell">Custom dashboards</div>
+                    <div class="pricing-cell pricing-cell-center">Basic</div>
+                    <div class="pricing-cell pricing-cell-center">Advanced</div>
+                    <div class="pricing-cell pricing-cell-center">Enterprise-grade</div>
+                </div>
+                
+                <div class="pricing-row">
+                    <div class="pricing-cell">Delivery time</div>
+                    <div class="pricing-cell pricing-cell-center">2 weeks</div>
+                    <div class="pricing-cell pricing-cell-center">7-10 days</div>
+                    <div class="pricing-cell pricing-cell-center">Custom timeline</div>
+                </div>
+                
+                <div class="pricing-row">
+                    <div class="pricing-cell">Support period</div>
+                    <div class="pricing-cell pricing-cell-center">15 days</div>
+                    <div class="pricing-cell pricing-cell-center">30 days</div>
+                    <div class="pricing-cell pricing-cell-center">Ongoing</div>
+                </div>
+                
+                <div class="pricing-row">
+                    <div class="pricing-cell">Team training</div>
+                    <div class="pricing-cell pricing-cell-center">Documentation</div>
+                    <div class="pricing-cell pricing-cell-center">Live training</div>
+                    <div class="pricing-cell pricing-cell-center">Dedicated support</div>
+                </div>
+                
+                <div class="pricing-row">
+                    <div class="pricing-cell"></div>
+                    <div class="pricing-cell pricing-cell-center" style="padding: 1.5rem;">
+                        <a href="#audit" class="btn btn-outline" style="padding: 0.625rem 1.25rem; font-size: 0.875rem;">Get Started</a>
+                    </div>
+                    <div class="pricing-cell pricing-cell-center" style="padding: 1.5rem;">
+                        <a href="#audit" class="btn btn-primary" style="padding: 0.625rem 1.25rem; font-size: 0.875rem;">Get Started</a>
+                    </div>
+                    <div class="pricing-cell pricing-cell-center" style="padding: 1.5rem;">
+                        <a href="#audit" class="btn btn-outline" style="padding: 0.625rem 1.25rem; font-size: 0.875rem;">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-center text-sm text-muted-foreground mt-8">
+                All plans include full documentation, source code access, and no ongoing fees.
+            </p>
+        </div>
+    </section>
+    
+    <!-- Why Packdez -->
+    <section class="section-padding bg-muted">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
+                Why teams choose Packdez
+            </h2>
+            <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
+                Because operations need systems — not experiments.
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card-flat">
+                    <h3 class="text-lg font-bold mb-3">Built for Google Sheets</h3>
+                    <p class="text-muted-foreground">
+                        We don't force you into new platforms. We make the tools you already use work harder. Your team knows Sheets—no learning curve, no adoption friction.
+                    </p>
+                </div>
+                
+                <div class="card-flat">
+                    <h3 class="text-lg font-bold mb-3">Systems, not templates</h3>
+                    <p class="text-muted-foreground">
+                        Every system is custom-built for your workflow. We don't sell pre-made templates that force you to adapt. We adapt to you.
+                    </p>
+                </div>
+                
+                <div class="card-flat">
+                    <h3 class="text-lg font-bold mb-3">Reliability over hacks</h3>
+                    <p class="text-muted-foreground">
+                        We build for long-term stability. Clean logic, documented workflows, error handling. These systems run for years, not weeks.
+                    </p>
+                </div>
+                
+                <div class="card-flat">
+                    <h3 class="text-lg font-bold mb-3">Fixed pricing, fast delivery</h3>
+                    <p class="text-muted-foreground">
+                        No hourly rates. No scope creep. You know the cost upfront. Most projects deliver in 7-10 days, not months.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Primary CTA -->
+    <section id="audit" class="section-padding">
+        <div class="max-w-3xl mx-auto px-4">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    See what should be automated first
+                </h2>
+                <p class="text-lg text-muted-foreground">
+                    In 30 minutes, we’ll map your workflow, and tell you exactly what it would take to fix it.
+                </p>
+            </div>
+            
+            <div class="card-flat max-w-2xl mx-auto">
+                <form onsubmit="handleSubmit(event)" class="space-y-5">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <input type="text" id="name" placeholder="Your name" class="input" required />
+                        <input type="email" id="email" placeholder="Work email" class="input" required />
+                    </div>
+                    <input type="text" id="company" placeholder="Company name" class="input" />
+                    <textarea id="message" placeholder="Describe your current workflow and what's slowing you down" class="textarea" required></textarea>
+                    <button type="submit" id="submit-btn" class="btn btn-primary w-full text-lg">
+                        Request free automatino audit
+                    </button>
+                    <p class="text-sm text-muted-foreground text-center">
+                        We respond within 24 hours.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ -->
+    <section id="faq" class="section-padding bg-muted">
+        <div class="max-w-3xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
+                Common questions.
+            </h2>
+            
+            <div class="space-y-4">
+                <div class="card-flat">
+                    <button onclick="toggleFaq(0)" class="w-full flex items-start justify-between text-left">
+                        <span class="font-bold text-lg pr-4">How long does it take?</span>
+                        <span class="text-primary text-xl font-bold" id="faq-icon-0" style="flex-shrink: 0;">+</span>
+                    </button>
+                    <div id="faq-answer-0" class="mt-3 text-muted-foreground" style="display: none;">
+                        Most projects are delivered in 7-10 days. You'll see a working prototype within 72 hours. We don't drag projects out.
+                    </div>
+                </div>
+                
+                <div class="card-flat">
+                    <button onclick="toggleFaq(1)" class="w-full flex items-start justify-between text-left">
+                        <span class="font-bold text-lg pr-4">What if I already have a Sheet?</span>
+                        <span class="text-primary text-xl font-bold" id="faq-icon-1" style="flex-shrink: 0;">+</span>
+                    </button>
+                    <div id="faq-answer-1" class="mt-3 text-muted-foreground" style="display: none;">
+                        We can work with your existing Sheets or build new ones. Most clients have Sheets that need automation added, not replacement.
+                    </div>
+                </div>
+                
+                <div class="card-flat">
+                    <button onclick="toggleFaq(2)" class="w-full flex items-start justify-between text-left">
+                        <span class="font-bold text-lg pr-4">What tools do you integrate with?</span>
+                        <span class="text-primary text-xl font-bold" id="faq-icon-2" style="flex-shrink: 0;">+</span>
+                    </button>
+                    <div id="faq-answer-2" class="mt-3 text-muted-foreground" style="display: none;">
+                        Zapier, Stripe, Slack, HubSpot, QuickBooks, Gmail, Calendar, and any tool with an API. If it has data, we can connect it.
+                    </div>
+                </div>
+                
+                <div class="card-flat">
+                    <button onclick="toggleFaq(3)" class="w-full flex items-start justify-between text-left">
+                        <span class="font-bold text-lg pr-4">How much does it cost?</span>
+                        <span class="text-primary text-xl font-bold" id="faq-icon-3" style="flex-shrink: 0;">+</span>
+                    </button>
+                    <div id="faq-answer-3" class="mt-3 text-muted-foreground" style="display: none;">
+                        Most projects range from $800 to $3,500 depending on complexity. Fixed price, quoted upfront. No hourly billing or surprise costs.
+                    </div>
+                </div>
+                
+                <div class="card-flat">
+                    <button onclick="toggleFaq(4)" class="w-full flex items-start justify-between text-left">
+                        <span class="font-bold text-lg pr-4">What happens after delivery?</span>
+                        <span class="text-primary text-xl font-bold" id="faq-icon-4" style="flex-shrink: 0;">+</span>
+                    </button>
+                    <div id="faq-answer-4" class="mt-3 text-muted-foreground" style="display: none;">
+                        You get full documentation, team training, and 30 days of support. After that, the system is yours. We offer optional maintenance packages if needed.
+                    </div>
+                </div>
+                
+                <div class="card-flat">
+                    <button onclick="toggleFaq(5)" class="w-full flex items-start justify-between text-left">
+                        <span class="font-bold text-lg pr-4">Is this secure?</span>
+                        <span class="text-primary text-xl font-bold" id="faq-icon-5" style="flex-shrink: 0;">+</span>
+                    </button>
+                    <div id="faq-answer-5" class="mt-3 text-muted-foreground" style="display: none;">
+                        All systems run in your Google Workspace with your permissions. We follow Google's security best practices. You control all access.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-12 border-t border-border px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <img 
+                            src="https://packdez.com/assets/logo/packdez-logo-512x512.png" 
+                            alt="Packdez"
+                            class="h-7 w-7"
+                        />
+                        <h3 class="text-lg font-bold">Packdez</h3>
+                    </div>
+                    <p class="text-sm text-muted-foreground mb-4">
+                        Operational systems in Google Sheets. Built for teams that need automation they can trust.
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="https://x.com/packdezHQ" target="_blank" rel="noopener noreferrer" class="w-9 h-9 bg-muted hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all">
+                            <i data-lucide="twitter" class="w-4 h-4"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/packdez/" target="_blank" rel="noopener noreferrer" class="w-9 h-9 bg-muted hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all">
+                            <i data-lucide="linkedin" class="w-4 h-4"></i>
+                        </a>
+                        <a href="https://youtube.com/@packdezhqz?si=EXj27rVMq27WlWQp" target="_blank" rel="noopener noreferrer" class="w-9 h-9 bg-muted hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all">
+                            <i data-lucide="youtube" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-3 text-sm">What We Build</h4>
+                    <ul class="space-y-2 text-sm text-muted-foreground">
+                        <li>Automated reporting systems</li>
+                        <li>Operations automation</li>
+                        <li>Custom internal tools</li>
+                        <li>API integrations</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-3 text-sm">Contact</h4>
+                    <ul class="space-y-2 text-sm text-muted-foreground">
+                        <li>hello@packdez.com</li>
+                        <li>Response within 24 hours</li>
+                        <li>Delivery in 7-10 days</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-6 border-t border-border text-center text-sm text-muted-foreground">
+                <p>© 2024 Packdez. Operational systems for growing teams.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Video Modal -->
+    <div id="video-modal" class="video-modal" onclick="closeVideo()">
+        <div class="video-container" onclick="event.stopPropagation()">
+            <iframe id="video-iframe" src="" class="w-full h-full" allow="autoplay; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+    
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Conversion popup logic
+        let popupShown = false;
+        window.addEventListener('scroll', function() {
+            if (!popupShown && window.scrollY > 1500) {
+                document.getElementById('conversion-popup').classList.add('active');
+                popupShown = true;
+                lucide.createIcons();
+            }
+        });
+        
+        function closePopup() {
+            document.getElementById('conversion-popup').classList.remove('active');
+        }
+        
+        function scrollToAudit() {
+            document.getElementById('audit').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Mobile menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('active');
+        }
+        
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.remove('active');
+        }
+        
+        // Video modal
+        function openVideo(videoId) {
+            const modal = document.getElementById('video-modal');
+            const iframe = document.getElementById('video-iframe');
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            modal.classList.add('active');
+        }
+        
+        function closeVideo() {
+            const modal = document.getElementById('video-modal');
+            const iframe = document.getElementById('video-iframe');
+            iframe.src = '';
+            modal.classList.remove('active');
+        }
+        
+        // FAQ toggle
+        function toggleFaq(index) {
+            const answer = document.getElementById(`faq-answer-${index}`);
+            const icon = document.getElementById(`faq-icon-${index}`);
+            
+            if (answer.style.display === 'none') {
+                answer.style.display = 'block';
+                icon.textContent = '−';
+            } else {
+                answer.style.display = 'none';
+                icon.textContent = '+';
+            }
+        }
+        
+        // Toast
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast active';
+            toast.style.backgroundColor = type === 'success' ? 'hsl(146 55% 36%)' : 'hsl(0 84% 60%)';
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 3000);
+        }
+        
+        // Form submission
+        async function handleSubmit(event) {
+            event.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                company: document.getElementById('company').value,
+                message: document.getElementById('message').value,
+                submittedAt: new Date().toISOString()
+            };
+            
+            const scriptBaseURL = "https://corsproxy.io/?" + encodeURIComponent(
+                "https://script.google.com/macros/s/AKfycbznvN_BiRWk1_GnLdRj4zzGnD0oGnq5d1LXpi2hBeBn1ZYzPp6IsMgigPbCiq0nr4Z4tA/exec"
+            );
+            
+            try {
+                const response = await fetch(scriptBaseURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+                    body: new URLSearchParams(formData).toString(),
+                });
+                
+                if (response.ok) {
+                    showToast("Thanks. We'll contact you within 24 hours.", 'success');
+                    document.getElementById('name').value = '';
+                    document.getElementById('email').value = '';
+                    document.getElementById('company').value = '';
+                    document.getElementById('message').value = '';
+                } else {
+                    showToast('Something went wrong. Please try again.', 'error');
+                }
+            } catch (err) {
+                showToast('Network error. Please try again.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Request Free Audit';
+            }
+        }
+        
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
