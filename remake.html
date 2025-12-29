@@ -186,37 +186,6 @@
         
         .mobile-menu.active { display: block; }
         
-        /* Conversion Popup */
-        .conversion-popup {
-            display: none;
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 90;
-            width: 90%;
-            max-width: 420px;
-            background-color: white;
-            border: 2px solid hsl(146 55% 36%);
-            border-radius: 1rem;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .conversion-popup.active { display: block; }
-        
-        @media (max-width: 768px) {
-            .desktop-only { display: none !important; }
-            .conversion-popup {
-                bottom: 1rem;
-                right: 1rem;
-                left: 1rem;
-                max-width: none;
-            }
-        }
-        
-        @media (min-width: 769px) {
-            .mobile-only { display: none !important; }
-        }
         
         .toast {
             position: fixed;
@@ -312,55 +281,251 @@
             fill: hsl(43 96% 56%);
         }
         
-        .pricing-table {
-            background-color: white;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.75rem;
-            overflow: hidden;
-        }
-        
-        .pricing-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            border-bottom: 1px solid hsl(220 13% 91%);
-            align-items: center;
-            min-height: 3.5rem;
-        }
-        
-        .pricing-row:last-child {
-            border-bottom: none;
-        }
-        
-        .pricing-header {
-            background-color: hsl(220 14% 96%);
-            font-weight: 700;
-        }
-        
-        .pricing-cell {
-            padding: 1rem 1.5rem;
-            border-right: 1px solid hsl(220 13% 91%);
-        }
-        
-        .pricing-cell:last-child {
-            border-right: none;
-        }
-        
-        .pricing-cell-center {
-            text-align: center;
-        }
-        
-        @media (max-width: 768px) {
-            .pricing-row {
-                grid-template-columns: 1fr;
-            }
-            .pricing-cell {
-                border-right: none;
-                border-bottom: 1px solid hsl(220 13% 91%);
-            }
-            .pricing-cell:last-child {
-                border-bottom: none;
-            }
-        }
+
+       
+/* =============================
+   PRICING SECTION STYLES
+   ============================= */
+
+.pricing-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(64px, 8vw, 96px) 16px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: clamp(32px, 6vw, 64px);
+}
+
+@media (max-width: 768px) {
+  .pricing-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pricing-badge {
+  display: inline-block;
+  background: #2e8c4e;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+}
+
+.pricing-lead {
+  font-size: clamp(28px, 5vw, 46px);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.pricing-sub {
+  font-size: clamp(15px, 3.5vw, 18px);
+  color: #475569;
+  max-width: 520px;
+  margin-bottom: 32px;
+}
+
+.pricing-list {
+  list-style: none;
+  margin-bottom: 40px;
+}
+
+.pricing-list li {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 16px;
+  font-size: 15px;
+}
+
+.pricing-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #2e8c4e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #2e8c4e;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.pricing-cta {
+  display: inline-block;
+  background: linear-gradient(180deg, #2e8c4e, #276f40);
+  color: #fff;
+  padding: 16px 28px;
+  border-radius: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(46, 140, 78, 0.35);
+}
+
+/* =============================
+   PRICING SIDECARD
+   ============================= */
+
+.pricing-card {
+  background: linear-gradient(180deg, #ffffff, #f9fafb);
+  border-radius: 24px;
+  padding: clamp(24px, 5vw, 40px);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.06);
+}
+
+.pricing-card h3 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #475569;
+  margin-bottom: 16px;
+}
+
+.pricing-range {
+  font-size: clamp(22px, 4vw, 30px);
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.pricing-meta {
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 24px;
+}
+
+.pricing-card ul {
+  list-style: none;
+  margin-top: 16px;
+}
+
+.pricing-card li {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.pricing-timeline {
+  margin-top: 28px;
+  font-size: 15px;
+  color: #475569;
+}
+
+/* =============================
+   FLOATING ROI PILL
+   ============================= */
+
+#roi-pill {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #2e8c4e;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 20px 40px rgba(46, 140, 78, 0.45);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =============================
+   ROI OVERLAY + MODAL
+   ============================= */
+
+.roi-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 80;
+  padding: 24px;
+}
+
+.roi-overlay.active {
+  display: flex;
+}
+
+.roi-modal {
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  width: 100%;
+  max-width: 420px;
+  border-radius: 20px;
+  padding: 28px;
+  position: relative;
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.4);
+}
+
+.roi-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  border: none;
+  background: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #64748b;
+}
+
+.roi-fields label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.roi-fields input[type="range"] {
+  width: 100%;
+  margin-top: 10px;
+  accent-color: #2e8c4e;
+}
+
+.roi-values {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+  text-align: center;
+}
+
+@media (max-width: 520px) {
+  .roi-values {
+    grid-template-columns: 1fr;
+  }
+}
+
+.roi-box {
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border-radius: 16px;
+  padding: 18px 12px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.roi-box strong {
+  display: block;
+  font-size: 22px;
+  color: #2e8c4e;
+}
+
+.roi-calc {
+  width: 100%;
+  margin-top: 22px;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background: #2e8c4e;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+}
     </style>
 </head>
 <body>
@@ -890,91 +1055,115 @@
     </section>
     
     <!-- Pricing Section -->
-    <section id="pricing" class="section-padding">
-        <div class="max-w-5xl mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
-                Transparent pricing.
-            </h2>
-            <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
-                Fixed prices. No hourly rates. No surprises. Most projects pay for themselves within 3 months.
-            </p>
+
+<section class="pricing-section" id="pricing">
+  <!-- LEFT COLUMN -->
+  <div>
+    <span class="pricing-badge">FIXED-PRICE AUTOMATION</span>
+    <div style="margin-bottom:18px;font-weight:700;color:#2e8c4e">
+      Starting from <strong>$800</strong>
+    </div>
+
+    <h2 class="pricing-lead">
+      Stop managing spreadsheets. Start running systems.
+    </h2>
+
+    <p class="pricing-sub">
+      Custom Google Sheets automation that removes manual work, reduces errors,
+      and gives your team a system you can trust.
+    </p>
+
+    <ul class="pricing-list">
+      <li><span class="pricing-check">✓</span>Designed around how your team works</li>
+      <li><span class="pricing-check">✓</span>Built and iterated with you</li>
+      <li><span class="pricing-check">✓</span>Stabilization support included</li>
+      <li><span class="pricing-check">✓</span>Full handover and training</li>
+      <li><span class="pricing-check">✓</span>No retainers or ongoing fees</li>
+    </ul>
+
+    <a href="#audit" class="pricing-cta">Get a free automation plan</a>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="pricing-card">
+    <h3>WHAT MOST TEAMS INVEST</h3>
+    <div class="pricing-range">$1,200 – $2,500</div>
+    <div class="pricing-meta">
+      Based on scope, integrations, and workflow complexity
+    </div>
+
+    <strong>Included in a typical build:</strong>
+    <ul>
+      <li>• Automated workflows</li>
+      <li>• Custom dashboards</li>
+      <li>• Notifications</li>
+      <li>• Data validation</li>
+    </ul>
+
+    <div class="pricing-timeline">
+      <strong>Timeline:</strong><br />
+      7–10 days from kickoff
+    </div>
+  </div>
+</section>
+
+<!-- FLOATING ROI BUTTON -->
+<button id="roi-pill" aria-label="Open ROI calculator">
+  🧮
+</button>
+
+<!-- ROI MODAL -->
+<div id="roi-overlay" class="roi-overlay">
+  <div class="roi-modal">
+    <button class="roi-close" onclick="closeROI()">×</button>
+
+    <h2>Estimate your automation impact</h2>
+    <p style="color:#475569;font-size:14px;margin-bottom:22px">
+      Adjust the sliders to see potential savings.
+    </p>
+
+    <div class="roi-fields">
+      <label>
+        Hours per week
+        <strong><span id="hVal">6</span> hrs</strong>
+        <input type="range" id="hours" min="1" max="25" value="6" oninput="updateROI()" />
+      </label>
+
+      <label>
+        People involved
+        <strong><span id="pVal">3</span></strong>
+        <input type="range" id="people" min="1" max="12" value="3" oninput="updateROI()" />
+      </label>
+
+      <label>
+        Avg. hourly cost
+        <strong>$<span id="rVal">45</span></strong>
+        <input type="range" id="rate" min="20" max="120" value="45" oninput="updateROI()" />
+      </label>
+    </div>
+
+    <div class="roi-values">
+      <div class="roi-box">
+        <strong id="hrsSaved">18 hrs</strong>
+        <span>Time saved / week</span>
+      </div>
+      <div class="roi-box">
+        <strong id="monSaved">$3,240</strong>
+        <span>Cost saved / month</span>
+      </div>
+      <div class="roi-box">
+        <strong id="yrSaved">$42,120</strong>
+        <span>Cost saved / year</span>
+      </div>
+    </div>
+
+    <button class="roi-calc" onclick="closeROI()">
+      Talk through this setup
+    </button>
+  </div>
+</div>
+
             
-            <div class="pricing-table">
-                <div class="pricing-row pricing-header">
-                    <div class="pricing-cell"></div>
-                    <div class="pricing-cell pricing-cell-center">Starter</div>
-                    <div class="pricing-cell pricing-cell-center">Professional</div>
-                    <div class="pricing-cell pricing-cell-center">Enterprise</div>
-                </div>
-                
-                <div class="pricing-row">
-                    <div class="pricing-cell"><strong>Price</strong></div>
-                    <div class="pricing-cell pricing-cell-center"><strong>$800</strong></div>
-                    <div class="pricing-cell pricing-cell-center"><strong>$2,500</strong></div>
-                    <div class="pricing-cell pricing-cell-center"><strong>Custom</strong></div>
-                </div>
-                
-                <div class="pricing-row">
-                    <div class="pricing-cell">Automation workflows</div>
-                    <div class="pricing-cell pricing-cell-center">Up to 3</div>
-                    <div class="pricing-cell pricing-cell-center">Unlimited</div>
-                    <div class="pricing-cell pricing-cell-center">Unlimited</div>
-                </div>
-                
-                <div class="pricing-row">
-                    <div class="pricing-cell">API integrations</div>
-                    <div class="pricing-cell pricing-cell-center">1 tool</div>
-                    <div class="pricing-cell pricing-cell-center">Multiple tools</div>
-                    <div class="pricing-cell pricing-cell-center">Complex integrations</div>
-                </div>
-                
-                <div class="pricing-row">
-                    <div class="pricing-cell">Custom dashboards</div>
-                    <div class="pricing-cell pricing-cell-center">Basic</div>
-                    <div class="pricing-cell pricing-cell-center">Advanced</div>
-                    <div class="pricing-cell pricing-cell-center">Enterprise-grade</div>
-                </div>
-                
-                <div class="pricing-row">
-                    <div class="pricing-cell">Delivery time</div>
-                    <div class="pricing-cell pricing-cell-center">2 weeks</div>
-                    <div class="pricing-cell pricing-cell-center">7-10 days</div>
-                    <div class="pricing-cell pricing-cell-center">Custom timeline</div>
-                </div>
-                
-                <div class="pricing-row">
-                    <div class="pricing-cell">Support period</div>
-                    <div class="pricing-cell pricing-cell-center">15 days</div>
-                    <div class="pricing-cell pricing-cell-center">30 days</div>
-                    <div class="pricing-cell pricing-cell-center">Ongoing</div>
-                </div>
-                
-                <div class="pricing-row">
-                    <div class="pricing-cell">Team training</div>
-                    <div class="pricing-cell pricing-cell-center">Documentation</div>
-                    <div class="pricing-cell pricing-cell-center">Live training</div>
-                    <div class="pricing-cell pricing-cell-center">Dedicated support</div>
-                </div>
-                
-                <div class="pricing-row">
-                    <div class="pricing-cell"></div>
-                    <div class="pricing-cell pricing-cell-center" style="padding: 1.5rem;">
-                        <a href="#audit" class="btn btn-outline" style="padding: 0.625rem 1.25rem; font-size: 0.875rem;">Get Started</a>
-                    </div>
-                    <div class="pricing-cell pricing-cell-center" style="padding: 1.5rem;">
-                        <a href="#audit" class="btn btn-primary" style="padding: 0.625rem 1.25rem; font-size: 0.875rem;">Get Started</a>
-                    </div>
-                    <div class="pricing-cell pricing-cell-center" style="padding: 1.5rem;">
-                        <a href="#audit" class="btn btn-outline" style="padding: 0.625rem 1.25rem; font-size: 0.875rem;">Contact Us</a>
-                    </div>
-                </div>
-            </div>
-            
-            <p class="text-center text-sm text-muted-foreground mt-8">
-                All plans include full documentation, source code access, and no ongoing fees.
-            </p>
-        </div>
-    </section>
     
     <!-- Why Packdez -->
     <section class="section-padding bg-muted">
@@ -1309,6 +1498,52 @@
                 }
             });
         });
+
+
+
+        
+/* =============================
+   ROI CALCULATOR LOGIC
+   ============================= */
+
+const overlay = document.getElementById("roi-overlay");
+const pill = document.getElementById("roi-pill");
+
+pill.addEventListener("click", () => {
+  overlay.classList.add("active");
+  document.body.style.overflow = "hidden";
+});
+
+function closeROI() {
+  overlay.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+overlay.addEventListener("click", (e) => {
+  if (e.target === overlay) closeROI();
+});
+
+function updateROI() {
+  const h = +hours.value;
+  const p = +people.value;
+  const r = +rate.value;
+
+  hVal.textContent = h;
+  pVal.textContent = p;
+  rVal.textContent = r;
+
+  const hrs = h * p;
+  const weekly = hrs * r;
+  const monthly = weekly * 4;
+  const yearly = weekly * 52;
+
+  hrsSaved.textContent = `${hrs} hrs`;
+  monSaved.textContent = `$${monthly.toLocaleString()}`;
+  yrSaved.textContent = `$${yearly.toLocaleString()}`;
+}
+
+updateROI();
+
     </script>
 </body>
 </html>
