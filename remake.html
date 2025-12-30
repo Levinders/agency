@@ -526,6 +526,79 @@
   font-size: 15px;
   cursor: pointer;
 }
+
+
+
+
+        /* Reviews Carousel */
+.reviews-carousel {
+  position: relative;
+  overflow: hidden;
+}
+
+.reviews-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: reviewScroll 45s linear infinite;
+}
+
+.reviews-carousel:hover .reviews-track {
+  animation-play-state: paused;
+}
+
+/* Individual review width */
+.review-card {
+  min-width: 360px;
+  max-width: 360px;
+}
+
+/* Soft edge fade */
+.reviews-carousel::before,
+.reviews-carousel::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 80px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.reviews-carousel::before {
+  left: 0;
+  background: linear-gradient(to right, white, transparent);
+}
+
+.reviews-carousel::after {
+  right: 0;
+  background: linear-gradient(to left, white, transparent);
+}
+
+/* Animation */
+@keyframes reviewScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Mobile behavior */
+@media (max-width: 768px) {
+  .reviews-track {
+    animation: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .review-card {
+    scroll-snap-align: start;
+    min-width: 85%;
+  }
+}
+
     </style>
 </head>
 <body>
@@ -587,7 +660,7 @@
                 Your Sheets aren’t broken — your process is.
             </h2>
             <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
-                Google Sheets is powerful. But without structure, automation, and ownership, it becomes a bottleneck instead of a system.
+                Google Sheets is powerful. But without structure and automation, it becomes a bottleneck instead of a system.
             </p>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -652,7 +725,7 @@
                                 Live dashboards that pull from your tools automatically — so reports are always accurate and never rebuilt by hand.
                             </p>
                             <p class="text-sm font-medium">
-                                Typical result: 6 hours/week → 15 minutes/week
+                                Result: 6 hours/week → 15 minutes/week
                             </p>
                         </div>
                     </div>
@@ -669,7 +742,7 @@
                                 Order-to-fulfillment workflows, inventory tracking, client onboarding. Manual steps become automatic.
                             </p>
                             <p class="text-sm font-medium">
-                                Typical outcome: 95% fewer errors, 10x faster processing
+                                Outcome: 95% fewer errors, 10x faster processing
                             </p>
                         </div>
                     </div>
@@ -686,7 +759,7 @@
                                 Apps Script-powered interfaces for approvals, data validation, and team workflows. Built in Sheets, no external software.
                             </p>
                             <p class="text-sm font-medium">
-                                Typical outcome: Replace 2-3 SaaS subscriptions
+                                Result: Replace 2-3 SaaS subscriptions
                             </p>
                         </div>
                     </div>
@@ -703,7 +776,7 @@
                                 Connect your Sheets to Stripe, Slack, HubSpot, QuickBooks, or any tool with an API. Real-time sync, no middleware.
                             </p>
                             <p class="text-sm font-medium">
-                                Typical outcome: Real-time data, zero manual entry
+                                Outcome: Real-time data, zero manual entry
                             </p>
                         </div>
                     </div>
@@ -716,7 +789,7 @@
     <section id="work" class="section-padding bg-muted">
         <div class="max-w-6xl mx-auto px-4">
             <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
-                Before and after. Clear outcomes. No fluff.
+                Before and after. Measurable outcomes.
             </h2>
             <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
                 Real projects. Real outcomes. No fluff.
@@ -834,6 +907,266 @@
             </div>
         </div>
     </section>
+
+
+    <!-- Reviews Section -->
+<section id="reviews" class="section-padding">
+  <div class="max-w-6xl mx-auto px-4">
+    
+    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
+      Trusted by teams running real operations
+    </h2>
+    <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
+      Feedback from teams who rely on these systems every day.
+    </p>
+
+    <!-- Carousel Wrapper -->
+    <div class="reviews-carousel">
+      <div class="reviews-track">
+
+        <!-- Review 1 -->
+        <div class="card-flat review-card">
+          <div class="flex gap-1 mb-3">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+          </div>
+          <p class="text-muted-foreground mb-4" style="line-height:1.6;">
+            “We were spending $400/month on three different tools. Packdez built one system that replaced all of them. It paid for itself in two months.”
+          </p>
+          <div>
+            <p class="font-bold text-sm">Sarah Chen</p>
+            <p class="text-sm text-muted-foreground">Operations Manager, TechStart</p>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="card-flat review-card">
+          <div class="flex gap-1 mb-3">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+          </div>
+          <p class="text-muted-foreground mb-4" style="line-height:1.6;">
+            “Our weekly reporting dropped from six hours to about fifteen minutes. No bugs. No babysitting. It just runs.”
+          </p>
+          <div>
+            <p class="font-bold text-sm">Michael Okonkwo</p>
+            <p class="text-sm text-muted-foreground">Finance Director, GrowthHub</p>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="card-flat review-card">
+          <div class="flex gap-1 mb-3">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+          </div>
+          <p class="text-muted-foreground mb-4" style="line-height:1.6;">
+            “Fast delivery, clear scope, and exactly what was promised. No back-and-forth, no surprises.”
+          </p>
+          <div>
+            <p class="font-bold text-sm">James Mwangi</p>
+            <p class="text-sm text-muted-foreground">Founder, Logistics Kenya</p>
+          </div>
+        </div>
+
+        <!-- Review 4 -->
+        <div class="card-flat review-card">
+          <div class="flex gap-1 mb-3">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+          </div>
+          <p class="text-muted-foreground mb-4" style="line-height:1.6;">
+            “We tried building this internally and lost three months. Packdez delivered a better system in eight days.”
+          </p>
+          <div>
+            <p class="font-bold text-sm">Amara Nwosu</p>
+            <p class="text-sm text-muted-foreground">COO, Healthcare Plus</p>
+          </div>
+        </div>
+
+        <!-- Review 5 -->
+        <div class="card-flat review-card">
+          <div class="flex gap-1 mb-3">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+          </div>
+          <p class="text-muted-foreground mb-4" style="line-height:1.6;">
+            “The documentation alone was worth it. Our team actually understands and owns the system now.”
+          </p>
+          <div>
+            <p class="font-bold text-sm">David Adebayo</p>
+            <p class="text-sm text-muted-foreground">Head of Operations, Invoice Pro</p>
+          </div>
+        </div>
+
+        <!-- Review 6 -->
+        <div class="card-flat review-card">
+          <div class="flex gap-1 mb-3">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+          </div>
+          <p class="text-muted-foreground mb-4" style="line-height:1.6;">
+            “Fixed price, clear timeline, and real outcomes. This felt more like an internal systems team than an agency.”
+          </p>
+          <div>
+            <p class="font-bold text-sm">Grace Kimani</p>
+            <p class="text-sm text-muted-foreground">CEO, DataFlow Solutions</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Reviews Section -->
+<section id="reviews" class="section-padding">
+  <div class="max-w-6xl mx-auto px-4">
+    
+    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
+      Trusted by teams running real operations
+    </h2>
+    <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
+      Feedback from teams who rely on these systems every day.
+    </p>
+
+    <!-- Carousel Wrapper -->
+    <div class="reviews-carousel">
+      <div class="reviews-track">
+
+        <!-- Review 1 -->
+        <div class="card-flat review-card">
+          <div class="flex gap-1 mb-3">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+          </div>
+          <p class="text-muted-foreground mb-4" style="line-height:1.6;">
+            “We were spending $400/month on three different tools. Packdez built one system that replaced all of them. It paid for itself in two months.”
+          </p>
+          <div>
+            <p class="font-bold text-sm">Sarah Chen</p>
+            <p class="text-sm text-muted-foreground">Operations Manager, TechStart</p>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="card-flat review-card">
+          <div class="flex gap-1 mb-3">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+          </div>
+          <p class="text-muted-foreground mb-4" style="line-height:1.6;">
+            “Our weekly reporting dropped from six hours to about fifteen minutes. No bugs. No babysitting. It just runs.”
+          </p>
+          <div>
+            <p class="font-bold text-sm">Michael Okonkwo</p>
+            <p class="text-sm text-muted-foreground">Finance Director, GrowthHub</p>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="card-flat review-card">
+          <div class="flex gap-1 mb-3">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+          </div>
+          <p class="text-muted-foreground mb-4" style="line-height:1.6;">
+            “Fast delivery, clear scope, and exactly what was promised. No back-and-forth, no surprises.”
+          </p>
+          <div>
+            <p class="font-bold text-sm">James Mwangi</p>
+            <p class="text-sm text-muted-foreground">Founder, Logistics Kenya</p>
+          </div>
+        </div>
+
+        <!-- Review 4 -->
+        <div class="card-flat review-card">
+          <div class="flex gap-1 mb-3">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+          </div>
+          <p class="text-muted-foreground mb-4" style="line-height:1.6;">
+            “We tried building this internally and lost three months. Packdez delivered a better system in eight days.”
+          </p>
+          <div>
+            <p class="font-bold text-sm">Amara Nwosu</p>
+            <p class="text-sm text-muted-foreground">COO, Healthcare Plus</p>
+          </div>
+        </div>
+
+        <!-- Review 5 -->
+        <div class="card-flat review-card">
+          <div class="flex gap-1 mb-3">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+          </div>
+          <p class="text-muted-foreground mb-4" style="line-height:1.6;">
+            “The documentation alone was worth it. Our team actually understands and owns the system now.”
+          </p>
+          <div>
+            <p class="font-bold text-sm">David Adebayo</p>
+            <p class="text-sm text-muted-foreground">Head of Operations, Invoice Pro</p>
+          </div>
+        </div>
+
+        <!-- Review 6 -->
+        <div class="card-flat review-card">
+          <div class="flex gap-1 mb-3">
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+            <i data-lucide="star" class="star-icon"></i>
+          </div>
+          <p class="text-muted-foreground mb-4" style="line-height:1.6;">
+            “Fixed price, clear timeline, and real outcomes. This felt more like an internal systems team than an agency.”
+          </p>
+          <div>
+            <p class="font-bold text-sm">Grace Kimani</p>
+            <p class="text-sm text-muted-foreground">CEO, DataFlow Solutions</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
     
     <!-- Reviews Section -->
     <section id="reviews" class="section-padding">
@@ -1477,6 +1810,11 @@ updateROI();
    ============================= */
   document.getElementById('year').textContent = new Date().getFullYear();
 
+/* =============================
+   carousel of reviews section
+   ============================= */
+          const track = document.querySelector(".reviews-track");
+  track.innerHTML += track.innerHTML;
 
     </script>
 </body>
