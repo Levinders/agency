@@ -46,6 +46,11 @@
         .text-muted-foreground { color: hsl(220 9% 46%); }
         .border-border { border-color: hsl(220 13% 91%); }
         .text-destructive { color: hsl(0 84% 60%); }
+
+        .hero {
+                  padding-top: 10rem;
+                  padding-bottom: 6rem;
+                }
         
         .btn {
             display: inline-flex;
@@ -596,6 +601,21 @@
 
 /* Mobile behavior */
 @media (max-width: 768px) {
+   .hero {
+    padding-top: 5rem;
+    padding-bottom: 4rem;
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+
+  .hero h1 {
+    margin-bottom: 1rem; /* 16px */
+  }
+
+  .hero p {
+    margin-bottom: 1.25rem; /* 20px */
+  }
+    
   .reviews-track {
     animation: none;
     overflow-x: auto;
@@ -747,7 +767,7 @@
   }
 
   .metric {
-    font-size: 1.1rem;
+    font-size: 1.0rem;
   }
 }
 
@@ -893,7 +913,7 @@
 
    
     <!-- Hero Section -->
-    <section class="section-padding" style="padding-top: 10rem; padding-bottom: 6rem;">
+    <section class="section-padding hero">
         <div class="max-w-4xl mx-auto px-4">
             <div class="text-center fade-in">
                 <h1 class="page-h1 text-4xl md:text-6xl font-black mb-6 leading-tight" style="letter-spacing: -0.02em;">
