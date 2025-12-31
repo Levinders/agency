@@ -610,28 +610,6 @@
 }
 
 
-      
-        /* =====================================================
-           MOBILE NAV VISIBILITY HELPERS
-        ====================================================== */
-        .desktop-only {
-            display: flex;
-            
-        }
-
-        .mobile-only {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .desktop-only {
-                display: none;
-            }
-            .mobile-only {
-                display: flex;
-            }
-        }
-
         /* =====================================================
            MOBILE SIDEBAR MENU
         ====================================================== */
@@ -873,7 +851,7 @@
       </a>
 
       <!-- Desktop links -->
-      <div class="desktop-only flex items-center gap-6">
+      <div class="hidden md:flex items-center gap-6">
         <a href="#work">Work</a>
         <a href="#pricing">Pricing</a>
         <a href="#reviews">Reviews</a>
@@ -882,7 +860,7 @@
       </div>
 
       <!-- Mobile hamburger -->
-      <button class="mobile-only" onclick="toggleMobileMenu()" aria-label="Open menu">
+        <button class="flex md:hidden" onclick="toggleMobileMenu()" aria-label="Open menu">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <line x1="3" y1="6" x2="21" y2="6"/>
           <line x1="3" y1="12" x2="21" y2="12"/>
