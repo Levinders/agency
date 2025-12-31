@@ -1539,11 +1539,10 @@
       </div>
     </div>
 
-    <button class="roi-calc" onclick="closeROI()">
         <a href="#audit" class="roi-calc" onclick="closeROI()">
           Talk through this setup
         </a>
-    </button>
+
   </div>
 </div>
 
@@ -1912,7 +1911,11 @@ updateROI();
    carousel of reviews section
    ============================= */
 const track = document.querySelector(".reviews-track");
-if (track) track.innerHTML += track.innerHTML;
+if (track && !track.dataset.cloned) {
+  track.innerHTML += track.innerHTML;
+  track.dataset.cloned = "true";
+}
+
 
 
 /* =====================================================
