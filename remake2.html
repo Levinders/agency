@@ -36,6 +36,7 @@
             color: hsl(var(--foreground));
             scroll-behavior: smooth;
             line-height: 1.6;
+            overflow-x: hidden; /* prevent horizontal scroll on mobile */
         }
         
         .bg-primary { background-color: hsl(146 55% 36%); }
@@ -138,8 +139,8 @@
             color: hsl(146 55% 36%);
             border: 1px solid hsl(146 55% 36% / 0.2);
         }
-        
-        .nav-fixed {
+
+            .nav-fixed {
             position: fixed;
             top: 0;
             left: 0;
@@ -149,6 +150,7 @@
             backdrop-filter: blur(8px);
             border-bottom: 1px solid hsl(220 13% 91%);
         }
+
         
         .video-modal {
             display: none;
@@ -177,15 +179,7 @@
             animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .mobile-menu {
-            display: none;
-            background-color: white;
-            border-top: 1px solid hsl(220 13% 91%);
-            padding: 1rem;
-        }
-        
-        .mobile-menu.active { display: block; }
-        
+      
         
         .toast {
             position: fixed;
@@ -608,23 +602,296 @@
     scroll-snap-type: x mandatory;
   }
 
+ 
   .review-card {
     scroll-snap-align: start;
     min-width: 85%;
   }
 }
 
+
+        /* =====================================================
+           MOBILE SIDEBAR MENU
+        ====================================================== */
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(6px);
+            z-index: 90;
+            display: none;
+        }
+
+        .mobile-overlay.active {
+            display: block;
+        }
+
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 85%;
+            max-width: 320px;
+            background: white;
+            z-index: 100;
+            padding: 24px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-sidebar.active {
+            transform: translateX(0);
+        }
+
+        .mobile-sidebar a {
+            padding: 14px 0;
+            font-size: 16px;
+            font-weight: 600;
+            border-bottom: 1px solid hsl(var(--border));
+        }
+
+      /* =====================================================
+   MOBILE SPACING OPTIMIZATION
+   ===================================================== */
+@media (max-width: 768px) {
+
+  /* Reduce vertical padding without collapsing sections */
+  .section-padding {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  /* Cards: tighter but breathable */
+  .card,
+  .card-flat {
+    padding: 1.25rem;
+  }
+
+  /* Headings spacing */
+  h1 {
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    margin-bottom: 0.75rem;
+  }
+
+  /* Paragraph rhythm */
+  p {
+    margin-bottom: 0.75rem;
+  }
+}
+
+
+      /* =====================================================
+   MOBILE TAP TARGET IMPROVEMENTS
+   ===================================================== */
+@media (max-width: 768px) {
+
+  /* Buttons: larger tap area */
+  .btn,
+  .pricing-cta,
+  .roi-calc {
+    min-height: 48px;
+    padding: 0.875rem 1.25rem;
+    font-size: 1rem;
+  }
+
+  /* Mobile menu links */
+  .mobile-sidebar a {
+    padding: 16px 0;
+    font-size: 16px;
+  }
+
+  /* Form inputs */
+  .input,
+  .textarea {
+    min-height: 48px;
+    font-size: 16px; /* prevents iOS zoom */
+  }
+
+  /* Range sliders */
+  input[type="range"] {
+    height: 32px;
+  }
+}
+
+
+      /* =====================================================
+   MOBILE TYPOGRAPHY SCALE
+   ===================================================== */
+@media (max-width: 768px) {
+
+.page-h1 {
+    font-size: clamp(1.125rem, 5.5vw, 1.475rem);
+    line-height: 1.25;
+  }
+
+  h2 {
+    font-size: clamp(1.2rem, 5.5vw, 1.3rem);
+    line-height: 1.25;
+  }
+
+.problem-title {
+    font-size: 1.5rem; /* 24px */
+    line-height: 1.25;
+}
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  p,
+  li,
+  span {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .metric {
+    font-size: 1.1rem;
+  }
+}
+
+
+      /* =====================================================
+   MOBILE CTA OPTIMIZATION
+   ===================================================== */
+@media (max-width: 768px) {
+
+  /* Primary CTA section */
+  #audit .card-flat {
+    padding: 1.25rem;
+  }
+
+  #audit button {
+    position: sticky;
+    bottom: 12px;
+    z-index: 5;
+  }
+}
+
+
+      /* =====================================================
+   ROI CALCULATOR — MOBILE FIXES
+   ===================================================== */
+@media (max-width: 768px) {
+
+  .roi-overlay {
+    align-items: flex-start;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+  }
+
+  .roi-modal {
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 20px;
+  }
+
+  .roi-fields label {
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+
+  .roi-box strong {
+    font-size: 18px;
+  }
+
+  .roi-box span {
+    font-size: 14px;
+  }
+
+  .roi-values {
+    gap: 12px;
+  }
+
+  .roi-calc {
+    font-size: 15px;
+    padding: 14px;
+  }
+}
+
+
+
+        /* =====================================================
+   FIX: TOP BAR + MOBILE SIDEBAR VISIBILITY ONLY
+   ===================================================== */
+
+/* Hide desktop nav on mobile */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
+
+/* Restore layout on mobile (undo negative margins) */
+@media (max-width: 768px) {
+  .nav-fixed a[style],
+  .nav-fixed .desktop-only[style] {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+
     </style>
 </head>
 <body>
     <div id="toast" class="toast"></div>
     
-   
-    <!-- Navigation -->
-    <nav class="nav-fixed">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex items-center justify-between h-16">
-                <a href="https://packdez.com" class="flex items-center gap-2" style="margin-left:-50px;">
+     
+<!-- =====================================================
+     MOBILE NAV OVERLAY
+====================================================== -->
+<div id="mobile-overlay" class="mobile-overlay" onclick="closeMobileMenu()"></div>
+
+<!-- =====================================================
+     MOBILE SIDEBAR MENU
+====================================================== -->
+<aside id="mobile-menu" class="mobile-sidebar">
+
+  <!-- Logo + close -->
+  <div class="flex items-center justify-between mb-6">
+    <a href="#" class="flex items-center gap-2" onclick="closeMobileMenu()">
+      <img
+        src="https://packdez.com/assets/logo/packdez-logo-512x512.png"
+        alt="Packdez"
+        class="h-8 w-8"
+      />
+      <span class="text-xl font-bold">Packdez</span>
+    </a>
+
+    <button onclick="closeMobileMenu()" aria-label="Close menu" class="text-2xl font-bold">
+      ×
+    </button>
+  </div>
+
+  <!-- Nav links -->
+  <a href="#work" onclick="closeMobileMenu()">Work</a>
+  <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
+  <a href="#reviews" onclick="closeMobileMenu()">Reviews</a>
+  <a href="#faq" onclick="closeMobileMenu()">About</a>
+
+  <a href="#audit" onclick="closeMobileMenu()" class="mt-6 btn btn-primary">
+    Get Automation Plan
+  </a>
+
+</aside>
+
+
+<!-- =====================================================
+     FIXED NAVIGATION BAR
+====================================================== -->
+<nav class="nav-fixed">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex items-center justify-between h-16">           
+
+      <!-- Logo -->
+        <a href="https://packdez.com" class="flex items-center gap-2" style="margin-left:-50px;">
                     <img 
                         src="https://packdez.com/assets/logo/packdez-logo-512x512.png" 
                         alt="Packdez"
@@ -632,24 +899,36 @@
                     />
                     <span class="text-xl font-bold">Packdez</span>
                 </a>
-                
+
+      <!-- Desktop links -->
                 <div class="desktop-only flex items-center gap-6" style="margin-right:-90px;">
                     <a href="#work" class="text-sm font-medium text-muted-foreground hover:text-primary">Work</a>
                     <a href="#reviews" class="text-sm font-medium text-muted-foreground hover:text-primary">Pricing</a>
                     <a href="#pricing" class="text-sm font-medium text-muted-foreground hover:text-primary">Reviews</a>
                     <a href="#faq" class="text-sm font-medium text-muted-foreground hover:text-primary">About</a>
                     <a href="#audit" class="btn btn-primary ml-auto mr-10" style="padding: 0.5rem 1.25rem;">Get Free Audit</a>
-
                 </div>
-             </div>
-        </div>
-    </nav>
-    
+
+      <!-- Mobile hamburger -->
+        <button class="flex md:hidden" onclick="toggleMobileMenu()" aria-label="Open menu">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+
+    </div>
+  </div>
+</nav>
+
+
+   
     <!-- Hero Section -->
     <section class="section-padding" style="padding-top: 10rem; padding-bottom: 6rem;">
         <div class="max-w-4xl mx-auto px-4">
             <div class="text-center fade-in">
-                <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight" style="letter-spacing: -0.02em;">
+                <h1 class="page-h1 text-4xl md:text-6xl font-black mb-6 leading-tight" style="letter-spacing: -0.02em;">
                     Stop managing spreadsheets Start running systems
                 </h1>
                 
@@ -669,10 +948,11 @@
         </div>
     </section>
     
+    
     <!-- Problem Awareness -->
     <section class="section-padding bg-muted">
         <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
+            <h2 class="problem-title text-3xl md:text-4xl font-bold mb-4 text-center">
                 Your Sheets aren’t broken - your process is.
             </h2>
             <p class="text-lg text-muted-foreground mb-12 text-center max-w-2xl mx-auto">
@@ -1291,9 +1571,10 @@
       </div>
     </div>
 
-    <button class="roi-calc" onclick="closeROI()">
-      <a href="#audit">Talk through this setup</a>
-    </button>
+        <a href="#audit" class="roi-calc" onclick="closeROI()">
+          Talk through this setup
+        </a>
+
   </div>
 </div>
 
@@ -1366,7 +1647,7 @@
                         Get my automation plan
                     </button>
                     <p class="text-sm text-muted-foreground text-center">
-                        No obligation. You’ll hear back within 24 hours.
+                        No obligation. You’ll hear back in 24 hours.
                     </p>
                 </form>
             </div>
@@ -1509,20 +1790,8 @@
     </div>
     
     <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
-                
-        // Mobile menu
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('active');
-        }
-        
-        function closeMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.remove('active');
-        }
-        
+              
+      
         // Video modal
         function openVideo(videoId) {
             const modal = document.getElementById('video-modal');
@@ -1673,8 +1942,30 @@ updateROI();
 /* =============================
    carousel of reviews section
    ============================= */
-          const track = document.querySelector(".reviews-track");
+const track = document.querySelector(".reviews-track");
+if (track && !track.dataset.cloned) {
   track.innerHTML += track.innerHTML;
+  track.dataset.cloned = "true";
+}
+
+
+
+/* =====================================================
+     MOBILE MENU SCRIPT
+====================================================== */
+    function toggleMobileMenu() {
+        document.getElementById('mobile-menu').classList.add('active');
+        document.getElementById('mobile-overlay').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu() {
+        document.getElementById('mobile-menu').classList.remove('active');
+        document.getElementById('mobile-overlay').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+      
+    lucide.createIcons();
 
     </script>
 </body>
