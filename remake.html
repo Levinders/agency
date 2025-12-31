@@ -150,7 +150,7 @@
             backdrop-filter: blur(8px);
             border-bottom: 1px solid hsl(220 13% 91%);
         }
-    
+
         
         .video-modal {
             display: none;
@@ -860,22 +860,26 @@
 ====================================================== -->
 <nav class="nav-fixed">
   <div class="max-w-6xl mx-auto px-4">
-    <div class="flex items-center justify-between h-16">
+    <div class="flex items-center justify-between h-16">           
 
       <!-- Logo -->
-      <a href="#" class="flex items-center gap-2">
-        <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" class="h-8 w-8">
-        <span class="text-xl font-bold">Packdez</span>
-      </a>
+        <a href="https://packdez.com" class="flex items-center gap-2" style="margin-left:-50px;">
+                    <img 
+                        src="https://packdez.com/assets/logo/packdez-logo-512x512.png" 
+                        alt="Packdez"
+                        class="h-8 w-8"
+                    />
+                    <span class="text-xl font-bold">Packdez</span>
+                </a>
 
       <!-- Desktop links -->
-      <div class="hidden md:flex items-center gap-6">
-        <a href="#work">Work</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#faq">About</a>
-        <a href="#audit" class="btn btn-primary">Get Free Audit</a>
-      </div>
+                <div class="desktop-only flex items-center gap-6" style="margin-right:-90px;">
+                    <a href="#work" class="text-sm font-medium text-muted-foreground hover:text-primary">Work</a>
+                    <a href="#reviews" class="text-sm font-medium text-muted-foreground hover:text-primary">Pricing</a>
+                    <a href="#pricing" class="text-sm font-medium text-muted-foreground hover:text-primary">Reviews</a>
+                    <a href="#faq" class="text-sm font-medium text-muted-foreground hover:text-primary">About</a>
+                    <a href="#audit" class="btn btn-primary ml-auto mr-10" style="padding: 0.5rem 1.25rem;">Get Free Audit</a>
+                </div>
 
       <!-- Mobile hamburger -->
         <button class="flex md:hidden" onclick="toggleMobileMenu()" aria-label="Open menu">
