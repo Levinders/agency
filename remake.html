@@ -140,7 +140,7 @@
             border: 1px solid hsl(146 55% 36% / 0.2);
         }
 
-        .nav-fixed-pc {
+            .nav-fixed {
             position: fixed;
             top: 0;
             left: 0;
@@ -150,7 +150,7 @@
             backdrop-filter: blur(8px);
             border-bottom: 1px solid hsl(220 13% 91%);
         }
-
+    
         
         .video-modal {
             display: none;
@@ -610,17 +610,7 @@
     scroll-snap-type: x mandatory;
   }
 
-    .nav-fixed {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 50;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid hsl(220 13% 91%);
-        }
-    
+  
   .review-card {
     scroll-snap-align: start;
     min-width: 85%;
@@ -634,6 +624,19 @@
         ====================================================== */
         .desktop-only {
             display: flex;
+
+
+        .nav-fixed-pc {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid hsl(220 13% 91%);
+        }
+            
         }
 
         .mobile-only {
