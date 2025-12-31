@@ -810,6 +810,29 @@
   }
 }
 
+
+
+        /* =====================================================
+   FIX: TOP BAR + MOBILE SIDEBAR VISIBILITY ONLY
+   ===================================================== */
+
+/* Hide desktop nav on mobile */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
+
+/* Restore layout on mobile (undo negative margins) */
+@media (max-width: 768px) {
+  .nav-fixed a[style],
+  .nav-fixed .desktop-only[style] {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+
     </style>
 </head>
 <body>
