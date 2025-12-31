@@ -2,204 +2,198 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sheets Automation for Operations Teams | Packdez</title>
-    <meta name="description" content="We build automated operational systems in Google Sheets for growing teams. No templates. No bloat. Just reliable systems that work.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>AutomateOps Agency | Custom Google Sheets & App Script Solutions</title>
+    <meta name="description" content="Transform your business operations with custom automation solutions built on Google Sheets and App Script. Save 20+ hours per week and reduce errors by 90%.">
 
-    <!-- Tailwind CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
 
     <style>
-        /* =====================================================
-           BASE RESET + VARIABLES (UNCHANGED)
-        ====================================================== */
-        :root {
-            --background: 0 0% 100%;
-            --foreground: 220 20% 10%;
-            --primary: 146 55% 36%;
-            --primary-foreground: 0 0% 100%;
-            --muted: 220 14% 96%;
-            --muted-foreground: 220 9% 46%;
-            --border: 220 13% 91%;
-            --destructive: 0 84% 60%;
+        html { scroll-behavior: smooth; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .btn-transition {
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .btn-transition:hover {
+            transform: translateY(-1px);
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: hsl(var(--background));
-            color: hsl(var(--foreground));
-            scroll-behavior: smooth;
-            line-height: 1.6;
-            overflow-x: hidden; /* prevent horizontal scroll on mobile */
-        }
-
-        /* =====================================================
-           MOBILE NAV VISIBILITY HELPERS
-        ====================================================== */
-        .desktop-only {
-            display: flex;
-        }
-
-        .mobile-only {
-            display: none;
-        }
-
+        /* ===============================
+           MOBILE OPTIMIZATIONS ONLY
+           =============================== */
         @media (max-width: 768px) {
-            .desktop-only {
-                display: none;
+
+            /* Typography */
+            h1 {
+                font-size: clamp(2rem, 7vw, 2.5rem);
+                line-height: 1.15;
             }
-            .mobile-only {
-                display: flex;
+            h2 {
+                font-size: clamp(1.6rem, 6vw, 2rem);
+                line-height: 1.25;
+            }
+            p, li, span {
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+
+            /* Section spacing */
+            section {
+                padding-top: 3rem !important;
+                padding-bottom: 3rem !important;
+            }
+
+            /* Buttons & tap targets */
+            button, a.btn-transition {
+                min-height: 48px;
+                padding: 0.9rem 1.2rem;
+                font-size: 1rem;
+            }
+
+            input, textarea {
+                font-size: 16px;
+                min-height: 48px;
+            }
+
+            /* Prevent horizontal scroll */
+            body {
+                overflow-x: hidden;
             }
         }
-
-        /* =====================================================
-           MOBILE SIDEBAR MENU
-        ====================================================== */
-        .mobile-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.55);
-            backdrop-filter: blur(6px);
-            z-index: 90;
-            display: none;
-        }
-
-        .mobile-overlay.active {
-            display: block;
-        }
-
-        .mobile-sidebar {
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100%;
-            width: 85%;
-            max-width: 320px;
-            background: white;
-            z-index: 100;
-            padding: 24px;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .mobile-sidebar.active {
-            transform: translateX(0);
-        }
-
-        .mobile-sidebar a {
-            padding: 14px 0;
-            font-size: 16px;
-            font-weight: 600;
-            border-bottom: 1px solid hsl(var(--border));
-        }
-
-        /* =====================================================
-           KEEP EXISTING STYLES BELOW (UNCHANGED)
-           (Pricing, Reviews, ROI, etc)
-        ====================================================== */
-
-        /* ---- YOUR EXISTING CSS CONTINUES UNCHANGED ---- */
     </style>
 </head>
 
-<body>
+<body class="bg-white text-gray-900 font-sans antialiased">
 
-<!-- =====================================================
-     MOBILE NAV OVERLAY
-====================================================== -->
-<div id="mobile-overlay" class="mobile-overlay" onclick="closeMobileMenu()"></div>
+<!-- ================= NAV ================= -->
+<nav id="navbar" class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+        <span class="font-bold text-lg">[Your Agency]</span>
 
-<!-- =====================================================
-     MOBILE SIDEBAR MENU
-====================================================== -->
-<aside id="mobile-menu" class="mobile-sidebar">
-    <button onclick="closeMobileMenu()" class="mb-6 text-right font-bold text-xl">×</button>
-
-    <a href="#work" onclick="closeMobileMenu()">Work</a>
-    <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
-    <a href="#reviews" onclick="closeMobileMenu()">Reviews</a>
-    <a href="#faq" onclick="closeMobileMenu()">About</a>
-
-    <a href="#audit" onclick="closeMobileMenu()" class="mt-6 btn btn-primary">
-        Get Automation Plan
-    </a>
-</aside>
-
-<!-- =====================================================
-     FIXED NAVIGATION BAR
-====================================================== -->
-<nav class="nav-fixed">
-    <div class="max-w-6xl mx-auto px-4">
-        <div class="flex items-center justify-between h-16">
-
-            <!-- LOGO -->
-            <a href="/" class="flex items-center gap-2">
-                <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez" class="h-8 w-8">
-                <span class="text-xl font-bold">Packdez</span>
-            </a>
-
-            <!-- DESKTOP NAV -->
-            <div class="desktop-only items-center gap-6">
-                <a href="#work" class="text-sm font-medium text-muted-foreground hover:text-primary">Work</a>
-                <a href="#pricing" class="text-sm font-medium text-muted-foreground hover:text-primary">Pricing</a>
-                <a href="#reviews" class="text-sm font-medium text-muted-foreground hover:text-primary">Reviews</a>
-                <a href="#faq" class="text-sm font-medium text-muted-foreground hover:text-primary">About</a>
-                <a href="#audit" class="btn btn-primary ml-4" style="padding:0.5rem 1.25rem;">Get Automation Plan</a>
-            </div>
-
-            <!-- MOBILE HAMBURGER -->
-            <button class="mobile-only" onclick="toggleMobileMenu()" aria-label="Open menu">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <line x1="3" y1="6" x2="21" y2="6"/>
-                    <line x1="3" y1="12" x2="21" y2="12"/>
-                    <line x1="3" y1="18" x2="21" y2="18"/>
-                </svg>
-            </button>
-
+        <div class="hidden md:flex gap-6 text-sm">
+            <a href="#services">Services</a>
+            <a href="#process">Process</a>
+            <a href="#benefits">Benefits</a>
+            <a href="#testimonials">Reviews</a>
         </div>
+
+        <a href="#contact" class="btn-transition bg-blue-600 text-white rounded-lg px-4 py-2 text-sm">
+            Get Started
+        </a>
     </div>
 </nav>
 
-<!-- =====================================================
-     PAGE CONTENT (UNCHANGED)
-====================================================== -->
-<!-- EVERYTHING BELOW REMAINS EXACTLY AS YOU PROVIDED -->
-<!-- (Hero, sections, pricing, reviews, ROI, FAQ, footer) -->
+<!-- ================= HERO ================= -->
+<section class="min-h-[90vh] flex items-center justify-center pt-20 bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900">
+    <div class="max-w-5xl text-center px-4 fade-in">
+        <h1 class="font-extrabold text-white mb-6">
+            Stop Drowning in Spreadsheets.<br>
+            <span class="text-blue-400">Start Automating.</span>
+        </h1>
+        <p class="text-white/80 max-w-3xl mx-auto mb-10">
+            We build custom automation systems using Google Sheets and Apps Script that remove manual work, reduce errors, and scale operations.
+        </p>
+        <a href="#contact" class="btn-transition inline-flex items-center justify-center bg-blue-600 text-white rounded-lg px-8 py-4">
+            Get Your Automation Plan
+        </a>
+    </div>
+</section>
 
-<!-- ... YOUR FULL CONTENT CONTINUES HERE WITHOUT CHANGES ... -->
+<!-- ================= SERVICES ================= -->
+<section id="services">
+    <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-center font-bold mb-10">What We Build</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="p-6 border rounded-lg">Operations Automation</div>
+            <div class="p-6 border rounded-lg">CRM Systems</div>
+            <div class="p-6 border rounded-lg">Integrations</div>
+        </div>
+    </div>
+</section>
 
-<!-- =====================================================
-     MOBILE MENU SCRIPT
-====================================================== -->
-<script>
-    function toggleMobileMenu() {
-        document.getElementById('mobile-menu').classList.add('active');
-        document.getElementById('mobile-overlay').classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
+<!-- ================= PROCESS ================= -->
+<section id="process" class="bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-center font-bold mb-10">Simple, Predictable Process</h2>
+        <div class="grid md:grid-cols-4 gap-6 text-center">
+            <div>Discovery</div>
+            <div>Proposal</div>
+            <div>Build</div>
+            <div>Launch</div>
+        </div>
+    </div>
+</section>
 
-    function closeMobileMenu() {
-        document.getElementById('mobile-menu').classList.remove('active');
-        document.getElementById('mobile-overlay').classList.remove('active');
-        document.body.style.overflow = '';
-    }
-</script>
+<!-- ================= BENEFITS ================= -->
+<section id="benefits">
+    <div class="max-w-7xl mx-auto px-4">
+        <h2 class="font-bold mb-6">Why Teams Choose This</h2>
+        <ul class="space-y-4">
+            <li>Save 20+ hours per week</li>
+            <li>Reduce errors by 90%</li>
+            <li>Scale without hiring</li>
+        </ul>
+    </div>
+</section>
 
-<script>
-    lucide.createIcons();
-</script>
+<!-- ================= TESTIMONIALS ================= -->
+<section id="testimonials" class="bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-center font-bold mb-10">Trusted by Real Teams</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="p-6 bg-white border">“Saved us weeks of manual work.”</div>
+            <div class="p-6 bg-white border">“Reliable systems, no hacks.”</div>
+            <div class="p-6 bg-white border">“Exactly what we needed.”</div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="bg-blue-700 text-white">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+        <h2 class="font-bold mb-4">Get My Automation Plan</h2>
+        <p class="mb-6">No obligation. You’ll hear back within 24 hours.</p>
+        <form class="space-y-4 max-w-md mx-auto">
+            <input placeholder="Your name" class="w-full px-4 py-3 rounded text-black">
+            <input placeholder="Work email" class="w-full px-4 py-3 rounded text-black">
+            <textarea placeholder="Describe your workflow" class="w-full px-4 py-3 rounded text-black"></textarea>
+            <button class="btn-transition w-full bg-white text-blue-700 rounded-lg py-3 font-semibold">
+                Get My Automation Plan
+            </button>
+        </form>
+    </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="py-6 text-center text-sm text-gray-500">
+    © <script>document.write(new Date().getFullYear())</script> [Your Agency]
+</footer>
 
 </body>
 </html>
