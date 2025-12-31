@@ -610,6 +610,16 @@
     scroll-snap-type: x mandatory;
   }
 
+    .nav-fixed-mobile {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid hsl(220 13% 91%);
+        }
   
   .review-card {
     scroll-snap-align: start;
@@ -624,18 +634,6 @@
         ====================================================== */
         .desktop-only {
             display: flex;
-
-
-        .nav-fixed-pc {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 50;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid hsl(220 13% 91%);
-        }
             
         }
 
@@ -882,7 +880,7 @@
 <!-- =====================================================
      FIXED NAVIGATION BAR
 ====================================================== -->
-<nav class="nav-fixed">
+<nav class="nav-fixed-mobile">
     <div class="max-w-6xl mx-auto px-4">
         <div class="flex items-center justify-between h-16">
 
@@ -907,7 +905,7 @@
 
 
     <!-- Navigation -->
-    <nav class="nav-fixed-pc">
+    <nav class="nav-fixed">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex items-center justify-between h-16">
                 <a href="https://packdez.com" class="flex items-center gap-2" style="margin-left:-50px;">
