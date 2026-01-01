@@ -89,6 +89,7 @@
         
         .hero-image-offset {
             position: relative;
+            padding: clamp(12px, 2vw, 20px);
         }
 
         .hero-image-offset img {
@@ -101,10 +102,10 @@
         .hero-image-offset::after {
             content: '';
             position: absolute;
-            top: -20px;
-            left: -20px;
-            right: 20px;
-            bottom: 20px;
+            top: -12px;
+            left: -12px;
+            right: 12px;
+            bottom: 12px;
             border: 3px solid hsl(146 55% 36%);
             border-radius: 0.5rem;
             z-index: -1;
