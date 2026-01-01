@@ -410,6 +410,22 @@
    FLOATING ROI PILL
    ============================= */
 
+.roi-cta-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.roi-calc {
+  width: auto;          /* remove full-width */
+  min-width: 240px;     /* keeps it strong */
+  max-width: 100%;
+  text-align: center;
+  padding: 16px 28px;
+  border-radius: 999px;
+}
+
+
 #roi-pill {
   position: fixed;
   bottom: 24px;
@@ -1595,9 +1611,12 @@ h1 {
       </div>
     </div>
 
-        <a href="#audit" class="roi-calc" onclick="closeROI()">
-          Talk through this setup
-        </a>
+        <div class="roi-cta-wrap">
+          <a href="#audit" class="roi-calc" onclick="closeROI()">
+            Talk through this setup
+          </a>
+        </div>
+
 
   </div>
 </div>
