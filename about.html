@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Packdez | Reliable Google Sheets Automation</title>
+
+  <style>
+    /* ----------------------------------
+       ABOUT PAGE — SHARED PRINCIPLES
+       ---------------------------------- */
+
+    .about-section {
+      padding: clamp(64px, 8vw, 96px) 1rem;
+    }
+
+    .about-container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .fade-in {
+      animation: fadeUp 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ----------------------------------
+       HERO IMAGE FLOATING CARD
+       ---------------------------------- */
+
+    .profile-card {
+      background: linear-gradient(180deg, #ffffff, #f9fafb);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 30px 80px rgba(15, 23, 42, 0.18);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .profile-img {
+      width: 100%;
+      border-radius: 18px;
+      object-fit: cover;
+    }
+
+    /* ----------------------------------
+       TEXT STYLES
+       ---------------------------------- */
+
+    .eyebrow {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #2e8c4e;
+      margin-bottom: 12px;
+    }
+
+    .about-lead {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .about-sub {
+      font-size: 18px;
+      color: #475569;
+      max-width: 640px;
+    }
+
+    .about-block {
+      max-width: 760px;
+    }
+
+    .about-block h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .about-block p {
+      font-size: 16px;
+      color: #475569;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 32px;
+    }
+
+    .principle-card {
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .principle-card strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    /* ----------------------------------
+       CTA
+       ---------------------------------- */
+
+    .about-cta {
+      margin-top: 48px;
+      display: inline-block;
+      background: linear-gradient(180deg, #2e8c4e, #276f40);
+      color: #ffffff;
+      padding: 16px 28px;
+      border-radius: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 12px 30px rgba(46, 140, 78, 0.35);
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     HERO / INTRO
+     Image: floating card with subtle animation
+====================================================== -->
+<section class="about-section">
+  <div class="about-container" style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:64px;align-items:center;">
+    
+    <!-- Copy -->
+    <div class="fade-in">
+      <div class="eyebrow">ABOUT PACKDEZ</div>
+      <h1 class="about-lead">
+        We build systems teams can rely on.
+      </h1>
+      <p class="about-sub">
+        Packdez helps teams turn Google Sheets into reliable, automated systems — removing manual work, reducing errors, and creating clarity where spreadsheets usually break.
+      </p>
+    </div>
+
+    <!-- Image -->
+    <div class="profile-card fade-in">
+      <!-- Floating image with soft shadow -->
+      <img
+        src="https://raw.githubusercontent.com/Levinders/Portfolio-Hub-Looker-Studio-Portfolio-Page-/refs/heads/main/me3.png"
+        alt="Raphael Levinder"
+        class="profile-img"
+      />
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================
+     WHY PACKDEZ EXISTS
+====================================================== -->
+<section class="about-section" style="background:#f8fafc;">
+  <div class="about-container about-block fade-in">
+    <h3>Why Packdez exists</h3>
+    <p>
+      Most teams don’t need more tools — they need their existing systems to work.
+    </p>
+    <p>
+      Google Sheets is powerful, but without structure and automation it becomes fragile. Formulas break. Data gets copied manually. Reports are rebuilt instead of trusted.
+    </p>
+    <p>
+      Packdez was created to fix that gap: building operational systems that are simple to use, hard to break, and designed to scale with the team using them.
+    </p>
+  </div>
+</section>
+
+<!-- =====================================================
+     HOW PACKDEZ WORKS
+====================================================== -->
+<section class="about-section">
+  <div class="about-container about-block fade-in">
+    <h3>How Packdez works</h3>
+    <p>
+      Every project follows a predictable, low-friction process.
+    </p>
+    <ul style="padding-left:18px;color:#475569;line-height:1.6;">
+      <li>• We start by mapping how work actually happens today</li>
+      <li>• We automate only what creates real leverage</li>
+      <li>• We build directly inside Google Sheets using Apps Script and APIs</li>
+      <li>• We document everything so teams own the system</li>
+    </ul>
+    <p>
+      The result is a system your team understands, trusts, and can run without constant fixes.
+    </p>
+  </div>
+</section>
+
+<!-- =====================================================
+     WHO’S BEHIND PACKDEZ
+====================================================== -->
+<section class="about-section" style="background:#f8fafc;">
+  <div class="about-container about-block fade-in">
+    <h3>Who’s behind Packdez</h3>
+    <p>
+      Packdez is led by <strong>Raphael Levinder</strong>, a systems builder focused on operational automation, reporting, and internal tools.
+    </p>
+    <p>
+      Over the past years, Raphael has worked with founders, operations teams, and agencies to replace manual workflows with reliable Google Sheets systems — often removing entire categories of repetitive work.
+    </p>
+    <p>
+      Clients consistently highlight clarity, communication, and systems that work as promised — not prototypes that break under pressure.
+    </p>
+  </div>
+</section>
+
+<!-- =====================================================
+     PRINCIPLES
+====================================================== -->
+<section class="about-section">
+  <div class="about-container fade-in">
+    <h3 style="margin-bottom:24px;">Operating principles</h3>
+
+    <div class="principles">
+      <div class="principle-card">
+        <strong>Clarity over complexity</strong>
+        <p>Systems should be understandable by the people who use them.</p>
+      </div>
+      <div class="principle-card">
+        <strong>Reliability first</strong>
+        <p>Automation only matters if it keeps working as things change.</p>
+      </div>
+      <div class="principle-card">
+        <strong>No unnecessary tools</strong>
+        <p>Build inside tools teams already trust.</p>
+      </div>
+      <div class="principle-card">
+        <strong>Ownership matters</strong>
+        <p>Clients leave with documentation and full control.</p>
+      </div>
+    </div>
+
+    <a href="/#audit" class="about-cta">
+      Talk through your workflow
+    </a>
+  </div>
+</section>
+
+</body>
+</html>
