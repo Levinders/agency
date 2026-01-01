@@ -86,42 +86,39 @@
 
 
         
-        
+    /* Hero image container */
 .hero-image-offset {
   position: relative;
-  z-index: 1;
 }
 
+/* Hero image itself */
 .hero-image-offset img {
-  display: block;
   width: 100%;
   height: auto;
   border-radius: 0.5rem;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-  background: white;
 }
 
-.hero-image-offset::before {
+/* Green offset border behind the image */
+.hero-image-offset::after {
   content: '';
   position: absolute;
-  inset: 0;
+  top: -20px;
+  left: -20px;
+  right: 20px;
+  bottom: 20px;
   border: 3px solid hsl(146 55% 36%);
   border-radius: 0.5rem;
-  transform: translate(-18px, -18px);
   z-index: -1;
 }
 
-@media (max-width: 768px) {
-  .hero-image-offset::before {
-    transform: translate(-10px, -10px);
-  }
-}
-
-        
-
+/* Mobile adjustment for the green border */
 @media (max-width: 968px) {
-  .hero-image-offset::before {
-    transform: translate(-10px, -10px);
+  .hero-image-offset::after {
+    top: -10px;
+    left: -10px;
+    right: 10px;
+    bottom: 10px;
   }
 }
 
