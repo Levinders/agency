@@ -620,7 +620,7 @@
      HERO SECTION WITH IMAGE
 ====================================================== -->
 <section class="section-padding hero-section" style="padding-top: 8rem; padding-bottom: 6rem;">
-  <div class="max-w-6xl mx-auto px-4">
+  <div class="max-w-6xl mx-auto px-4 fade-up">
     <div class="grid md:grid-cols-2 gap-12 items-center">
 
       <!-- Text Content -->
@@ -1051,6 +1051,19 @@
 </footer>
 
 <script>
+
+    const fadeInObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.fade-in-section')
+  .forEach(el => fadeInObserver.observe(el));
+
+    
     // Mobile menu
     function toggleMobileMenu() {
         document.getElementById('mobile-menu').classList.add('active');
@@ -1110,8 +1123,6 @@
         });
     });
 
-    
-   
     // Update year
     document.getElementById('year').textContent = new Date().getFullYear();
 
