@@ -826,7 +826,35 @@ h1 {
     margin-left: 0 !important;
     margin-right: 0 !important;
   }
+
+    
+/* =====================================================
+   REVIEWS — MOBILE: REMOVE SOFT EDGES
+   ===================================================== */
+  .reviews-carousel::before,
+  .reviews-carousel::after {
+    display: none;
+  }
+
+
+    /* =====================================================
+   REVIEWS — MOBILE: ENABLE AUTO SCROLL
+   ===================================================== */
+.reviews-track {
+    animation: reviewScroll 45s linear infinite;
+    overflow: visible;
+    scroll-snap-type: none;
+    animation-duration: 60s;
+
+  }
+
+  .review-card {
+    min-width: 80%;
+    scroll-snap-align: unset;
+  }
+    
 }
+
 
 
     </style>
