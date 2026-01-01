@@ -492,6 +492,79 @@
             font-weight: 600;
             color: hsl(220 20% 10%);
         }
+
+
+
+/* =====================================================
+   HERO LAYOUT
+====================================================== */
+.section-padding {
+  padding: 5rem 1rem;
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding: 3rem 1rem;
+  }
+}
+
+/* =====================================================
+   HERO BADGE
+====================================================== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 0.375rem;
+  background-color: hsl(146 55% 36% / 0.1);
+  color: hsl(146 55% 36%);
+  border: 1px solid hsl(146 55% 36% / 0.2);
+}
+
+/* =====================================================
+   HERO FLOATING IMAGE CARD
+====================================================== */
+.floating-image-card {
+  position: relative;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
+  border: 1px solid hsl(220 13% 91%);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-image-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 80px rgba(46, 140, 78, 0.15);
+}
+
+.floating-image-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.floating-image-card:hover img {
+  transform: scale(1.03);
+}
+
+/* =====================================================
+   HERO FADE-IN ANIMATION
+====================================================== */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
     </style>
 </head>
 <body>
@@ -543,33 +616,43 @@
   </div>
 </nav>
 
-<!-- Magazine-style hero -->
-<section class="hero-magazine">
-    <div class="hero-text-block fade-up">
-        <div class="hero-eyebrow">About Packdez</div>
-        <h1 style="font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.02em;">
-            Operational systems that scale
-        </h1>
-        <p style="font-size: 1.25rem; color: hsl(220 9% 46%); line-height: 1.7; margin-bottom: 2rem;">
-            Packdez builds automation systems in Google Sheets that reduce manual work, eliminate errors, and scale with your team.
-        </p>
-        <p style="font-size: 1.125rem; color: hsl(220 9% 46%); line-height: 1.6; margin-bottom: 2.5rem;">
-            Custom-built. Fully documented. Delivered in 7-15 days.
-        </p>
-        <a href="https://packdez.com#audit" class="btn btn-primary" style="font-size: 1.125rem;">
-            Get your automation plan
-        </a>
-    </div>
+<!-- =====================================================
+     HERO SECTION WITH IMAGE
+====================================================== -->
+<section class="section-padding hero-section" style="padding-top: 8rem; padding-bottom: 6rem;">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
 
-    <div class="hero-image-offset fade-up">
+      <!-- Text Content -->
+      <div class="fade-in-section">
+        <div class="badge mb-4">About Packdez</div>
+
+        <h1 class="text-4xl md:text-5xl font-black mb-6 leading-tight tracking-[-0.02em]">
+          Building systems that work, so your team can focus on what matters
+        </h1>
+
+        <p class="text-lg text-muted-foreground mb-6 leading-relaxed">
+          Packdez exists to remove operational friction. We build reliable automation systems in Google Sheets that reduce manual work, eliminate errors, and scale with your team.
+        </p>
+
+        <p class="text-lg text-muted-foreground leading-relaxed">
+          No templates. No shortcuts. Just custom-built systems designed around how your team actually works.
+        </p>
+      </div>
+
+      <!-- Floating Image Card -->
+      <div class="fade-in-section floating-image-card">
         <img 
           src="https://raw.githubusercontent.com/Levinders/Portfolio-Hub-Looker-Studio-Portfolio-Page-/refs/heads/main/me3.png" 
-          alt="Raphael Levinders - Founder of Packdez"
+          alt="Raphael Levinder - Founder of Packdez"
           loading="lazy"
         />
-        
+      </div>
+
     </div>
+  </div>
 </section>
+
 
 <!-- Why section with sidebar layout -->
 <section style="background: hsl(220 14% 98%); padding: 5rem 0;">
@@ -1027,6 +1110,27 @@
         });
     });
 
+    
+  // Fade-in animation on scroll (used by hero)
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.fade-in-section').forEach(section => {
+    observer.observe(section);
+  });
+
+
+    
     // Update year
     document.getElementById('year').textContent = new Date().getFullYear();
 
