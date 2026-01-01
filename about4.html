@@ -979,24 +979,18 @@
 <script>
 
 
-      // Fade-in animation on scroll (used by hero)
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, observerOptions);
-
-  document.querySelectorAll('.fade-in-section').forEach(section => {
-    observer.observe(section);
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
   });
+}, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
 
+// Observe BOTH hero + content animations
+document
+  .querySelectorAll('.fade-in-section, .fade-up')
+  .forEach(el => observer.observe(el));
 
     
     // Mobile menu
@@ -1024,17 +1018,6 @@
         });
         lucide.createIcons();
     }
-
-    // Fade-in on scroll
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
-
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
     // Sidebar navigation active state
     const sections = document.querySelectorAll('[id]');
