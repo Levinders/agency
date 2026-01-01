@@ -84,6 +84,42 @@
             border-bottom: 1px solid hsl(220 13% 91%);
         }
 
+
+        
+        
+        .hero-image-offset {
+            position: relative;
+        }
+
+        .hero-image-offset img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .hero-image-offset::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: 20px;
+            bottom: 20px;
+            border: 3px solid hsl(146 55% 36%);
+            border-radius: 0.5rem;
+            z-index: -1;
+        }
+
+        @media (max-width: 968px) {
+            .hero-image-offset::after {
+                top: -10px;
+                left: -10px;
+                right: 10px;
+                bottom: 10px;
+            }
+        }
+
+        
         /* Sidebar layout for content sections */
         .sidebar-layout {
             display: grid;
@@ -566,7 +602,7 @@
       </div>
 
       <!-- Floating Image Card -->
-      <div class="fade-in-section floating-image-card">
+      <div class="fade-in-section floating-image-card hero-image-offset fade-up">
         <img 
           src="https://raw.githubusercontent.com/Levinders/Portfolio-Hub-Looker-Studio-Portfolio-Page-/refs/heads/main/me3.png" 
           alt="Raphael Levinder - Founder of Packdez"
