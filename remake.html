@@ -596,28 +596,36 @@
 
 /* Mobile behavior */
 @media (max-width: 768px) {
-  .reviews-track {
-    animation: none;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-  }
 
- 
 .reviews-carousel {
     overflow: hidden;
   }
 
-  .reviews-track {
-    gap: 0;
+  /* Remove soft edge fades */
+  .reviews-carousel::before,
+  .reviews-carousel::after {
+    display: none;
   }
 
+  /* Keep auto-scroll */
+  .reviews-track {
+    display: flex;
+    gap: 0;
+    width: max-content;
+    animation: reviewScroll 60s linear infinite;
+    overflow: visible;
+  }
+
+  /* One full card at a time */
   .review-card {
     min-width: 100%;
     max-width: 100%;
-    padding-right: 1rem;
     padding-left: 1rem;
+    padding-right: 1rem;
   }
+
 }
+
 
 
         /* =====================================================
@@ -836,33 +844,7 @@ h1 {
     margin-left: 0 !important;
     margin-right: 0 !important;
   }
-
-    
-/* =====================================================
-   REVIEWS — MOBILE: REMOVE SOFT EDGES
-   ===================================================== */
-  .reviews-carousel::before,
-  .reviews-carousel::after {
-    display: none;
-  }
-
-
-    /* =====================================================
-   REVIEWS — MOBILE: ENABLE AUTO SCROLL
-   ===================================================== */
-.reviews-track {
-    animation: reviewScroll 45s linear infinite;
-    overflow: visible;
-    scroll-snap-type: none;
-    animation-duration: 60s;
-
-  }
-
-  .review-card {
-    min-width: 80%;
-    scroll-snap-align: unset;
-  }
-    
+   
 }
 
 
