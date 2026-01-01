@@ -99,26 +99,24 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
         }
 
+   
         .hero-image-offset::after {
-            content: '';
-            position: absolute;
-            top: -12px;
-            left: -12px;
-            right: 12px;
-            bottom: 12px;
-            border: 3px solid hsl(146 55% 36%);
-            border-radius: 0.5rem;
-            z-index: -1;
+          content: '';
+          position: absolute;
+          inset: 0;
+          border: 3px solid hsl(146 55% 36%);
+          border-radius: 0.5rem;
+          transform: translate(-20px, -20px);
+          z-index: -1;
         }
 
-        @media (max-width: 968px) {
-            .hero-image-offset::after {
-                top: -10px;
-                left: -10px;
-                right: 10px;
-                bottom: 10px;
-            }
-        }
+
+@media (max-width: 968px) {
+  .hero-image-offset::after {
+    transform: translate(-10px, -10px);
+  }
+}
+
 
         
         /* Sidebar layout for content sections */
