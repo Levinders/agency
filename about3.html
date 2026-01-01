@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Packdez | Google Sheets Automation Experts</title>
+    <meta name="description" content="Learn about Packdez - building reliable operational systems in Google Sheets for growing teams. Clear process, measurable results.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 220 20% 10%;
+            --primary: 146 55% 36%;
+            --primary-foreground: 0 0% 100%;
+            --muted: 220 14% 96%;
+            --muted-foreground: 220 9% 46%;
+            --border: 220 13% 91%;
+            --destructive: 0 84% 60%;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+            scroll-behavior: smooth;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .bg-primary { background-color: hsl(146 55% 36%); }
+        .text-primary { color: hsl(146 55% 36%); }
+        .border-primary { border-color: hsl(146 55% 36%); }
+        .bg-muted { background-color: hsl(220 14% 96%); }
+        .text-muted-foreground { color: hsl(220 9% 46%); }
+        .border-border { border-color: hsl(220 13% 91%); }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background-color: hsl(146 55% 36%);
+            color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary:hover {
+            background-color: hsl(146 55% 32%);
+            box-shadow: 0 4px 12px rgba(46, 140, 78, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .nav-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid hsl(220 13% 91%);
+        }
+
+        /* New split-screen hero design */
+        .hero-split {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @media (max-width: 968px) {
+            .hero-split {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            padding: 6rem 3rem;
+        }
+
+        .hero-image-side {
+            background: linear-gradient(135deg, hsl(146 55% 36% / 0.05), hsl(146 55% 36% / 0.15));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-image-side::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, hsl(146 55% 36% / 0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .hero-image-wrapper img {
+            width: 100%;
+            height: auto;
+            border-radius: 1rem;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Horizontal timeline design */
+        .timeline-horizontal {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            padding: 2rem 0;
+            scroll-snap-type: x mandatory;
+        }
+
+        .timeline-item {
+            min-width: 300px;
+            scroll-snap-align: start;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, hsl(146 55% 36%), hsl(146 65% 45%));
+            border-radius: 2px;
+        }
+
+        /* Grid stats layout */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            border: 2px solid hsl(220 13% 91%);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: hsl(146 55% 36%);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(46, 140, 78, 0.15);
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            color: hsl(146 55% 36%);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Bento box grid layout */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .bento-item {
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .bento-item:hover {
+            border-color: hsl(146 55% 36% / 0.5);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .bento-large {
+            grid-column: span 8;
+        }
+
+        .bento-small {
+            grid-column: span 4;
+        }
+
+        .bento-medium {
+            grid-column: span 6;
+        }
+
+        @media (max-width: 968px) {
+            .bento-large,
+            .bento-small,
+            .bento-medium {
+                grid-column: span 12;
+            }
+        }
+
+        /* Review cards - masonry style */
+        .reviews-masonry {
+            column-count: 2;
+            column-gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .reviews-masonry {
+                column-count: 1;
+            }
+        }
+
+        .review-card {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 1rem;
+            padding: 1.5rem;
+        }
+
+        /* Principle cards - icon on top */
+        .principle-card {
+            background: linear-gradient(135deg, white, hsl(220 14% 98%));
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 1.25rem;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .principle-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+            border-color: hsl(146 55% 36% / 0.3);
+        }
+
+        .principle-icon {
+            width: 4rem;
+            height: 4rem;
+            background: hsl(146 55% 36%);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        /* Quote with large quotation marks */
+        .quote-large {
+            position: relative;
+            background: hsl(146 55% 36% / 0.03);
+            border-radius: 1.5rem;
+            padding: 3rem 2.5rem;
+            margin: 3rem 0;
+        }
+
+        .quote-large::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            font-size: 10rem;
+            font-family: Georgia, serif;
+            color: hsl(146 55% 36% / 0.15);
+            line-height: 1;
+            z-index: 0;
+        }
+
+        .quote-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Mobile sidebar */
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(6px);
+            z-index: 90;
+            display: none;
+        }
+
+        .mobile-overlay.active {
+            display: block;
+        }
+
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 85%;
+            max-width: 320px;
+            background: white;
+            z-index: 100;
+            padding: 24px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-sidebar.active {
+            transform: translateX(0);
+        }
+
+        .mobile-sidebar a {
+            padding: 14px 0;
+            font-size: 16px;
+            font-weight: 600;
+            border-bottom: 1px solid hsl(var(--border));
+        }
+
+        /* Fade animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .desktop-only {
+                display: none !important;
+            }
+
+            .hero-content {
+                padding: 3rem 1.5rem;
+            }
+
+            .stat-value {
+                font-size: 2rem;
+            }
+
+            .btn {
+                min-height: 48px;
+                padding: 0.875rem 1.25rem;
+            }
+
+            .timeline-horizontal {
+                gap: 1rem;
+            }
+
+            .timeline-item {
+                min-width: 280px;
+            }
+        }
+
+        .section-dark {
+            background: hsl(220 20% 10%);
+            color: white;
+        }
+
+        .section-dark h2,
+        .section-dark h3 {
+            color: white;
+        }
+
+        .section-dark .text-muted-foreground {
+            color: hsl(220 14% 75%);
+        }
+
+        .badge-inline {
+            display: inline-block;
+            background: hsl(146 55% 36% / 0.1);
+            color: hsl(146 55% 36%);
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: 1px solid hsl(146 55% 36% / 0.2);
+        }
+    </style>
+</head>
+<body>
+    
+<!-- Mobile overlay -->
+<div id="mobile-overlay" class="mobile-overlay" onclick="closeMobileMenu()"></div>
+
+<!-- Mobile sidebar -->
+<aside id="mobile-menu" class="mobile-sidebar">
+  <div class="flex items-center justify-between mb-6">
+    <a href="https://packdez.com" class="flex items-center gap-2" onclick="closeMobileMenu()">
+      <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez" class="h-8 w-8" />
+      <span class="text-xl font-bold">Packdez</span>
+    </a>
+    <button onclick="closeMobileMenu()" aria-label="Close menu" class="text-2xl font-bold">×</button>
+  </div>
+  <a href="https://packdez.com#work" onclick="closeMobileMenu()">Work</a>
+  <a href="https://packdez.com#pricing" onclick="closeMobileMenu()">Pricing</a>
+  <a href="https://packdez.com#reviews" onclick="closeMobileMenu()">Reviews</a>
+  <a href="about.html" onclick="closeMobileMenu()">About</a>
+  <a href="https://packdez.com#audit" onclick="closeMobileMenu()" class="mt-6 btn btn-primary">
+    Get Automation Plan
+  </a>
+</aside>
+
+<!-- Navigation -->
+<nav class="nav-fixed">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex items-center justify-between h-16">
+      <a href="https://packdez.com" class="flex items-center gap-2" style="margin-left:-50px;">
+        <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez" class="h-8 w-8" />
+        <span class="text-xl font-bold">Packdez</span>
+      </a>
+      <div class="desktop-only flex items-center gap-6" style="margin-right:-90px;">
+        <a href="https://packdez.com#work" class="text-sm font-medium text-muted-foreground hover:text-primary">Work</a>
+        <a href="https://packdez.com#pricing" class="text-sm font-medium text-muted-foreground hover:text-primary">Pricing</a>
+        <a href="https://packdez.com#reviews" class="text-sm font-medium text-muted-foreground hover:text-primary">Reviews</a>
+        <a href="about.html" class="text-sm font-medium text-primary">About</a>
+        <a href="https://packdez.com#audit" class="btn btn-primary ml-auto mr-10" style="padding: 0.5rem 1.25rem;">Get Free Audit</a>
+      </div>
+      <button class="flex md:hidden" onclick="toggleMobileMenu()" aria-label="Open menu">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Split-screen hero -->
+<section class="hero-split">
+    <div class="hero-content">
+        <div class="max-w-xl">
+            <div class="badge-inline mb-4">About Packdez</div>
+            <h1 class="text-5xl md:text-6xl font-black mb-6 leading-[1.1] tracking-tight">
+                Automation systems that scale
+            </h1>
+            <p class="text-xl text-muted-foreground mb-8 leading-relaxed">
+                Packdez builds operational systems in Google Sheets that reduce manual work, eliminate errors, and scale with your team.
+            </p>
+            <p class="text-lg text-muted-foreground mb-8">
+                Custom-built. Fully documented. Delivered in 7-15 days.
+            </p>
+            <a href="https://packdez.com#audit" class="btn btn-primary text-lg">
+                Get your automation plan
+            </a>
+        </div>
+    </div>
+    <div class="hero-image-side">
+        <div class="hero-image-wrapper">
+            <img 
+                src="https://raw.githubusercontent.com/Levinders/Portfolio-Hub-Looker-Studio-Portfolio-Page-/refs/heads/main/me3.png" 
+                alt="Packdez automation systems"
+                loading="lazy"
+            />
+        </div>
+    </div>
+</section>
+
+<!-- Why section with horizontal timeline -->
+<section style="padding: 6rem 1rem; background: hsl(220 14% 96%);">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12 fade-in">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">Why Packdez exists</h2>
+            <p class="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Most teams don't need another tool. They need their systems to work better.
+            </p>
+        </div>
+
+        <div class="timeline-horizontal fade-in">
+            <div class="timeline-item">
+                <div class="text-6xl font-black text-primary mb-3">01</div>
+                <h3 class="text-xl font-bold mb-3">The problem</h3>
+                <p class="text-muted-foreground leading-relaxed">
+                    Spreadsheets that worked at 10 people break at 50. Manual processes multiply. Data lives in 5 different tools.
+                </p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="text-6xl font-black text-primary mb-3">02</div>
+                <h3 class="text-xl font-bold mb-3">The solution</h3>
+                <p class="text-muted-foreground leading-relaxed">
+                    Google Sheets is already where teams work. Apps Script and integrations can automate most repetitive work.
+                </p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="text-6xl font-black text-primary mb-3">03</div>
+                <h3 class="text-xl font-bold mb-3">The outcome</h3>
+                <p class="text-muted-foreground leading-relaxed">
+                    Systems that are reliable, documented, and designed to scale — so teams can focus on their business.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How it works - Bento grid -->
+<section style="padding: 6rem 1rem;">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12 fade-in">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">How Packdez works</h2>
+            <p class="text-xl text-muted-foreground max-w-3xl mx-auto">
+                A repeatable process for designing, building, and delivering automation.
+            </p>
+        </div>
+
+        <div class="bento-grid">
+            <div class="bento-item bento-large fade-in">
+                <div style="width: 3.5rem; height: 3.5rem; background: hsl(146 55% 36% / 0.1); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                    <i data-lucide="target" style="width: 2rem; height: 2rem; color: hsl(146 55% 36%);"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3">Built around your workflow</h3>
+                <p class="text-lg text-muted-foreground leading-relaxed">
+                    Every system is custom. We design automation that fits how your team actually works, not how software dictates. No templates, no generic solutions.
+                </p>
+            </div>
+
+            <div class="bento-item bento-small fade-in">
+                <div style="width: 3rem; height: 3rem; background: hsl(146 55% 36% / 0.1); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                    <i data-lucide="clock" style="width: 1.5rem; height: 1.5rem; color: hsl(146 55% 36%);"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">7-15 days</h3>
+                <p class="text-muted-foreground">Fixed timeline, no delays</p>
+            </div>
+
+            <div class="bento-item bento-small fade-in">
+                <div style="width: 3rem; height: 3rem; background: hsl(146 55% 36% / 0.1); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                    <i data-lucide="shield-check" style="width: 1.5rem; height: 1.5rem; color: hsl(146 55% 36%);"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Built to last</h3>
+                <p class="text-muted-foreground">Reliable, maintainable systems</p>
+            </div>
+
+            <div class="bento-item bento-medium fade-in">
+                <div style="width: 3rem; height: 3rem; background: hsl(146 55% 36% / 0.1); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                    <i data-lucide="file-text" style="width: 1.5rem; height: 1.5rem; color: hsl(146 55% 36%);"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Documented and transferable</h3>
+                <p class="text-muted-foreground leading-relaxed">
+                    Clear documentation and training included. Your team owns the system and can maintain it independently.
+                </p>
+            </div>
+
+            <div class="bento-item bento-medium fade-in">
+                <div style="width: 3rem; height: 3rem; background: hsl(146 55% 36% / 0.1); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                    <i data-lucide="dollar-sign" style="width: 1.5rem; height: 1.5rem; color: hsl(146 55% 36%);"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Fixed scope & pricing</h3>
+                <p class="text-muted-foreground leading-relaxed">
+                    Clear pricing upfront. No hourly billing, no scope creep, no surprises.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Who runs it - Dark section -->
+<section class="section-dark" style="padding: 6rem 1rem;">
+    <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-12 fade-in">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">Who runs Packdez</h2>
+            <p class="text-xl" style="color: hsl(220 14% 75%);">
+                Led by an experienced automation engineer with a systems-first approach.
+            </p>
+        </div>
+
+        <div class="fade-in" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 1.5rem; padding: 3rem; margin-bottom: 3rem;">
+            <div class="flex flex-col md:flex-row gap-6 items-center">
+                <div style="width: 120px; height: 120px; background: hsl(146 55% 36%); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    <span style="font-size: 3rem; font-weight: 900; color: white;">RL</span>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-3xl font-bold mb-2">Raphael Levinder</h3>
+                    <p class="text-xl mb-4" style="color: hsl(146 55% 45%);">Automation Engineer</p>
+                    <p style="color: hsl(220 14% 75%); font-size: 1.125rem; line-height: 1.7; margin-bottom: 1rem;">
+                        Packdez is led by an experienced automation engineer specializing in Google Apps Script, API integrations, and operational systems.
+                    </p>
+                    <p style="color: hsl(220 14% 75%); font-size: 1.125rem; line-height: 1.7;">
+                        Systems have been delivered across healthcare, e-commerce, finance, and operations teams. The approach focuses on clarity, reliability, and reducing operational friction.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quote -->
+        <div class="fade-in" style="background: rgba(255,255,255,0.05); border-left: 4px solid hsl(146 55% 36%); border-radius: 0.75rem; padding: 2.5rem;">
+            <p style="font-size: 1.25rem; font-style: italic; color: hsl(220 14% 85%); line-height: 1.7; margin-bottom: 1.5rem;">
+                "Raphael is a reliable and trustworthy professional. He consistently delivers high-quality work on time and demonstrates a strong commitment to excellence. His attention to detail and ability to solve complex problems make him a valuable asset to any team."
+            </p>
+            <div>
+                <p class="font-bold text-lg" style="color: white;">— Phyu (Elisa) Swan</p>
+                <p style="color: hsl(220 14% 75%);">Founder, Wellnite</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats section -->
+<section style="padding: 6rem 1rem; background: hsl(220 14% 96%);">
+    <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-12 fade-in">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">Delivery standards</h2>
+            <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Consistent quality, predictable timelines, clear communication.
+            </p>
+        </div>
+
+        <div class="stats-grid fade-in">
+            <div class="stat-card">
+                <div class="stat-value">5.0★</div>
+                <p class="text-muted-foreground font-semibold">Client feedback</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">7-15</div>
+                <p class="text-muted-foreground font-semibold">Days to delivery</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">24hr</div>
+                <p class="text-muted-foreground font-semibold">Response time</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Reviews - Masonry layout -->
+<section style="padding: 6rem 1rem;">
+    <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-12 fade-in">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">Client feedback</h2>
+            <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Systems delivered across healthcare, e-commerce, operations, and services.
+            </p>
+        </div>
+
+        <div class="reviews-masonry">
+            <div class="review-card fade-in">
+                <div class="flex gap-1 mb-3">
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                </div>
+                <p class="text-muted-foreground mb-4 leading-relaxed">
+                    "Fast, detailed communication and very professional. He explored multiple approaches and delivered a solid solution. We'll work with him again."
+                </p>
+                <p class="font-bold text-sm">— Liam, Marketing Director</p>
+                <p class="text-sm text-muted-foreground">via Upwork</p>
+            </div>
+
+            <div class="review-card fade-in">
+                <div class="flex gap-1 mb-3">
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                </div>
+                <p class="text-muted-foreground mb-4 leading-relaxed">
+                    "Communicative, offered good solutions to problems, and delivered exactly what was needed."
+                </p>
+                <p class="font-bold text-sm">— Aloysius, Operations Manager</p>
+                <p class="text-sm text-muted-foreground">via Upwork</p>
+            </div>
+
+            <div class="review-card fade-in">
+                <div class="flex gap-1 mb-3">
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                </div>
+                <p class="text-muted-foreground mb-4 leading-relaxed">
+                    "Raphael transformed our bookings system and made our operations significantly smoother. The automation removed manual steps and reduced errors immediately."
+                </p>
+                <p class="font-bold text-sm">— Moe, Cleaning Business Owner</p>
+                <p class="text-sm text-muted-foreground">via Upwork</p>
+            </div>
+
+            <div class="review-card fade-in">
+                <div class="flex gap-1 mb-3">
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                    <i data-lucide="star" style="width: 1rem; height: 1rem; color: hsl(43 96% 56%); fill: hsl(43 96% 56%);"></i>
+                </div>
+                <p class="text-muted-foreground mb-4 leading-relaxed">
+                    "Good knowledge of Google Sheets, Looker, Shopify, and reporting workflows. Communication was clear and effective throughout."
+                </p>
+                <p class="font-bold text-sm">— Shivam, Shopify Business Owner</p>
+                <p class="text-sm text-muted-foreground">via Upwork</p>
+            </div>
+        </div>
+
+        <!-- Industries -->
+        <div class="text-center mt-12 fade-in">
+            <p class="text-sm text-muted-foreground font-semibold mb-4">SYSTEMS DELIVERED ACROSS</p>
+            <div class="flex flex-wrap justify-center gap-3">
+                <span class="badge-inline">Healthcare</span>
+                <span class="badge-inline">E-commerce</span>
+                <span class="badge-inline">Finance</span>
+                <span class="badge-inline">Marketing</span>
+                <span class="badge-inline">Operations</span>
+                <span class="badge-inline">SaaS</span>
+                <span class="badge-inline">Professional Services</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Operating principles - Icon-top cards -->
+<section style="padding: 6rem 1rem; background: hsl(220 14% 96%);">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12 fade-in">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">Operating principles</h2>
+            <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Standards that guide every project.
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+            <div class="principle-card fade-in">
+                <div class="principle-icon">
+                    <i data-lucide="check-circle" style="width: 2rem; height: 2rem; color: white;"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Clarity over complexity</h3>
+                <p class="text-muted-foreground leading-relaxed">
+                    Simple, understandable systems that teams can maintain.
+                </p>
+            </div>
+
+            <div class="principle-card fade-in">
+                <div class="principle-icon">
+                    <i data-lucide="users" style="width: 2rem; height: 2rem; color: white;"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Workflow-first design</h3>
+                <p class="text-muted-foreground leading-relaxed">
+                    Built around how teams work, not how software dictates.
+                </p>
+            </div>
+
+            <div class="principle-card fade-in">
+                <div class="principle-icon">
+                    <i data-lucide="zap" style="width: 2rem; height: 2rem; color: white;"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Built for reliability</h3>
+                <p class="text-muted-foreground leading-relaxed">
+                    Designed for long-term performance and maintainability.
+                </p>
+            </div>
+
+            <div class="principle-card fade-in">
+                <div class="principle-icon">
+                    <i data-lucide="message-circle" style="width: 2rem; height: 2rem; color: white;"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Clear communication</h3>
+                <p class="text-muted-foreground leading-relaxed">
+                    No jargon, no vague updates. You know what's happening.
+                </p>
+            </div>
+
+            <div class="principle-card fade-in">
+                <div class="principle-icon">
+                    <i data-lucide="lock" style="width: 2rem; height: 2rem; color: white;"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Full ownership transfer</h3>
+                <p class="text-muted-foreground leading-relaxed">
+                    You own the system, code, and documentation.
+                </p>
+            </div>
+
+            <div class="principle-card fade-in">
+                <div class="principle-icon">
+                    <i data-lucide="trending-up" style="width: 2rem; height: 2rem; color: white;"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Designed to scale</h3>
+                <p class="text-muted-foreground leading-relaxed">
+                    What works at 100 records will work at 10,000.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA section -->
+<section style="padding: 8rem 1rem; background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 65% 42%)); color: white; text-align: center;">
+    <div class="max-w-3xl mx-auto fade-in">
+        <h2 class="text-4xl md:text-5xl font-black mb-6">
+            Ready to automate your workflow?
+        </h2>
+        <p class="text-xl mb-8 opacity-95 leading-relaxed">
+            Get a clear automation plan for your workflow in 24 hours. No obligation, clear scope, fixed pricing.
+        </p>
+        <a href="https://packdez.com#audit" style="background: white; color: hsl(146 55% 36%); padding: 1.25rem 3rem; border-radius: 0.75rem; font-weight: 700; font-size: 1.125rem; display: inline-block; text-decoration: none; box-shadow: 0 8px 24px rgba(0,0,0,0.2); transition: all 0.2s;">
+            Get your automation plan
+        </a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer style="padding: 4rem 1rem; border-top: 1px solid hsl(220 13% 91%);">
+    <div class="max-w-6xl mx-auto">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+            <div>
+                <div class="flex items-center gap-2 mb-3">
+                    <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez" class="h-7 w-7" />
+                    <h3 class="text-lg font-bold">Packdez</h3>
+                </div>
+                <p class="text-sm text-muted-foreground mb-4">Stay connected</p>
+                <div class="flex gap-3">
+                    <a href="https://x.com/packdezHQ" target="_blank" rel="noopener noreferrer" style="width: 2.5rem; height: 2.5rem; background: hsl(220 14% 96%); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                        <i data-lucide="twitter" style="width: 1rem; height: 1rem;"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/company/packdez/" target="_blank" rel="noopener noreferrer" style="width: 2.5rem; height: 2.5rem; background: hsl(220 14% 96%); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                        <i data-lucide="linkedin" style="width: 1rem; height: 1rem;"></i>
+                    </a>
+                    <a href="https://youtube.com/@packdezhqz?si=EXj27rVMq27WlWQp" target="_blank" rel="noopener noreferrer" style="width: 2.5rem; height: 2.5rem; background: hsl(220 14% 96%); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                        <i data-lucide="youtube" style="width: 1rem; height: 1rem;"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-bold mb-3 text-sm">What We Build</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.5rem;"><span class="text-sm text-muted-foreground">Automated reporting systems</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span class="text-sm text-muted-foreground">Operations automation</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span class="text-sm text-muted-foreground">Custom internal tools</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span class="text-sm text-muted-foreground">API integrations</span></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="font-bold mb-3 text-sm">Contact</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.5rem;"><span class="text-sm text-muted-foreground">packdez.com@gmail.com</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span class="text-sm text-muted-foreground">Response within 24 hours</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span class="text-sm text-muted-foreground">Delivery in 7-15 days</span></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div style="padding-top: 2rem; border-top: 1px solid hsl(220 13% 91%); text-align: center;">
+            <p class="text-sm text-muted-foreground">© <span id="year"></span> Packdez</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile menu
+    function toggleMobileMenu() {
+        document.getElementById('mobile-menu').classList.add('active');
+        document.getElementById('mobile-overlay').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu() {
+        document.getElementById('mobile-menu').classList.remove('active');
+        document.getElementById('mobile-overlay').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Update year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Initialize icons
+    lucide.createIcons();
+</script>
+
+</body>
+</html>
