@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Packdez | Google Sheets Automation Experts</title>
+
+  <!-- Tailwind (kept only for typography + spacing utilities you already use) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body style="
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+  background:#fff;
+  color:#0f172a;
+  line-height:1.6;
+  overflow-x:hidden;
+">
+
+<!-- =========================
+     MOBILE OVERLAY (BACKDROP)
+========================= -->
+<div id="mobile-overlay"
+     onclick="closeMobileMenu()"
+     style="
+       position:fixed;
+       inset:0;
+       background:rgba(15,23,42,.55);
+       backdrop-filter:blur(6px);
+       z-index:90;
+       display:none;
+     ">
+</div>
+
+<!-- =========================
+     MOBILE SIDEBAR NAV
+========================= -->
+<aside id="mobile-menu"
+       style="
+         position:fixed;
+         top:0;
+         right:0;
+         height:100%;
+         width:85%;
+         max-width:320px;
+         background:#fff;
+         z-index:100;
+         padding:24px;
+         transform:translateX(100%);
+         transition:transform .3s ease;
+         display:flex;
+         flex-direction:column;
+       ">
+  <div class="flex items-center justify-between mb-6">
+    <a href="https://packdez.com" class="flex items-center gap-2" onclick="closeMobileMenu()">
+      <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" style="height:32px;width:32px;">
+      <span class="text-xl font-bold">Packdez</span>
+    </a>
+    <button onclick="closeMobileMenu()" style="font-size:24px;font-weight:700;">×</button>
+  </div>
+
+  <a href="#work" onclick="closeMobileMenu()" style="padding:14px 0;font-weight:600;border-bottom:1px solid #e5e7eb;">Work</a>
+  <a href="#pricing" onclick="closeMobileMenu()" style="padding:14px 0;font-weight:600;border-bottom:1px solid #e5e7eb;">Pricing</a>
+  <a href="#reviews" onclick="closeMobileMenu()" style="padding:14px 0;font-weight:600;border-bottom:1px solid #e5e7eb;">Reviews</a>
+  <a href="about.html" onclick="closeMobileMenu()" style="padding:14px 0;font-weight:600;border-bottom:1px solid #e5e7eb;">About</a>
+
+  <a href="https://packdez.com#audit"
+     style="
+       margin-top:24px;
+       background:#2e8c4e;
+       color:#fff;
+       padding:14px;
+       text-align:center;
+       border-radius:8px;
+       font-weight:700;
+       text-decoration:none;
+     ">
+    Get Automation Plan
+  </a>
+</aside>
+
+<!-- =========================
+     FIXED TOP NAVIGATION
+========================= -->
+<nav style="
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:50;
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid #e5e7eb;
+">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex items-center justify-between h-16">
+      <a href="https://packdez.com" class="flex items-center gap-2">
+        <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" style="height:32px;width:32px;">
+        <span class="text-xl font-bold">Packdez</span>
+      </a>
+
+      <button class="md:hidden" onclick="toggleMobileMenu()">
+        <svg width="28" height="28" fill="none" stroke="currentColor">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- =========================
+     HERO – SPLIT SCREEN
+========================= -->
+<section style="
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+">
+  <!-- Hero Text -->
+  <div style="
+    display:flex;
+    align-items:center;
+    padding:6rem 3rem;
+  ">
+    <div style="max-width:520px;">
+      <span style="
+        display:inline-block;
+        margin-bottom:16px;
+        background:rgba(46,140,78,.1);
+        color:#2e8c4e;
+        padding:4px 12px;
+        border-radius:6px;
+        font-weight:600;
+        font-size:14px;
+      ">
+        About Packdez
+      </span>
+
+      <h1 class="text-5xl md:text-6xl font-black mb-6 leading-tight tracking-tight">
+        Automation systems that scale
+      </h1>
+
+      <p class="text-xl text-gray-500 mb-6">
+        Packdez builds operational systems in Google Sheets that reduce manual work, eliminate errors, and scale with your team.
+      </p>
+
+      <p class="text-lg text-gray-500 mb-8">
+        Custom-built. Fully documented. Delivered in 7–15 days.
+      </p>
+
+      <a href="https://packdez.com#audit"
+         style="
+           display:inline-block;
+           background:#2e8c4e;
+           color:#fff;
+           padding:14px 32px;
+           border-radius:8px;
+           font-weight:700;
+           text-decoration:none;
+         ">
+        Get your automation plan
+      </a>
+    </div>
+  </div>
+
+  <!-- Hero Image -->
+  <div style="
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:3rem;
+    background:linear-gradient(135deg,rgba(46,140,78,.05),rgba(46,140,78,.15));
+  ">
+    <img src="https://raw.githubusercontent.com/Levinders/Portfolio-Hub-Looker-Studio-Portfolio-Page-/refs/heads/main/me3.png"
+         alt="Packdez automation systems"
+         style="
+           width:100%;
+           max-width:500px;
+           border-radius:16px;
+           box-shadow:0 30px 80px rgba(0,0,0,.2);
+         ">
+  </div>
+</section>
+
+<!-- =========================
+     WHY PACKDEZ – TIMELINE
+========================= -->
+<section style="padding:6rem 1rem;background:#f8fafc;">
+  <div class="max-w-6xl mx-auto">
+
+    <h2 class="text-4xl md:text-5xl font-bold text-center mb-6">
+      Why Packdez exists
+    </h2>
+
+    <p class="text-xl text-gray-500 text-center max-w-3xl mx-auto mb-12">
+      Most teams don’t need another tool. They need their systems to work better.
+    </p>
+
+    <!-- Timeline -->
+    <div style="
+      display:flex;
+      gap:2rem;
+      overflow-x:auto;
+      padding:2rem 0;
+    ">
+      <!-- Timeline Item -->
+      <div style="min-width:300px;padding-left:24px;position:relative;">
+        <div style="
+          position:absolute;
+          left:0;top:0;
+          width:4px;height:100%;
+          background:linear-gradient(#2e8c4e,#3fbf7f);
+          border-radius:2px;
+        "></div>
+
+        <div class="text-6xl font-black text-green-600 mb-3">01</div>
+        <h3 class="text-xl font-bold mb-2">The problem</h3>
+        <p class="text-gray-500">
+          Spreadsheets that worked at 10 people break at 50.
+        </p>
+      </div>
+
+      <div style="min-width:300px;padding-left:24px;position:relative;">
+        <div style="position:absolute;left:0;top:0;width:4px;height:100%;background:linear-gradient(#2e8c4e,#3fbf7f);border-radius:2px;"></div>
+        <div class="text-6xl font-black text-green-600 mb-3">02</div>
+        <h3 class="text-xl font-bold mb-2">The solution</h3>
+        <p class="text-gray-500">Automate workflows where teams already work.</p>
+      </div>
+
+      <div style="min-width:300px;padding-left:24px;position:relative;">
+        <div style="position:absolute;left:0;top:0;width:4px;height:100%;background:linear-gradient(#2e8c4e,#3fbf7f);border-radius:2px;"></div>
+        <div class="text-6xl font-black text-green-600 mb-3">03</div>
+        <h3 class="text-xl font-bold mb-2">The outcome</h3>
+        <p class="text-gray-500">Reliable systems designed to scale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     FOOTER
+========================= -->
+<footer style="padding:4rem 1rem;border-top:1px solid #e5e7eb;">
+  <div class="max-w-6xl mx-auto text-center text-gray-500 text-sm">
+    © <span id="year"></span> Packdez
+  </div>
+</footer>
+
+<script>
+  function toggleMobileMenu() {
+    document.getElementById('mobile-menu').style.transform = 'translateX(0)';
+    document.getElementById('mobile-overlay').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMobileMenu() {
+    document.getElementById('mobile-menu').style.transform = 'translateX(100%)';
+    document.getElementById('mobile-overlay').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+  lucide.createIcons();
+</script>
+
+</body>
+</html>
