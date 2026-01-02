@@ -261,8 +261,8 @@
         /* Profile card with large image */
         .profile-showcase {
             display: grid;
-            grid-template-columns: 400px 1fr;
-            gap: 3rem;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
             background: linear-gradient(135deg, hsl(220 14% 98%), white);
             border-radius: 1.5rem;
             padding: 3rem;
@@ -279,8 +279,9 @@
 
         .profile-image-large {
             width: 100%;
+            max-width: 150px;
             aspect-ratio: 1;
-            border-radius: 1rem;
+            border-radius: 8rem;
             object-fit: cover;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
         }
@@ -420,9 +421,8 @@
 
         /* Full-width CTA band */
         .cta-band {
-            background: hsl(146 55% 36%);
-            color: white;
-            padding: 4rem 2rem;
+            background: #FFFFFF;
+            padding: 5rem 1rem;
             text-align: center;
         }
 
@@ -432,18 +432,6 @@
             }
         }
 
-        .cta-band h2 {
-            font-size: 3rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        @media (max-width: 768px) {
-            .cta-band h2 {
-                font-size: 2rem;
-            }
-        }
 
         /* Industry tags */
         .industry-tags {
@@ -598,7 +586,7 @@
       <div class="fade-in-section">
         <div class="badge mb-4">About Packdez</div>
 
-        <h1 class="text-4xl md:text-5xl font-black mb-6 leading-tight tracking-[-0.02em]">
+        <h1 class="text-3xl md:text-4xl font-bold mb-6 leading-tight tracking-[-0.02em]">
           Building systems that work, so your team can focus on what matters
         </h1>
 
@@ -633,9 +621,8 @@
             <nav>
                 <a href="#why" class="active">Why Packdez</a>
                 <a href="#how">How it works</a>
-                <a href="#who">Who runs it</a>
-                <a href="#standards">Standards</a>
                 <a href="#feedback">Client feedback</a>
+                <a href="#who">Built and maintained by</a>
                 <a href="#principles">Principles</a>
             </nav>
         </aside>
@@ -643,7 +630,7 @@
         <div>
             <div id="why" class="content-block fade-up">
                 <div class="block-number">01</div>
-                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem;">Why Packdez exists</h2>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Why Packdez exists</h2>
                 <p style="font-size: 1.125rem; color: hsl(220 9% 46%); line-height: 1.8; margin-bottom: 1.5rem;">
                     Most teams don't need another tool. They need their systems to work better.
                 </p>
@@ -663,18 +650,12 @@
                         </p>
                     </div>
 
-                    <div style="padding: 1.5rem; background: white; border-radius: 0.75rem; border: 1px solid hsl(220 13% 91%);">
-                        <h3 style="font-weight: 700; margin-bottom: 0.75rem; font-size: 1.125rem;">The outcome</h3>
-                        <p style="color: hsl(220 9% 46%); line-height: 1.7;">
-                            Systems that are reliable, documented, and designed to scale — so teams can focus on their business.
-                        </p>
-                    </div>
                 </div>
             </div>
 
             <div id="how" class="content-block fade-up">
                 <div class="block-number">02</div>
-                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem;">How Packdez works</h2>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">How Packdez works</h2>
                 <p style="font-size: 1.125rem; color: hsl(220 9% 46%); line-height: 1.8; margin-bottom: 2rem;">
                     A repeatable process for designing, building, and delivering automation.
                 </p>
@@ -726,51 +707,12 @@
                                 Clear pricing upfront. Delivery in 7-15 days. No hourly billing, no scope creep, no surprises.
                             </p>
                         </div>
-                    </div>
+                    </div>                  
                 </div>
-            </div>
 
-            <div id="who" class="content-block fade-up">
-                <div class="block-number">03</div>
-                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem;">Who runs Packdez</h2>
-                <p style="font-size: 1.125rem; color: hsl(220 9% 46%); line-height: 1.8; margin-bottom: 2rem;">
-                    Led by an experienced automation engineer with a systems-first approach.
-                </p>
 
-                <div class="profile-showcase">
-                    <div>
-                        <img 
-                            src="https://raw.githubusercontent.com/Levinders/Portfolio-Hub-Looker-Studio-Portfolio-Page-/refs/heads/main/me3.png" 
-                            alt="Raphael Levinder"
-                            class="profile-image-large"
-                        />
-                    </div>
-                    <div>
-                        <span class="pill-badge" style="margin-bottom: 1rem; display: inline-block;">Automation Engineer</span>
-                        <h3 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem;">Raphael Levinder</h3>
-                        <p style="font-size: 1.125rem; color: hsl(220 9% 46%); line-height: 1.7; margin-bottom: 1.5rem;">
-                            Packdez is led by an experienced automation engineer specializing in Google Apps Script, API integrations, and operational systems.
-                        </p>
-                        <p style="font-size: 1.125rem; color: hsl(220 9% 46%); line-height: 1.7; margin-bottom: 2rem;">
-                            Systems have been delivered across healthcare, e-commerce, finance, and operations teams. The approach focuses on clarity, reliability, and reducing operational friction.
-                        </p>
-
-                        <div class="quote-vertical">
-                            <p>
-                                "Raphael is a reliable and trustworthy professional. He consistently delivers high-quality work on time and demonstrates a strong commitment to excellence."
-                            </p>
-                            <div>
-                                <p style="font-weight: 700; margin-bottom: 0.25rem;">— Phyu (Elisa) Swan</p>
-                                <p style="font-size: 0.875rem; color: hsl(220 9% 46%);">Founder, Wellnite</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="standards" class="content-block fade-up">
-                <div class="block-number">04</div>
-                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem;">Delivery standards</h2>
+                 <div class="block-number"></div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Delivery standards</h2>
                 <p style="font-size: 1.125rem; color: hsl(220 9% 46%); line-height: 1.8; margin-bottom: 2rem;">
                     Consistent quality, predictable timelines, clear communication.
                 </p>
@@ -789,11 +731,15 @@
                         <p style="font-weight: 600; color: hsl(220 9% 46%);">Response time</p>
                     </div>
                 </div>
+                
             </div>
 
+
+
+            
             <div id="feedback" class="content-block fade-up">
-                <div class="block-number">05</div>
-                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem;">Client feedback</h2>
+                <div class="block-number">03</div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Client feedback</h2>
                 <p style="font-size: 1.125rem; color: hsl(220 9% 46%); line-height: 1.8; margin-bottom: 2rem;">
                     Systems delivered across healthcare, e-commerce, operations, and services.
                 </p>
@@ -876,20 +822,67 @@
                     </div>
                 </div>
 
-                <div class="industry-tags">
-                    <span class="industry-tag">Healthcare</span>
-                    <span class="industry-tag">E-commerce</span>
-                    <span class="industry-tag">Finance</span>
-                    <span class="industry-tag">Marketing</span>
-                    <span class="industry-tag">Operations</span>
-                    <span class="industry-tag">SaaS</span>
-                    <span class="industry-tag">Professional Services</span>
+        <!-- Industries Served -->
+        <div class="fade-in-section mt-12 text-center">
+            <p class="text-sm text-muted-foreground font-semibold mb-4">SYSTEMS DELIVERED ACROSS</p>
+            <div class="flex flex-wrap justify-center gap-3">
+                <span class="badge">Healthcare</span>
+                <span class="badge">E-commerce</span>
+                <span class="badge">Finance</span>
+                <span class="badge">Marketing</span>
+                <span class="badge">Operations</span>
+                <span class="badge">SaaS</span>
+                <span class="badge">Professional Services</span>
+            </div>
+        </div>
+                
+     </div>
+
+
+
+            
+            <div id="who" class="content-block fade-up">
+                <div class="block-number">04</div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Built and maintained by</h2>
+                <p style="font-size: 1.125rem; color: hsl(220 9% 46%); line-height: 1.8; margin-bottom: 2rem;">
+                    Led by an experienced automation engineer with a systems-first approach.
+                </p>
+
+                <div class="profile-showcase">
+                    <div>
+                        <img 
+                            src="https://raw.githubusercontent.com/packdez/agency/refs/heads/main/assets/Raphael_Levinders.png" 
+                            alt="Raphael Levinders"
+                            class="profile-image-large"
+                        />
+                    </div>
+                    <div>
+                        <span class="pill-badge" style="margin-bottom: 1rem; display: inline-block;">Automation Engineer</span>
+                        <h3 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem;">Raphael Levinders</h3>
+                        <p style="font-size: 1.125rem; color: hsl(220 9% 46%); line-height: 1.7; margin-bottom: 1.5rem;">
+                            Packdez is led by an experienced automation engineer specializing in Google Apps Script, API integrations, and operational systems.
+                        </p>
+                        <p style="font-size: 1.125rem; color: hsl(220 9% 46%); line-height: 1.7; margin-bottom: 2rem;">
+                            Systems have been delivered across healthcare, e-commerce, finance, and operations teams. The approach focuses on clarity, reliability, and reducing operational friction.
+                        </p>
+
+                        <div class="quote-vertical">
+                            <p>
+                                "I worked with Raphael and was impressed by his reliability and practical approach to problem-solving. He consistently delivered quality work and collaborated effectively with the team to achieve our goals."
+                            </p>
+                            <div>
+                                <p style="font-weight: 700; margin-bottom: 0.25rem;">— Phyu (Elisa) Swan</p>
+                                <p style="font-size: 0.875rem; color: hsl(220 9% 46%);">Founder, Wellnite</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
+
             <div id="principles" class="content-block fade-up">
-                <div class="block-number">06</div>
-                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem;">Operating principles</h2>
+                <div class="block-number">05</div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Operating principles</h2>
                 <p style="font-size: 1.125rem; color: hsl(220 9% 46%); line-height: 1.8; margin-bottom: 2rem;">
                     Standards that guide every project.
                 </p>
@@ -917,16 +910,6 @@
 
                     <div class="principle-compact">
                         <div class="principle-compact-icon">
-                            <i data-lucide="zap" style="width: 1.25rem; height: 1.25rem; color: hsl(146 55% 36%);"></i>
-                        </div>
-                        <h3 style="font-weight: 700; margin-bottom: 0.5rem;">Built for reliability</h3>
-                        <p style="color: hsl(220 9% 46%); font-size: 0.9375rem; line-height: 1.6;">
-                            Designed for long-term performance and maintainability.
-                        </p>
-                    </div>
-
-                    <div class="principle-compact">
-                        <div class="principle-compact-icon">
                             <i data-lucide="message-circle" style="width: 1.25rem; height: 1.25rem; color: hsl(146 55% 36%);"></i>
                         </div>
                         <h3 style="font-weight: 700; margin-bottom: 0.5rem;">Clear communication</h3>
@@ -945,15 +928,6 @@
                         </p>
                     </div>
 
-                    <div class="principle-compact">
-                        <div class="principle-compact-icon">
-                            <i data-lucide="trending-up" style="width: 1.25rem; height: 1.25rem; color: hsl(146 55% 36%);"></i>
-                        </div>
-                        <h3 style="font-weight: 700; margin-bottom: 0.5rem;">Designed to scale</h3>
-                        <p style="color: hsl(220 9% 46%); font-size: 0.9375rem; line-height: 1.6;">
-                            What works at 100 records will work at 10,000.
-                        </p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -963,8 +937,8 @@
 <!-- CTA band -->
 <section class="cta-band">
     <div style="max-width: 900px; margin: 0 auto;">
-        <h2>Ready to automate your workflow?</h2>
-        <p style="font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to automate your workflow?</h2>
+        <p style="font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;" class="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
             Get a clear automation plan in 24 hours. No obligation, clear scope, fixed pricing.
         </p>
         <a href="https://packdez.com#audit" style="display: inline-block; background: white; color: hsl(146 55% 36%); padding: 1rem 2.5rem; border-radius: 0.5rem; font-weight: 700; text-decoration: none; font-size: 1.125rem; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
