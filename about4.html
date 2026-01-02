@@ -463,6 +463,18 @@
             color: hsl(220 20% 10%);
         }
 
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            border-radius: 0.375rem;
+            background-color: hsl(146 55% 36% / 0.1);
+            color: hsl(146 55% 36%);
+            border: 1px solid hsl(146 55% 36% / 0.2);
+        }
+
 
 
         /* =====================================================
@@ -643,44 +655,34 @@
         <div>
             <div id="why" class="content-block fade-up">
                 <div class="block-number">01</div>
-               
-                <!-- WHY PACKDEZ TIMELINE -->
+                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem;">Why Packdez exists</h2>
+                <p style="font-size: 1.125rem; color: hsl(220 9% 46%); line-height: 1.8; margin-bottom: 1.5rem;">
+                    Most teams don't need another tool. They need their systems to work better.
+                </p>
+                
+                <div style="display: grid; gap: 1.5rem; margin-top: 2rem;">
+                    <div style="padding: 1.5rem; background: white; border-radius: 0.75rem; border: 1px solid hsl(220 13% 91%);">
+                        <h3 style="font-weight: 700; margin-bottom: 0.75rem; font-size: 1.125rem;">The problem</h3>
+                        <p style="color: hsl(220 9% 46%); line-height: 1.7;">
+                            Spreadsheets that worked at 10 people break at 50. Manual processes multiply. Data lives in 5 different tools.
+                        </p>
+                    </div>
 
-    <h2 style="font-size:48px;font-weight:800;text-align:center;margin-bottom:16px;">
-      Why Packdez exists
-    </h2>
+                    <div style="padding: 1.5rem; background: white; border-radius: 0.75rem; border: 1px solid hsl(220 13% 91%);">
+                        <h3 style="font-weight: 700; margin-bottom: 0.75rem; font-size: 1.125rem;">The solution</h3>
+                        <p style="color: hsl(220 9% 46%); line-height: 1.7;">
+                            Google Sheets is already where teams work. Apps Script and integrations can automate most repetitive work.
+                        </p>
+                    </div>
 
-    <p style="font-size:20px;color:#6b7280;text-align:center;max-width:720px;margin:0 auto 48px;">
-      Most teams don’t need another tool. They need their systems to work better.
-    </p>
-
-    <div style="display:flex;gap:32px;overflow-x:auto;padding:32px 0;">
-      
-      <!-- ITEM -->
-      <div style="min-width:300px;padding-left:24px;position:relative;">
-        <div style="position:absolute;left:0;top:0;width:4px;height:100%;background:linear-gradient(#2e8c4e,#3fbf7f);"></div>
-        <div style="font-size:56px;font-weight:900;color:#2e8c4e;">01</div>
-        <h3 style="font-size:20px;font-weight:700;margin:8px 0;">The problem</h3>
-        <p style="color:#6b7280;">Spreadsheets break as teams scale.</p>
-      </div>
-
-      <!-- ITEM -->
-      <div style="min-width:300px;padding-left:24px;position:relative;">
-        <div style="position:absolute;left:0;top:0;width:4px;height:100%;background:linear-gradient(#2e8c4e,#3fbf7f);"></div>
-        <div style="font-size:56px;font-weight:900;color:#2e8c4e;">02</div>
-        <h3 style="font-size:20px;font-weight:700;margin:8px 0;">The solution</h3>
-        <p style="color:#6b7280;">Automate where teams already work.</p>
-      </div>
-
-      <!-- ITEM -->
-      <div style="min-width:300px;padding-left:24px;position:relative;">
-        <div style="position:absolute;left:0;top:0;width:4px;height:100%;background:linear-gradient(#2e8c4e,#3fbf7f);"></div>
-        <div style="font-size:56px;font-weight:900;color:#2e8c4e;">03</div>
-        <h3 style="font-size:20px;font-weight:700;margin:8px 0;">The outcome</h3>
-        <p style="color:#6b7280;">Reliable systems built to scale.</p>
-      </div>
-
-    </div>
+                    <div style="padding: 1.5rem; background: white; border-radius: 0.75rem; border: 1px solid hsl(220 13% 91%);">
+                        <h3 style="font-weight: 700; margin-bottom: 0.75rem; font-size: 1.125rem;">The outcome</h3>
+                        <p style="color: hsl(220 9% 46%); line-height: 1.7;">
+                            Systems that are reliable, documented, and designed to scale — so teams can focus on their business.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
             <div id="how" class="content-block fade-up">
                 <div class="block-number">02</div>
@@ -886,14 +888,18 @@
                     </div>
                 </div>
 
-                <div class="industry-tags">
-                    <span class="industry-tag">Healthcare</span>
-                    <span class="industry-tag">E-commerce</span>
-                    <span class="industry-tag">Finance</span>
-                    <span class="industry-tag">Marketing</span>
-                    <span class="industry-tag">Operations</span>
-                    <span class="industry-tag">SaaS</span>
-                    <span class="industry-tag">Professional Services</span>
+                <!-- Industries Served -->
+                <div style="margin-top: 3rem; text-center;">
+                    <p style="font-size: 0.875rem; color: hsl(220 9% 46%); font-weight: 600; margin-bottom: 1rem;">SYSTEMS DELIVERED ACROSS</p>
+                    <div style="display: flex; flex-wrap: wrap; justify-center; gap: 0.75rem;">
+                        <span class="badge">Healthcare</span>
+                        <span class="badge">E-commerce</span>
+                        <span class="badge">Finance</span>
+                        <span class="badge">Marketing</span>
+                        <span class="badge">Operations</span>
+                        <span class="badge">SaaS</span>
+                        <span class="badge">Professional Services</span>
+                    </div>
                 </div>
             </div>
 
@@ -975,11 +981,14 @@
     <div style="max-width: 900px; margin: 0 auto;">
         <h2>Ready to automate your workflow?</h2>
         <p style="font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;">
-            Get a clear automation plan in 24 hours. No obligation, clear scope, fixed pricing.
+            If your team is spending too much time on manual work, broken formulas, or scattered data — get a clear automation plan for your workflow in 24 hours.
         </p>
         <a href="https://packdez.com#audit" style="display: inline-block; background: white; color: hsl(146 55% 36%); padding: 1rem 2.5rem; border-radius: 0.5rem; font-weight: 700; text-decoration: none; font-size: 1.125rem; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
             Get your automation plan
         </a>
+        <p style="font-size: 0.875rem; margin-top: 1rem; opacity: 0.9;">
+            No obligation. Clear scope. Fixed pricing.
+        </p>
     </div>
 </section>
 
