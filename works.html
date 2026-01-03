@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Works | Packdez - Google Sheets Automation Systems</title>
-    <meta name="description" content="Automation systems built for real operational teams. See how Packdez designs custom Google Sheets workflows that remove manual work and scale with your business.">
+    <title>Work | Packdez - Automation Systems</title>
+    <meta name="description" content="Automation systems built for real operational teams. Custom Google Sheets workflows that remove manual work and scale with your business.">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -21,7 +21,7 @@
             --muted: 220 14% 96%;
             --muted-foreground: 220 9% 46%;
             --border: 220 13% 91%;
-            --destructive: 0 84% 60%;
+            --card: 0 0% 100%;
         }
         
         * {
@@ -34,45 +34,14 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background-color: hsl(var(--background));
             color: hsl(var(--foreground));
-            scroll-behavior: smooth;
             line-height: 1.6;
             overflow-x: hidden;
         }
-        
-        .bg-primary { background-color: hsl(146 55% 36%); }
-        .text-primary { color: hsl(146 55% 36%); }
-        .border-primary { border-color: hsl(146 55% 36%); }
-        .bg-muted { background-color: hsl(220 14% 96%); }
-        .text-muted-foreground { color: hsl(220 9% 46%); }
-        .border-border { border-color: hsl(220 13% 91%); }
-        
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            font-weight: 600;
-            border-radius: 0.5rem;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            border: none;
-            font-size: 1rem;
-            text-decoration: none;
-        }
-        
-        .btn-primary {
-            background-color: hsl(146 55% 36%);
-            color: white;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn-primary:hover {
-            background-color: hsl(146 55% 32%);
-            box-shadow: 0 4px 12px rgba(46, 140, 78, 0.3);
-            transform: translateY(-1px);
-        }
 
+        /* ===================================================================
+           NAVIGATION
+           ================================================================ */
+        
         .nav-fixed {
             position: fixed;
             top: 0;
@@ -84,196 +53,434 @@
             border-bottom: 1px solid hsl(220 13% 91%);
         }
 
-        /* Hero Slider */
-        .hero-slider {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            border-radius: 1rem;
-            background: white;
-            border: 1px solid hsl(220 13% 91%);
+        /* ===================================================================
+           PAGE HEADER (DRIBBBLE STYLE)
+           ================================================================ */
+        
+        .page-header {
+            padding: 8rem 1rem 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        .slider-track {
-            display: flex;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        .page-title {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.75rem;
         }
 
-        .slider-slide {
-            min-width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            padding: 3rem;
-            align-items: center;
+        .page-subtitle {
+            font-size: 1.125rem;
+            color: hsl(220 9% 46%);
+            font-weight: 400;
         }
 
-        @media (max-width: 968px) {
-            .slider-slide {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                padding: 2rem;
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 6rem 1rem 2rem;
+            }
+            .page-title {
+                font-size: 2rem;
+            }
+            .page-subtitle {
+                font-size: 1rem;
             }
         }
 
-        .slider-image {
-            width: 100%;
-            height: auto;
-            border-radius: 0.75rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .slider-controls {
-            position: absolute;
-            bottom: 2rem;
-            right: 2rem;
+        /* ===================================================================
+           FILTERS (DRIBBBLE STYLE - MINIMAL, INLINE)
+           ================================================================ */
+        
+        .filters-bar {
+            max-width: 1400px;
+            margin: 0 auto 3rem;
+            padding: 0 1rem;
             display: flex;
-            gap: 0.75rem;
-            z-index: 10;
-        }
-
-        .slider-btn {
-            width: 2.5rem;
-            height: 2.5rem;
-            background: white;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 50%;
-            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
             align-items: center;
-            justify-content: center;
+        }
+
+        .filter-search {
+            flex: 1;
+            min-width: 240px;
+            padding: 0.625rem 1rem;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 2rem;
+            font-size: 0.9375rem;
+            background: white;
+            transition: all 0.2s;
+        }
+
+        .filter-search:focus {
+            outline: none;
+            border-color: hsl(146 55% 36%);
+            box-shadow: 0 0 0 3px hsl(146 55% 36% / 0.1);
+        }
+
+        .filter-pill {
+            padding: 0.625rem 1.25rem;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            appearance: none;
+        }
+
+        .filter-pill:hover,
+        .filter-pill:focus {
+            border-color: hsl(146 55% 36%);
+            background: hsl(146 55% 36% / 0.05);
+            outline: none;
+        }
+
+        .filter-clear {
+            padding: 0.625rem 1.25rem;
+            border: none;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            background: transparent;
+            color: hsl(220 9% 46%);
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        .slider-btn:hover {
-            background: hsl(146 55% 36%);
-            border-color: hsl(146 55% 36%);
-            color: white;
+        .filter-clear:hover {
+            color: hsl(146 55% 36%);
+            background: hsl(146 55% 36% / 0.05);
         }
 
-        .slider-dots {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 0.5rem;
+        /* ===================================================================
+           PROJECT GRID (DRIBBBLE 4-COLUMN MASONRY-LIKE)
+           ================================================================ */
+        
+        .projects-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem 4rem;
         }
 
-        .slider-dot {
-            width: 0.5rem;
-            height: 0.5rem;
-            background: hsl(220 13% 91%);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .slider-dot.active {
-            background: hsl(146 55% 36%);
-            width: 1.5rem;
-            border-radius: 0.25rem;
-        }
-
-        /* Filters */
-        .filters-section {
-            background: white;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .filter-input {
-            padding: 0.75rem 1rem;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.5rem;
-            font-size: 0.9375rem;
-            width: 100%;
-            transition: border-color 0.2s;
-        }
-
-        .filter-input:focus {
-            outline: none;
-            border-color: hsl(146 55% 36%);
-        }
-
-        .filter-select {
-            padding: 0.75rem 1rem;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.5rem;
-            font-size: 0.9375rem;
-            background: white;
-            cursor: pointer;
-            transition: border-color 0.2s;
-        }
-
-        .filter-select:focus {
-            outline: none;
-            border-color: hsl(146 55% 36%);
-        }
-
-        /* Project Grid */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.75rem;
+        }
+
+        @media (max-width: 1200px) {
+            .projects-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
             .projects-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.25rem;
             }
         }
 
-        .project-card {
-            background: white;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.75rem;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            cursor: pointer;
+        @media (max-width: 480px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
         }
 
-        .project-card:hover {
-            border-color: hsl(146 55% 36%);
-            box-shadow: 0 8px 24px rgba(46, 140, 78, 0.1);
+        /* ===================================================================
+           PROJECT CARD (DRIBBBLE SHOT STYLE)
+           ================================================================ */
+        
+        .project-card {
+            position: relative;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .project-card:focus {
+            outline: none;
+        }
+
+        .project-card-image-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            background: hsl(220 14% 96%);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .project-card:hover .project-card-image-wrapper,
+        .project-card:focus .project-card-image-wrapper {
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
             transform: translateY(-2px);
         }
 
         .project-card-image {
             width: 100%;
-            height: 200px;
+            height: 100%;
             object-fit: cover;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .project-card-content {
-            padding: 1.5rem;
+        .project-card:hover .project-card-image {
+            transform: scale(1.04);
         }
 
-        .project-tag {
+        /* Desktop overlay */
+        .project-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(0, 0, 0, 0.7) 0%,
+                rgba(0, 0, 0, 0.3) 40%,
+                transparent 70%
+            );
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1rem;
+        }
+
+        @media (min-width: 769px) {
+            .project-card:hover .project-card-overlay,
+            .project-card:focus .project-card-overlay {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .project-card-overlay {
+                display: none;
+            }
+        }
+
+        .project-card-overlay-top {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            transform: translateY(-8px);
+            transition: transform 0.25s ease;
+        }
+
+        .project-card:hover .project-card-overlay-top,
+        .project-card:focus .project-card-overlay-top {
+            transform: translateY(0);
+        }
+
+        .overlay-action {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.375rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .overlay-action:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        .project-card-overlay-bottom {
+            transform: translateY(8px);
+            transition: transform 0.25s ease;
+        }
+
+        .project-card:hover .project-card-overlay-bottom,
+        .project-card:focus .project-card-overlay-bottom {
+            transform: translateY(0);
+        }
+
+        .project-card-title-overlay {
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.375rem;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card-category-overlay {
             display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: hsl(146 55% 36% / 0.1);
-            color: hsl(146 55% 36%);
+            padding: 0.25rem 0.625rem;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            color: white;
             border-radius: 0.25rem;
             font-size: 0.75rem;
             font-weight: 600;
             margin-bottom: 0.75rem;
         }
 
-        /* Modal */
+        .project-card-stats {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            color: white;
+            font-size: 0.8125rem;
+            font-weight: 600;
+        }
+
+        .stat-item svg {
+            width: 0.875rem;
+            height: 0.875rem;
+            opacity: 0.9;
+        }
+
+        /* Mobile content */
+        .project-card-content-mobile {
+            display: none;
+            padding-top: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .project-card-content-mobile {
+                display: block;
+            }
+        }
+
+        .project-card-header-mobile {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card-title-mobile {
+            font-size: 0.9375rem;
+            font-weight: 700;
+            color: hsl(220 20% 10%);
+            line-height: 1.3;
+            flex: 1;
+        }
+
+        .project-card-actions-mobile {
+            display: flex;
+            gap: 0.5rem;
+            flex-shrink: 0;
+            margin-left: 0.75rem;
+        }
+
+        .action-mobile {
+            width: 1.75rem;
+            height: 1.75rem;
+            border-radius: 0.25rem;
+            background: hsl(220 14% 96%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: hsl(220 9% 46%);
+        }
+
+        .action-mobile svg {
+            width: 0.875rem;
+            height: 0.875rem;
+        }
+
+        .project-card-category-mobile {
+            display: inline-block;
+            padding: 0.25rem 0.625rem;
+            background: hsl(146 55% 36% / 0.1);
+            color: hsl(146 55% 36%);
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .project-card-stats-mobile {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.8125rem;
+            color: hsl(220 9% 46%);
+        }
+
+        .stat-mobile {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .stat-mobile svg {
+            width: 0.875rem;
+            height: 0.875rem;
+        }
+
+        /* ===================================================================
+           PAGINATION (MINIMAL)
+           ================================================================ */
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 4rem;
+            padding-bottom: 2rem;
+        }
+
+        .pagination-btn {
+            min-width: 2.5rem;
+            height: 2.5rem;
+            padding: 0 0.75rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: hsl(220 20% 10%);
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            border-color: hsl(146 55% 36%);
+            background: hsl(146 55% 36% / 0.05);
+        }
+
+        .pagination-btn.active {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* ===================================================================
+           MODAL (DRIBBBLE SHOT VIEWER STYLE)
+           ================================================================ */
+        
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(6px);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(4px);
             z-index: 100;
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 1rem;
+            padding: 2rem;
+            overflow-y: auto;
         }
 
         .modal-overlay.active {
@@ -283,12 +490,21 @@
         .modal-content {
             background: white;
             border-radius: 1rem;
-            max-width: 900px;
+            max-width: 1100px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .modal-overlay {
+                padding: 1rem;
+            }
+            .modal-content {
+                max-height: 95vh;
+            }
         }
 
         .modal-header {
@@ -296,17 +512,41 @@
             top: 0;
             background: white;
             border-bottom: 1px solid hsl(220 13% 91%);
-            padding: 1.5rem;
+            padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 10;
         }
 
-        .modal-close {
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
+        .modal-title-section {
+            flex: 1;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+            color: hsl(220 20% 10%);
+        }
+
+        .modal-category {
+            font-size: 0.875rem;
+            color: hsl(220 9% 46%);
+            font-weight: 600;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            margin-left: 2rem;
+        }
+
+        .modal-action-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
             background: hsl(220 14% 96%);
             border: none;
             cursor: pointer;
@@ -314,6 +554,35 @@
             align-items: center;
             justify-content: center;
             transition: all 0.2s;
+            color: hsl(220 20% 10%);
+        }
+
+        .modal-action-btn:hover {
+            background: hsl(220 13% 91%);
+        }
+
+        .modal-action-btn.liked {
+            background: hsl(0 84% 60% / 0.1);
+            color: hsl(0 84% 60%);
+        }
+
+        .modal-action-btn.saved {
+            background: hsl(146 55% 36% / 0.1);
+            color: hsl(146 55% 36%);
+        }
+
+        .modal-close {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            background: hsl(220 14% 96%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            margin-left: 1rem;
         }
 
         .modal-close:hover {
@@ -332,32 +601,104 @@
         }
 
         .modal-section {
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
 
-        .modal-section h3 {
-            font-size: 1.25rem;
+        .modal-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-section-title {
+            font-size: 1.125rem;
             font-weight: 700;
             margin-bottom: 0.75rem;
             color: hsl(220 20% 10%);
         }
 
-        .modal-section p {
+        .modal-section-content {
             color: hsl(220 9% 46%);
             line-height: 1.7;
+            font-size: 0.9375rem;
+        }
+
+        .modal-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tool-badge {
+            padding: 0.5rem 1rem;
+            background: hsl(220 14% 96%);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: hsl(220 20% 10%);
+        }
+
+        .modal-outcomes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .outcome-card {
+            background: hsl(220 14% 98%);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+        }
+
+        .outcome-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: hsl(146 55% 36%);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .outcome-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: hsl(220 9% 46%);
+        }
+
+        .modal-testimonial {
+            background: hsl(220 14% 98%);
+            border-left: 4px solid hsl(146 55% 36%);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .testimonial-quote {
+            font-style: italic;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            color: hsl(220 20% 20%);
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            font-size: 0.875rem;
+            color: hsl(220 20% 10%);
+        }
+
+        .testimonial-source {
+            font-weight: 400;
+            color: hsl(220 9% 46%);
         }
 
         .modal-navigation {
             display: flex;
             gap: 1rem;
-            padding: 1.5rem;
+            padding: 1.5rem 2rem;
             border-top: 1px solid hsl(220 13% 91%);
             background: hsl(220 14% 98%);
         }
 
         .modal-nav-btn {
             flex: 1;
-            padding: 0.75rem 1.5rem;
+            padding: 0.875rem 1.5rem;
             background: white;
             border: 1px solid hsl(220 13% 91%);
             border-radius: 0.5rem;
@@ -368,6 +709,7 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            font-size: 0.9375rem;
         }
 
         .modal-nav-btn:hover:not(:disabled) {
@@ -377,56 +719,14 @@
         }
 
         .modal-nav-btn:disabled {
-            opacity: 0.4;
+            opacity: 0.3;
             cursor: not-allowed;
         }
 
-        /* Testimonial in modal */
-        .testimonial-box {
-            background: hsl(220 14% 98%);
-            border-left: 4px solid hsl(146 55% 36%);
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            margin-top: 2rem;
-        }
-
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 3rem;
-        }
-
-        .pagination-btn {
-            padding: 0.5rem 1rem;
-            background: white;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .pagination-btn:hover:not(:disabled) {
-            background: hsl(146 55% 36%);
-            border-color: hsl(146 55% 36%);
-            color: white;
-        }
-
-        .pagination-btn.active {
-            background: hsl(146 55% 36%);
-            border-color: hsl(146 55% 36%);
-            color: white;
-        }
-
-        .pagination-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        /* Loading state */
+        /* ===================================================================
+           LOADING & EMPTY STATES
+           ================================================================ */
+        
         .loading-state {
             text-align: center;
             padding: 4rem 2rem;
@@ -446,14 +746,23 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Empty state */
         .empty-state {
             text-align: center;
             padding: 4rem 2rem;
             color: hsl(220 9% 46%);
         }
 
-        /* Mobile sidebar */
+        .empty-state h3 {
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: hsl(220 20% 10%);
+        }
+
+        /* ===================================================================
+           MOBILE MENU
+           ================================================================ */
+        
         .mobile-overlay {
             position: fixed;
             inset: 0;
@@ -491,78 +800,50 @@
             padding: 14px 0;
             font-size: 16px;
             font-weight: 600;
-            border-bottom: 1px solid hsl(var(--border));
-        }
-
-        /* Fade animations */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-
-        .fade-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .section-padding {
-            padding: 5rem 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .section-padding {
-                padding: 3rem 1rem;
-            }
-            .desktop-only {
-                display: none !important;
-            }
-        }
-
-        /* Tool tags */
-        .tool-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .tool-tag {
-            padding: 0.375rem 0.75rem;
-            background: white;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.375rem;
-            font-size: 0.8125rem;
-            font-weight: 600;
+            border-bottom: 1px solid hsl(220 13% 91%);
+            text-decoration: none;
             color: hsl(220 20% 10%);
         }
 
-        /* Outcome metrics */
-        .outcome-metrics {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .outcome-metric {
-            background: hsl(220 14% 98%);
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            text-align: center;
-        }
-
-        .outcome-metric-value {
-            font-size: 2rem;
-            font-weight: 900;
+        .mobile-sidebar a:hover {
             color: hsl(146 55% 36%);
-            margin-bottom: 0.5rem;
         }
 
-        .outcome-metric-label {
-            font-size: 0.875rem;
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
             font-weight: 600;
-            color: hsl(220 9% 46%);
+            border-radius: 0.5rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background-color: hsl(146 55% 36%);
+            color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary:hover {
+            background-color: hsl(146 55% 32%);
+            box-shadow: 0 4px 12px rgba(46, 140, 78, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .desktop-only {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .desktop-only {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -573,40 +854,40 @@
 
 <!-- Mobile sidebar -->
 <aside id="mobile-menu" class="mobile-sidebar">
-  <div class="flex items-center justify-between mb-6">
-    <a href="https://packdez.com" class="flex items-center gap-2" onclick="closeMobileMenu()">
-      <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez logo" class="h-8 w-8" />
-      <span class="text-xl font-bold">Packdez</span>
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+    <a href="https://packdez.com" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: inherit;" onclick="closeMobileMenu()">
+      <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez logo" style="height: 2rem; width: 2rem;" />
+      <span style="font-size: 1.25rem; font-weight: 700;">Packdez</span>
     </a>
-    <button onclick="closeMobileMenu()" aria-label="Close menu" class="text-2xl font-bold">×</button>
+    <button onclick="closeMobileMenu()" aria-label="Close menu" style="font-size: 1.5rem; font-weight: 700; background: none; border: none; cursor: pointer;">×</button>
   </div>
   <a href="https://packdez.com#work" onclick="closeMobileMenu()">Work</a>
   <a href="https://packdez.com#pricing" onclick="closeMobileMenu()">Pricing</a>
   <a href="https://packdez.com#reviews" onclick="closeMobileMenu()">Reviews</a>
   <a href="about.html" onclick="closeMobileMenu()">About</a>
-  <a href="https://packdez.com#audit" onclick="closeMobileMenu()" class="mt-6 btn btn-primary">
+  <a href="https://packdez.com#audit" onclick="closeMobileMenu()" class="btn btn-primary" style="margin-top: 1.5rem;">
     Get Automation Plan
   </a>
 </aside>
 
 <!-- Navigation -->
 <nav class="nav-fixed">
-  <div class="max-w-6xl mx-auto px-4">
-    <div class="flex items-center justify-between h-16">
-      <a href="https://packdez.com" class="flex items-center gap-2 md:-ml-12">
-        <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez logo" class="h-8 w-8" />
-        <span class="text-xl font-bold">Packdez</span>
+  <div style="max-width: 1400px; margin: 0 auto; padding: 0 1rem;">
+    <div style="display: flex; align-items: center; justify-content: space-between; height: 4rem;">
+      <a href="https://packdez.com" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: inherit;">
+        <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez logo" style="height: 2rem; width: 2rem;" />
+        <span style="font-size: 1.25rem; font-weight: 700;">Packdez</span>
       </a>
       
-      <div class="desktop-only flex items-center gap-6" style="margin-right:-90px;">
-        <a href="https://packdez.com#work" class="text-sm font-medium text-primary">Work</a>
-        <a href="https://packdez.com#pricing" class="text-sm font-medium text-muted-foreground hover:text-primary">Pricing</a>
-        <a href="https://packdez.com#reviews" class="text-sm font-medium text-muted-foreground hover:text-primary">Reviews</a>
-        <a href="about.html" class="text-sm font-medium text-muted-foreground hover:text-primary">About</a>
-        <a href="https://packdez.com#audit" class="btn btn-primary ml-auto mr-10" style="padding: 0.5rem 1.25rem;">Get Free Audit</a>
+      <div class="desktop-only" style="display: flex; align-items: center; gap: 2rem;">
+        <a href="https://packdez.com#work" style="font-size: 0.875rem; font-weight: 600; color: hsl(146 55% 36%); text-decoration: none;">Work</a>
+        <a href="https://packdez.com#pricing" style="font-size: 0.875rem; font-weight: 600; color: hsl(220 9% 46%); text-decoration: none;">Pricing</a>
+        <a href="https://packdez.com#reviews" style="font-size: 0.875rem; font-weight: 600; color: hsl(220 9% 46%); text-decoration: none;">Reviews</a>
+        <a href="about.html" style="font-size: 0.875rem; font-weight: 600; color: hsl(220 9% 46%); text-decoration: none;">About</a>
+        <a href="https://packdez.com#audit" class="btn btn-primary" style="padding: 0.5rem 1.25rem;">Get Free Audit</a>
       </div>
-      <button class="flex md:hidden" onclick="toggleMobileMenu()" aria-label="Open menu">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <button style="display: flex; background: none; border: none; cursor: pointer;" class="md:hidden" onclick="toggleMobileMenu()" aria-label="Open menu">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="3" y1="6" x2="21" y2="6"/>
           <line x1="3" y1="12" x2="21" y2="12"/>
           <line x1="3" y1="18" x2="21" y2="18"/>
@@ -616,169 +897,71 @@
   </div>
 </nav>
 
-<!-- Hero Section with Featured Slider -->
-<section class="section-padding" style="padding-top: 8rem; padding-bottom: 4rem;">
-  <div class="max-w-6xl mx-auto px-4">
-    <div class="text-center mb-8 fade-up">
-      <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight tracking-[-0.02em]">
-        Systems built for operational teams
-      </h1>
-      <p class="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-        Custom Google Sheets automation that removes manual work, connects your tools, and scales with your business.
-      </p>
-    </div>
+<!-- Page Header -->
+<header class="page-header">
+  <h1 class="page-title">Work</h1>
+  <p class="page-subtitle">Automation systems built for operational teams</p>
+</header>
 
-    <!-- Featured Projects Slider -->
-    <div id="featured-slider" class="hero-slider fade-up" style="display: none;">
-      <div class="slider-track" id="slider-track"></div>
-      <div class="slider-controls">
-        <button class="slider-btn" onclick="previousSlide()" aria-label="Previous">
-          <i data-lucide="chevron-left" style="width: 1.25rem; height: 1.25rem;"></i>
-        </button>
-        <button class="slider-btn" onclick="nextSlide()" aria-label="Next">
-          <i data-lucide="chevron-right" style="width: 1.25rem; height: 1.25rem;"></i>
-        </button>
-      </div>
-      <div class="slider-dots" id="slider-dots"></div>
-    </div>
+<!-- Filters Bar -->
+<div class="filters-bar">
+  <input 
+    type="text" 
+    id="search-input" 
+    class="filter-search" 
+    placeholder="Search projects..."
+    onkeyup="applyFilters()"
+  />
+  <select id="category-filter" class="filter-pill" onchange="applyFilters()">
+    <option value="">All categories</option>
+  </select>
+  <select id="industry-filter" class="filter-pill" onchange="applyFilters()">
+    <option value="">All industries</option>
+  </select>
+  <button onclick="clearFilters()" class="filter-clear">Clear filters</button>
+</div>
 
-    <!-- Loading state for slider -->
-    <div id="slider-loading" class="loading-state">
-      <div class="loading-spinner"></div>
-      <p class="text-muted-foreground">Loading featured systems...</p>
-    </div>
+<!-- Projects Container -->
+<div class="projects-container">
+  <!-- Loading state -->
+  <div id="projects-loading" class="loading-state">
+    <div class="loading-spinner"></div>
+    <p style="color: hsl(220 9% 46%);">Loading projects...</p>
   </div>
-</section>
 
-<!-- Filters Section -->
-<section style="background: hsl(220 14% 98%); padding: 3rem 0;">
-  <div class="max-w-6xl mx-auto px-4">
-    <div class="filters-section fade-up">
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; align-items: end;">
-        <div>
-          <label for="search-input" style="display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Search</label>
-          <input 
-            type="text" 
-            id="search-input" 
-            class="filter-input" 
-            placeholder="Search projects..."
-            onkeyup="applyFilters()"
-          />
-        </div>
-        <div>
-          <label for="category-filter" style="display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Category</label>
-          <select id="category-filter" class="filter-select" onchange="applyFilters()">
-            <option value="">All categories</option>
-          </select>
-        </div>
-        <div>
-          <label for="industry-filter" style="display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Industry</label>
-          <select id="industry-filter" class="filter-select" onchange="applyFilters()">
-            <option value="">All industries</option>
-          </select>
-        </div>
-        <div>
-          <button onclick="clearFilters()" class="filter-input" style="cursor: pointer; background: white; font-weight: 600; color: hsl(146 55% 36%);">
-            Clear filters
-          </button>
-        </div>
-      </div>
-    </div>
+  <!-- Projects grid -->
+  <div id="projects-grid" class="projects-grid" style="display: none;"></div>
 
-    <!-- Projects Grid -->
-    <div id="projects-container">
-      <!-- Loading state -->
-      <div id="projects-loading" class="loading-state">
-        <div class="loading-spinner"></div>
-        <p class="text-muted-foreground">Loading projects...</p>
-      </div>
-
-      <!-- Projects will be rendered here -->
-      <div id="projects-grid" class="projects-grid" style="display: none;"></div>
-
-      <!-- Empty state -->
-      <div id="empty-state" class="empty-state" style="display: none;">
-        <i data-lucide="search" style="width: 3rem; height: 3rem; margin: 0 auto 1rem; opacity: 0.3;"></i>
-        <h3 style="font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem;">No projects found</h3>
-        <p>Try adjusting your filters or search terms</p>
-      </div>
-
-      <!-- Pagination -->
-      <div id="pagination" class="pagination" style="display: none;"></div>
-    </div>
+  <!-- Empty state -->
+  <div id="empty-state" class="empty-state" style="display: none;">
+    <i data-lucide="search" style="width: 3rem; height: 3rem; margin: 0 auto 1rem; opacity: 0.3;"></i>
+    <h3>No projects found</h3>
+    <p>Try adjusting your filters or search terms</p>
   </div>
-</section>
 
-<!-- CTA Section -->
-<section style="background: white; padding: 5rem 1rem; text-align: center;">
-  <div style="max-width: 900px; margin: 0 auto;">
-    <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to automate your workflow?</h2>
-    <p style="font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;" class="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-      Get a clear automation plan in 24 hours. No obligation.
-    </p>
-    <a href="https://packdez.com#audit" style="display: inline-block; background: #298E55; color: white; padding: 1rem 2rem; border-radius: 0.5rem; font-weight: 600; text-decoration: none; font-size: 1.125rem; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
-      Get your automation plan
-    </a>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer style="padding: 4rem 2rem; border-top: 1px solid hsl(220 13% 91%);">
-    <div style="max-width: 1400px; margin: 0 auto;">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
-            <div>
-                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
-                    <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez logo" style="height: 1.75rem; width: 1.75rem;" />
-                    <h3 style="font-size: 1.125rem; font-weight: 700;">Packdez</h3>
-                </div>
-                <p style="font-size: 0.875rem; color: hsl(220 9% 46%); margin-bottom: 1rem;">Stay connected</p>
-                <div style="display: flex; gap: 0.75rem;">
-                    <a href="https://x.com/packdezHQ" target="_blank" rel="noopener noreferrer" style="width: 2.5rem; height: 2.5rem; background: hsl(220 14% 96%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                        <i data-lucide="twitter" style="width: 1rem; height: 1rem;"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/company/packdez/" target="_blank" rel="noopener noreferrer" style="width: 2.5rem; height: 2.5rem; background: hsl(220 14% 96%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                        <i data-lucide="linkedin" style="width: 1rem; height: 1rem;"></i>
-                    </a>
-                    <a href="https://youtube.com/@packdezhqz?si=EXj27rVMq27WlWQp" target="_blank" rel="noopener noreferrer" style="width: 2.5rem; height: 2.5rem; background: hsl(220 14% 96%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                        <i data-lucide="youtube" style="width: 1rem; height: 1rem;"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <div>
-                <h4 style="font-weight: 700; margin-bottom: 1rem; font-size: 0.875rem;">What We Build</h4>
-                <ul style="list-style: none;">
-                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Automated reporting systems</span></li>
-                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Operations automation</span></li>
-                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Custom internal tools</span></li>
-                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">API integrations</span></li>
-                </ul>
-            </div>
-            
-            <div>
-                <h4 style="font-weight: 700; margin-bottom: 1rem; font-size: 0.875rem;">Contact</h4>
-                <ul style="list-style: none;">
-                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">packdez.com@gmail.com</span></li>
-                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Response within 24 hours</span></li>
-                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Delivery in 7-15 days</span></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div style="padding-top: 2rem; border-top: 1px solid hsl(220 13% 91%); text-align: center;">
-            <p style="font-size: 0.875rem; color: hsl(220 9% 46%);">© <span id="year"></span> Packdez</p>
-        </div>
-    </div>
-</footer>
+  <!-- Pagination -->
+  <div id="pagination" class="pagination" style="display: none;"></div>
+</div>
 
 <!-- Project Modal -->
 <div id="project-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
   <div class="modal-content">
     <div class="modal-header">
-      <h2 id="modal-title" style="font-size: 1.5rem; font-weight: 700; margin: 0;"></h2>
-      <button class="modal-close" onclick="closeModal()" aria-label="Close">
-        <i data-lucide="x" style="width: 1.25rem; height: 1.25rem;"></i>
-      </button>
+      <div class="modal-title-section">
+        <h2 id="modal-title" class="modal-title"></h2>
+        <p id="modal-category" class="modal-category"></p>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-action-btn" id="modal-like-btn" onclick="toggleLike(event)" aria-label="Like">
+          <i data-lucide="heart" style="width: 1.125rem; height: 1.125rem;"></i>
+        </button>
+        <button class="modal-action-btn" id="modal-save-btn" onclick="toggleSave(event)" aria-label="Save">
+          <i data-lucide="bookmark" style="width: 1.125rem; height: 1.125rem;"></i>
+        </button>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">
+          <i data-lucide="x" style="width: 1.25rem; height: 1.25rem;"></i>
+        </button>
+      </div>
     </div>
     <div class="modal-body" id="modal-body"></div>
     <div class="modal-navigation">
@@ -801,10 +984,26 @@
 let allProjects = [];
 let filteredProjects = [];
 let currentPage = 1;
-const projectsPerPage = 9;
-let currentSlide = 0;
-let sliderInterval = null;
+const projectsPerPage = 12;
 let currentModalIndex = -1;
+
+// ===================================================================
+// FAKE ENGAGEMENT METRICS (UI ONLY - CONSISTENT PER PROJECT)
+// ===================================================================
+function generateEngagementMetrics(projectId) {
+  // Use project ID to seed consistent random numbers
+  const seed = projectId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const random = (min, max) => {
+    const x = Math.sin(seed) * 10000;
+    return Math.floor((x - Math.floor(x)) * (max - min + 1)) + min;
+  };
+  
+  return {
+    likes: random(45, 289),
+    views: random(856, 4231),
+    saves: random(12, 87)
+  };
+}
 
 // ===================================================================
 // API DATA FETCHING
@@ -824,9 +1023,7 @@ allProjects = (responseData.projects || [])
     
     filteredProjects = [...allProjects];
     
-    // Initialize UI
     populateFilters();
-    renderFeaturedSlider();
     renderProjects();
     
   } catch (error) {
@@ -836,107 +1033,7 @@ allProjects = (responseData.projects || [])
         <p style="color: hsl(0 84% 60%);">Failed to load projects. Please try again later.</p>
       </div>
     `;
-    document.getElementById('slider-loading').innerHTML = `
-      <div class="empty-state">
-        <p style="color: hsl(0 84% 60%);">Failed to load featured projects.</p>
-      </div>
-    `;
   }
-}
-
-// ===================================================================
-// FEATURED SLIDER
-// ===================================================================
-function renderFeaturedSlider() {
-  const featuredProjects = allProjects
-  .filter(p => String(p.show_on_homepage).toLowerCase() === 'true')
-  .slice(0, 5);
-
-  
-  if (featuredProjects.length === 0) {
-    document.getElementById('slider-loading').style.display = 'none';
-    return;
-  }
-
-  const sliderTrack = document.getElementById('slider-track');
-  const sliderDots = document.getElementById('slider-dots');
-  
-  sliderTrack.innerHTML = featuredProjects.map(project => `
-    <div class="slider-slide">
-      <div>
-        <span class="project-tag">${project.primary_category || 'Automation'}</span>
-        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2;">
-          ${project.project_title}
-        </h2>
-        <p style="font-size: 1.125rem; color: hsl(220 9% 46%); margin-bottom: 1.5rem; line-height: 1.7;">
-          ${project.short_highlight || project.problem_summary || ''}
-        </p>
-        ${project.industry ? `<p style="font-size: 0.9375rem; color: hsl(220 9% 46%);"><strong>Industry:</strong> ${project.industry}</p>` : ''}
-        <button onclick="openModal('${project.project_id}')" class="btn btn-primary" style="margin-top: 1.5rem;">
-          View system details
-        </button>
-      </div>
-      <div>
-        <img 
-          src="${project.thumbnail_image_url}" 
-          alt="${project.image_alt_text || project.project_title}"
-          class="slider-image"
-          loading="lazy"
-        />
-      </div>
-    </div>
-  `).join('');
-
-  sliderDots.innerHTML = featuredProjects.map((_, index) => `
-    <div class="slider-dot ${index === 0 ? 'active' : ''}" onclick="goToSlide(${index})"></div>
-  `).join('');
-
-  document.getElementById('slider-loading').style.display = 'none';
-  document.getElementById('featured-slider').style.display = 'block';
-
-  // Auto-play slider
-  startSlider(featuredProjects.length);
-  lucide.createIcons();
-}
-
-function startSlider(totalSlides) {
-  if (sliderInterval) clearInterval(sliderInterval);
-  sliderInterval = setInterval(() => {
-    currentSlide = (currentSlide + 1) % totalSlides;
-    updateSlider();
-  }, 6000);
-}
-
-function updateSlider() {
-  const sliderTrack = document.getElementById('slider-track');
-  sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
-  
-  document.querySelectorAll('.slider-dot').forEach((dot, index) => {
-    dot.classList.toggle('active', index === currentSlide);
-  });
-}
-
-function goToSlide(index) {
-  currentSlide = index;
-  updateSlider();
-  if (sliderInterval) clearInterval(sliderInterval);
-  startSlider(document.querySelectorAll('.slider-slide').length);
-}
-
-function nextSlide() {
-  const totalSlides = document.querySelectorAll('.slider-slide').length;
-  currentSlide = (currentSlide + 1) % totalSlides;
-  updateSlider();
-  if (sliderInterval) clearInterval(sliderInterval);
-  startSlider(totalSlides);
-}
-
-function previousSlide() {
-  const totalSlides = document.querySelectorAll('.slider-slide').length;
-  currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-  updateSlider();
-  if (sliderInterval) clearInterval(sliderInterval);
-  startSlider(totalSlides);
 }
 
 // ===================================================================
@@ -993,7 +1090,7 @@ function clearFilters() {
 }
 
 // ===================================================================
-// PROJECT GRID RENDERING
+// PROJECT GRID RENDERING - DRIBBBLE STYLE
 // ===================================================================
 function renderProjects() {
   const grid = document.getElementById('projects-grid');
@@ -1014,41 +1111,82 @@ function renderProjects() {
   emptyState.style.display = 'none';
   grid.style.display = 'grid';
 
-  // Pagination logic
   const startIndex = (currentPage - 1) * projectsPerPage;
   const endIndex = startIndex + projectsPerPage;
   const projectsToShow = filteredProjects.slice(startIndex, endIndex);
 
-  grid.innerHTML = projectsToShow.map(project => `
-    <div class="project-card" onclick="openModal('${project.project_id}')">
-      <img 
-        src="${project.thumbnail_image_url}" 
-        alt="${project.image_alt_text || project.project_title}"
-        class="project-card-image"
-        loading="lazy"
-      />
-      <div class="project-card-content">
-        <span class="project-tag">${project.primary_category || 'Automation'}</span>
-        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">
-          ${project.project_title}
-        </h3>
-        <p style="color: hsl(220 9% 46%); font-size: 0.9375rem; line-height: 1.6;">
-          ${project.short_highlight || project.problem_summary || ''}
-        </p>
-        ${project.industry ? `
-          <p style="font-size: 0.8125rem; color: hsl(220 9% 46%); margin-top: 0.75rem;">
-            <strong>Industry:</strong> ${project.industry}
-          </p>
-        ` : ''}
+  grid.innerHTML = projectsToShow.map(project => {
+    const metrics = generateEngagementMetrics(project.project_id);
+    
+    return `
+    <div class="project-card" onclick="openModal('${project.project_id}')" tabindex="0" onkeypress="if(event.key==='Enter') openModal('${project.project_id}')">
+      <div class="project-card-image-wrapper">
+        <img 
+          src="${project.thumbnail_image_url}" 
+          alt="${project.image_alt_text || project.project_title}"
+          class="project-card-image"
+          loading="lazy"
+        />
+        
+        <!-- Desktop overlay -->
+        <div class="project-card-overlay">
+          <div class="project-card-overlay-top">
+            <div class="overlay-action">
+              <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
+            </div>
+            <div class="overlay-action">
+              <i data-lucide="bookmark" style="width: 0.875rem; height: 0.875rem;"></i>
+            </div>
+          </div>
+          <div class="project-card-overlay-bottom">
+            <h3 class="project-card-title-overlay">${project.project_title}</h3>
+            <span class="project-card-category-overlay">${project.primary_category || 'Automation'}</span>
+            <div class="project-card-stats">
+              <div class="stat-item">
+                <i data-lucide="heart" style="fill: currentColor;"></i>
+                <span>${metrics.likes}</span>
+              </div>
+              <div class="stat-item">
+                <i data-lucide="eye"></i>
+                <span>${metrics.views.toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Mobile content -->
+      <div class="project-card-content-mobile">
+        <div class="project-card-header-mobile">
+          <h3 class="project-card-title-mobile">${project.project_title}</h3>
+          <div class="project-card-actions-mobile">
+            <div class="action-mobile">
+              <i data-lucide="heart"></i>
+            </div>
+            <div class="action-mobile">
+              <i data-lucide="bookmark"></i>
+            </div>
+          </div>
+        </div>
+        <span class="project-card-category-mobile">${project.primary_category || 'Automation'}</span>
+        <div class="project-card-stats-mobile">
+          <div class="stat-mobile">
+            <i data-lucide="heart"></i>
+            <span>${metrics.likes}</span>
+          </div>
+          <div class="stat-mobile">
+            <i data-lucide="eye"></i>
+            <span>${metrics.views.toLocaleString()}</span>
+          </div>
+        </div>
       </div>
     </div>
-  `).join('');
+  `}).join('');
 
   renderPagination();
   lucide.createIcons();
   
-  // Scroll to top of grid
-  document.getElementById('projects-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function renderPagination() {
@@ -1064,11 +1202,10 @@ function renderPagination() {
 
   let paginationHTML = `
     <button class="pagination-btn" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
-      Previous
+      ‹
     </button>
   `;
 
-  // Show page numbers
   for (let i = 1; i <= totalPages; i++) {
     if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
       paginationHTML += `
@@ -1077,13 +1214,13 @@ function renderPagination() {
         </button>
       `;
     } else if (i === currentPage - 2 || i === currentPage + 2) {
-      paginationHTML += `<span style="padding: 0.5rem;">...</span>`;
+      paginationHTML += `<span style="padding: 0 0.25rem; color: hsl(220 9% 46%);">...</span>`;
     }
   }
 
   paginationHTML += `
     <button class="pagination-btn" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
-      Next
+      ›
     </button>
   `;
 
@@ -1098,40 +1235,36 @@ function changePage(page) {
 }
 
 // ===================================================================
-// MODAL
+// MODAL - DRIBBBLE SHOT VIEWER STYLE
 // ===================================================================
 function openModal(projectId) {
   const project = allProjects.find(p => p.project_id === projectId);
   if (!project) return;
 
   currentModalIndex = filteredProjects.findIndex(p => p.project_id === projectId);
+  const metrics = generateEngagementMetrics(projectId);
 
   const modal = document.getElementById('project-modal');
   const modalTitle = document.getElementById('modal-title');
+  const modalCategory = document.getElementById('modal-category');
   const modalBody = document.getElementById('modal-body');
 
   modalTitle.textContent = project.project_title;
+  modalCategory.textContent = project.primary_category || 'Automation';
 
-  // Build modal content
   let content = '';
 
   // Detail image
   if (project.detail_image_url) {
-    content += `
-      <img 
-        src="${project.detail_image_url}" 
-        alt="${project.image_alt_text || project.project_title}"
-        class="modal-image"
-      />
-    `;
+    content += `<img src="${project.detail_image_url}" alt="${project.image_alt_text || project.project_title}" class="modal-image" />`;
   }
 
   // Context
   if (project.client_context) {
     content += `
       <div class="modal-section">
-        <h3>Context</h3>
-        <p>${project.client_context}</p>
+        <h3 class="modal-section-title">Context</h3>
+        <p class="modal-section-content">${project.client_context}</p>
       </div>
     `;
   }
@@ -1140,8 +1273,8 @@ function openModal(projectId) {
   if (project.problem_details || project.problem_summary) {
     content += `
       <div class="modal-section">
-        <h3>Problem</h3>
-        <p>${project.problem_details || project.problem_summary}</p>
+        <h3 class="modal-section-title">Problem</h3>
+        <p class="modal-section-content">${project.problem_details || project.problem_summary}</p>
       </div>
     `;
   }
@@ -1150,8 +1283,8 @@ function openModal(projectId) {
   if (project.system_overview) {
     content += `
       <div class="modal-section">
-        <h3>System overview</h3>
-        <p>${project.system_overview}</p>
+        <h3 class="modal-section-title">System overview</h3>
+        <p class="modal-section-content">${project.system_overview}</p>
       </div>
     `;
   }
@@ -1162,9 +1295,9 @@ function openModal(projectId) {
     if (tools.length > 0) {
       content += `
         <div class="modal-section">
-          <h3>Tools & integrations</h3>
-          <div class="tool-tags">
-            ${tools.map(tool => `<span class="tool-tag">${tool}</span>`).join('')}
+          <h3 class="modal-section-title">Tools & integrations</h3>
+          <div class="modal-tools">
+            ${tools.map(tool => `<span class="tool-badge">${tool}</span>`).join('')}
           </div>
         </div>
       `;
@@ -1175,64 +1308,55 @@ function openModal(projectId) {
   if (project.automation_features) {
     content += `
       <div class="modal-section">
-        <h3>Automation features</h3>
-        <p>${project.automation_features}</p>
+        <h3 class="modal-section-title">Automation features</h3>
+        <p class="modal-section-content">${project.automation_features}</p>
       </div>
     `;
   }
 
   // Outcomes
   if (project.primary_outcome || project.secondary_outcome) {
-    content += `
-      <div class="modal-section">
-        <h3>Outcomes</h3>
-        <div class="outcome-metrics">
-    `;
+    content += `<div class="modal-section"><h3 class="modal-section-title">Outcomes</h3><div class="modal-outcomes">`;
     
     if (project.primary_outcome) {
       content += `
-        <div class="outcome-metric">
-          <div class="outcome-metric-value">${project.primary_outcome}</div>
-          <div class="outcome-metric-label">${project.metric_type || 'Primary outcome'}</div>
+        <div class="outcome-card">
+          <div class="outcome-value">${project.primary_outcome}</div>
+          <div class="outcome-label">${project.metric_type || 'Primary outcome'}</div>
         </div>
       `;
     }
     
     if (project.secondary_outcome) {
       content += `
-        <div class="outcome-metric">
-          <div class="outcome-metric-value">${project.secondary_outcome}</div>
-          <div class="outcome-metric-label">Secondary outcome</div>
+        <div class="outcome-card">
+          <div class="outcome-value">${project.secondary_outcome}</div>
+          <div class="outcome-label">Secondary outcome</div>
         </div>
       `;
     }
     
-    content += `
-        </div>
-      </div>
-    `;
+    content += `</div></div>`;
   }
 
   // Testimonial
   if (project.testimonial_quote) {
     content += `
-      <div class="testimonial-box">
-        <p style="font-style: italic; line-height: 1.7; margin-bottom: 1rem; color: hsl(220 20% 20%);">
-          "${project.testimonial_quote}"
-        </p>
-        ${project.testimonial_author ? `
-          <p style="font-weight: 700; font-size: 0.875rem;">
-            — ${project.testimonial_author}
-            ${project.testimonial_source ? `<span style="font-weight: 400; color: hsl(220 9% 46%);">, ${project.testimonial_source}</span>` : ''}
-          </p>
-        ` : ''}
+      <div class="modal-section">
+        <div class="modal-testimonial">
+          <p class="testimonial-quote">"${project.testimonial_quote}"</p>
+          ${project.testimonial_author ? `
+            <p class="testimonial-author">
+              — ${project.testimonial_author}
+              ${project.testimonial_source ? `<span class="testimonial-source">, ${project.testimonial_source}</span>` : ''}
+            </p>
+          ` : ''}
+        </div>
       </div>
     `;
   }
 
   modalBody.innerHTML = content;
-
-  // Update navigation buttons
   updateModalNavigation();
 
   modal.classList.add('active');
@@ -1269,6 +1393,21 @@ function navigateProject(direction) {
   openModal(project.project_id);
 }
 
+// UI-only like/save toggles
+function toggleLike(event) {
+  event.stopPropagation();
+  const btn = document.getElementById('modal-like-btn');
+  btn.classList.toggle('liked');
+  lucide.createIcons();
+}
+
+function toggleSave(event) {
+  event.stopPropagation();
+  const btn = document.getElementById('modal-save-btn');
+  btn.classList.toggle('saved');
+  lucide.createIcons();
+}
+
 // ESC key to close modal
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
@@ -1292,22 +1431,8 @@ function closeMobileMenu() {
 }
 
 // ===================================================================
-// FADE-UP ANIMATIONS
-// ===================================================================
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
-
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-// ===================================================================
 // INITIALIZATION
 // ===================================================================
-document.getElementById('year').textContent = new Date().getFullYear();
 fetchProjects();
 lucide.createIcons();
 </script>
