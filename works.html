@@ -814,12 +814,13 @@ const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbx271i09tTrmNdXKof
 async function fetchProjects() {
   try {
     const response = await fetch(API_ENDPOINT);
-    const data = await response.json();
-    
-    // Filter only published projects and sort by display_order
-    allProjects = data
-      .filter(project => project.status === 'published')
-      .sort((a, b) => (a.display_order || 999) - (b.display_order || 999));
+const responseData = await response.json();
+
+// IMPORTANT: projects are inside responseData.projects
+allProjects = (responseData.projects || [])
+  .filter(project => project.status === 'published')
+  .sort((a, b) => (a.display_order || 999) - (b.display_order || 999));
+
     
     filteredProjects = [...allProjects];
     
