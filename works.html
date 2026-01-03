@@ -848,7 +848,10 @@ allProjects = (responseData.projects || [])
 // FEATURED SLIDER
 // ===================================================================
 function renderFeaturedSlider() {
-  const featuredProjects = allProjects.filter(p => p.show_on_homepage === 'TRUE').slice(0, 5);
+  const featuredProjects = allProjects
+  .filter(p => String(p.show_on_homepage).toLowerCase() === 'true')
+  .slice(0, 5);
+
   
   if (featuredProjects.length === 0) {
     document.getElementById('slider-loading').style.display = 'none';
