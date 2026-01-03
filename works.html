@@ -213,7 +213,7 @@
             border-color: hsl(146 55% 36%);
         }
 
-        /* Project Grid */
+        /* Project Grid - Dribbble Style */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -227,40 +227,182 @@
             }
         }
 
+        /* Dribbble-style Card */
         .project-card {
-            background: white;
-            border: 1px solid hsl(220 13% 91%);
+            background: transparent;
             border-radius: 0.75rem;
-            overflow: hidden;
-            transition: all 0.3s ease;
+            overflow: visible;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .project-card:hover {
-            border-color: hsl(146 55% 36%);
-            box-shadow: 0 8px 24px rgba(46, 140, 78, 0.1);
-            transform: translateY(-2px);
+        .project-card-image-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            background: hsl(220 14% 96%);
+            margin-bottom: 0.75rem;
+        }
+
+        .project-card:hover .project-card-image-wrapper {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
         }
 
         .project-card-image {
             width: 100%;
-            height: 200px;
+            height: 100%;
             object-fit: cover;
+            transition: transform 0.3s ease;
         }
 
-        .project-card-content {
-            padding: 1.5rem;
+        .project-card:hover .project-card-image {
+            transform: scale(1.04);
         }
 
-        .project-tag {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: hsl(146 55% 36% / 0.1);
-            color: hsl(146 55% 36%);
-            border-radius: 0.25rem;
+        /* Overlay on hover */
+        .project-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 40%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1rem;
+        }
+
+        @media (min-width: 769px) {
+            .project-card:hover .project-card-overlay {
+                opacity: 1;
+            }
+        }
+
+        .overlay-top {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        .overlay-action {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.375rem;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .overlay-action:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        .overlay-bottom {
+            color: white;
+        }
+
+        .overlay-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .overlay-stats {
+            display: flex;
+            gap: 1rem;
             font-size: 0.75rem;
             font-weight: 600;
-            margin-bottom: 0.75rem;
+        }
+
+        .overlay-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* Card Footer - Dribbble Style */
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-creator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .creator-avatar {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid hsl(220 13% 91%);
+        }
+
+        .creator-name {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: hsl(220 20% 10%);
+        }
+
+        .card-stats {
+            display: flex;
+            gap: 0.75rem;
+            font-size: 0.75rem;
+            color: hsl(220 9% 46%);
+        }
+
+        .card-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .card-stat svg {
+            width: 0.875rem;
+            height: 0.875rem;
+        }
+
+        /* Like Button with Animation */
+        .like-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: all 0.2s;
+        }
+
+        .like-btn:hover {
+            color: hsl(0 84% 60%);
+        }
+
+        .like-btn.liked {
+            color: hsl(0 84% 60%);
+        }
+
+        .like-btn.liked svg {
+            fill: currentColor;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1.1); }
+        }
+
+        .like-btn.animating svg {
+            animation: heartBeat 0.4s ease;
         }
 
         /* Modal */
@@ -381,7 +523,6 @@
             cursor: not-allowed;
         }
 
-        /* Testimonial in modal */
         .testimonial-box {
             background: hsl(220 14% 98%);
             border-left: 4px solid hsl(146 55% 36%);
@@ -390,7 +531,6 @@
             margin-top: 2rem;
         }
 
-        /* Pagination */
         .pagination {
             display: flex;
             justify-content: center;
@@ -426,7 +566,6 @@
             cursor: not-allowed;
         }
 
-        /* Loading state */
         .loading-state {
             text-align: center;
             padding: 4rem 2rem;
@@ -446,14 +585,12 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Empty state */
         .empty-state {
             text-align: center;
             padding: 4rem 2rem;
             color: hsl(220 9% 46%);
         }
 
-        /* Mobile sidebar */
         .mobile-overlay {
             position: fixed;
             inset: 0;
@@ -494,7 +631,6 @@
             border-bottom: 1px solid hsl(var(--border));
         }
 
-        /* Fade animations */
         .fade-up {
             opacity: 0;
             transform: translateY(30px);
@@ -519,7 +655,6 @@
             }
         }
 
-        /* Tool tags */
         .tool-tags {
             display: flex;
             flex-wrap: wrap;
@@ -537,7 +672,6 @@
             color: hsl(220 20% 10%);
         }
 
-        /* Outcome metrics */
         .outcome-metrics {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -806,6 +940,43 @@ let currentSlide = 0;
 let sliderInterval = null;
 let currentModalIndex = -1;
 
+// Local storage for engagement tracking
+const STORAGE_KEY = 'packdez_project_engagement';
+
+function getEngagement() {
+  const data = localStorage.getItem(STORAGE_KEY);
+  return data ? JSON.parse(data) : {};
+}
+
+function saveEngagement(engagement) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(engagement));
+}
+
+function getProjectEngagement(projectId) {
+  const engagement = getEngagement();
+  return engagement[projectId] || { views: 0, likes: 0 };
+}
+
+function incrementViews(projectId) {
+  const engagement = getEngagement();
+  if (!engagement[projectId]) {
+    engagement[projectId] = { views: 0, likes: 0 };
+  }
+  engagement[projectId].views++;
+  saveEngagement(engagement);
+  return engagement[projectId].views;
+}
+
+function toggleLike(projectId) {
+  const engagement = getEngagement();
+  if (!engagement[projectId]) {
+    engagement[projectId] = { views: 0, likes: 0 };
+  }
+  engagement[projectId].likes++;
+  saveEngagement(engagement);
+  return engagement[projectId].likes;
+}
+
 // ===================================================================
 // API DATA FETCHING
 // ===================================================================
@@ -814,17 +985,14 @@ const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbx271i09tTrmNdXKof
 async function fetchProjects() {
   try {
     const response = await fetch(API_ENDPOINT);
-const responseData = await response.json();
+    const responseData = await response.json();
 
-// IMPORTANT: projects are inside responseData.projects
-allProjects = (responseData.projects || [])
-  .filter(project => project.status === 'published')
-  .sort((a, b) => (a.display_order || 999) - (b.display_order || 999));
-
+    allProjects = (responseData.projects || [])
+      .filter(project => project.status === 'published')
+      .sort((a, b) => (a.display_order || 999) - (b.display_order || 999));
     
     filteredProjects = [...allProjects];
     
-    // Initialize UI
     populateFilters();
     renderFeaturedSlider();
     renderProjects();
@@ -849,9 +1017,8 @@ allProjects = (responseData.projects || [])
 // ===================================================================
 function renderFeaturedSlider() {
   const featuredProjects = allProjects
-  .filter(p => String(p.show_on_homepage).toLowerCase() === 'true')
-  .slice(0, 5);
-
+    .filter(p => String(p.show_on_homepage).toLowerCase() === 'true')
+    .slice(0, 5);
   
   if (featuredProjects.length === 0) {
     document.getElementById('slider-loading').style.display = 'none';
@@ -894,7 +1061,6 @@ function renderFeaturedSlider() {
   document.getElementById('slider-loading').style.display = 'none';
   document.getElementById('featured-slider').style.display = 'block';
 
-  // Auto-play slider
   startSlider(featuredProjects.length);
   lucide.createIcons();
 }
@@ -993,7 +1159,7 @@ function clearFilters() {
 }
 
 // ===================================================================
-// PROJECT GRID RENDERING
+// PROJECT GRID RENDERING - DRIBBBLE STYLE
 // ===================================================================
 function renderProjects() {
   const grid = document.getElementById('projects-grid');
@@ -1014,41 +1180,92 @@ function renderProjects() {
   emptyState.style.display = 'none';
   grid.style.display = 'grid';
 
-  // Pagination logic
   const startIndex = (currentPage - 1) * projectsPerPage;
   const endIndex = startIndex + projectsPerPage;
   const projectsToShow = filteredProjects.slice(startIndex, endIndex);
 
-  grid.innerHTML = projectsToShow.map(project => `
+  grid.innerHTML = projectsToShow.map(project => {
+    const engagement = getProjectEngagement(project.project_id);
+    const profileImage = project.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png';
+    const creatorName = project.creator_name || 'Packdez';
+    
+    return `
     <div class="project-card" onclick="openModal('${project.project_id}')">
-      <img 
-        src="${project.thumbnail_image_url}" 
-        alt="${project.image_alt_text || project.project_title}"
-        class="project-card-image"
-        loading="lazy"
-      />
-      <div class="project-card-content">
-        <span class="project-tag">${project.primary_category || 'Automation'}</span>
-        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">
-          ${project.project_title}
-        </h3>
-        <p style="color: hsl(220 9% 46%); font-size: 0.9375rem; line-height: 1.6;">
-          ${project.short_highlight || project.problem_summary || ''}
-        </p>
-        ${project.industry ? `
-          <p style="font-size: 0.8125rem; color: hsl(220 9% 46%); margin-top: 0.75rem;">
-            <strong>Industry:</strong> ${project.industry}
-          </p>
-        ` : ''}
+      <div class="project-card-image-wrapper">
+        <img 
+          src="${project.thumbnail_image_url}" 
+          alt="${project.image_alt_text || project.project_title}"
+          class="project-card-image"
+          loading="lazy"
+        />
+        
+        <!-- Desktop overlay -->
+        <div class="project-card-overlay">
+          <div class="overlay-top">
+            <div class="overlay-action" onclick="event.stopPropagation(); handleLike('${project.project_id}')">
+              <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
+            </div>
+          </div>
+          <div class="overlay-bottom">
+            <div class="overlay-title">${project.project_title}</div>
+            <div class="overlay-stats">
+              <div class="overlay-stat">
+                <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
+                <span id="likes-overlay-${project.project_id}">${engagement.likes}</span>
+              </div>
+              <div class="overlay-stat">
+                <i data-lucide="eye" style="width: 0.875rem; height: 0.875rem;"></i>
+                <span id="views-overlay-${project.project_id}">${engagement.views}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Card Footer -->
+      <div class="card-footer">
+        <div class="card-creator">
+          <img src="${profileImage}" alt="${creatorName}" class="creator-avatar" />
+          <span class="creator-name">${creatorName}</span>
+        </div>
+        <div class="card-stats">
+          <button class="like-btn" onclick="event.stopPropagation(); handleLike('${project.project_id}')" id="like-btn-${project.project_id}">
+            <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
+            <span id="likes-${project.project_id}">${engagement.likes}</span>
+          </button>
+          <div class="card-stat">
+            <i data-lucide="eye"></i>
+            <span id="views-${project.project_id}">${engagement.views}</span>
+          </div>
+        </div>
       </div>
     </div>
-  `).join('');
+  `}).join('');
 
   renderPagination();
   lucide.createIcons();
   
-  // Scroll to top of grid
   document.getElementById('projects-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function handleLike(projectId) {
+  const newLikes = toggleLike(projectId);
+  
+  // Update all displays
+  const likesElement = document.getElementById(`likes-${projectId}`);
+  const likesOverlay = document.getElementById(`likes-overlay-${projectId}`);
+  const likeBtn = document.getElementById(`like-btn-${projectId}`);
+  
+  if (likesElement) likesElement.textContent = newLikes;
+  if (likesOverlay) likesOverlay.textContent = newLikes;
+  
+  // Add animation
+  if (likeBtn) {
+    likeBtn.classList.add('animating', 'liked');
+    setTimeout(() => likeBtn.classList.remove('animating'), 400);
+  }
+  
+  lucide.createIcons();
 }
 
 function renderPagination() {
@@ -1068,7 +1285,6 @@ function renderPagination() {
     </button>
   `;
 
-  // Show page numbers
   for (let i = 1; i <= totalPages; i++) {
     if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
       paginationHTML += `
@@ -1104,6 +1320,15 @@ function openModal(projectId) {
   const project = allProjects.find(p => p.project_id === projectId);
   if (!project) return;
 
+  // Increment view count
+  const newViews = incrementViews(projectId);
+  
+  // Update view counts in grid
+  const viewsElement = document.getElementById(`views-${projectId}`);
+  const viewsOverlay = document.getElementById(`views-overlay-${projectId}`);
+  if (viewsElement) viewsElement.textContent = newViews;
+  if (viewsOverlay) viewsOverlay.textContent = newViews;
+
   currentModalIndex = filteredProjects.findIndex(p => p.project_id === projectId);
 
   const modal = document.getElementById('project-modal');
@@ -1112,10 +1337,8 @@ function openModal(projectId) {
 
   modalTitle.textContent = project.project_title;
 
-  // Build modal content
   let content = '';
 
-  // Detail image
   if (project.detail_image_url) {
     content += `
       <img 
@@ -1126,7 +1349,6 @@ function openModal(projectId) {
     `;
   }
 
-  // Context
   if (project.client_context) {
     content += `
       <div class="modal-section">
@@ -1136,7 +1358,6 @@ function openModal(projectId) {
     `;
   }
 
-  // Problem
   if (project.problem_details || project.problem_summary) {
     content += `
       <div class="modal-section">
@@ -1146,7 +1367,6 @@ function openModal(projectId) {
     `;
   }
 
-  // System overview
   if (project.system_overview) {
     content += `
       <div class="modal-section">
@@ -1156,7 +1376,6 @@ function openModal(projectId) {
     `;
   }
 
-  // Tools used
   if (project.tools_used) {
     const tools = project.tools_used.split(',').map(t => t.trim()).filter(Boolean);
     if (tools.length > 0) {
@@ -1171,7 +1390,6 @@ function openModal(projectId) {
     }
   }
 
-  // Automation features
   if (project.automation_features) {
     content += `
       <div class="modal-section">
@@ -1181,7 +1399,6 @@ function openModal(projectId) {
     `;
   }
 
-  // Outcomes
   if (project.primary_outcome || project.secondary_outcome) {
     content += `
       <div class="modal-section">
@@ -1213,7 +1430,6 @@ function openModal(projectId) {
     `;
   }
 
-  // Testimonial
   if (project.testimonial_quote) {
     content += `
       <div class="testimonial-box">
@@ -1231,8 +1447,6 @@ function openModal(projectId) {
   }
 
   modalBody.innerHTML = content;
-
-  // Update navigation buttons
   updateModalNavigation();
 
   modal.classList.add('active');
@@ -1269,7 +1483,6 @@ function navigateProject(direction) {
   openModal(project.project_id);
 }
 
-// ESC key to close modal
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeModal();
@@ -1305,8 +1518,12 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
 // ===================================================================
-// INITIALIZATION
+// INITIALIZATION - SCROLL TO TOP
 // ===================================================================
+window.addEventListener('load', () => {
+  window.scrollTo(0, 0);
+});
+
 document.getElementById('year').textContent = new Date().getFullYear();
 fetchProjects();
 lucide.createIcons();
