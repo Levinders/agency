@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Works | Packdez - Google Sheets Automation Systems</title>
+    <meta name="description" content="Automation systems built for real operational teams. See how Packdez designs custom Google Sheets workflows that remove manual work and scale with your business.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 220 20% 10%;
+            --primary: 146 55% 36%;
+            --primary-foreground: 0 0% 100%;
+            --muted: 220 14% 96%;
+            --muted-foreground: 220 9% 46%;
+            --border: 220 13% 91%;
+            --destructive: 0 84% 60%;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+            scroll-behavior: smooth;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .bg-primary { background-color: hsl(146 55% 36%); }
+        .text-primary { color: hsl(146 55% 36%); }
+        .border-primary { border-color: hsl(146 55% 36%); }
+        .bg-muted { background-color: hsl(220 14% 96%); }
+        .text-muted-foreground { color: hsl(220 9% 46%); }
+        .border-border { border-color: hsl(220 13% 91%); }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background-color: hsl(146 55% 36%);
+            color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary:hover {
+            background-color: hsl(146 55% 32%);
+            box-shadow: 0 4px 12px rgba(46, 140, 78, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .nav-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid hsl(220 13% 91%);
+        }
+
+        /* Hero Slider */
+        .hero-slider {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 1rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+        }
+
+        .slider-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slider-slide {
+            min-width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            padding: 3rem;
+            align-items: center;
+        }
+
+        @media (max-width: 968px) {
+            .slider-slide {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 2rem;
+            }
+        }
+
+        .slider-image {
+            width: 100%;
+            height: auto;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .slider-controls {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 0.75rem;
+            z-index: 10;
+        }
+
+        .slider-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .slider-btn:hover {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .slider-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            background: hsl(220 13% 91%);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .slider-dot.active {
+            background: hsl(146 55% 36%);
+            width: 1.5rem;
+            border-radius: 0.25rem;
+        }
+
+        /* Filters */
+        .filters-section {
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .filter-input {
+            padding: 0.75rem 1rem;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-size: 0.9375rem;
+            width: 100%;
+            transition: border-color 0.2s;
+        }
+
+        .filter-input:focus {
+            outline: none;
+            border-color: hsl(146 55% 36%);
+        }
+
+        .filter-select {
+            padding: 0.75rem 1rem;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-size: 0.9375rem;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: hsl(146 55% 36%);
+        }
+
+        /* Project Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .project-card {
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            border-color: hsl(146 55% 36%);
+            box-shadow: 0 8px 24px rgba(46, 140, 78, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .project-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-card-content {
+            padding: 1.5rem;
+        }
+
+        .project-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: hsl(146 55% 36% / 0.1);
+            color: hsl(146 55% 36%);
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(6px);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            position: sticky;
+            top: 0;
+            background: white;
+            border-bottom: 1px solid hsl(220 13% 91%);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .modal-close {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background: hsl(220 14% 96%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: hsl(220 13% 91%);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: auto;
+            border-radius: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .modal-section {
+            margin-bottom: 2rem;
+        }
+
+        .modal-section h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: hsl(220 20% 10%);
+        }
+
+        .modal-section p {
+            color: hsl(220 9% 46%);
+            line-height: 1.7;
+        }
+
+        .modal-navigation {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-top: 1px solid hsl(220 13% 91%);
+            background: hsl(220 14% 98%);
+        }
+
+        .modal-nav-btn {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .modal-nav-btn:hover:not(:disabled) {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .modal-nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Testimonial in modal */
+        .testimonial-box {
+            background: hsl(220 14% 98%);
+            border-left: 4px solid hsl(146 55% 36%);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        .pagination-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .pagination-btn.active {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Loading state */
+        .loading-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .loading-spinner {
+            width: 3rem;
+            height: 3rem;
+            border: 3px solid hsl(220 13% 91%);
+            border-top-color: hsl(146 55% 36%);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: hsl(220 9% 46%);
+        }
+
+        /* Mobile sidebar */
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(6px);
+            z-index: 90;
+            display: none;
+        }
+
+        .mobile-overlay.active {
+            display: block;
+        }
+
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 85%;
+            max-width: 320px;
+            background: white;
+            z-index: 100;
+            padding: 24px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-sidebar.active {
+            transform: translateX(0);
+        }
+
+        .mobile-sidebar a {
+            padding: 14px 0;
+            font-size: 16px;
+            font-weight: 600;
+            border-bottom: 1px solid hsl(var(--border));
+        }
+
+        /* Fade animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-padding {
+            padding: 5rem 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .section-padding {
+                padding: 3rem 1rem;
+            }
+            .desktop-only {
+                display: none !important;
+            }
+        }
+
+        /* Tool tags */
+        .tool-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tool-tag {
+            padding: 0.375rem 0.75rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.375rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: hsl(220 20% 10%);
+        }
+
+        /* Outcome metrics */
+        .outcome-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .outcome-metric {
+            background: hsl(220 14% 98%);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+        }
+
+        .outcome-metric-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: hsl(146 55% 36%);
+            margin-bottom: 0.5rem;
+        }
+
+        .outcome-metric-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: hsl(220 9% 46%);
+        }
+    </style>
+</head>
+<body>
+    
+<!-- Mobile overlay -->
+<div id="mobile-overlay" class="mobile-overlay" onclick="closeMobileMenu()"></div>
+
+<!-- Mobile sidebar -->
+<aside id="mobile-menu" class="mobile-sidebar">
+  <div class="flex items-center justify-between mb-6">
+    <a href="https://packdez.com" class="flex items-center gap-2" onclick="closeMobileMenu()">
+      <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez logo" class="h-8 w-8" />
+      <span class="text-xl font-bold">Packdez</span>
+    </a>
+    <button onclick="closeMobileMenu()" aria-label="Close menu" class="text-2xl font-bold">×</button>
+  </div>
+  <a href="https://packdez.com#work" onclick="closeMobileMenu()">Work</a>
+  <a href="https://packdez.com#pricing" onclick="closeMobileMenu()">Pricing</a>
+  <a href="https://packdez.com#reviews" onclick="closeMobileMenu()">Reviews</a>
+  <a href="about.html" onclick="closeMobileMenu()">About</a>
+  <a href="https://packdez.com#audit" onclick="closeMobileMenu()" class="mt-6 btn btn-primary">
+    Get Automation Plan
+  </a>
+</aside>
+
+<!-- Navigation -->
+<nav class="nav-fixed">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex items-center justify-between h-16">
+      <a href="https://packdez.com" class="flex items-center gap-2 md:-ml-12">
+        <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez logo" class="h-8 w-8" />
+        <span class="text-xl font-bold">Packdez</span>
+      </a>
+      
+      <div class="desktop-only flex items-center gap-6" style="margin-right:-90px;">
+        <a href="https://packdez.com#work" class="text-sm font-medium text-primary">Work</a>
+        <a href="https://packdez.com#pricing" class="text-sm font-medium text-muted-foreground hover:text-primary">Pricing</a>
+        <a href="https://packdez.com#reviews" class="text-sm font-medium text-muted-foreground hover:text-primary">Reviews</a>
+        <a href="about.html" class="text-sm font-medium text-muted-foreground hover:text-primary">About</a>
+        <a href="https://packdez.com#audit" class="btn btn-primary ml-auto mr-10" style="padding: 0.5rem 1.25rem;">Get Free Audit</a>
+      </div>
+      <button class="flex md:hidden" onclick="toggleMobileMenu()" aria-label="Open menu">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section with Featured Slider -->
+<section class="section-padding" style="padding-top: 8rem; padding-bottom: 4rem;">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-8 fade-up">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight tracking-[-0.02em]">
+        Systems built for operational teams
+      </h1>
+      <p class="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+        Custom Google Sheets automation that removes manual work, connects your tools, and scales with your business.
+      </p>
+    </div>
+
+    <!-- Featured Projects Slider -->
+    <div id="featured-slider" class="hero-slider fade-up" style="display: none;">
+      <div class="slider-track" id="slider-track"></div>
+      <div class="slider-controls">
+        <button class="slider-btn" onclick="previousSlide()" aria-label="Previous">
+          <i data-lucide="chevron-left" style="width: 1.25rem; height: 1.25rem;"></i>
+        </button>
+        <button class="slider-btn" onclick="nextSlide()" aria-label="Next">
+          <i data-lucide="chevron-right" style="width: 1.25rem; height: 1.25rem;"></i>
+        </button>
+      </div>
+      <div class="slider-dots" id="slider-dots"></div>
+    </div>
+
+    <!-- Loading state for slider -->
+    <div id="slider-loading" class="loading-state">
+      <div class="loading-spinner"></div>
+      <p class="text-muted-foreground">Loading featured systems...</p>
+    </div>
+  </div>
+</section>
+
+<!-- Filters Section -->
+<section style="background: hsl(220 14% 98%); padding: 3rem 0;">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="filters-section fade-up">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; align-items: end;">
+        <div>
+          <label for="search-input" style="display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Search</label>
+          <input 
+            type="text" 
+            id="search-input" 
+            class="filter-input" 
+            placeholder="Search projects..."
+            onkeyup="applyFilters()"
+          />
+        </div>
+        <div>
+          <label for="category-filter" style="display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Category</label>
+          <select id="category-filter" class="filter-select" onchange="applyFilters()">
+            <option value="">All categories</option>
+          </select>
+        </div>
+        <div>
+          <label for="industry-filter" style="display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Industry</label>
+          <select id="industry-filter" class="filter-select" onchange="applyFilters()">
+            <option value="">All industries</option>
+          </select>
+        </div>
+        <div>
+          <button onclick="clearFilters()" class="filter-input" style="cursor: pointer; background: white; font-weight: 600; color: hsl(146 55% 36%);">
+            Clear filters
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projects Grid -->
+    <div id="projects-container">
+      <!-- Loading state -->
+      <div id="projects-loading" class="loading-state">
+        <div class="loading-spinner"></div>
+        <p class="text-muted-foreground">Loading projects...</p>
+      </div>
+
+      <!-- Projects will be rendered here -->
+      <div id="projects-grid" class="projects-grid" style="display: none;"></div>
+
+      <!-- Empty state -->
+      <div id="empty-state" class="empty-state" style="display: none;">
+        <i data-lucide="search" style="width: 3rem; height: 3rem; margin: 0 auto 1rem; opacity: 0.3;"></i>
+        <h3 style="font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem;">No projects found</h3>
+        <p>Try adjusting your filters or search terms</p>
+      </div>
+
+      <!-- Pagination -->
+      <div id="pagination" class="pagination" style="display: none;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section style="background: white; padding: 5rem 1rem; text-align: center;">
+  <div style="max-width: 900px; margin: 0 auto;">
+    <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to automate your workflow?</h2>
+    <p style="font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;" class="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+      Get a clear automation plan in 24 hours. No obligation.
+    </p>
+    <a href="https://packdez.com#audit" style="display: inline-block; background: #298E55; color: white; padding: 1rem 2rem; border-radius: 0.5rem; font-weight: 600; text-decoration: none; font-size: 1.125rem; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
+      Get your automation plan
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer style="padding: 4rem 2rem; border-top: 1px solid hsl(220 13% 91%);">
+    <div style="max-width: 1400px; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+            <div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                    <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez logo" style="height: 1.75rem; width: 1.75rem;" />
+                    <h3 style="font-size: 1.125rem; font-weight: 700;">Packdez</h3>
+                </div>
+                <p style="font-size: 0.875rem; color: hsl(220 9% 46%); margin-bottom: 1rem;">Stay connected</p>
+                <div style="display: flex; gap: 0.75rem;">
+                    <a href="https://x.com/packdezHQ" target="_blank" rel="noopener noreferrer" style="width: 2.5rem; height: 2.5rem; background: hsl(220 14% 96%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i data-lucide="twitter" style="width: 1rem; height: 1rem;"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/company/packdez/" target="_blank" rel="noopener noreferrer" style="width: 2.5rem; height: 2.5rem; background: hsl(220 14% 96%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i data-lucide="linkedin" style="width: 1rem; height: 1rem;"></i>
+                    </a>
+                    <a href="https://youtube.com/@packdezhqz?si=EXj27rVMq27WlWQp" target="_blank" rel="noopener noreferrer" style="width: 2.5rem; height: 2.5rem; background: hsl(220 14% 96%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i data-lucide="youtube" style="width: 1rem; height: 1rem;"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 style="font-weight: 700; margin-bottom: 1rem; font-size: 0.875rem;">What We Build</h4>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Automated reporting systems</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Operations automation</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Custom internal tools</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">API integrations</span></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 style="font-weight: 700; margin-bottom: 1rem; font-size: 0.875rem;">Contact</h4>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">packdez.com@gmail.com</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Response within 24 hours</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Delivery in 7-15 days</span></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div style="padding-top: 2rem; border-top: 1px solid hsl(220 13% 91%); text-align: center;">
+            <p style="font-size: 0.875rem; color: hsl(220 9% 46%);">© <span id="year"></span> Packdez</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Project Modal -->
+<div id="project-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modal-title" style="font-size: 1.5rem; font-weight: 700; margin: 0;"></h2>
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">
+        <i data-lucide="x" style="width: 1.25rem; height: 1.25rem;"></i>
+      </button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-navigation">
+      <button id="prev-project-btn" class="modal-nav-btn" onclick="navigateProject(-1)">
+        <i data-lucide="chevron-left" style="width: 1.25rem; height: 1.25rem;"></i>
+        Previous
+      </button>
+      <button id="next-project-btn" class="modal-nav-btn" onclick="navigateProject(1)">
+        Next
+        <i data-lucide="chevron-right" style="width: 1.25rem; height: 1.25rem;"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===================================================================
+// STATE MANAGEMENT
+// ===================================================================
+let allProjects = [];
+let filteredProjects = [];
+let currentPage = 1;
+const projectsPerPage = 9;
+let currentSlide = 0;
+let sliderInterval = null;
+let currentModalIndex = -1;
+
+// ===================================================================
+// API DATA FETCHING
+// ===================================================================
+const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbx271i09tTrmNdXKofA4ExInWMPDDN-npO-GMOCKFL-j8M1h1CaD-bB0Qwk43Ey2T7Z/exec';
+
+async function fetchProjects() {
+  try {
+    const response = await fetch(API_ENDPOINT);
+    const data = await response.json();
+    
+    // Filter only published projects and sort by display_order
+    allProjects = data
+      .filter(project => project.status === 'published')
+      .sort((a, b) => (a.display_order || 999) - (b.display_order || 999));
+    
+    filteredProjects = [...allProjects];
+    
+    // Initialize UI
+    populateFilters();
+    renderFeaturedSlider();
+    renderProjects();
+    
+  } catch (error) {
+    console.error('Error fetching projects:', error);
+    document.getElementById('projects-loading').innerHTML = `
+      <div class="empty-state">
+        <p style="color: hsl(0 84% 60%);">Failed to load projects. Please try again later.</p>
+      </div>
+    `;
+    document.getElementById('slider-loading').innerHTML = `
+      <div class="empty-state">
+        <p style="color: hsl(0 84% 60%);">Failed to load featured projects.</p>
+      </div>
+    `;
+  }
+}
+
+// ===================================================================
+// FEATURED SLIDER
+// ===================================================================
+function renderFeaturedSlider() {
+  const featuredProjects = allProjects.filter(p => p.show_on_homepage === 'TRUE').slice(0, 5);
+  
+  if (featuredProjects.length === 0) {
+    document.getElementById('slider-loading').style.display = 'none';
+    return;
+  }
+
+  const sliderTrack = document.getElementById('slider-track');
+  const sliderDots = document.getElementById('slider-dots');
+  
+  sliderTrack.innerHTML = featuredProjects.map(project => `
+    <div class="slider-slide">
+      <div>
+        <span class="project-tag">${project.primary_category || 'Automation'}</span>
+        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2;">
+          ${project.project_title}
+        </h2>
+        <p style="font-size: 1.125rem; color: hsl(220 9% 46%); margin-bottom: 1.5rem; line-height: 1.7;">
+          ${project.short_highlight || project.problem_summary || ''}
+        </p>
+        ${project.industry ? `<p style="font-size: 0.9375rem; color: hsl(220 9% 46%);"><strong>Industry:</strong> ${project.industry}</p>` : ''}
+        <button onclick="openModal('${project.project_id}')" class="btn btn-primary" style="margin-top: 1.5rem;">
+          View system details
+        </button>
+      </div>
+      <div>
+        <img 
+          src="${project.thumbnail_image_url}" 
+          alt="${project.image_alt_text || project.project_title}"
+          class="slider-image"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  `).join('');
+
+  sliderDots.innerHTML = featuredProjects.map((_, index) => `
+    <div class="slider-dot ${index === 0 ? 'active' : ''}" onclick="goToSlide(${index})"></div>
+  `).join('');
+
+  document.getElementById('slider-loading').style.display = 'none';
+  document.getElementById('featured-slider').style.display = 'block';
+
+  // Auto-play slider
+  startSlider(featuredProjects.length);
+  lucide.createIcons();
+}
+
+function startSlider(totalSlides) {
+  if (sliderInterval) clearInterval(sliderInterval);
+  sliderInterval = setInterval(() => {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    updateSlider();
+  }, 6000);
+}
+
+function updateSlider() {
+  const sliderTrack = document.getElementById('slider-track');
+  sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+  
+  document.querySelectorAll('.slider-dot').forEach((dot, index) => {
+    dot.classList.toggle('active', index === currentSlide);
+  });
+}
+
+function goToSlide(index) {
+  currentSlide = index;
+  updateSlider();
+  if (sliderInterval) clearInterval(sliderInterval);
+  startSlider(document.querySelectorAll('.slider-slide').length);
+}
+
+function nextSlide() {
+  const totalSlides = document.querySelectorAll('.slider-slide').length;
+  currentSlide = (currentSlide + 1) % totalSlides;
+  updateSlider();
+  if (sliderInterval) clearInterval(sliderInterval);
+  startSlider(totalSlides);
+}
+
+function previousSlide() {
+  const totalSlides = document.querySelectorAll('.slider-slide').length;
+  currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+  updateSlider();
+  if (sliderInterval) clearInterval(sliderInterval);
+  startSlider(totalSlides);
+}
+
+// ===================================================================
+// FILTERS
+// ===================================================================
+function populateFilters() {
+  const categories = [...new Set(allProjects.map(p => p.primary_category).filter(Boolean))];
+  const industries = [...new Set(allProjects.map(p => p.industry).filter(Boolean))];
+
+  const categoryFilter = document.getElementById('category-filter');
+  const industryFilter = document.getElementById('industry-filter');
+
+  categories.forEach(cat => {
+    const option = document.createElement('option');
+    option.value = cat;
+    option.textContent = cat;
+    categoryFilter.appendChild(option);
+  });
+
+  industries.forEach(ind => {
+    const option = document.createElement('option');
+    option.value = ind;
+    option.textContent = ind;
+    industryFilter.appendChild(option);
+  });
+}
+
+function applyFilters() {
+  const searchTerm = document.getElementById('search-input').value.toLowerCase();
+  const category = document.getElementById('category-filter').value;
+  const industry = document.getElementById('industry-filter').value;
+
+  filteredProjects = allProjects.filter(project => {
+    const matchesSearch = !searchTerm || 
+      project.project_title.toLowerCase().includes(searchTerm) ||
+      (project.problem_summary && project.problem_summary.toLowerCase().includes(searchTerm)) ||
+      (project.short_highlight && project.short_highlight.toLowerCase().includes(searchTerm));
+    
+    const matchesCategory = !category || project.primary_category === category;
+    const matchesIndustry = !industry || project.industry === industry;
+
+    return matchesSearch && matchesCategory && matchesIndustry;
+  });
+
+  currentPage = 1;
+  renderProjects();
+}
+
+function clearFilters() {
+  document.getElementById('search-input').value = '';
+  document.getElementById('category-filter').value = '';
+  document.getElementById('industry-filter').value = '';
+  applyFilters();
+}
+
+// ===================================================================
+// PROJECT GRID RENDERING
+// ===================================================================
+function renderProjects() {
+  const grid = document.getElementById('projects-grid');
+  const loading = document.getElementById('projects-loading');
+  const emptyState = document.getElementById('empty-state');
+  const pagination = document.getElementById('pagination');
+
+  loading.style.display = 'none';
+
+  if (filteredProjects.length === 0) {
+    grid.style.display = 'none';
+    emptyState.style.display = 'block';
+    pagination.style.display = 'none';
+    lucide.createIcons();
+    return;
+  }
+
+  emptyState.style.display = 'none';
+  grid.style.display = 'grid';
+
+  // Pagination logic
+  const startIndex = (currentPage - 1) * projectsPerPage;
+  const endIndex = startIndex + projectsPerPage;
+  const projectsToShow = filteredProjects.slice(startIndex, endIndex);
+
+  grid.innerHTML = projectsToShow.map(project => `
+    <div class="project-card" onclick="openModal('${project.project_id}')">
+      <img 
+        src="${project.thumbnail_image_url}" 
+        alt="${project.image_alt_text || project.project_title}"
+        class="project-card-image"
+        loading="lazy"
+      />
+      <div class="project-card-content">
+        <span class="project-tag">${project.primary_category || 'Automation'}</span>
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">
+          ${project.project_title}
+        </h3>
+        <p style="color: hsl(220 9% 46%); font-size: 0.9375rem; line-height: 1.6;">
+          ${project.short_highlight || project.problem_summary || ''}
+        </p>
+        ${project.industry ? `
+          <p style="font-size: 0.8125rem; color: hsl(220 9% 46%); margin-top: 0.75rem;">
+            <strong>Industry:</strong> ${project.industry}
+          </p>
+        ` : ''}
+      </div>
+    </div>
+  `).join('');
+
+  renderPagination();
+  lucide.createIcons();
+  
+  // Scroll to top of grid
+  document.getElementById('projects-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function renderPagination() {
+  const pagination = document.getElementById('pagination');
+  const totalPages = Math.ceil(filteredProjects.length / projectsPerPage);
+
+  if (totalPages <= 1) {
+    pagination.style.display = 'none';
+    return;
+  }
+
+  pagination.style.display = 'flex';
+
+  let paginationHTML = `
+    <button class="pagination-btn" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+      Previous
+    </button>
+  `;
+
+  // Show page numbers
+  for (let i = 1; i <= totalPages; i++) {
+    if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+      paginationHTML += `
+        <button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">
+          ${i}
+        </button>
+      `;
+    } else if (i === currentPage - 2 || i === currentPage + 2) {
+      paginationHTML += `<span style="padding: 0.5rem;">...</span>`;
+    }
+  }
+
+  paginationHTML += `
+    <button class="pagination-btn" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+      Next
+    </button>
+  `;
+
+  pagination.innerHTML = paginationHTML;
+}
+
+function changePage(page) {
+  const totalPages = Math.ceil(filteredProjects.length / projectsPerPage);
+  if (page < 1 || page > totalPages) return;
+  currentPage = page;
+  renderProjects();
+}
+
+// ===================================================================
+// MODAL
+// ===================================================================
+function openModal(projectId) {
+  const project = allProjects.find(p => p.project_id === projectId);
+  if (!project) return;
+
+  currentModalIndex = filteredProjects.findIndex(p => p.project_id === projectId);
+
+  const modal = document.getElementById('project-modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalBody = document.getElementById('modal-body');
+
+  modalTitle.textContent = project.project_title;
+
+  // Build modal content
+  let content = '';
+
+  // Detail image
+  if (project.detail_image_url) {
+    content += `
+      <img 
+        src="${project.detail_image_url}" 
+        alt="${project.image_alt_text || project.project_title}"
+        class="modal-image"
+      />
+    `;
+  }
+
+  // Context
+  if (project.client_context) {
+    content += `
+      <div class="modal-section">
+        <h3>Context</h3>
+        <p>${project.client_context}</p>
+      </div>
+    `;
+  }
+
+  // Problem
+  if (project.problem_details || project.problem_summary) {
+    content += `
+      <div class="modal-section">
+        <h3>Problem</h3>
+        <p>${project.problem_details || project.problem_summary}</p>
+      </div>
+    `;
+  }
+
+  // System overview
+  if (project.system_overview) {
+    content += `
+      <div class="modal-section">
+        <h3>System overview</h3>
+        <p>${project.system_overview}</p>
+      </div>
+    `;
+  }
+
+  // Tools used
+  if (project.tools_used) {
+    const tools = project.tools_used.split(',').map(t => t.trim()).filter(Boolean);
+    if (tools.length > 0) {
+      content += `
+        <div class="modal-section">
+          <h3>Tools & integrations</h3>
+          <div class="tool-tags">
+            ${tools.map(tool => `<span class="tool-tag">${tool}</span>`).join('')}
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  // Automation features
+  if (project.automation_features) {
+    content += `
+      <div class="modal-section">
+        <h3>Automation features</h3>
+        <p>${project.automation_features}</p>
+      </div>
+    `;
+  }
+
+  // Outcomes
+  if (project.primary_outcome || project.secondary_outcome) {
+    content += `
+      <div class="modal-section">
+        <h3>Outcomes</h3>
+        <div class="outcome-metrics">
+    `;
+    
+    if (project.primary_outcome) {
+      content += `
+        <div class="outcome-metric">
+          <div class="outcome-metric-value">${project.primary_outcome}</div>
+          <div class="outcome-metric-label">${project.metric_type || 'Primary outcome'}</div>
+        </div>
+      `;
+    }
+    
+    if (project.secondary_outcome) {
+      content += `
+        <div class="outcome-metric">
+          <div class="outcome-metric-value">${project.secondary_outcome}</div>
+          <div class="outcome-metric-label">Secondary outcome</div>
+        </div>
+      `;
+    }
+    
+    content += `
+        </div>
+      </div>
+    `;
+  }
+
+  // Testimonial
+  if (project.testimonial_quote) {
+    content += `
+      <div class="testimonial-box">
+        <p style="font-style: italic; line-height: 1.7; margin-bottom: 1rem; color: hsl(220 20% 20%);">
+          "${project.testimonial_quote}"
+        </p>
+        ${project.testimonial_author ? `
+          <p style="font-weight: 700; font-size: 0.875rem;">
+            — ${project.testimonial_author}
+            ${project.testimonial_source ? `<span style="font-weight: 400; color: hsl(220 9% 46%);">, ${project.testimonial_source}</span>` : ''}
+          </p>
+        ` : ''}
+      </div>
+    `;
+  }
+
+  modalBody.innerHTML = content;
+
+  // Update navigation buttons
+  updateModalNavigation();
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  lucide.createIcons();
+}
+
+function closeModal() {
+  const modal = document.getElementById('project-modal');
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+  currentModalIndex = -1;
+}
+
+function closeModalOnOverlay(event) {
+  if (event.target.id === 'project-modal') {
+    closeModal();
+  }
+}
+
+function updateModalNavigation() {
+  const prevBtn = document.getElementById('prev-project-btn');
+  const nextBtn = document.getElementById('next-project-btn');
+
+  prevBtn.disabled = currentModalIndex <= 0;
+  nextBtn.disabled = currentModalIndex >= filteredProjects.length - 1;
+}
+
+function navigateProject(direction) {
+  const newIndex = currentModalIndex + direction;
+  if (newIndex < 0 || newIndex >= filteredProjects.length) return;
+
+  const project = filteredProjects[newIndex];
+  openModal(project.project_id);
+}
+
+// ESC key to close modal
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeModal();
+  }
+});
+
+// ===================================================================
+// MOBILE MENU
+// ===================================================================
+function toggleMobileMenu() {
+  document.getElementById('mobile-menu').classList.add('active');
+  document.getElementById('mobile-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMobileMenu() {
+  document.getElementById('mobile-menu').classList.remove('active');
+  document.getElementById('mobile-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// ===================================================================
+// FADE-UP ANIMATIONS
+// ===================================================================
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// ===================================================================
+// INITIALIZATION
+// ===================================================================
+document.getElementById('year').textContent = new Date().getFullYear();
+fetchProjects();
+lucide.createIcons();
+</script>
+
+</body>
+</html>
