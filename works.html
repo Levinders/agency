@@ -1186,8 +1186,8 @@ function renderProjects() {
 
   grid.innerHTML = projectsToShow.map(project => {
     const engagement = getProjectEngagement(project.project_id);
-    const profileImage = project.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png';
-    const creatorName = project.creator_name || 'Packdez';
+    const profileImage = project.profile_image || '${project.profile_image}';
+    const creatorName = project.contractor_name || '${project.contractor_name}';
     
     return `
     <div class="project-card" onclick="openModal('${project.project_id}')">
