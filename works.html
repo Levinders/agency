@@ -266,17 +266,13 @@
             }
         }
 
-        /* Dribbble-style Card - Enhanced */
+        /* Dribbble-style Card */
         .project-card {
             background: transparent;
             border-radius: 0.75rem;
             overflow: visible;
             cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .project-card:active {
-            transform: scale(0.98);
+            transition: all 0.3s ease;
         }
 
         .project-card-image-wrapper {
@@ -297,18 +293,18 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.3s ease;
         }
 
         .project-card:hover .project-card-image {
-            transform: scale(1.05);
+            transform: scale(1.04);
         }
 
-        /* Overlay on hover - Refined */
+        /* Overlay on hover */
         .project-card-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.35) 40%, transparent 70%);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 40%, transparent 70%);
             opacity: 0;
             transition: opacity 0.3s ease;
             display: flex;
@@ -333,7 +329,7 @@
             width: 2rem;
             height: 2rem;
             border-radius: 0.375rem;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.9);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -342,7 +338,7 @@
 
         .overlay-action:hover {
             background: white;
-            transform: scale(1.15);
+            transform: scale(1.1);
         }
 
         .overlay-bottom {
@@ -353,7 +349,7 @@
             font-size: 1rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         .overlay-stats {
@@ -369,7 +365,7 @@
             gap: 0.25rem;
         }
 
-        /* Card Footer - Refined */
+        /* Card Footer - Dribbble Style */
         .card-footer {
             display: flex;
             justify-content: space-between;
@@ -414,7 +410,7 @@
             height: 0.875rem;
         }
 
-        /* Like Button - Enhanced Animation */
+        /* Like Button with Animation */
         .like-btn {
             background: none;
             border: none;
@@ -427,7 +423,7 @@
         }
 
         .like-btn:hover {
-            color: hsl(310 77% 65%);
+            color: hsl(0 84% 60%);
         }
 
         .like-btn.liked {
@@ -440,12 +436,12 @@
 
         @keyframes heartBeat {
             0%, 100% { transform: scale(1); }
-            25% { transform: scale(1.4); }
-            50% { transform: scale(1.15); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1.1); }
         }
 
         .like-btn.animating svg {
-            animation: heartBeat 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: heartBeat 0.4s ease;
         }
 
         /* Scroll to Top Button */
@@ -462,7 +458,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(46, 140, 78, 0.3);
             z-index: 40;
             opacity: 0;
@@ -492,23 +488,17 @@
             }
         }
 
-        /* Modal - Enhanced Layout */
+        /* Modal */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(15, 23, 42, 0.65);
-            backdrop-filter: blur(8px);
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(6px);
             z-index: 100;
             display: none;
             align-items: center;
             justify-content: center;
             padding: 1rem;
-            animation: fadeIn 0.2s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .modal-overlay.active {
@@ -524,18 +514,6 @@
             overflow-y: auto;
             position: relative;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .modal-header {
@@ -548,6 +526,36 @@
             justify-content: space-between;
             align-items: center;
             z-index: 10;
+        }
+
+        .modal-title-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .modal-nav-icon {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background: hsl(220 14% 96%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-nav-icon:hover:not(:disabled) {
+            background: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .modal-nav-icon:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
         }
 
         .modal-close {
@@ -578,19 +586,262 @@
             }
         }
 
-        .modal-image {
+        /* Featured Media */
+        .modal-featured-media {
+            width: 100%;
+            border-radius: 0.75rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .modal-featured-media iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: none;
+        }
+
+        .modal-featured-media img {
             width: 100%;
             height: auto;
+            display: block;
+        }
+
+        /* Additional Media Gallery */
+        .media-gallery {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .media-gallery img {
+            height: 200px;
+            width: auto;
+            border-radius: 0.5rem;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .media-gallery img {
+                height: 150px;
+            }
+        }
+
+        /* Live Analytics */
+        .analytics-bar {
+            display: flex;
+            gap: 2rem;
+            padding: 1rem;
+            background: hsl(220 14% 98%);
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+
+        .analytics-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .analytics-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: hsl(146 55% 36%);
+        }
+
+        .analytics-label {
+            font-size: 0.875rem;
+            color: hsl(220 9% 46%);
+        }
+
+        .modal-like-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        .modal-like-btn:hover {
+            border-color: hsl(310 77% 65%);
+            color: hsl(310 77% 65%);
+        }
+
+        .modal-like-btn.liked {
+            background: hsl(310 77% 65%);
+            border-color: hsl(310 77% 65%);
+            color: white;
+        }
+
+        .modal-like-btn.liked svg {
+            fill: currentColor;
+        }
+
+        /* Comments Section */
+        .comments-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid hsl(220 13% 91%);
+        }
+
+        .comment-form {
+            background: hsl(220 14% 98%);
+            padding: 1.5rem;
             border-radius: 0.75rem;
             margin-bottom: 2rem;
         }
 
-        .modal-section {
-            margin-bottom: 2rem;
+        .comment-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9375rem;
+            font-family: inherit;
         }
 
-        .modal-section:last-child {
-            margin-bottom: 0;
+        .comment-input:focus {
+            outline: none;
+            border-color: hsl(146 55% 36%);
+        }
+
+        .comment-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .comment-submit {
+            padding: 0.75rem 1.5rem;
+            background: hsl(146 55% 36%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .comment-submit:hover {
+            background: hsl(146 55% 32%);
+        }
+
+        .comment-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .comment-item {
+            padding: 1rem;
+            background: hsl(220 14% 98%);
+            border-radius: 0.5rem;
+        }
+
+        .comment-author {
+            font-weight: 700;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .comment-date {
+            font-size: 0.75rem;
+            color: hsl(220 9% 46%);
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-text {
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        /* Contractor Section */
+        .contractor-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: hsl(220 14% 98%);
+            border-radius: 0.75rem;
+        }
+
+        .contractor-header {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contractor-avatar {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid hsl(220 13% 91%);
+        }
+
+        .contractor-info h4 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .contractor-bio {
+            font-size: 0.9375rem;
+            color: hsl(220 9% 46%);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        /* Related Projects */
+        .related-projects {
+            margin-top: 2rem;
+        }
+
+        .related-projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .related-project-card {
+            cursor: pointer;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .related-project-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .related-project-card img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+        }
+
+        .related-project-title {
+            padding: 0.75rem;
+            background: hsl(220 14% 98%);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .modal-section {
+            margin-bottom: 2rem;
         }
 
         .modal-section h3 {
@@ -605,46 +856,12 @@
             line-height: 1.7;
         }
 
-        .modal-navigation {
-            display: flex;
-            gap: 1rem;
-            padding: 1.5rem;
-            border-top: 1px solid hsl(220 13% 91%);
-            background: hsl(220 14% 98%);
-        }
-
-        .modal-nav-btn {
-            flex: 1;
-            padding: 0.75rem 1.5rem;
-            background: white;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .modal-nav-btn:hover:not(:disabled) {
-            background: hsl(146 55% 36%);
-            border-color: hsl(146 55% 36%);
-            color: white;
-            transform: translateY(-1px);
-        }
-
-        .modal-nav-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
         .testimonial-box {
             background: hsl(220 14% 98%);
             border-left: 4px solid hsl(146 55% 36%);
             padding: 1.5rem;
             border-radius: 0.5rem;
+            margin-top: 2rem;
         }
 
         .pagination {
@@ -653,7 +870,6 @@
             align-items: center;
             gap: 0.5rem;
             margin-top: 3rem;
-            flex-wrap: wrap;
         }
 
         .pagination-btn {
@@ -670,7 +886,6 @@
             background: hsl(146 55% 36%);
             border-color: hsl(146 55% 36%);
             color: white;
-            transform: translateY(-1px);
         }
 
         .pagination-btn.active {
@@ -1032,22 +1247,20 @@
 <div id="project-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
   <div class="modal-content">
     <div class="modal-header">
-      <h2 id="modal-title" style="font-size: 1.5rem; font-weight: 700; margin: 0;"></h2>
+      <div class="modal-title-wrapper">
+        <button id="modal-prev-icon" class="modal-nav-icon" onclick="navigateProject(-1)" aria-label="Previous project">
+          <i data-lucide="chevron-left" style="width: 1rem; height: 1rem;"></i>
+        </button>
+        <h2 id="modal-title" style="font-size: 1.5rem; font-weight: 700; margin: 0;"></h2>
+        <button id="modal-next-icon" class="modal-nav-icon" onclick="navigateProject(1)" aria-label="Next project">
+          <i data-lucide="chevron-right" style="width: 1rem; height: 1rem;"></i>
+        </button>
+      </div>
       <button class="modal-close" onclick="closeModal()" aria-label="Close">
         <i data-lucide="x" style="width: 1.25rem; height: 1.25rem;"></i>
       </button>
     </div>
     <div class="modal-body" id="modal-body"></div>
-    <div class="modal-navigation">
-      <button id="prev-project-btn" class="modal-nav-btn" onclick="navigateProject(-1)">
-        <i data-lucide="chevron-left" style="width: 1.25rem; height: 1.25rem;"></i>
-        Previous
-      </button>
-      <button id="next-project-btn" class="modal-nav-btn" onclick="navigateProject(1)">
-        Next
-        <i data-lucide="chevron-right" style="width: 1.25rem; height: 1.25rem;"></i>
-      </button>
-    </div>
   </div>
 </div>
 
@@ -1062,61 +1275,52 @@ function formatCount(count) {
   return count.toString();
 }
 
+function sanitizeInput(input) {
+  const div = document.createElement('div');
+  div.textContent = input;
+  return div.innerHTML;
+}
+
+function extractYouTubeId(url) {
+  if (!url) return null;
+  const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[7].length === 11) ? match[7] : null;
+}
+
 // ===================================================================
 // STATE MANAGEMENT
 // ===================================================================
 let allProjects = [];
+let allAnalytics = {};
+let allContractors = {};
+let allMedia = {};
+let allFeedbacks = {};
 let filteredProjects = [];
 let currentPage = 1;
 const projectsPerPage = 9;
 let currentSlide = 0;
 let sliderInterval = null;
 let currentModalIndex = -1;
+let currentProjectId = null;
 
-// Local storage for engagement tracking
-const STORAGE_KEY = 'packdez_project_engagement';
+// Session tracking for likes (prevent multiple likes per session)
+const SESSION_LIKES_KEY = 'packdez_session_likes';
 
-function getEngagement() {
-  const data = localStorage.getItem(STORAGE_KEY);
+function getSessionLikes() {
+  const data = sessionStorage.getItem(SESSION_LIKES_KEY);
   return data ? JSON.parse(data) : {};
 }
 
-function saveEngagement(engagement) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(engagement));
+function hasLikedInSession(projectId) {
+  const sessionLikes = getSessionLikes();
+  return sessionLikes[projectId] === true;
 }
 
-function getProjectEngagement(projectId) {
-  const engagement = getEngagement();
-  return engagement[projectId] || { views: 0, likes: 0, liked: false };
-}
-
-function incrementViews(projectId) {
-  const engagement = getEngagement();
-  if (!engagement[projectId]) {
-    engagement[projectId] = { views: 0, likes: 0, liked: false };
-  }
-  engagement[projectId].views++;
-  saveEngagement(engagement);
-  return engagement[projectId].views;
-}
-
-function toggleLike(projectId) {
-  const engagement = getEngagement();
-  if (!engagement[projectId]) {
-    engagement[projectId] = { views: 0, likes: 0, liked: false };
-  }
-  
-  // Toggle like state
-  if (engagement[projectId].liked) {
-    engagement[projectId].likes = Math.max(0, engagement[projectId].likes - 1);
-    engagement[projectId].liked = false;
-  } else {
-    engagement[projectId].likes++;
-    engagement[projectId].liked = true;
-  }
-  
-  saveEngagement(engagement);
-  return { likes: engagement[projectId].likes, liked: engagement[projectId].liked };
+function markLikedInSession(projectId) {
+  const sessionLikes = getSessionLikes();
+  sessionLikes[projectId] = true;
+  sessionStorage.setItem(SESSION_LIKES_KEY, JSON.stringify(sessionLikes));
 }
 
 // ===================================================================
@@ -1151,6 +1355,27 @@ async function fetchProjects() {
       .filter(project => project.status === 'published')
       .sort((a, b) => (a.display_order || 999) - (b.display_order || 999));
     
+    // Build lookup objects
+    (responseData.analytics || []).forEach(item => {
+      allAnalytics[item.project_id] = item;
+    });
+    
+    (responseData.contractors || []).forEach(item => {
+      allContractors[item.contractor_id] = item;
+    });
+    
+    (responseData.media || []).forEach(item => {
+      allMedia[item.project_id] = item;
+    });
+    
+    // Group feedbacks by project
+    (responseData.feedbacks || []).forEach(item => {
+      if (!allFeedbacks[item.project_id]) {
+        allFeedbacks[item.project_id] = [];
+      }
+      allFeedbacks[item.project_id].push(item);
+    });
+    
     filteredProjects = [...allProjects];
     
     populateFilters();
@@ -1173,6 +1398,74 @@ async function fetchProjects() {
 }
 
 // ===================================================================
+// API WRITE OPERATIONS
+// ===================================================================
+async function incrementViewsAPI(projectId) {
+  try {
+    const response = await fetch(`${API_ENDPOINT}?action=incrementViews&projectId=${projectId}`, {
+      method: 'POST'
+    });
+    const data = await response.json();
+    if (data.success) {
+      // Update local cache
+      if (!allAnalytics[projectId]) {
+        allAnalytics[projectId] = { project_id: projectId, total_views: 0, total_likes: 0 };
+      }
+      allAnalytics[projectId].total_views = data.total_views;
+    }
+  } catch (error) {
+    console.error('Error incrementing views:', error);
+  }
+}
+
+async function incrementLikesAPI(projectId) {
+  try {
+    const response = await fetch(`${API_ENDPOINT}?action=incrementLikes&projectId=${projectId}`, {
+      method: 'POST'
+    });
+    const data = await response.json();
+    if (data.success) {
+      // Update local cache
+      if (!allAnalytics[projectId]) {
+        allAnalytics[projectId] = { project_id: projectId, total_views: 0, total_likes: 0 };
+      }
+      allAnalytics[projectId].total_likes = data.total_likes;
+      return data.total_likes;
+    }
+  } catch (error) {
+    console.error('Error incrementing likes:', error);
+  }
+  return null;
+}
+
+async function submitCommentAPI(projectId, name, comment) {
+  try {
+    const response = await fetch(API_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `action=submitComment&projectId=${encodeURIComponent(projectId)}&name=${encodeURIComponent(name)}&comment=${encodeURIComponent(comment)}`
+    });
+    const data = await response.json();
+    if (data.success) {
+      // Update local cache
+      if (!allFeedbacks[projectId]) {
+        allFeedbacks[projectId] = [];
+      }
+      allFeedbacks[projectId].unshift({
+        project_id: projectId,
+        name: name,
+        comment: comment,
+        timestamp: new Date().toISOString()
+      });
+      return true;
+    }
+  } catch (error) {
+    console.error('Error submitting comment:', error);
+  }
+  return false;
+}
+
+// ===================================================================
 // FEATURED SLIDER
 // ===================================================================
 function renderFeaturedSlider() {
@@ -1189,9 +1482,10 @@ function renderFeaturedSlider() {
   const sliderDots = document.getElementById('slider-dots');
   
   sliderTrack.innerHTML = featuredProjects.map(project => {
-    const engagement = getProjectEngagement(project.project_id);
-    const profileImage = project.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png';
-    const creatorName = project.contractor_name || 'Packdez Team';
+    const analytics = allAnalytics[project.project_id] || { total_views: 0, total_likes: 0 };
+    const contractor = allContractors[project.contractor_id] || {};
+    const profileImage = contractor.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png';
+    const creatorName = contractor.contractor_name || 'Packdez Team';
     
     return `
     <div class="slider-slide">
@@ -1212,11 +1506,11 @@ function renderFeaturedSlider() {
             <div class="slider-engagement-stats">
               <div class="slider-engagement-stat">
                 <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
-                <span>${formatCount(engagement.likes)}</span>
+                <span>${formatCount(analytics.total_likes)}</span>
               </div>
               <div class="slider-engagement-stat">
                 <i data-lucide="eye" style="width: 0.875rem; height: 0.875rem;"></i>
-                <span>${formatCount(engagement.views)}</span>
+                <span>${formatCount(analytics.total_views)}</span>
               </div>
             </div>
           </div>
@@ -1369,9 +1663,10 @@ function renderProjects() {
   const projectsToShow = filteredProjects.slice(startIndex, endIndex);
 
   grid.innerHTML = projectsToShow.map(project => {
-    const engagement = getProjectEngagement(project.project_id);
-    const profileImage = project.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png';
-    const creatorName = project.contractor_name || 'Packdez Team';
+    const analytics = allAnalytics[project.project_id] || { total_views: 0, total_likes: 0 };
+    const contractor = allContractors[project.contractor_id] || {};
+    const profileImage = contractor.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png';
+    const creatorName = contractor.contractor_name || 'Packdez Team';
     
     return `
     <div class="project-card" onclick="openModal('${project.project_id}')">
@@ -1395,11 +1690,11 @@ function renderProjects() {
             <div class="overlay-stats">
               <div class="overlay-stat">
                 <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
-                <span id="likes-overlay-${project.project_id}">${formatCount(engagement.likes)}</span>
+                <span id="likes-overlay-${project.project_id}">${formatCount(analytics.total_likes)}</span>
               </div>
               <div class="overlay-stat">
                 <i data-lucide="eye" style="width: 0.875rem; height: 0.875rem;"></i>
-                <span id="views-overlay-${project.project_id}">${formatCount(engagement.views)}</span>
+                <span id="views-overlay-${project.project_id}">${formatCount(analytics.total_views)}</span>
               </div>
             </div>
           </div>
@@ -1413,13 +1708,13 @@ function renderProjects() {
           <span class="creator-name">${creatorName}</span>
         </div>
         <div class="card-stats">
-          <button class="like-btn ${engagement.liked ? 'liked' : ''}" onclick="event.stopPropagation(); handleLike('${project.project_id}')" id="like-btn-${project.project_id}">
-            <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem; ${engagement.liked ? 'fill: currentColor;' : ''}"></i>
-            <span id="likes-${project.project_id}">${formatCount(engagement.likes)}</span>
+          <button class="like-btn ${hasLikedInSession(project.project_id) ? 'liked' : ''}" onclick="event.stopPropagation(); handleLike('${project.project_id}'))" id="like-btn-${project.project_id}">
+            <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
+            <span id="likes-${project.project_id}">${formatCount(analytics.total_likes)}</span>
           </button>
           <div class="card-stat">
             <i data-lucide="eye"></i>
-            <span id="views-${project.project_id}">${formatCount(engagement.views)}</span>
+            <span id="views-${project.project_id}">${formatCount(analytics.total_views)}</span>
           </div>
         </div>
       </div>
@@ -1430,25 +1725,51 @@ function renderProjects() {
   lucide.createIcons();
 }
 
-function handleLike(projectId) {
-  const result = toggleLike(projectId);
+async function handleLike(projectId) {
+  // Prevent multiple likes per session
+  if (hasLikedInSession(projectId)) {
+    return;
+  }
   
-  // Update all displays
+  // Optimistic UI update
+  const analytics = allAnalytics[projectId] || { total_views: 0, total_likes: 0 };
+  const optimisticLikes = analytics.total_likes + 1;
+  
+  // Update all displays optimistically
   const likesElement = document.getElementById(`likes-${projectId}`);
   const likesOverlay = document.getElementById(`likes-overlay-${projectId}`);
   const likeBtn = document.getElementById(`like-btn-${projectId}`);
+  const modalLikeBtn = document.getElementById('modal-like-btn');
+  const modalLikesValue = document.getElementById('modal-likes-value');
   
-  if (likesElement) likesElement.textContent = formatCount(result.likes);
-  if (likesOverlay) likesOverlay.textContent = formatCount(result.likes);
+  if (likesElement) likesElement.textContent = formatCount(optimisticLikes);
+  if (likesOverlay) likesOverlay.textContent = formatCount(optimisticLikes);
   
-  // Update button state
+  // Add animation
   if (likeBtn) {
-    if (result.liked) {
-      likeBtn.classList.add('animating', 'liked');
-    } else {
-      likeBtn.classList.remove('liked');
-    }
-    setTimeout(() => likeBtn.classList.remove('animating'), 500);
+    likeBtn.classList.add('animating', 'liked');
+    setTimeout(() => likeBtn.classList.remove('animating'), 400);
+  }
+  
+  if (modalLikeBtn) {
+    modalLikeBtn.classList.add('liked');
+  }
+  
+  if (modalLikesValue) {
+    modalLikesValue.textContent = formatCount(optimisticLikes);
+  }
+  
+  // Mark as liked in session
+  markLikedInSession(projectId);
+  
+  // Sync with API
+  const actualLikes = await incrementLikesAPI(projectId);
+  
+  // Update with actual value from server
+  if (actualLikes !== null) {
+    if (likesElement) likesElement.textContent = formatCount(actualLikes);
+    if (likesOverlay) likesOverlay.textContent = formatCount(actualLikes);
+    if (modalLikesValue) modalLikesValue.textContent = formatCount(actualLikes);
   }
   
   lucide.createIcons();
@@ -1508,20 +1829,26 @@ function changePage(page) {
 }
 
 // ===================================================================
-// MODAL - ENHANCED WITH CONDITIONAL SECTIONS
+// MODAL
 // ===================================================================
-function openModal(projectId) {
+async function openModal(projectId) {
   const project = allProjects.find(p => p.project_id === projectId);
   if (!project) return;
 
-  // Increment view count
-  const newViews = incrementViews(projectId);
+  currentProjectId = projectId;
   
-  // Update view counts in grid
+  // Increment view count (optimistic + API sync)
+  const analytics = allAnalytics[projectId] || { total_views: 0, total_likes: 0 };
+  const optimisticViews = analytics.total_views + 1;
+  
+  // Update view counts in grid optimistically
   const viewsElement = document.getElementById(`views-${projectId}`);
   const viewsOverlay = document.getElementById(`views-overlay-${projectId}`);
-  if (viewsElement) viewsElement.textContent = formatCount(newViews);
-  if (viewsOverlay) viewsOverlay.textContent = formatCount(newViews);
+  if (viewsElement) viewsElement.textContent = formatCount(optimisticViews);
+  if (viewsOverlay) viewsOverlay.textContent = formatCount(optimisticViews);
+  
+  // Sync with API
+  incrementViewsAPI(projectId);
 
   currentModalIndex = filteredProjects.findIndex(p => p.project_id === projectId);
 
@@ -1533,18 +1860,70 @@ function openModal(projectId) {
 
   let content = '';
 
-  // Hero image - only if exists
-  if (project.detail_image_url) {
+  // 1. Featured Media (Video or Hero Image)
+  const media = allMedia[projectId] || {};
+  if (media.video) {
+    const youtubeId = extractYouTubeId(media.video);
+    if (youtubeId) {
+      content += `
+        <div class="modal-featured-media">
+          <iframe 
+            src="https://www.youtube.com/embed/${youtubeId}" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+        </div>
+      `;
+    }
+  } else if (project.detail_image_url) {
     content += `
-      <img 
-        src="${project.detail_image_url}" 
-        alt="${project.image_alt_text || project.project_title}"
-        class="modal-image"
-      />
+      <div class="modal-featured-media">
+        <img 
+          src="${project.detail_image_url}" 
+          alt="${project.image_alt_text || project.project_title}"
+        />
+      </div>
     `;
   }
 
-  // Context - only if exists
+  // 2. Additional Media Gallery
+  const additionalImages = [media.img_1, media.img_2, media.img_3].filter(Boolean);
+  if (additionalImages.length > 0) {
+    content += `
+      <div class="media-gallery">
+        ${additionalImages.map(img => `
+          <img src="${img}" alt="Additional project media" loading="lazy" />
+        `).join('')}
+      </div>
+    `;
+  }
+
+  // 3. Live Analytics Bar
+  const currentAnalytics = allAnalytics[projectId] || { total_views: 0, total_likes: 0 };
+  content += `
+    <div class="analytics-bar">
+      <div class="analytics-item">
+        <i data-lucide="eye" style="width: 1.25rem; height: 1.25rem; color: hsl(220 9% 46%);"></i>
+        <div>
+          <div class="analytics-value" id="modal-views-value">${formatCount(currentAnalytics.total_views)}</div>
+          <div class="analytics-label">Views</div>
+        </div>
+      </div>
+      <div class="analytics-item">
+        <i data-lucide="heart" style="width: 1.25rem; height: 1.25rem; color: hsl(220 9% 46%);"></i>
+        <div>
+          <div class="analytics-value" id="modal-likes-value">${formatCount(currentAnalytics.total_likes)}</div>
+          <div class="analytics-label">Likes</div>
+        </div>
+      </div>
+      <button class="modal-like-btn ${hasLikedInSession(projectId) ? 'liked' : ''}" id="modal-like-btn" onclick="handleLike('${projectId}')">
+        <i data-lucide="heart" style="width: 1rem; height: 1rem;"></i>
+        ${hasLikedInSession(projectId) ? 'Liked' : 'Like this system'}
+      </button>
+    </div>
+  `;
+
+  // 4. Project Details
   if (project.client_context) {
     content += `
       <div class="modal-section">
@@ -1554,7 +1933,6 @@ function openModal(projectId) {
     `;
   }
 
-  // Problem - only if exists
   if (project.problem_details || project.problem_summary) {
     content += `
       <div class="modal-section">
@@ -1564,7 +1942,6 @@ function openModal(projectId) {
     `;
   }
 
-  // System overview - only if exists
   if (project.system_overview) {
     content += `
       <div class="modal-section">
@@ -1574,7 +1951,6 @@ function openModal(projectId) {
     `;
   }
 
-  // Tools - only if exists
   if (project.tools_used) {
     const tools = project.tools_used.split(',').map(t => t.trim()).filter(Boolean);
     if (tools.length > 0) {
@@ -1589,7 +1965,6 @@ function openModal(projectId) {
     }
   }
 
-  // Automation features - only if exists
   if (project.automation_features) {
     content += `
       <div class="modal-section">
@@ -1599,7 +1974,6 @@ function openModal(projectId) {
     `;
   }
 
-  // Outcomes - only if exists
   if (project.primary_outcome || project.secondary_outcome) {
     content += `
       <div class="modal-section">
@@ -1631,20 +2005,99 @@ function openModal(projectId) {
     `;
   }
 
-  // Testimonial - only if exists
   if (project.testimonial_quote) {
     content += `
-      <div class="modal-section">
-        <div class="testimonial-box">
-          <p style="font-style: italic; line-height: 1.7; margin-bottom: 1rem; color: hsl(220 20% 20%);">
-            "${project.testimonial_quote}"
+      <div class="testimonial-box">
+        <p style="font-style: italic; line-height: 1.7; margin-bottom: 1rem; color: hsl(220 20% 20%);">
+          "${project.testimonial_quote}"
+        </p>
+        ${project.testimonial_author ? `
+          <p style="font-weight: 700; font-size: 0.875rem;">
+            — ${project.testimonial_author}
+            ${project.testimonial_source ? `<span style="font-weight: 400; color: hsl(220 9% 46%);">, ${project.testimonial_source}</span>` : ''}
           </p>
-          ${project.testimonial_author ? `
-            <p style="font-weight: 700; font-size: 0.875rem;">
-              — ${project.testimonial_author}
-              ${project.testimonial_source ? `<span style="font-weight: 400; color: hsl(220 9% 46%);">, ${project.testimonial_source}</span>` : ''}
-            </p>
-          ` : ''}
+        ` : ''}
+      </div>
+    `;
+  }
+
+  // 5. Comments Section
+  const comments = allFeedbacks[projectId] || [];
+  content += `
+    <div class="comments-section">
+      <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Comments</h3>
+      
+      <div class="comment-form">
+        <input 
+          type="text" 
+          id="comment-name" 
+          class="comment-input" 
+          placeholder="Your name"
+          maxlength="100"
+        />
+        <textarea 
+          id="comment-text" 
+          class="comment-input comment-textarea" 
+          placeholder="Share your thoughts..."
+          maxlength="500"
+        ></textarea>
+        <button class="comment-submit" onclick="submitComment()">Post comment</button>
+      </div>
+      
+      <div class="comments-list" id="comments-list">
+        ${comments.length === 0 ? `
+          <p style="text-align: center; color: hsl(220 9% 46%); padding: 2rem;">No comments yet. Be the first to share your thoughts!</p>
+        ` : comments.map(comment => `
+          <div class="comment-item">
+            <div class="comment-author">${sanitizeInput(comment.name)}</div>
+            <div class="comment-date">${new Date(comment.timestamp).toLocaleDateString()}</div>
+            <div class="comment-text">${sanitizeInput(comment.comment)}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  // 6. Contractor Section
+  const contractor = allContractors[project.contractor_id] || {};
+  if (contractor.contractor_name || contractor.bio) {
+    content += `
+      <div class="contractor-section">
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Built by</h3>
+        <div class="contractor-header">
+          <img 
+            src="${contractor.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png'}" 
+            alt="${contractor.contractor_name || 'Packdez Team'}" 
+            class="contractor-avatar"
+          />
+          <div class="contractor-info">
+            <h4>${contractor.contractor_name || 'Packdez Team'}</h4>
+          </div>
+        </div>
+        ${contractor.bio ? `<p class="contractor-bio">${contractor.bio}</p>` : ''}
+        <button class="btn btn-primary" onclick="viewRelatedProjects('${project.contractor_id}')">
+          View related systems
+        </button>
+      </div>
+    `;
+  }
+
+  // 7. Related Projects
+  const relatedProjects = allProjects
+    .filter(p => p.contractor_id === project.contractor_id && p.project_id !== projectId)
+    .slice(0, 4);
+  
+  if (relatedProjects.length > 0) {
+    content += `
+      <div class="related-projects">
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">More by this creator</h3>
+        <div class="related-projects-grid">
+          ${relatedProjects.map(p => `
+            <div class="related-project-card" onclick="openModal('${p.project_id}')">
+              <img src="${p.thumbnail_image_url}" alt="${p.project_title}" loading="lazy" />
+              <div class="related-project-title">${p.project_title}</div>
+            </div>
+          `).join('')}
         </div>
       </div>
     `;
@@ -1658,11 +2111,76 @@ function openModal(projectId) {
   lucide.createIcons();
 }
 
+async function submitComment() {
+  const nameInput = document.getElementById('comment-name');
+  const textInput = document.getElementById('comment-text');
+  
+  const name = nameInput.value.trim();
+  const comment = textInput.value.trim();
+  
+  if (!name || !comment) {
+    alert('Please fill in both your name and comment.');
+    return;
+  }
+  
+  // Disable button during submission
+  const submitBtn = event.target;
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Posting...';
+  
+  const success = await submitCommentAPI(currentProjectId, name, comment);
+  
+  if (success) {
+    // Clear inputs
+    nameInput.value = '';
+    textInput.value = '';
+    
+    // Refresh comments list
+    const commentsList = document.getElementById('comments-list');
+    const comments = allFeedbacks[currentProjectId] || [];
+    
+    if (comments.length === 0) {
+      commentsList.innerHTML = `<p style="text-align: center; color: hsl(220 9% 46%); padding: 2rem;">No comments yet. Be the first to share your thoughts!</p>`;
+    } else {
+      commentsList.innerHTML = comments.map(c => `
+        <div class="comment-item">
+          <div class="comment-author">${sanitizeInput(c.name)}</div>
+          <div class="comment-date">${new Date(c.timestamp).toLocaleDateString()}</div>
+          <div class="comment-text">${sanitizeInput(c.comment)}</div>
+        </div>
+      `).join('');
+    }
+  } else {
+    alert('Failed to post comment. Please try again.');
+  }
+  
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'Post comment';
+}
+
+function viewRelatedProjects(contractorId) {
+  // Filter projects by contractor and apply filters
+  const relatedProjects = allProjects.filter(p => p.contractor_id === contractorId);
+  
+  if (relatedProjects.length > 0) {
+    closeModal();
+    
+    // Scroll to projects section
+    const filtersSection = document.getElementById('filters-section');
+    if (filtersSection) {
+      const yOffset = -80;
+      const y = filtersSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  }
+}
+
 function closeModal() {
   const modal = document.getElementById('project-modal');
   modal.classList.remove('active');
   document.body.style.overflow = '';
   currentModalIndex = -1;
+  currentProjectId = null;
 }
 
 function closeModalOnOverlay(event) {
@@ -1672,11 +2190,13 @@ function closeModalOnOverlay(event) {
 }
 
 function updateModalNavigation() {
-  const prevBtn = document.getElementById('prev-project-btn');
-  const nextBtn = document.getElementById('next-project-btn');
+  const prevBtn = document.getElementById('modal-prev-icon');
+  const nextBtn = document.getElementById('modal-next-icon');
 
   prevBtn.disabled = currentModalIndex <= 0;
   nextBtn.disabled = currentModalIndex >= filteredProjects.length - 1;
+  
+  lucide.createIcons();
 }
 
 function navigateProject(direction) {
