@@ -528,14 +528,12 @@
             z-index: 10;
         }
 
-        .modal-title-wrapper {
-            flex: 1;
+        .modal-nav-icons {
             display: flex;
-            align-items: center;
-            gap: 1rem;
+            gap: 0.5rem;
         }
 
-        .modal-nav-icon {
+        .modal-nav-icon-btn {
             width: 2rem;
             height: 2rem;
             border-radius: 50%;
@@ -548,12 +546,12 @@
             transition: all 0.2s;
         }
 
-        .modal-nav-icon:hover:not(:disabled) {
+        .modal-nav-icon-btn:hover:not(:disabled) {
             background: hsl(146 55% 36%);
             color: white;
         }
 
-        .modal-nav-icon:disabled {
+        .modal-nav-icon-btn:disabled {
             opacity: 0.3;
             cursor: not-allowed;
         }
@@ -573,271 +571,32 @@
 
         .modal-close:hover {
             background: hsl(220 13% 91%);
-            transform: rotate(90deg);
         }
 
         .modal-body {
-            padding: 2rem;
+            padding: 0;
         }
 
-        @media (max-width: 768px) {
-            .modal-body {
-                padding: 1.5rem;
-            }
-        }
-
-        /* Featured Media */
         .modal-featured-media {
             width: 100%;
-            border-radius: 0.75rem;
-            margin-bottom: 2rem;
-            overflow: hidden;
+            position: relative;
+            background: hsl(220 14% 96%);
         }
 
-        .modal-featured-media iframe {
+        .modal-featured-video {
             width: 100%;
             aspect-ratio: 16 / 9;
             border: none;
         }
 
-        .modal-featured-media img {
+        .modal-image {
             width: 100%;
             height: auto;
             display: block;
         }
 
-        /* Additional Media Gallery */
-        .media-gallery {
-            display: flex;
-            gap: 1rem;
-            overflow-x: auto;
-            padding-bottom: 0.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .media-gallery img {
-            height: 200px;
-            width: auto;
-            border-radius: 0.5rem;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
-
-        @media (max-width: 768px) {
-            .media-gallery img {
-                height: 150px;
-            }
-        }
-
-        /* Live Analytics */
-        .analytics-bar {
-            display: flex;
-            gap: 2rem;
-            padding: 1rem;
-            background: hsl(220 14% 98%);
-            border-radius: 0.5rem;
-            margin-bottom: 2rem;
-            align-items: center;
-        }
-
-        .analytics-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .analytics-value {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: hsl(146 55% 36%);
-        }
-
-        .analytics-label {
-            font-size: 0.875rem;
-            color: hsl(220 9% 46%);
-        }
-
-        .modal-like-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: white;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-weight: 600;
-        }
-
-        .modal-like-btn:hover {
-            border-color: hsl(310 77% 65%);
-            color: hsl(310 77% 65%);
-        }
-
-        .modal-like-btn.liked {
-            background: hsl(310 77% 65%);
-            border-color: hsl(310 77% 65%);
-            color: white;
-        }
-
-        .modal-like-btn.liked svg {
-            fill: currentColor;
-        }
-
-        /* Comments Section */
-        .comments-section {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid hsl(220 13% 91%);
-        }
-
-        .comment-form {
-            background: hsl(220 14% 98%);
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            margin-bottom: 2rem;
-        }
-
-        .comment-input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-            font-size: 0.9375rem;
-            font-family: inherit;
-        }
-
-        .comment-input:focus {
-            outline: none;
-            border-color: hsl(146 55% 36%);
-        }
-
-        .comment-textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .comment-submit {
-            padding: 0.75rem 1.5rem;
-            background: hsl(146 55% 36%);
-            color: white;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .comment-submit:hover {
-            background: hsl(146 55% 32%);
-        }
-
-        .comment-submit:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .comments-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .comment-item {
-            padding: 1rem;
-            background: hsl(220 14% 98%);
-            border-radius: 0.5rem;
-        }
-
-        .comment-author {
-            font-weight: 700;
-            font-size: 0.875rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .comment-date {
-            font-size: 0.75rem;
-            color: hsl(220 9% 46%);
-            margin-bottom: 0.5rem;
-        }
-
-        .comment-text {
-            font-size: 0.9375rem;
-            line-height: 1.6;
-        }
-
-        /* Contractor Section */
-        .contractor-section {
-            margin-top: 2rem;
+        .modal-content-padding {
             padding: 2rem;
-            background: hsl(220 14% 98%);
-            border-radius: 0.75rem;
-        }
-
-        .contractor-header {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .contractor-avatar {
-            width: 4rem;
-            height: 4rem;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid hsl(220 13% 91%);
-        }
-
-        .contractor-info h4 {
-            font-size: 1.125rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-        }
-
-        .contractor-bio {
-            font-size: 0.9375rem;
-            color: hsl(220 9% 46%);
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        /* Related Projects */
-        .related-projects {
-            margin-top: 2rem;
-        }
-
-        .related-projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .related-project-card {
-            cursor: pointer;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            transition: transform 0.2s;
-        }
-
-        .related-project-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .related-project-card img {
-            width: 100%;
-            aspect-ratio: 4 / 3;
-            object-fit: cover;
-        }
-
-        .related-project-title {
-            padding: 0.75rem;
-            background: hsl(220 14% 98%);
-            font-size: 0.875rem;
-            font-weight: 600;
         }
 
         .modal-section {
@@ -854,6 +613,223 @@
         .modal-section p {
             color: hsl(220 9% 46%);
             line-height: 1.7;
+        }
+
+        .modal-analytics {
+            display: flex;
+            gap: 2rem;
+            padding: 1.5rem;
+            background: hsl(220 14% 98%);
+            border-radius: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .modal-analytics-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-like-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: hsl(220 20% 10%);
+            transition: all 0.2s;
+            padding: 0;
+        }
+
+        .modal-like-btn:hover {
+            color: hsl(310 77% 65%);
+        }
+
+        .modal-like-btn.liked {
+            color: hsl(310 77% 65%);
+        }
+
+        .modal-like-btn.liked svg {
+            fill: currentColor;
+        }
+
+        .additional-media-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .additional-media-image {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            border: 1px solid hsl(220 13% 91%);
+        }
+
+        .comments-section {
+            background: hsl(220 14% 98%);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+        }
+
+        .comment-form {
+            margin-bottom: 2rem;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-size: 0.9375rem;
+            margin-bottom: 0.75rem;
+            font-family: inherit;
+        }
+
+        .comment-input:focus {
+            outline: none;
+            border-color: hsl(146 55% 36%);
+        }
+
+        .comment-submit-btn {
+            background: hsl(146 55% 36%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .comment-submit-btn:hover {
+            background: hsl(146 55% 32%);
+        }
+
+        .comment-submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .comment-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid hsl(220 13% 91%);
+        }
+
+        .comment-author {
+            font-weight: 700;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .comment-timestamp {
+            font-size: 0.75rem;
+            color: hsl(220 9% 46%);
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-text {
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        .contractor-section {
+            background: hsl(220 14% 98%);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .contractor-avatar {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid hsl(220 13% 91%);
+        }
+
+        .contractor-info {
+            flex: 1;
+        }
+
+        .contractor-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .contractor-bio {
+            font-size: 0.9375rem;
+            color: hsl(220 9% 46%);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .contractor-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .contractor-btn:hover {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .related-projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .related-project-card {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .related-project-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .related-project-image {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            border: 1px solid hsl(220 13% 91%);
+            margin-bottom: 0.5rem;
+        }
+
+        .related-project-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            line-height: 1.4;
         }
 
         .testimonial-box {
@@ -985,6 +961,13 @@
             }
             .desktop-only {
                 display: none !important;
+            }
+            .contractor-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            .related-projects {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -1247,13 +1230,12 @@
 <div id="project-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
   <div class="modal-content">
     <div class="modal-header">
-      <div class="modal-title-wrapper">
-        <button id="modal-prev-icon" class="modal-nav-icon" onclick="navigateProject(-1)" aria-label="Previous project">
-          <i data-lucide="chevron-left" style="width: 1rem; height: 1rem;"></i>
+      <div class="modal-nav-icons">
+        <button id="modal-prev-btn" class="modal-nav-icon-btn" onclick="navigateProject(-1)" aria-label="Previous project">
+          <i data-lucide="chevron-left" style="width: 1.125rem; height: 1.125rem;"></i>
         </button>
-        <h2 id="modal-title" style="font-size: 1.5rem; font-weight: 700; margin: 0;"></h2>
-        <button id="modal-next-icon" class="modal-nav-icon" onclick="navigateProject(1)" aria-label="Next project">
-          <i data-lucide="chevron-right" style="width: 1rem; height: 1rem;"></i>
+        <button id="modal-next-btn" class="modal-nav-icon-btn" onclick="navigateProject(1)" aria-label="Next project">
+          <i data-lucide="chevron-right" style="width: 1.125rem; height: 1.125rem;"></i>
         </button>
       </div>
       <button class="modal-close" onclick="closeModal()" aria-label="Close">
@@ -1281,30 +1263,61 @@ function sanitizeInput(input) {
   return div.innerHTML;
 }
 
-function extractYouTubeId(url) {
-  if (!url) return null;
-  const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-  const match = url.match(regExp);
-  return (match && match[7].length === 11) ? match[7] : null;
+function formatTimestamp(timestamp) {
+  const date = new Date(timestamp);
+  const now = new Date();
+  const diff = now - date;
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (days > 7) {
+    return date.toLocaleDateString();
+  } else if (days > 0) {
+    return `${days}d ago`;
+  } else if (hours > 0) {
+    return `${hours}h ago`;
+  } else if (minutes > 0) {
+    return `${minutes}m ago`;
+  } else {
+    return 'Just now';
+  }
+}
+
+function isYouTubeUrl(url) {
+  if (!url) return false;
+  return url.includes('youtube.com') || url.includes('youtu.be');
+}
+
+function getYouTubeEmbedUrl(url) {
+  if (!url) return '';
+  
+  // Extract video ID from various YouTube URL formats
+  let videoId = '';
+  if (url.includes('youtube.com/watch?v=')) {
+    videoId = url.split('watch?v=')[1].split('&')[0];
+  } else if (url.includes('youtu.be/')) {
+    videoId = url.split('youtu.be/')[1].split('?')[0];
+  } else if (url.includes('youtube.com/embed/')) {
+    return url;
+  }
+  
+  return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
 }
 
 // ===================================================================
 // STATE MANAGEMENT
 // ===================================================================
 let allProjects = [];
-let allAnalytics = {};
-let allContractors = {};
-let allMedia = {};
-let allFeedbacks = {};
 let filteredProjects = [];
 let currentPage = 1;
 const projectsPerPage = 9;
 let currentSlide = 0;
 let sliderInterval = null;
 let currentModalIndex = -1;
-let currentProjectId = null;
 
-// Session tracking for likes (prevent multiple likes per session)
+// Session storage for like tracking (prevent multiple likes per session)
 const SESSION_LIKES_KEY = 'packdez_session_likes';
 
 function getSessionLikes() {
@@ -1313,14 +1326,14 @@ function getSessionLikes() {
 }
 
 function hasLikedInSession(projectId) {
-  const sessionLikes = getSessionLikes();
-  return sessionLikes[projectId] === true;
+  const likes = getSessionLikes();
+  return likes[projectId] === true;
 }
 
 function markLikedInSession(projectId) {
-  const sessionLikes = getSessionLikes();
-  sessionLikes[projectId] = true;
-  sessionStorage.setItem(SESSION_LIKES_KEY, JSON.stringify(sessionLikes));
+  const likes = getSessionLikes();
+  likes[projectId] = true;
+  sessionStorage.setItem(SESSION_LIKES_KEY, JSON.stringify(likes));
 }
 
 // ===================================================================
@@ -1342,9 +1355,14 @@ function toggleScrollToTopButton() {
 window.addEventListener('scroll', toggleScrollToTopButton);
 
 // ===================================================================
-// API DATA FETCHING
+// API DATA FETCHING & WRITING
 // ===================================================================
 const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbx271i09tTrmNdXKofA4ExInWMPDDN-npO-GMOCKFL-j8M1h1CaD-bB0Qwk43Ey2T7Z/exec';
+
+let analyticsCache = {};
+let commentsCache = {};
+let additionalMediaCache = {};
+let contractorsCache = {};
 
 async function fetchProjects() {
   try {
@@ -1355,28 +1373,55 @@ async function fetchProjects() {
       .filter(project => project.status === 'published')
       .sort((a, b) => (a.display_order || 999) - (b.display_order || 999));
     
-    // Build lookup objects
-    (responseData.analytics || []).forEach(item => {
-      allAnalytics[item.project_id] = item;
-    });
-    
-    (responseData.contractors || []).forEach(item => {
-      allContractors[item.contractor_id] = item;
-    });
-    
-    (responseData.media || []).forEach(item => {
-      allMedia[item.project_id] = item;
-    });
-    
-    // Group feedbacks by project
-    (responseData.feedbacks || []).forEach(item => {
-      if (!allFeedbacks[item.project_id]) {
-        allFeedbacks[item.project_id] = [];
-      }
-      allFeedbacks[item.project_id].push(item);
-    });
-    
     filteredProjects = [...allProjects];
+    
+    // Cache analytics data
+    if (responseData.analytics) {
+      responseData.analytics.forEach(item => {
+        analyticsCache[item.project_id] = {
+          views: parseInt(item.total_views) || 0,
+          likes: parseInt(item.total_likes) || 0
+        };
+      });
+    }
+
+    // Cache additional media
+    if (responseData.additional_media) {
+      responseData.additional_media.forEach(item => {
+        additionalMediaCache[item.project_id] = {
+          video: item.video,
+          img_1: item.img_1,
+          img_2: item.img_2,
+          img_3: item.img_3
+        };
+      });
+    }
+
+    // Cache comments
+    if (responseData.feedbacks) {
+      responseData.feedbacks.forEach(item => {
+        if (!commentsCache[item.project_id]) {
+          commentsCache[item.project_id] = [];
+        }
+        commentsCache[item.project_id].push({
+          name: item.name,
+          comment: item.comment,
+          timestamp: item.timestamp
+        });
+      });
+    }
+
+    // Cache contractors
+    if (responseData.contractors) {
+      responseData.contractors.forEach(item => {
+        contractorsCache[item.contractor_id] = {
+          name: item.contractor_name,
+          bio: item.bio,
+          meeting_link: item.meeting_link,
+          profile_image: item.profile_image
+        };
+      });
+    }
     
     populateFilters();
     renderFeaturedSlider();
@@ -1397,72 +1442,106 @@ async function fetchProjects() {
   }
 }
 
-// ===================================================================
-// API WRITE OPERATIONS
-// ===================================================================
-async function incrementViewsAPI(projectId) {
+async function incrementViewCount(projectId, contractorId) {
   try {
-    const response = await fetch(`${API_ENDPOINT}?action=incrementViews&projectId=${projectId}`, {
-      method: 'POST'
-    });
-    const data = await response.json();
-    if (data.success) {
-      // Update local cache
-      if (!allAnalytics[projectId]) {
-        allAnalytics[projectId] = { project_id: projectId, total_views: 0, total_likes: 0 };
-      }
-      allAnalytics[projectId].total_views = data.total_views;
+    // Optimistic update
+    if (!analyticsCache[projectId]) {
+      analyticsCache[projectId] = { views: 0, likes: 0 };
     }
-  } catch (error) {
-    console.error('Error incrementing views:', error);
-  }
-}
+    analyticsCache[projectId].views++;
 
-async function incrementLikesAPI(projectId) {
-  try {
-    const response = await fetch(`${API_ENDPOINT}?action=incrementLikes&projectId=${projectId}`, {
-      method: 'POST'
-    });
-    const data = await response.json();
-    if (data.success) {
-      // Update local cache
-      if (!allAnalytics[projectId]) {
-        allAnalytics[projectId] = { project_id: projectId, total_views: 0, total_likes: 0 };
-      }
-      allAnalytics[projectId].total_likes = data.total_likes;
-      return data.total_likes;
-    }
-  } catch (error) {
-    console.error('Error incrementing likes:', error);
-  }
-  return null;
-}
-
-async function submitCommentAPI(projectId, name, comment) {
-  try {
-    const response = await fetch(API_ENDPOINT, {
+    // Send to API
+    await fetch(API_ENDPOINT, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `action=submitComment&projectId=${encodeURIComponent(projectId)}&name=${encodeURIComponent(name)}&comment=${encodeURIComponent(comment)}`
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'incrementView',
+        project_id: projectId,
+        contractor_id: contractorId
+      })
     });
-    const data = await response.json();
-    if (data.success) {
-      // Update local cache
-      if (!allFeedbacks[projectId]) {
-        allFeedbacks[projectId] = [];
-      }
-      allFeedbacks[projectId].unshift({
+
+    return analyticsCache[projectId].views;
+  } catch (error) {
+    console.error('Error incrementing view:', error);
+    return analyticsCache[projectId]?.views || 0;
+  }
+}
+
+async function incrementLikeCount(projectId, contractorId) {
+  try {
+    // Optimistic update
+    if (!analyticsCache[projectId]) {
+      analyticsCache[projectId] = { views: 0, likes: 0 };
+    }
+    analyticsCache[projectId].likes++;
+    markLikedInSession(projectId);
+
+    // Send to API
+    await fetch(API_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'incrementLike',
+        project_id: projectId,
+        contractor_id: contractorId
+      })
+    });
+
+    return analyticsCache[projectId].likes;
+  } catch (error) {
+    console.error('Error incrementing like:', error);
+    return analyticsCache[projectId]?.likes || 0;
+  }
+}
+
+async function submitComment(projectId, name, comment) {
+  try {
+    const timestamp = new Date().toISOString();
+    
+    // Optimistic update
+    if (!commentsCache[projectId]) {
+      commentsCache[projectId] = [];
+    }
+    commentsCache[projectId].unshift({ name, comment, timestamp });
+
+    // Send to API
+    await fetch(API_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'addComment',
         project_id: projectId,
         name: name,
         comment: comment,
-        timestamp: new Date().toISOString()
-      });
-      return true;
-    }
+        timestamp: timestamp
+      })
+    });
+
+    return true;
   } catch (error) {
     console.error('Error submitting comment:', error);
+    return false;
   }
-  return false;
+}
+
+function getAnalytics(projectId) {
+  return analyticsCache[projectId] || { views: 0, likes: 0 };
+}
+
+function getComments(projectId) {
+  return commentsCache[projectId] || [];
+}
+
+function getAdditionalMedia(projectId) {
+  return additionalMediaCache[projectId] || {};
+}
+
+function getContractor(contractorId) {
+  return contractorsCache[contractorId] || null;
 }
 
 // ===================================================================
@@ -1482,10 +1561,9 @@ function renderFeaturedSlider() {
   const sliderDots = document.getElementById('slider-dots');
   
   sliderTrack.innerHTML = featuredProjects.map(project => {
-    const analytics = allAnalytics[project.project_id] || { total_views: 0, total_likes: 0 };
-    const contractor = allContractors[project.contractor_id] || {};
-    const profileImage = contractor.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png';
-    const creatorName = contractor.contractor_name || 'Packdez Team';
+    const analytics = getAnalytics(project.project_id);
+    const profileImage = project.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png';
+    const creatorName = project.contractor_name || 'Packdez Team';
     
     return `
     <div class="slider-slide">
@@ -1506,11 +1584,11 @@ function renderFeaturedSlider() {
             <div class="slider-engagement-stats">
               <div class="slider-engagement-stat">
                 <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
-                <span>${formatCount(analytics.total_likes)}</span>
+                <span>${formatCount(analytics.likes)}</span>
               </div>
               <div class="slider-engagement-stat">
                 <i data-lucide="eye" style="width: 0.875rem; height: 0.875rem;"></i>
-                <span>${formatCount(analytics.total_views)}</span>
+                <span>${formatCount(analytics.views)}</span>
               </div>
             </div>
           </div>
@@ -1663,10 +1741,9 @@ function renderProjects() {
   const projectsToShow = filteredProjects.slice(startIndex, endIndex);
 
   grid.innerHTML = projectsToShow.map(project => {
-    const analytics = allAnalytics[project.project_id] || { total_views: 0, total_likes: 0 };
-    const contractor = allContractors[project.contractor_id] || {};
-    const profileImage = contractor.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png';
-    const creatorName = contractor.contractor_name || 'Packdez Team';
+    const analytics = getAnalytics(project.project_id);
+    const profileImage = project.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png';
+    const creatorName = project.contractor_name || 'Packdez Team';
     
     return `
     <div class="project-card" onclick="openModal('${project.project_id}')">
@@ -1681,7 +1758,7 @@ function renderProjects() {
         <!-- Desktop overlay -->
         <div class="project-card-overlay">
           <div class="overlay-top">
-            <div class="overlay-action" onclick="event.stopPropagation(); handleLike('${project.project_id}')">
+            <div class="overlay-action" onclick="event.stopPropagation(); handleLike('${project.project_id}', '${project.contractor_id}')">
               <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
             </div>
           </div>
@@ -1690,11 +1767,11 @@ function renderProjects() {
             <div class="overlay-stats">
               <div class="overlay-stat">
                 <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
-                <span id="likes-overlay-${project.project_id}">${formatCount(analytics.total_likes)}</span>
+                <span id="likes-overlay-${project.project_id}">${formatCount(analytics.likes)}</span>
               </div>
               <div class="overlay-stat">
                 <i data-lucide="eye" style="width: 0.875rem; height: 0.875rem;"></i>
-                <span id="views-overlay-${project.project_id}">${formatCount(analytics.total_views)}</span>
+                <span id="views-overlay-${project.project_id}">${formatCount(analytics.views)}</span>
               </div>
             </div>
           </div>
@@ -1708,13 +1785,13 @@ function renderProjects() {
           <span class="creator-name">${creatorName}</span>
         </div>
         <div class="card-stats">
-          <button class="like-btn ${hasLikedInSession(project.project_id) ? 'liked' : ''}" onclick="event.stopPropagation(); handleLike('${project.project_id}'))" id="like-btn-${project.project_id}">
+          <button class="like-btn ${hasLikedInSession(project.project_id) ? 'liked' : ''}" onclick="event.stopPropagation(); handleLike('${project.project_id}', '${project.contractor_id}')" id="like-btn-${project.project_id}">
             <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
-            <span id="likes-${project.project_id}">${formatCount(analytics.total_likes)}</span>
+            <span id="likes-${project.project_id}">${formatCount(analytics.likes)}</span>
           </button>
           <div class="card-stat">
             <i data-lucide="eye"></i>
-            <span id="views-${project.project_id}">${formatCount(analytics.total_views)}</span>
+            <span id="views-${project.project_id}">${formatCount(analytics.views)}</span>
           </div>
         </div>
       </div>
@@ -1725,25 +1802,23 @@ function renderProjects() {
   lucide.createIcons();
 }
 
-async function handleLike(projectId) {
-  // Prevent multiple likes per session
+async function handleLike(projectId, contractorId) {
   if (hasLikedInSession(projectId)) {
-    return;
+    return; // Already liked in this session
   }
+
+  const newLikes = await incrementLikeCount(projectId, contractorId);
   
-  // Optimistic UI update
-  const analytics = allAnalytics[projectId] || { total_views: 0, total_likes: 0 };
-  const optimisticLikes = analytics.total_likes + 1;
-  
-  // Update all displays optimistically
+  // Update all displays
   const likesElement = document.getElementById(`likes-${projectId}`);
   const likesOverlay = document.getElementById(`likes-overlay-${projectId}`);
   const likeBtn = document.getElementById(`like-btn-${projectId}`);
-  const modalLikeBtn = document.getElementById('modal-like-btn');
-  const modalLikesValue = document.getElementById('modal-likes-value');
+  const modalLikeBtn = document.getElementById(`modal-like-btn-${projectId}`);
+  const modalLikesCount = document.getElementById(`modal-likes-${projectId}`);
   
-  if (likesElement) likesElement.textContent = formatCount(optimisticLikes);
-  if (likesOverlay) likesOverlay.textContent = formatCount(optimisticLikes);
+  if (likesElement) likesElement.textContent = formatCount(newLikes);
+  if (likesOverlay) likesOverlay.textContent = formatCount(newLikes);
+  if (modalLikesCount) modalLikesCount.textContent = formatCount(newLikes);
   
   // Add animation
   if (likeBtn) {
@@ -1752,24 +1827,8 @@ async function handleLike(projectId) {
   }
   
   if (modalLikeBtn) {
-    modalLikeBtn.classList.add('liked');
-  }
-  
-  if (modalLikesValue) {
-    modalLikesValue.textContent = formatCount(optimisticLikes);
-  }
-  
-  // Mark as liked in session
-  markLikedInSession(projectId);
-  
-  // Sync with API
-  const actualLikes = await incrementLikesAPI(projectId);
-  
-  // Update with actual value from server
-  if (actualLikes !== null) {
-    if (likesElement) likesElement.textContent = formatCount(actualLikes);
-    if (likesOverlay) likesOverlay.textContent = formatCount(actualLikes);
-    if (modalLikesValue) modalLikesValue.textContent = formatCount(actualLikes);
+    modalLikeBtn.classList.add('animating', 'liked');
+    setTimeout(() => modalLikeBtn.classList.remove('animating'), 400);
   }
   
   lucide.createIcons();
@@ -1829,101 +1888,103 @@ function changePage(page) {
 }
 
 // ===================================================================
-// MODAL
+// MODAL - ENHANCED WITH ALL NEW FEATURES
 // ===================================================================
 async function openModal(projectId) {
   const project = allProjects.find(p => p.project_id === projectId);
   if (!project) return;
 
-  currentProjectId = projectId;
+  // Increment view count
+  const newViews = await incrementViewCount(projectId, project.contractor_id);
   
-  // Increment view count (optimistic + API sync)
-  const analytics = allAnalytics[projectId] || { total_views: 0, total_likes: 0 };
-  const optimisticViews = analytics.total_views + 1;
-  
-  // Update view counts in grid optimistically
+  // Update view counts in grid
   const viewsElement = document.getElementById(`views-${projectId}`);
   const viewsOverlay = document.getElementById(`views-overlay-${projectId}`);
-  if (viewsElement) viewsElement.textContent = formatCount(optimisticViews);
-  if (viewsOverlay) viewsOverlay.textContent = formatCount(optimisticViews);
-  
-  // Sync with API
-  incrementViewsAPI(projectId);
+  if (viewsElement) viewsElement.textContent = formatCount(newViews);
+  if (viewsOverlay) viewsOverlay.textContent = formatCount(newViews);
 
   currentModalIndex = filteredProjects.findIndex(p => p.project_id === projectId);
 
   const modal = document.getElementById('project-modal');
-  const modalTitle = document.getElementById('modal-title');
   const modalBody = document.getElementById('modal-body');
-
-  modalTitle.textContent = project.project_title;
 
   let content = '';
 
-  // 1. Featured Media (Video or Hero Image)
-  const media = allMedia[projectId] || {};
-  if (media.video) {
-    const youtubeId = extractYouTubeId(media.video);
-    if (youtubeId) {
-      content += `
-        <div class="modal-featured-media">
-          <iframe 
-            src="https://www.youtube.com/embed/${youtubeId}" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen>
-          </iframe>
-        </div>
-      `;
-    }
+  // 1. FEATURED MEDIA (Video or Hero Image)
+  const additionalMedia = getAdditionalMedia(projectId);
+  const videoUrl = additionalMedia.video;
+  
+  if (videoUrl && isYouTubeUrl(videoUrl)) {
+    const embedUrl = getYouTubeEmbedUrl(videoUrl);
+    content += `
+      <div class="modal-featured-media">
+        <iframe 
+          class="modal-featured-video"
+          src="${embedUrl}" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>
+    `;
   } else if (project.detail_image_url) {
     content += `
       <div class="modal-featured-media">
         <img 
           src="${project.detail_image_url}" 
           alt="${project.image_alt_text || project.project_title}"
+          class="modal-image"
         />
       </div>
     `;
   }
 
-  // 2. Additional Media Gallery
-  const additionalImages = [media.img_1, media.img_2, media.img_3].filter(Boolean);
-  if (additionalImages.length > 0) {
+  content += '<div class="modal-content-padding">';
+
+  // Project Title
+  content += `
+    <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.3;">
+      ${project.project_title}
+    </h2>
+  `;
+
+  // 3. LIVE ANALYTICS (Views & Likes)
+  const analytics = getAnalytics(projectId);
+  const isLiked = hasLikedInSession(projectId);
+  
+  content += `
+    <div class="modal-analytics">
+      <button 
+        class="modal-like-btn ${isLiked ? 'liked' : ''}" 
+        id="modal-like-btn-${projectId}"
+        onclick="handleLike('${projectId}', '${project.contractor_id}')"
+        ${isLiked ? 'disabled' : ''}
+      >
+        <i data-lucide="heart" style="width: 1.125rem; height: 1.125rem;"></i>
+        <span id="modal-likes-${projectId}">${formatCount(analytics.likes)}</span>
+      </button>
+      <div class="modal-analytics-item" style="color: hsl(220 9% 46%); font-weight: 600;">
+        <i data-lucide="eye" style="width: 1.125rem; height: 1.125rem;"></i>
+        <span id="modal-views-${projectId}">${formatCount(analytics.views)}</span>
+      </div>
+    </div>
+  `;
+
+  // 2. ADDITIONAL MEDIA GALLERY
+  const images = [additionalMedia.img_1, additionalMedia.img_2, additionalMedia.img_3].filter(Boolean);
+  if (images.length > 0) {
     content += `
-      <div class="media-gallery">
-        ${additionalImages.map(img => `
-          <img src="${img}" alt="Additional project media" loading="lazy" />
-        `).join('')}
+      <div class="modal-section">
+        <h3>Additional Media</h3>
+        <div class="additional-media-gallery">
+          ${images.map(img => `
+            <img src="${img}" alt="Additional project media" class="additional-media-image" loading="lazy" />
+          `).join('')}
+        </div>
       </div>
     `;
   }
 
-  // 3. Live Analytics Bar
-  const currentAnalytics = allAnalytics[projectId] || { total_views: 0, total_likes: 0 };
-  content += `
-    <div class="analytics-bar">
-      <div class="analytics-item">
-        <i data-lucide="eye" style="width: 1.25rem; height: 1.25rem; color: hsl(220 9% 46%);"></i>
-        <div>
-          <div class="analytics-value" id="modal-views-value">${formatCount(currentAnalytics.total_views)}</div>
-          <div class="analytics-label">Views</div>
-        </div>
-      </div>
-      <div class="analytics-item">
-        <i data-lucide="heart" style="width: 1.25rem; height: 1.25rem; color: hsl(220 9% 46%);"></i>
-        <div>
-          <div class="analytics-value" id="modal-likes-value">${formatCount(currentAnalytics.total_likes)}</div>
-          <div class="analytics-label">Likes</div>
-        </div>
-      </div>
-      <button class="modal-like-btn ${hasLikedInSession(projectId) ? 'liked' : ''}" id="modal-like-btn" onclick="handleLike('${projectId}')">
-        <i data-lucide="heart" style="width: 1rem; height: 1rem;"></i>
-        ${hasLikedInSession(projectId) ? 'Liked' : 'Like this system'}
-      </button>
-    </div>
-  `;
-
-  // 4. Project Details
+  // Context
   if (project.client_context) {
     content += `
       <div class="modal-section">
@@ -1933,6 +1994,7 @@ async function openModal(projectId) {
     `;
   }
 
+  // Problem
   if (project.problem_details || project.problem_summary) {
     content += `
       <div class="modal-section">
@@ -1942,6 +2004,7 @@ async function openModal(projectId) {
     `;
   }
 
+  // System overview
   if (project.system_overview) {
     content += `
       <div class="modal-section">
@@ -1951,6 +2014,7 @@ async function openModal(projectId) {
     `;
   }
 
+  // Tools & integrations
   if (project.tools_used) {
     const tools = project.tools_used.split(',').map(t => t.trim()).filter(Boolean);
     if (tools.length > 0) {
@@ -1965,6 +2029,7 @@ async function openModal(projectId) {
     }
   }
 
+  // Automation features
   if (project.automation_features) {
     content += `
       <div class="modal-section">
@@ -1974,6 +2039,7 @@ async function openModal(projectId) {
     `;
   }
 
+  // Outcomes
   if (project.primary_outcome || project.secondary_outcome) {
     content += `
       <div class="modal-section">
@@ -2005,6 +2071,7 @@ async function openModal(projectId) {
     `;
   }
 
+  // Testimonial
   if (project.testimonial_quote) {
     content += `
       <div class="testimonial-box">
@@ -2021,87 +2088,100 @@ async function openModal(projectId) {
     `;
   }
 
-  // 5. Comments Section
-  const comments = allFeedbacks[projectId] || [];
+  // 5. COMMENTS SYSTEM
+  const comments = getComments(projectId);
   content += `
-    <div class="comments-section">
-      <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Comments</h3>
-      
-      <div class="comment-form">
-        <input 
-          type="text" 
-          id="comment-name" 
-          class="comment-input" 
-          placeholder="Your name"
-          maxlength="100"
-        />
-        <textarea 
-          id="comment-text" 
-          class="comment-input comment-textarea" 
-          placeholder="Share your thoughts..."
-          maxlength="500"
-        ></textarea>
-        <button class="comment-submit" onclick="submitComment()">Post comment</button>
-      </div>
-      
-      <div class="comments-list" id="comments-list">
-        ${comments.length === 0 ? `
-          <p style="text-align: center; color: hsl(220 9% 46%); padding: 2rem;">No comments yet. Be the first to share your thoughts!</p>
-        ` : comments.map(comment => `
-          <div class="comment-item">
-            <div class="comment-author">${sanitizeInput(comment.name)}</div>
-            <div class="comment-date">${new Date(comment.timestamp).toLocaleDateString()}</div>
-            <div class="comment-text">${sanitizeInput(comment.comment)}</div>
-          </div>
-        `).join('')}
+    <div class="modal-section">
+      <h3>Comments</h3>
+      <div class="comments-section">
+        <form class="comment-form" onsubmit="handleCommentSubmit(event, '${projectId}')" id="comment-form-${projectId}">
+          <input 
+            type="text" 
+            class="comment-input" 
+            placeholder="Your name" 
+            required 
+            maxlength="100"
+            id="comment-name-${projectId}"
+          />
+          <textarea 
+            class="comment-input" 
+            placeholder="Add a comment..." 
+            required 
+            rows="3"
+            maxlength="500"
+            id="comment-text-${projectId}"
+          ></textarea>
+          <button type="submit" class="comment-submit-btn">Post Comment</button>
+        </form>
+        
+        <div class="comments-list" id="comments-list-${projectId}">
+          ${comments.length === 0 ? '<p style="color: hsl(220 9% 46%); font-size: 0.875rem;">No comments yet. Be the first to comment!</p>' : ''}
+          ${comments.map(comment => `
+            <div class="comment-item">
+              <div class="comment-author">${sanitizeInput(comment.name)}</div>
+              <div class="comment-timestamp">${formatTimestamp(comment.timestamp)}</div>
+              <div class="comment-text">${sanitizeInput(comment.comment)}</div>
+            </div>
+          `).join('')}
+        </div>
       </div>
     </div>
   `;
 
-  // 6. Contractor Section
-  const contractor = allContractors[project.contractor_id] || {};
-  if (contractor.contractor_name || contractor.bio) {
+  // 6. CONTRACTOR SUMMARY SECTION
+  const contractor = getContractor(project.contractor_id);
+  if (contractor) {
     content += `
-      <div class="contractor-section">
-        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Built by</h3>
-        <div class="contractor-header">
+      <div class="modal-section">
+        <h3>About the creator</h3>
+        <div class="contractor-section">
           <img 
             src="${contractor.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png'}" 
-            alt="${contractor.contractor_name || 'Packdez Team'}" 
+            alt="${contractor.name}"
             class="contractor-avatar"
           />
           <div class="contractor-info">
-            <h4>${contractor.contractor_name || 'Packdez Team'}</h4>
+            <div class="contractor-name">${contractor.name}</div>
+            ${contractor.bio ? `<div class="contractor-bio">${contractor.bio}</div>` : ''}
+            ${contractor.meeting_link ? `
+              <a href="${contractor.meeting_link}" target="_blank" rel="noopener noreferrer" class="contractor-btn">
+                <i data-lucide="calendar" style="width: 0.875rem; height: 0.875rem;"></i>
+                Schedule a meeting
+              </a>
+            ` : ''}
           </div>
         </div>
-        ${contractor.bio ? `<p class="contractor-bio">${contractor.bio}</p>` : ''}
-        <button class="btn btn-primary" onclick="viewRelatedProjects('${project.contractor_id}')">
-          View related systems
-        </button>
       </div>
     `;
   }
 
-  // 7. Related Projects
+  // 7. RELATED PROJECTS
   const relatedProjects = allProjects
     .filter(p => p.contractor_id === project.contractor_id && p.project_id !== projectId)
     .slice(0, 4);
   
   if (relatedProjects.length > 0) {
     content += `
-      <div class="related-projects">
-        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">More by this creator</h3>
-        <div class="related-projects-grid">
-          ${relatedProjects.map(p => `
-            <div class="related-project-card" onclick="openModal('${p.project_id}')">
-              <img src="${p.thumbnail_image_url}" alt="${p.project_title}" loading="lazy" />
-              <div class="related-project-title">${p.project_title}</div>
+      <div class="modal-section">
+        <h3>More by ${project.contractor_name || 'this creator'}</h3>
+        <div class="related-projects">
+          ${relatedProjects.map(rp => `
+            <div class="related-project-card" onclick="openModal('${rp.project_id}')">
+              <img 
+                src="${rp.thumbnail_image_url}" 
+                alt="${rp.project_title}"
+                class="related-project-image"
+                loading="lazy"
+              />
+              <div class="related-project-title">${rp.project_title}</div>
             </div>
           `).join('')}
         </div>
       </div>
     `;
   }
+
+  content += '</div>'; // Close modal-content-padding
 
   modalBody.innerHTML = content;
   updateModalNavigation();
@@ -2111,68 +2191,46 @@ async function openModal(projectId) {
   lucide.createIcons();
 }
 
-async function submitComment() {
-  const nameInput = document.getElementById('comment-name');
-  const textInput = document.getElementById('comment-text');
+async function handleCommentSubmit(event, projectId) {
+  event.preventDefault();
+  
+  const nameInput = document.getElementById(`comment-name-${projectId}`);
+  const textInput = document.getElementById(`comment-text-${projectId}`);
+  const submitBtn = event.target.querySelector('button[type="submit"]');
   
   const name = nameInput.value.trim();
   const comment = textInput.value.trim();
   
-  if (!name || !comment) {
-    alert('Please fill in both your name and comment.');
-    return;
-  }
+  if (!name || !comment) return;
   
-  // Disable button during submission
-  const submitBtn = event.target;
+  // Disable form
   submitBtn.disabled = true;
   submitBtn.textContent = 'Posting...';
   
-  const success = await submitCommentAPI(currentProjectId, name, comment);
+  // Submit comment
+  const success = await submitComment(projectId, name, comment);
   
   if (success) {
-    // Clear inputs
+    // Clear form
     nameInput.value = '';
     textInput.value = '';
     
-    // Refresh comments list
-    const commentsList = document.getElementById('comments-list');
-    const comments = allFeedbacks[currentProjectId] || [];
+    // Update comments list
+    const commentsList = document.getElementById(`comments-list-${projectId}`);
+    const comments = getComments(projectId);
     
-    if (comments.length === 0) {
-      commentsList.innerHTML = `<p style="text-align: center; color: hsl(220 9% 46%); padding: 2rem;">No comments yet. Be the first to share your thoughts!</p>`;
-    } else {
-      commentsList.innerHTML = comments.map(c => `
-        <div class="comment-item">
-          <div class="comment-author">${sanitizeInput(c.name)}</div>
-          <div class="comment-date">${new Date(c.timestamp).toLocaleDateString()}</div>
-          <div class="comment-text">${sanitizeInput(c.comment)}</div>
-        </div>
-      `).join('');
-    }
-  } else {
-    alert('Failed to post comment. Please try again.');
+    commentsList.innerHTML = comments.map(c => `
+      <div class="comment-item">
+        <div class="comment-author">${sanitizeInput(c.name)}</div>
+        <div class="comment-timestamp">${formatTimestamp(c.timestamp)}</div>
+        <div class="comment-text">${sanitizeInput(c.comment)}</div>
+      </div>
+    `).join('');
   }
   
+  // Re-enable form
   submitBtn.disabled = false;
-  submitBtn.textContent = 'Post comment';
-}
-
-function viewRelatedProjects(contractorId) {
-  // Filter projects by contractor and apply filters
-  const relatedProjects = allProjects.filter(p => p.contractor_id === contractorId);
-  
-  if (relatedProjects.length > 0) {
-    closeModal();
-    
-    // Scroll to projects section
-    const filtersSection = document.getElementById('filters-section');
-    if (filtersSection) {
-      const yOffset = -80;
-      const y = filtersSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
-  }
+  submitBtn.textContent = 'Post Comment';
 }
 
 function closeModal() {
@@ -2180,7 +2238,6 @@ function closeModal() {
   modal.classList.remove('active');
   document.body.style.overflow = '';
   currentModalIndex = -1;
-  currentProjectId = null;
 }
 
 function closeModalOnOverlay(event) {
@@ -2190,13 +2247,11 @@ function closeModalOnOverlay(event) {
 }
 
 function updateModalNavigation() {
-  const prevBtn = document.getElementById('modal-prev-icon');
-  const nextBtn = document.getElementById('modal-next-icon');
+  const prevBtn = document.getElementById('modal-prev-btn');
+  const nextBtn = document.getElementById('modal-next-btn');
 
   prevBtn.disabled = currentModalIndex <= 0;
   nextBtn.disabled = currentModalIndex >= filteredProjects.length - 1;
-  
-  lucide.createIcons();
 }
 
 function navigateProject(direction) {
