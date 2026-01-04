@@ -488,17 +488,18 @@
             }
         }
 
-        /* Modal */
+        /* Enhanced Modal - Dribbble Style with 2 Columns */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(6px);
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(8px);
             z-index: 100;
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 1rem;
+            padding: 0;
+            overflow-y: auto;
         }
 
         .modal-overlay.active {
@@ -507,30 +508,84 @@
 
         .modal-content {
             background: white;
-            border-radius: 1rem;
-            max-width: 900px;
             width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
+            height: 100vh;
             position: relative;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: grid;
+            grid-template-columns: 1fr 35px;
+            overflow: hidden;
         }
 
-        .modal-header {
+        @media (max-width: 968px) {
+            .modal-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Main Content Column */
+        .modal-main-column {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Fixed Header */
+        .modal-header-fixed {
             position: sticky;
             top: 0;
             background: white;
             border-bottom: 1px solid hsl(220 13% 91%);
-            padding: 1.5rem;
+            padding: 1.25rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 10;
+            z-index: 20;
+            gap: 1rem;
         }
 
-        .modal-close {
-            width: 2rem;
-            height: 2rem;
+        .modal-header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .modal-contractor-avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid hsl(220 13% 91%);
+            flex-shrink: 0;
+        }
+
+        .modal-title-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: hsl(220 20% 10%);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .modal-title-text {
+                font-size: 1rem;
+            }
+        }
+
+        .modal-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .modal-nav-icon-btn {
+            width: 2.5rem;
+            height: 2.5rem;
             border-radius: 50%;
             background: hsl(220 14% 96%);
             border: none;
@@ -541,137 +596,545 @@
             transition: all 0.2s;
         }
 
-        .modal-close:hover {
-            background: hsl(220 13% 91%);
+        .modal-nav-icon-btn:hover:not(:disabled) {
+            background: hsl(146 55% 36%);
+            color: white;
         }
 
-        .modal-body {
+        .modal-nav-icon-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .modal-enquiry-btn {
+            padding: 0.625rem 1.25rem;
+            background: hsl(146 55% 36%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .modal-enquiry-btn:hover {
+            background: hsl(146 55% 32%);
+            box-shadow: 0 4px 12px rgba(46, 140, 78, 0.3);
+        }
+
+        /* Modal Body */
+        .modal-body-content {
             padding: 2rem;
-        }
-
-        .modal-image {
+            max-width: 1200px;
+            margin: 0 auto;
             width: 100%;
-            height: auto;
+        }
+
+        @media (max-width: 768px) {
+            .modal-body-content {
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        /* Featured Media Section */
+        .featured-media-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .featured-media-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
             border-radius: 0.75rem;
-            margin-bottom: 2rem;
+            overflow: hidden;
+            background: hsl(220 14% 96%);
+            margin-bottom: 1rem;
+            position: relative;
         }
 
-        .modal-section {
-            margin-bottom: 2rem;
+        .featured-media-container img,
+        .featured-media-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .modal-section h3 {
-            font-size: 1.25rem;
+        .featured-media-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Thumbnail Gallery */
+        .media-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .media-thumbnail {
+            aspect-ratio: 4 / 3;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            background: hsl(220 14% 96%);
+        }
+
+        .media-thumbnail:hover {
+            border-color: hsl(146 55% 36%);
+            transform: scale(1.05);
+        }
+
+        .media-thumbnail.active {
+            border-color: hsl(146 55% 36%);
+        }
+
+        .media-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Project Details Grid */
+        .project-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: hsl(220 14% 98%);
+            border-radius: 0.75rem;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.375rem;
+        }
+
+        .detail-label {
+            font-size: 0.75rem;
             font-weight: 700;
-            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: hsl(220 9% 46%);
+        }
+
+        .detail-value {
+            font-size: 0.9375rem;
+            font-weight: 600;
             color: hsl(220 20% 10%);
         }
 
-        .modal-section p {
-            color: hsl(220 9% 46%);
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: hsl(220 20% 10%);
+        }
+
+        .section-content {
+            font-size: 1rem;
             line-height: 1.7;
-        }
-
-        .modal-navigation {
-            display: flex;
-            gap: 1rem;
-            padding: 1.5rem;
-            border-top: 1px solid hsl(220 13% 91%);
-            background: hsl(220 14% 98%);
-        }
-
-        .modal-nav-btn {
-            flex: 1;
-            padding: 0.75rem 1.5rem;
-            background: white;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .modal-nav-btn:hover:not(:disabled) {
-            background: hsl(146 55% 36%);
-            border-color: hsl(146 55% 36%);
-            color: white;
-        }
-
-        .modal-nav-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .testimonial-box {
-            background: hsl(220 14% 98%);
-            border-left: 4px solid hsl(146 55% 36%);
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            margin-top: 2rem;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 3rem;
-        }
-
-        .pagination-btn {
-            padding: 0.5rem 1rem;
-            background: white;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .pagination-btn:hover:not(:disabled) {
-            background: hsl(146 55% 36%);
-            border-color: hsl(146 55% 36%);
-            color: white;
-        }
-
-        .pagination-btn.active {
-            background: hsl(146 55% 36%);
-            border-color: hsl(146 55% 36%);
-            color: white;
-        }
-
-        .pagination-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .loading-state {
-            text-align: center;
-            padding: 4rem 2rem;
-        }
-
-        .loading-spinner {
-            width: 3rem;
-            height: 3rem;
-            border: 3px solid hsl(220 13% 91%);
-            border-top-color: hsl(146 55% 36%);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
             color: hsl(220 9% 46%);
+        }
+
+        /* Contractor Section */
+        .contractor-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 3rem 0;
+            position: relative;
+        }
+
+        .contractor-divider::before,
+        .contractor-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: hsl(220 13% 91%);
+        }
+
+        .contractor-avatar-large {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 0 1.5rem;
+        }
+
+        .contractor-info-box {
+            background: hsl(220 14% 98%);
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .contractor-name-large {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: hsl(220 20% 10%);
+        }
+
+        .contractor-bio {
+            font-size: 1rem;
+            color: hsl(220 9% 46%);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        /* Related Projects */
+        .related-projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .related-project-card {
+            cursor: pointer;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .related-project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .related-project-image {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            background: hsl(220 14% 96%);
+        }
+
+        .related-project-title {
+            padding: 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-top: none;
+        }
+
+        /* Side Column - Collapsible */
+        .modal-side-column {
+            background: hsl(220 14% 98%);
+            border-left: 1px solid hsl(220 13% 91%);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .modal-side-column.expanded {
+            width: 400px;
+        }
+
+        @media (max-width: 968px) {
+            .modal-side-column {
+                display: none;
+            }
+        }
+
+        .side-column-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem 0;
+            align-items: center;
+        }
+
+        .side-icon-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .side-icon-btn:hover {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .side-icon-btn.active {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        /* Side Panel Content */
+        .side-panel-content {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .side-panel-content.active {
+            display: flex;
+        }
+
+        .side-panel-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid hsl(220 13% 91%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+        }
+
+        .side-panel-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .side-panel-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: white;
+        }
+
+        /* Comments/Feedback Section */
+        .comment-item {
+            padding: 1rem;
+            background: hsl(220 14% 98%);
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .comment-text {
+            font-size: 0.875rem;
+            color: hsl(220 9% 46%);
+            line-height: 1.5;
+        }
+
+        .comment-form {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid hsl(220 13% 91%);
+        }
+
+        .comment-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            resize: vertical;
+            min-height: 80px;
+            font-family: inherit;
+        }
+
+        .comment-textarea:focus {
+            outline: none;
+            border-color: hsl(146 55% 36%);
+        }
+
+        .comment-submit-btn {
+            margin-top: 0.75rem;
+            padding: 0.625rem 1.25rem;
+            background: hsl(146 55% 36%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .comment-submit-btn:hover {
+            background: hsl(146 55% 32%);
+        }
+
+        /* Share Section */
+        .share-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .share-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1rem;
+            background: hsl(220 14% 98%);
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .share-btn:hover {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .share-link-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            background: white;
+        }
+
+        /* Analytics Section */
+        .analytics-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .analytics-item {
+            background: hsl(220 14% 98%);
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .analytics-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: hsl(146 55% 36%);
+            margin-bottom: 0.5rem;
+        }
+
+        .analytics-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: hsl(220 9% 46%);
+        }
+
+        /* Enquiry Modal */
+        .enquiry-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 110;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .enquiry-modal-overlay.active {
+            display: flex;
+        }
+
+        .enquiry-modal-content {
+            background: white;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 100%;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .enquiry-modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .enquiry-form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .enquiry-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .enquiry-input,
+        .enquiry-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-size: 0.9375rem;
+            font-family: inherit;
+        }
+
+        .enquiry-input:focus,
+        .enquiry-textarea:focus {
+            outline: none;
+            border-color: hsl(146 55% 36%);
+        }
+
+        .enquiry-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .enquiry-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .enquiry-cancel-btn {
+            flex: 1;
+            padding: 0.75rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .enquiry-submit-btn {
+            flex: 1;
+            padding: 0.75rem;
+            background: hsl(146 55% 36%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .enquiry-submit-btn:hover {
+            background: hsl(146 55% 32%);
         }
 
         .mobile-overlay {
@@ -779,6 +1242,74 @@
         .outcome-metric-label {
             font-size: 0.875rem;
             font-weight: 600;
+            color: hsl(220 9% 46%);
+        }
+
+        .testimonial-box {
+            background: hsl(220 14% 98%);
+            border-left: 4px solid hsl(146 55% 36%);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        .pagination-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .pagination-btn.active {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .loading-spinner {
+            width: 3rem;
+            height: 3rem;
+            border: 3px solid hsl(220 13% 91%);
+            border-top-color: hsl(146 55% 36%);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
             color: hsl(220 9% 46%);
         }
     </style>
@@ -993,26 +1524,109 @@
     </div>
 </footer>
 
-<!-- Project Modal -->
+<!-- Enhanced Project Modal - Dribbble Style -->
 <div id="project-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
   <div class="modal-content">
-    <div class="modal-header">
-      <h2 id="modal-title" style="font-size: 1.5rem; font-weight: 700; margin: 0;"></h2>
-      <button class="modal-close" onclick="closeModal()" aria-label="Close">
-        <i data-lucide="x" style="width: 1.25rem; height: 1.25rem;"></i>
-      </button>
+    <!-- Main Content Column -->
+    <div class="modal-main-column">
+      <!-- Fixed Header -->
+      <div class="modal-header-fixed">
+        <div class="modal-header-left">
+          <img id="modal-contractor-avatar" src="" alt="" class="modal-contractor-avatar" />
+          <h2 id="modal-title" class="modal-title-text"></h2>
+        </div>
+        <div class="modal-header-actions">
+          <button id="modal-prev-btn" class="modal-nav-icon-btn" onclick="event.stopPropagation(); navigateProject(-1)" aria-label="Previous project">
+            <i data-lucide="chevron-left" style="width: 1.25rem; height: 1.25rem;"></i>
+          </button>
+          <button id="modal-next-btn" class="modal-nav-icon-btn" onclick="event.stopPropagation(); navigateProject(1)" aria-label="Next project">
+            <i data-lucide="chevron-right" style="width: 1.25rem; height: 1.25rem;"></i>
+          </button>
+          <button class="modal-enquiry-btn" onclick="event.stopPropagation(); openEnquiryModal()">
+            Send Enquiry
+          </button>
+          <button class="modal-nav-icon-btn" onclick="event.stopPropagation(); closeModal()" aria-label="Close">
+            <i data-lucide="x" style="width: 1.25rem; height: 1.25rem;"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body-content" id="modal-body"></div>
     </div>
-    <div class="modal-body" id="modal-body"></div>
-    <div class="modal-navigation">
-      <button id="prev-project-btn" class="modal-nav-btn" onclick="navigateProject(-1)">
-        <i data-lucide="chevron-left" style="width: 1.25rem; height: 1.25rem;"></i>
-        Previous
-      </button>
-      <button id="next-project-btn" class="modal-nav-btn" onclick="navigateProject(1)">
-        Next
-        <i data-lucide="chevron-right" style="width: 1.25rem; height: 1.25rem;"></i>
-      </button>
+
+    <!-- Side Column -->
+    <div id="modal-side-column" class="modal-side-column">
+      <div class="side-column-icons">
+        <button class="side-icon-btn" onclick="event.stopPropagation(); toggleSidePanel('feedback')" data-panel="feedback" title="Feedback">
+          <i data-lucide="message-circle" style="width: 1.125rem; height: 1.125rem;"></i>
+        </button>
+        <button class="side-icon-btn" onclick="event.stopPropagation(); toggleSidePanel('share')" data-panel="share" title="Share">
+          <i data-lucide="share-2" style="width: 1.125rem; height: 1.125rem;"></i>
+        </button>
+        <button class="side-icon-btn" onclick="event.stopPropagation(); toggleSidePanel('analytics')" data-panel="analytics" title="Analytics">
+          <i data-lucide="bar-chart-2" style="width: 1.125rem; height: 1.125rem;"></i>
+        </button>
+      </div>
+
+      <!-- Feedback Panel -->
+      <div id="feedback-panel" class="side-panel-content">
+        <div class="side-panel-header">
+          <h3 class="side-panel-title">Feedback</h3>
+          <button class="side-icon-btn" onclick="event.stopPropagation(); closeSidePanel()" style="width: 2rem; height: 2rem;">
+            <i data-lucide="x" style="width: 1rem; height: 1rem;"></i>
+          </button>
+        </div>
+        <div class="side-panel-body" id="feedback-content"></div>
+      </div>
+
+      <!-- Share Panel -->
+      <div id="share-panel" class="side-panel-content">
+        <div class="side-panel-header">
+          <h3 class="side-panel-title">Share</h3>
+          <button class="side-icon-btn" onclick="event.stopPropagation(); closeSidePanel()" style="width: 2rem; height: 2rem;">
+            <i data-lucide="x" style="width: 1rem; height: 1rem;"></i>
+          </button>
+        </div>
+        <div class="side-panel-body" id="share-content"></div>
+      </div>
+
+      <!-- Analytics Panel -->
+      <div id="analytics-panel" class="side-panel-content">
+        <div class="side-panel-header">
+          <h3 class="side-panel-title">Analytics</h3>
+          <button class="side-icon-btn" onclick="event.stopPropagation(); closeSidePanel()" style="width: 2rem; height: 2rem;">
+            <i data-lucide="x" style="width: 1rem; height: 1rem;"></i>
+          </button>
+        </div>
+        <div class="side-panel-body" id="analytics-content"></div>
+      </div>
     </div>
+  </div>
+</div>
+
+<!-- Enquiry Modal -->
+<div id="enquiry-modal" class="enquiry-modal-overlay" onclick="closeEnquiryModalOnOverlay(event)">
+  <div class="enquiry-modal-content">
+    <h3 class="enquiry-modal-title">Send Enquiry</h3>
+    <form id="enquiry-form" onsubmit="submitEnquiry(event)">
+      <div class="enquiry-form-group">
+        <label class="enquiry-label" for="enquiry-name">Your Name *</label>
+        <input type="text" id="enquiry-name" class="enquiry-input" required />
+      </div>
+      <div class="enquiry-form-group">
+        <label class="enquiry-label" for="enquiry-email">Your Email *</label>
+        <input type="email" id="enquiry-email" class="enquiry-input" required />
+      </div>
+      <div class="enquiry-form-group">
+        <label class="enquiry-label" for="enquiry-message">Message *</label>
+        <textarea id="enquiry-message" class="enquiry-textarea" required></textarea>
+      </div>
+      <div class="enquiry-actions">
+        <button type="button" class="enquiry-cancel-btn" onclick="closeEnquiryModal()">Cancel</button>
+        <button type="submit" class="enquiry-submit-btn">Send Enquiry</button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -1027,6 +1641,12 @@ function formatCount(count) {
   return count.toString();
 }
 
+function getYouTubeEmbedUrl(url) {
+  if (!url) return null;
+  const videoIdMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+  return videoIdMatch ? `https://www.youtube.com/embed/${videoIdMatch[1]}` : null;
+}
+
 // ===================================================================
 // STATE MANAGEMENT
 // ===================================================================
@@ -1037,6 +1657,8 @@ const projectsPerPage = 9;
 let currentSlide = 0;
 let sliderInterval = null;
 let currentModalIndex = -1;
+let currentProject = null;
+let activeSidePanel = null;
 
 // Local storage for engagement tracking
 const STORAGE_KEY = 'packdez_project_engagement';
@@ -1369,7 +1991,7 @@ function renderProjects() {
           <span class="creator-name">${creatorName}</span>
         </div>
         <div class="card-stats">
-          <button class="like-btn" onclick="event.stopPropagation(); handleLike('${project.project_id}'))" id="like-btn-${project.project_id}">
+          <button class="like-btn" onclick="event.stopPropagation(); handleLike('${project.project_id}')}" id="like-btn-${project.project_id}">
             <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
             <span id="likes-${project.project_id}">${formatCount(engagement.likes)}</span>
           </button>
@@ -1460,11 +2082,13 @@ function changePage(page) {
 }
 
 // ===================================================================
-// MODAL
+// MODAL - ENHANCED DRIBBBLE STYLE
 // ===================================================================
 function openModal(projectId) {
   const project = allProjects.find(p => p.project_id === projectId);
   if (!project) return;
+
+  currentProject = project;
 
   // Increment view count
   const newViews = incrementViews(projectId);
@@ -1480,54 +2104,129 @@ function openModal(projectId) {
   const modal = document.getElementById('project-modal');
   const modalTitle = document.getElementById('modal-title');
   const modalBody = document.getElementById('modal-body');
+  const contractorAvatar = document.getElementById('modal-contractor-avatar');
 
+  // Set header
+  const profileImage = project.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png';
+  contractorAvatar.src = profileImage;
+  contractorAvatar.alt = project.contractor_name || 'Packdez Team';
   modalTitle.textContent = project.project_title;
 
+  // Build modal content
   let content = '';
 
-  if (project.detail_image_url) {
+  // Featured Media Section
+  content += '<div class="featured-media-section">';
+  
+  const videoUrl = project.media?.video;
+  const embedUrl = getYouTubeEmbedUrl(videoUrl);
+  
+  if (embedUrl) {
     content += `
-      <img 
-        src="${project.detail_image_url}" 
-        alt="${project.image_alt_text || project.project_title}"
-        class="modal-image"
-      />
+      <div class="featured-media-container" id="featured-media">
+        <iframe src="${embedUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    `;
+  } else {
+    content += `
+      <div class="featured-media-container" id="featured-media">
+        <img src="${project.thumbnail_image_url}" alt="${project.image_alt_text || project.project_title}" />
+      </div>
     `;
   }
 
+  // Media Thumbnails
+  const mediaItems = [];
+  if (project.thumbnail_image_url) {
+    mediaItems.push({ type: 'image', url: project.thumbnail_image_url });
+  }
+  if (project.media?.images && Array.isArray(project.media.images)) {
+    project.media.images.forEach(img => {
+      if (img) mediaItems.push({ type: 'image', url: img });
+    });
+  }
+  if (videoUrl) {
+    mediaItems.push({ type: 'video', url: videoUrl });
+  }
+
+  if (mediaItems.length > 1) {
+    content += '<div class="media-thumbnails">';
+    mediaItems.forEach((media, index) => {
+      const thumbUrl = media.type === 'image' ? media.url : project.thumbnail_image_url;
+      content += `
+        <div class="media-thumbnail ${index === 0 ? 'active' : ''}" onclick="switchFeaturedMedia('${media.type}', '${media.url}', this)">
+          <img src="${thumbUrl}" alt="Media ${index + 1}" />
+        </div>
+      `;
+    });
+    content += '</div>';
+  }
+  
+  content += '</div>';
+
+  // Project Details Grid
+  content += '<div class="project-details-grid">';
+  if (project.primary_category) {
+    content += `
+      <div class="detail-item">
+        <div class="detail-label">Category</div>
+        <div class="detail-value">${project.primary_category}</div>
+      </div>
+    `;
+  }
+  if (project.industry) {
+    content += `
+      <div class="detail-item">
+        <div class="detail-label">Industry</div>
+        <div class="detail-value">${project.industry}</div>
+      </div>
+    `;
+  }
+  if (project.team_size_range) {
+    content += `
+      <div class="detail-item">
+        <div class="detail-label">Team Size</div>
+        <div class="detail-value">${project.team_size_range}</div>
+      </div>
+    `;
+  }
   if (project.client_context) {
     content += `
-      <div class="modal-section">
-        <h3>Context</h3>
-        <p>${project.client_context}</p>
+      <div class="detail-item">
+        <div class="detail-label">Client</div>
+        <div class="detail-value">${project.client_context}</div>
       </div>
     `;
   }
+  content += '</div>';
 
+  // Problem Section
   if (project.problem_details || project.problem_summary) {
     content += `
-      <div class="modal-section">
-        <h3>Problem</h3>
-        <p>${project.problem_details || project.problem_summary}</p>
+      <div class="content-section">
+        <h3 class="section-title">The Problem</h3>
+        <p class="section-content">${project.problem_details || project.problem_summary}</p>
       </div>
     `;
   }
 
+  // Solution Section
   if (project.system_overview) {
     content += `
-      <div class="modal-section">
-        <h3>System overview</h3>
-        <p>${project.system_overview}</p>
+      <div class="content-section">
+        <h3 class="section-title">The Solution</h3>
+        <p class="section-content">${project.system_overview}</p>
       </div>
     `;
   }
 
+  // Tools Section
   if (project.tools_used) {
     const tools = project.tools_used.split(',').map(t => t.trim()).filter(Boolean);
     if (tools.length > 0) {
       content += `
-        <div class="modal-section">
-          <h3>Tools & integrations</h3>
+        <div class="content-section">
+          <h3 class="section-title">Tools & Integrations</h3>
           <div class="tool-tags">
             ${tools.map(tool => `<span class="tool-tag">${tool}</span>`).join('')}
           </div>
@@ -1536,19 +2235,11 @@ function openModal(projectId) {
     }
   }
 
-  if (project.automation_features) {
-    content += `
-      <div class="modal-section">
-        <h3>Automation features</h3>
-        <p>${project.automation_features}</p>
-      </div>
-    `;
-  }
-
+  // Outcomes Section
   if (project.primary_outcome || project.secondary_outcome) {
     content += `
-      <div class="modal-section">
-        <h3>Outcomes</h3>
+      <div class="content-section">
+        <h3 class="section-title">Results</h3>
         <div class="outcome-metrics">
     `;
     
@@ -1570,24 +2261,64 @@ function openModal(projectId) {
       `;
     }
     
-    content += `
-        </div>
-      </div>
-    `;
+    content += '</div></div>';
   }
 
+  // Testimonial
   if (project.testimonial_quote) {
     content += `
       <div class="testimonial-box">
-        <p style="font-style: italic; line-height: 1.7; margin-bottom: 1rem; color: hsl(220 20% 20%);">
+        <p style="font-style: italic; line-height: 1.7; margin-bottom: 1rem; color: hsl(220 20% 20%); font-size: 1.125rem;">
           "${project.testimonial_quote}"
         </p>
         ${project.testimonial_author ? `
-          <p style="font-weight: 700; font-size: 0.875rem;">
+          <p style="font-weight: 700; font-size: 0.9375rem;">
             — ${project.testimonial_author}
             ${project.testimonial_source ? `<span style="font-weight: 400; color: hsl(220 9% 46%);">, ${project.testimonial_source}</span>` : ''}
           </p>
         ` : ''}
+      </div>
+    `;
+  }
+
+  // Contractor Divider
+  content += `
+    <div class="contractor-divider">
+      <img src="${profileImage}" alt="${project.contractor_name || 'Packdez Team'}" class="contractor-avatar-large" />
+    </div>
+  `;
+
+  // Contractor Info
+  const contractor = project.contractor || {};
+  content += `
+    <div class="contractor-info-box">
+      <h3 class="contractor-name-large">${contractor.name || project.contractor_name || 'Packdez Team'}</h3>
+      <p class="contractor-bio">${contractor.bio || 'Specialist in automation and workflow optimization'}</p>
+      <button class="btn btn-primary" onclick="event.stopPropagation(); openEnquiryModal()">
+        Send Enquiry
+      </button>
+    </div>
+  `;
+
+  // Related Projects by Same Contractor
+  const relatedProjects = allProjects.filter(p => 
+    p.contractor_id === project.contractor_id && 
+    p.project_id !== project.project_id &&
+    p.status === 'published'
+  ).slice(0, 4);
+
+  if (relatedProjects.length > 0) {
+    content += `
+      <div class="content-section">
+        <h3 class="section-title">More Projects by ${contractor.name || project.contractor_name || 'This Contractor'}</h3>
+        <div class="related-projects-grid">
+          ${relatedProjects.map(rp => `
+            <div class="related-project-card" onclick="event.stopPropagation(); openModal('${rp.project_id}')">
+              <img src="${rp.thumbnail_image_url}" alt="${rp.project_title}" class="related-project-image" />
+              <div class="related-project-title">${rp.project_title}</div>
+            </div>
+          `).join('')}
+        </div>
       </div>
     `;
   }
@@ -1597,7 +2328,28 @@ function openModal(projectId) {
 
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
+  
+  // Reset side panel
+  closeSidePanel();
+  
   lucide.createIcons();
+}
+
+function switchFeaturedMedia(type, url, element) {
+  const featuredContainer = document.getElementById('featured-media');
+  
+  if (type === 'video') {
+    const embedUrl = getYouTubeEmbedUrl(url);
+    if (embedUrl) {
+      featuredContainer.innerHTML = `<iframe src="${embedUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    }
+  } else {
+    featuredContainer.innerHTML = `<img src="${url}" alt="Project media" />`;
+  }
+
+  // Update active thumbnail
+  document.querySelectorAll('.media-thumbnail').forEach(thumb => thumb.classList.remove('active'));
+  element.classList.add('active');
 }
 
 function closeModal() {
@@ -1605,6 +2357,8 @@ function closeModal() {
   modal.classList.remove('active');
   document.body.style.overflow = '';
   currentModalIndex = -1;
+  currentProject = null;
+  closeSidePanel();
 }
 
 function closeModalOnOverlay(event) {
@@ -1614,8 +2368,8 @@ function closeModalOnOverlay(event) {
 }
 
 function updateModalNavigation() {
-  const prevBtn = document.getElementById('prev-project-btn');
-  const nextBtn = document.getElementById('next-project-btn');
+  const prevBtn = document.getElementById('modal-prev-btn');
+  const nextBtn = document.getElementById('modal-next-btn');
 
   prevBtn.disabled = currentModalIndex <= 0;
   nextBtn.disabled = currentModalIndex >= filteredProjects.length - 1;
@@ -1629,11 +2383,212 @@ function navigateProject(direction) {
   openModal(project.project_id);
 }
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closeModal();
+// ===================================================================
+// SIDE PANEL FUNCTIONS
+// ===================================================================
+function toggleSidePanel(panelName) {
+  const sideColumn = document.getElementById('modal-side-column');
+  const panels = ['feedback', 'share', 'analytics'];
+  
+  // Close if same panel is clicked
+  if (activeSidePanel === panelName) {
+    closeSidePanel();
+    return;
   }
-});
+
+  // Hide all panels
+  panels.forEach(p => {
+    document.getElementById(`${p}-panel`).classList.remove('active');
+    document.querySelector(`[data-panel="${p}"]`).classList.remove('active');
+  });
+
+  // Show selected panel
+  document.getElementById(`${panelName}-panel`).classList.add('active');
+  document.querySelector(`[data-panel="${panelName}"]`).classList.add('active');
+  sideColumn.classList.add('expanded');
+  activeSidePanel = panelName;
+
+  // Load panel content
+  if (panelName === 'feedback') {
+    loadFeedbackPanel();
+  } else if (panelName === 'share') {
+    loadSharePanel();
+  } else if (panelName === 'analytics') {
+    loadAnalyticsPanel();
+  }
+
+  lucide.createIcons();
+}
+
+function closeSidePanel() {
+  const sideColumn = document.getElementById('modal-side-column');
+  const panels = ['feedback', 'share', 'analytics'];
+  
+  panels.forEach(p => {
+    document.getElementById(`${p}-panel`).classList.remove('active');
+    document.querySelector(`[data-panel="${p}"]`).classList.remove('active');
+  });
+  
+  sideColumn.classList.remove('expanded');
+  activeSidePanel = null;
+}
+
+function loadFeedbackPanel() {
+  if (!currentProject) return;
+  
+  const feedbackContent = document.getElementById('feedback-content');
+  const comments = currentProject.comments || [];
+  
+  let html = '';
+  
+  if (comments.length === 0) {
+    html += '<p style="color: hsl(220 9% 46%); text-align: center; padding: 2rem 0;">No feedback yet. Be the first to comment!</p>';
+  } else {
+    comments.forEach(comment => {
+      html += `
+        <div class="comment-item">
+          <div class="comment-author">${comment.author || 'Anonymous'}</div>
+          <div class="comment-text">${comment.text}</div>
+        </div>
+      `;
+    });
+  }
+  
+  html += `
+    <div class="comment-form">
+      <textarea class="comment-textarea" placeholder="Leave your feedback..." id="feedback-textarea"></textarea>
+      <button class="comment-submit-btn" onclick="submitFeedback()">Post Feedback</button>
+    </div>
+  `;
+  
+  feedbackContent.innerHTML = html;
+}
+
+function submitFeedback() {
+  const textarea = document.getElementById('feedback-textarea');
+  const text = textarea.value.trim();
+  
+  if (!text) return;
+  
+  // Here you would send to your backend
+  alert('Feedback submitted! (This would be saved to your sheet)');
+  textarea.value = '';
+  loadFeedbackPanel();
+}
+
+function loadSharePanel() {
+  if (!currentProject) return;
+  
+  const shareContent = document.getElementById('share-content');
+  const projectUrl = `${window.location.origin}${window.location.pathname}?project=${currentProject.project_id}`;
+  
+  const html = `
+    <div class="share-options">
+      <button class="share-btn" onclick="shareToLinkedIn()">
+        <i data-lucide="linkedin" style="width: 1.125rem; height: 1.125rem;"></i>
+        Share on LinkedIn
+      </button>
+      <button class="share-btn" onclick="shareToTwitter()">
+        <i data-lucide="twitter" style="width: 1.125rem; height: 1.125rem;"></i>
+        Share on X (Twitter)
+      </button>
+      <div style="margin-top: 1rem;">
+        <label style="display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Project Link</label>
+        <input type="text" class="share-link-input" value="${projectUrl}" readonly onclick="this.select()" />
+        <button class="comment-submit-btn" onclick="copyProjectLink()" style="margin-top: 0.5rem;">
+          Copy Link
+        </button>
+      </div>
+    </div>
+  `;
+  
+  shareContent.innerHTML = html;
+  lucide.createIcons();
+}
+
+function shareToLinkedIn() {
+  if (!currentProject) return;
+  const url = encodeURIComponent(`${window.location.origin}${window.location.pathname}?project=${currentProject.project_id}`);
+  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+}
+
+function shareToTwitter() {
+  if (!currentProject) return;
+  const url = encodeURIComponent(`${window.location.origin}${window.location.pathname}?project=${currentProject.project_id}`);
+  const text = encodeURIComponent(`Check out this project: ${currentProject.project_title}`);
+  window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+}
+
+function copyProjectLink() {
+  if (!currentProject) return;
+  const url = `${window.location.origin}${window.location.pathname}?project=${currentProject.project_id}`;
+  navigator.clipboard.writeText(url).then(() => {
+    alert('Link copied to clipboard!');
+  });
+}
+
+function loadAnalyticsPanel() {
+  if (!currentProject) return;
+  
+  const analyticsContent = document.getElementById('analytics-content');
+  const engagement = getProjectEngagement(currentProject.project_id);
+  const analytics = currentProject.analytics || {};
+  
+  const totalViews = (analytics.total_views || 0) + engagement.views;
+  const totalLikes = (analytics.total_likes || 0) + engagement.likes;
+  const totalComments = (currentProject.comments || []).length;
+  
+  const html = `
+    <div class="analytics-grid">
+      <div class="analytics-item">
+        <div class="analytics-value">${formatCount(totalViews)}</div>
+        <div class="analytics-label">Total Views</div>
+      </div>
+      <div class="analytics-item">
+        <div class="analytics-value">${formatCount(totalLikes)}</div>
+        <div class="analytics-label">Total Likes</div>
+      </div>
+      <div class="analytics-item">
+        <div class="analytics-value">${totalComments}</div>
+        <div class="analytics-label">Comments</div>
+      </div>
+    </div>
+  `;
+  
+  analyticsContent.innerHTML = html;
+}
+
+// ===================================================================
+// ENQUIRY MODAL
+// ===================================================================
+function openEnquiryModal() {
+  document.getElementById('enquiry-modal').classList.add('active');
+}
+
+function closeEnquiryModal() {
+  document.getElementById('enquiry-modal').classList.remove('active');
+  document.getElementById('enquiry-form').reset();
+}
+
+function closeEnquiryModalOnOverlay(event) {
+  if (event.target.id === 'enquiry-modal') {
+    closeEnquiryModal();
+  }
+}
+
+function submitEnquiry(event) {
+  event.preventDefault();
+  
+  const name = document.getElementById('enquiry-name').value;
+  const email = document.getElementById('enquiry-email').value;
+  const message = document.getElementById('enquiry-message').value;
+  
+  // Here you would send to your backend/Google Sheets
+  console.log('Enquiry submitted:', { name, email, message, project: currentProject?.project_id });
+  
+  alert('Thank you for your enquiry! We will get back to you soon.');
+  closeEnquiryModal();
+}
 
 // ===================================================================
 // MOBILE MENU
@@ -1664,10 +2619,48 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
 // ===================================================================
-// INITIALIZATION - SCROLL TO TOP ON LOAD
+// KEYBOARD SHORTCUTS
+// ===================================================================
+document.addEventListener('keydown', (e) => {
+  const modalOpen = document.getElementById('project-modal').classList.contains('active');
+  const enquiryModalOpen = document.getElementById('enquiry-modal').classList.contains('active');
+  
+  if (e.key === 'Escape') {
+    if (enquiryModalOpen) {
+      closeEnquiryModal();
+    } else if (activeSidePanel) {
+      closeSidePanel();
+    } else if (modalOpen) {
+      closeModal();
+    }
+  }
+  
+  if (modalOpen && !enquiryModalOpen && !activeSidePanel) {
+    if (e.key === 'ArrowLeft') {
+      navigateProject(-1);
+    } else if (e.key === 'ArrowRight') {
+      navigateProject(1);
+    }
+  }
+});
+
+// ===================================================================
+// URL PARAMETERS - Open project from URL
+// ===================================================================
+function checkUrlParams() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const projectId = urlParams.get('project');
+  if (projectId) {
+    setTimeout(() => openModal(projectId), 500);
+  }
+}
+
+// ===================================================================
+// INITIALIZATION
 // ===================================================================
 window.addEventListener('load', () => {
   window.scrollTo(0, 0);
+  checkUrlParams();
 });
 
 document.getElementById('year').textContent = new Date().getFullYear();
