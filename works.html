@@ -108,6 +108,45 @@
             align-items: center;
         }
 
+        .slider-creator-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .slider-creator-avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid hsl(220 13% 91%);
+        }
+
+        .slider-creator-details {
+            flex: 1;
+        }
+
+        .slider-creator-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: hsl(220 20% 10%);
+        }
+
+        .slider-engagement-stats {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: hsl(220 9% 46%);
+        }
+
+        .slider-engagement-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
         @media (max-width: 968px) {
             .slider-slide {
                 grid-template-columns: 1fr;
@@ -403,6 +442,50 @@
 
         .like-btn.animating svg {
             animation: heartBeat 0.4s ease;
+        }
+
+        /* Scroll to Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: hsl(146 55% 36%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(46, 140, 78, 0.3);
+            z-index: 40;
+            opacity: 0;
+            transform: translateY(100px);
+            pointer-events: none;
+            border: none;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .scroll-to-top:hover {
+            background: hsl(146 55% 32%);
+            box-shadow: 0 6px 16px rgba(46, 140, 78, 0.4);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .scroll-to-top {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                width: 2.5rem;
+                height: 2.5rem;
+            }
         }
 
         /* Modal */
@@ -750,6 +833,11 @@
   </div>
 </nav>
 
+<!-- Scroll to Top Button -->
+<button id="scroll-to-top" class="scroll-to-top" onclick="scrollToTop()" aria-label="Scroll to top">
+  <i data-lucide="chevron-up" style="width: 1.25rem; height: 1.25rem;"></i>
+</button>
+
 <!-- Hero Section with Featured Slider -->
 <section class="section-padding" style="padding-top: 8rem; padding-bottom: 4rem;">
   <div class="max-w-6xl mx-auto px-4">
@@ -785,7 +873,7 @@
 </section>
 
 <!-- Filters Section -->
-<section style="background: hsl(220 14% 98%); padding: 3rem 0;">
+<section id="filters-section" style="background: hsl(220 14% 98%); padding: 3rem 0;">
   <div class="max-w-6xl mx-auto px-4">
     <div class="filters-section fade-up">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; align-items: end;">
@@ -930,6 +1018,16 @@
 
 <script>
 // ===================================================================
+// UTILITY FUNCTIONS
+// ===================================================================
+function formatCount(count) {
+  if (count >= 1000) {
+    return (count / 1000).toFixed(1) + 'k';
+  }
+  return count.toString();
+}
+
+// ===================================================================
 // STATE MANAGEMENT
 // ===================================================================
 let allProjects = [];
@@ -976,6 +1074,24 @@ function toggleLike(projectId) {
   saveEngagement(engagement);
   return engagement[projectId].likes;
 }
+
+// ===================================================================
+// SCROLL TO TOP FUNCTIONALITY
+// ===================================================================
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleScrollToTopButton() {
+  const button = document.getElementById('scroll-to-top');
+  if (window.pageYOffset > 400) {
+    button.classList.add('visible');
+  } else {
+    button.classList.remove('visible');
+  }
+}
+
+window.addEventListener('scroll', toggleScrollToTopButton);
 
 // ===================================================================
 // API DATA FETCHING
@@ -1028,17 +1144,41 @@ function renderFeaturedSlider() {
   const sliderTrack = document.getElementById('slider-track');
   const sliderDots = document.getElementById('slider-dots');
   
-  sliderTrack.innerHTML = featuredProjects.map(project => `
+  sliderTrack.innerHTML = featuredProjects.map(project => {
+    const engagement = getProjectEngagement(project.project_id);
+    const profileImage = project.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png';
+    const creatorName = project.contractor_name || 'Packdez Team';
+    
+    return `
     <div class="slider-slide">
       <div>
-        <span class="project-tag">${project.primary_category || 'Automation'}</span>
+        <span style="display: inline-block; padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 600; border-radius: 9999px; background: hsl(146 55% 36% / 0.1); color: hsl(146 55% 36%); margin-bottom: 1rem;">${project.primary_category || 'Automation'}</span>
         <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2;">
           ${project.project_title}
         </h2>
         <p style="font-size: 1.125rem; color: hsl(220 9% 46%); margin-bottom: 1.5rem; line-height: 1.7;">
           ${project.short_highlight || project.problem_summary || ''}
         </p>
-        ${project.industry ? `<p style="font-size: 0.9375rem; color: hsl(220 9% 46%);"><strong>Industry:</strong> ${project.industry}</p>` : ''}
+        
+        <!-- Creator info and engagement -->
+        <div class="slider-creator-info">
+          <img src="${profileImage}" alt="${creatorName}" class="slider-creator-avatar" />
+          <div class="slider-creator-details">
+            <div class="slider-creator-name">${creatorName}</div>
+            <div class="slider-engagement-stats">
+              <div class="slider-engagement-stat">
+                <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
+                <span>${formatCount(engagement.likes)}</span>
+              </div>
+              <div class="slider-engagement-stat">
+                <i data-lucide="eye" style="width: 0.875rem; height: 0.875rem;"></i>
+                <span>${formatCount(engagement.views)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        ${project.industry ? `<p style="font-size: 0.9375rem; color: hsl(220 9% 46%); margin-top: 1rem;"><strong>Industry:</strong> ${project.industry}</p>` : ''}
         <button onclick="openModal('${project.project_id}')" class="btn btn-primary" style="margin-top: 1.5rem;">
           View system details
         </button>
@@ -1052,7 +1192,7 @@ function renderFeaturedSlider() {
         />
       </div>
     </div>
-  `).join('');
+  `}).join('');
 
   sliderDots.innerHTML = featuredProjects.map((_, index) => `
     <div class="slider-dot ${index === 0 ? 'active' : ''}" onclick="goToSlide(${index})"></div>
@@ -1186,8 +1326,8 @@ function renderProjects() {
 
   grid.innerHTML = projectsToShow.map(project => {
     const engagement = getProjectEngagement(project.project_id);
-    const profileImage = project.profile_image || '${project.profile_image}';
-    const creatorName = project.contractor_name || '${project.contractor_name}';
+    const profileImage = project.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png';
+    const creatorName = project.contractor_name || 'Packdez Team';
     
     return `
     <div class="project-card" onclick="openModal('${project.project_id}')">
@@ -1211,11 +1351,11 @@ function renderProjects() {
             <div class="overlay-stats">
               <div class="overlay-stat">
                 <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
-                <span id="likes-overlay-${project.project_id}">${engagement.likes}</span>
+                <span id="likes-overlay-${project.project_id}">${formatCount(engagement.likes)}</span>
               </div>
               <div class="overlay-stat">
                 <i data-lucide="eye" style="width: 0.875rem; height: 0.875rem;"></i>
-                <span id="views-overlay-${project.project_id}">${engagement.views}</span>
+                <span id="views-overlay-${project.project_id}">${formatCount(engagement.views)}</span>
               </div>
             </div>
           </div>
@@ -1229,13 +1369,13 @@ function renderProjects() {
           <span class="creator-name">${creatorName}</span>
         </div>
         <div class="card-stats">
-          <button class="like-btn" onclick="event.stopPropagation(); handleLike('${project.project_id}')" id="like-btn-${project.project_id}">
+          <button class="like-btn" onclick="event.stopPropagation(); handleLike('${project.project_id}'))" id="like-btn-${project.project_id}">
             <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
-            <span id="likes-${project.project_id}">${engagement.likes}</span>
+            <span id="likes-${project.project_id}">${formatCount(engagement.likes)}</span>
           </button>
           <div class="card-stat">
             <i data-lucide="eye"></i>
-            <span id="views-${project.project_id}">${engagement.views}</span>
+            <span id="views-${project.project_id}">${formatCount(engagement.views)}</span>
           </div>
         </div>
       </div>
@@ -1244,8 +1384,6 @@ function renderProjects() {
 
   renderPagination();
   lucide.createIcons();
-  
-  document.getElementById('projects-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function handleLike(projectId) {
@@ -1256,8 +1394,8 @@ function handleLike(projectId) {
   const likesOverlay = document.getElementById(`likes-overlay-${projectId}`);
   const likeBtn = document.getElementById(`like-btn-${projectId}`);
   
-  if (likesElement) likesElement.textContent = newLikes;
-  if (likesOverlay) likesOverlay.textContent = newLikes;
+  if (likesElement) likesElement.textContent = formatCount(newLikes);
+  if (likesOverlay) likesOverlay.textContent = formatCount(newLikes);
   
   // Add animation
   if (likeBtn) {
@@ -1311,6 +1449,14 @@ function changePage(page) {
   if (page < 1 || page > totalPages) return;
   currentPage = page;
   renderProjects();
+  
+  // Smooth scroll to filters section with offset for fixed nav
+  const filtersSection = document.getElementById('filters-section');
+  if (filtersSection) {
+    const yOffset = -80;
+    const y = filtersSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }
 }
 
 // ===================================================================
@@ -1326,8 +1472,8 @@ function openModal(projectId) {
   // Update view counts in grid
   const viewsElement = document.getElementById(`views-${projectId}`);
   const viewsOverlay = document.getElementById(`views-overlay-${projectId}`);
-  if (viewsElement) viewsElement.textContent = newViews;
-  if (viewsOverlay) viewsOverlay.textContent = newViews;
+  if (viewsElement) viewsElement.textContent = formatCount(newViews);
+  if (viewsOverlay) viewsOverlay.textContent = formatCount(newViews);
 
   currentModalIndex = filteredProjects.findIndex(p => p.project_id === projectId);
 
@@ -1518,7 +1664,7 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
 // ===================================================================
-// INITIALIZATION - SCROLL TO TOP
+// INITIALIZATION - SCROLL TO TOP ON LOAD
 // ===================================================================
 window.addEventListener('load', () => {
   window.scrollTo(0, 0);
