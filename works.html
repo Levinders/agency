@@ -512,8 +512,13 @@
             height: 100vh;
             position: relative;
             display: grid;
-            grid-template-columns: 1fr 35px;
+            grid-template-columns: 1fr 40px;
             overflow: hidden;
+            transition: grid-template-columns 0.3s ease;
+        }
+
+        .modal-content.side-expanded {
+            grid-template-columns: 1fr 380px;
         }
 
         @media (max-width: 968px) {
@@ -562,17 +567,62 @@
         }
 
         .modal-title-text {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             font-weight: 700;
             color: hsl(220 20% 10%);
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            flex: 1;
+        }
+
+        .modal-engagement-stats {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-left: 1rem;
+            flex-shrink: 0;
+        }
+
+        .modal-engagement-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.875rem;
+            color: hsl(220 9% 46%);
+        }
+
+        .modal-like-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.875rem;
+            color: hsl(220 9% 46%);
+            transition: all 0.2s;
+            padding: 0;
+        }
+
+        .modal-like-btn:hover {
+            color: hsl(310 77% 65%);
+        }
+
+        .modal-like-btn.liked {
+            color: hsl(310 77% 65%);
+        }
+
+        .modal-like-btn.liked svg {
+            fill: currentColor;
         }
 
         @media (max-width: 768px) {
             .modal-title-text {
                 font-size: 1rem;
+            }
+            .modal-engagement-stats {
+                display: none;
             }
         }
 
@@ -638,18 +688,39 @@
             }
         }
 
-        /* Featured Media Section */
+        /* Featured Media Section with Vertical Gallery */
         .featured-media-section {
             margin-bottom: 2.5rem;
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .featured-media-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .media-thumbnails-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .media-thumbnails-vertical {
+                flex-direction: row;
+                overflow-x: auto;
+            }
         }
 
         .featured-media-container {
             width: 100%;
-            aspect-ratio: 16 / 9;
+            aspect-ratio: 16 / 10;
             border-radius: 0.75rem;
             overflow: hidden;
             background: hsl(220 14% 96%);
-            margin-bottom: 1rem;
             position: relative;
         }
 
@@ -666,13 +737,6 @@
             border: none;
         }
 
-        /* Thumbnail Gallery */
-        .media-thumbnails {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 0.75rem;
-        }
-
         .media-thumbnail {
             aspect-ratio: 4 / 3;
             border-radius: 0.5rem;
@@ -681,6 +745,7 @@
             border: 2px solid transparent;
             transition: all 0.2s;
             background: hsl(220 14% 96%);
+            flex-shrink: 0;
         }
 
         .media-thumbnail:hover {
@@ -798,11 +863,43 @@
         }
 
         /* Related Projects */
+        .related-projects-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .view-all-link {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: hsl(146 55% 36%);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .view-all-link:hover {
+            color: hsl(146 55% 32%);
+            text-decoration: underline;
+        }
+
         .related-projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 1.5rem;
             margin-top: 1.5rem;
+        }
+
+        @media (max-width: 968px) {
+            .related-projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .related-projects-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .related-project-card {
@@ -810,6 +907,7 @@
             border-radius: 0.5rem;
             overflow: hidden;
             transition: all 0.2s;
+            position: relative;
         }
 
         .related-project-card:hover {
@@ -822,15 +920,44 @@
             aspect-ratio: 4 / 3;
             object-fit: cover;
             background: hsl(220 14% 96%);
+            border-radius: 0.5rem;
+        }
+
+        .related-project-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .related-project-card:hover .related-project-overlay {
+            opacity: 1;
         }
 
         .related-project-title {
-            padding: 0.75rem;
             font-size: 0.875rem;
             font-weight: 600;
-            background: white;
-            border: 1px solid hsl(220 13% 91%);
-            border-top: none;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .related-project-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: white;
+        }
+
+        .related-project-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
         }
 
         /* Side Column - Collapsible */
@@ -841,10 +968,7 @@
             flex-direction: column;
             transition: all 0.3s ease;
             position: relative;
-        }
-
-        .modal-side-column.expanded {
-            width: 400px;
+            overflow: hidden;
         }
 
         @media (max-width: 968px) {
@@ -857,7 +981,7 @@
             display: flex;
             flex-direction: column;
             gap: 1rem;
-            padding: 1rem 0;
+            padding: 2.5rem 0 1rem 0;
             align-items: center;
         }
 
@@ -885,6 +1009,20 @@
             background: hsl(146 55% 36%);
             border-color: hsl(146 55% 36%);
             color: white;
+        }
+
+        .side-icon-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: hsl(146 55% 36%);
+            color: white;
+            font-size: 0.625rem;
+            font-weight: 700;
+            padding: 0.125rem 0.375rem;
+            border-radius: 9999px;
+            min-width: 1.25rem;
+            text-align: center;
         }
 
         /* Side Panel Content */
@@ -979,7 +1117,63 @@
             background: hsl(146 55% 32%);
         }
 
-        /* Share Section */
+        /* Share & Analytics Modals - Centered */
+        .center-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 120;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .center-modal-overlay.active {
+            display: flex;
+        }
+
+        .center-modal-content {
+            background: white;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 100%;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .center-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .center-modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .center-modal-close {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background: hsl(220 14% 96%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .center-modal-close:hover {
+            background: hsl(220 13% 91%);
+        }
+
+        /* Share Options */
         .share-options {
             display: flex;
             flex-direction: column;
@@ -1526,7 +1720,7 @@
 
 <!-- Enhanced Project Modal - Dribbble Style -->
 <div id="project-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
-  <div class="modal-content">
+  <div id="modal-content-wrapper" class="modal-content">
     <!-- Main Content Column -->
     <div class="modal-main-column">
       <!-- Fixed Header -->
@@ -1534,6 +1728,16 @@
         <div class="modal-header-left">
           <img id="modal-contractor-avatar" src="" alt="" class="modal-contractor-avatar" />
           <h2 id="modal-title" class="modal-title-text"></h2>
+          <div class="modal-engagement-stats">
+            <button id="modal-like-btn" class="modal-like-btn" onclick="event.stopPropagation(); handleModalLike()">
+              <i data-lucide="heart" style="width: 1rem; height: 1rem;"></i>
+              <span id="modal-likes-count">0</span>
+            </button>
+            <div class="modal-engagement-stat">
+              <i data-lucide="eye" style="width: 1rem; height: 1rem;"></i>
+              <span id="modal-views-count">0</span>
+            </div>
+          </div>
         </div>
         <div class="modal-header-actions">
           <button id="modal-prev-btn" class="modal-nav-icon-btn" onclick="event.stopPropagation(); navigateProject(-1)" aria-label="Previous project">
@@ -1560,11 +1764,12 @@
       <div class="side-column-icons">
         <button class="side-icon-btn" onclick="event.stopPropagation(); toggleSidePanel('feedback')" data-panel="feedback" title="Feedback">
           <i data-lucide="message-circle" style="width: 1.125rem; height: 1.125rem;"></i>
+          <span id="feedback-badge" class="side-icon-badge" style="display: none;">0</span>
         </button>
-        <button class="side-icon-btn" onclick="event.stopPropagation(); toggleSidePanel('share')" data-panel="share" title="Share">
+        <button class="side-icon-btn" onclick="event.stopPropagation(); openShareModal()" data-panel="share" title="Share">
           <i data-lucide="share-2" style="width: 1.125rem; height: 1.125rem;"></i>
         </button>
-        <button class="side-icon-btn" onclick="event.stopPropagation(); toggleSidePanel('analytics')" data-panel="analytics" title="Analytics">
+        <button class="side-icon-btn" onclick="event.stopPropagation(); openAnalyticsModal()" data-panel="analytics" title="Analytics">
           <i data-lucide="bar-chart-2" style="width: 1.125rem; height: 1.125rem;"></i>
         </button>
       </div>
@@ -1579,29 +1784,33 @@
         </div>
         <div class="side-panel-body" id="feedback-content"></div>
       </div>
-
-      <!-- Share Panel -->
-      <div id="share-panel" class="side-panel-content">
-        <div class="side-panel-header">
-          <h3 class="side-panel-title">Share</h3>
-          <button class="side-icon-btn" onclick="event.stopPropagation(); closeSidePanel()" style="width: 2rem; height: 2rem;">
-            <i data-lucide="x" style="width: 1rem; height: 1rem;"></i>
-          </button>
-        </div>
-        <div class="side-panel-body" id="share-content"></div>
-      </div>
-
-      <!-- Analytics Panel -->
-      <div id="analytics-panel" class="side-panel-content">
-        <div class="side-panel-header">
-          <h3 class="side-panel-title">Analytics</h3>
-          <button class="side-icon-btn" onclick="event.stopPropagation(); closeSidePanel()" style="width: 2rem; height: 2rem;">
-            <i data-lucide="x" style="width: 1rem; height: 1rem;"></i>
-          </button>
-        </div>
-        <div class="side-panel-body" id="analytics-content"></div>
-      </div>
     </div>
+  </div>
+</div>
+
+<!-- Share Modal (Centered) -->
+<div id="share-modal" class="center-modal-overlay" onclick="closeShareModalOnOverlay(event)">
+  <div class="center-modal-content">
+    <div class="center-modal-header">
+      <h3 class="center-modal-title">Share Project</h3>
+      <button class="center-modal-close" onclick="closeShareModal()">
+        <i data-lucide="x" style="width: 1rem; height: 1rem;"></i>
+      </button>
+    </div>
+    <div id="share-content"></div>
+  </div>
+</div>
+
+<!-- Analytics Modal (Centered) -->
+<div id="analytics-modal" class="center-modal-overlay" onclick="closeAnalyticsModalOnOverlay(event)">
+  <div class="center-modal-content">
+    <div class="center-modal-header">
+      <h3 class="center-modal-title">Project Analytics</h3>
+      <button class="center-modal-close" onclick="closeAnalyticsModal()">
+        <i data-lucide="x" style="width: 1rem; height: 1rem;"></i>
+      </button>
+    </div>
+    <div id="analytics-content"></div>
   </div>
 </div>
 
@@ -2025,6 +2234,50 @@ function handleLike(projectId) {
     setTimeout(() => likeBtn.classList.remove('animating'), 400);
   }
   
+  // Update modal if open
+  if (currentProject && currentProject.project_id === projectId) {
+    updateModalEngagement();
+  }
+  
+  lucide.createIcons();
+}
+
+function handleModalLike() {
+  if (!currentProject) return;
+  
+  const newLikes = toggleLike(currentProject.project_id);
+  updateModalEngagement();
+  
+  // Update grid displays
+  const likesElement = document.getElementById(`likes-${currentProject.project_id}`);
+  const likesOverlay = document.getElementById(`likes-overlay-${currentProject.project_id}`);
+  
+  if (likesElement) likesElement.textContent = formatCount(newLikes);
+  if (likesOverlay) likesOverlay.textContent = formatCount(newLikes);
+  
+  lucide.createIcons();
+}
+
+function updateModalEngagement() {
+  if (!currentProject) return;
+  
+  const engagement = getProjectEngagement(currentProject.project_id);
+  const analytics = currentProject.analytics || {};
+  
+  const totalViews = (analytics.total_views || 0) + engagement.views;
+  const totalLikes = (analytics.total_likes || 0) + engagement.likes;
+  
+  const modalLikesCount = document.getElementById('modal-likes-count');
+  const modalViewsCount = document.getElementById('modal-views-count');
+  const modalLikeBtn = document.getElementById('modal-like-btn');
+  
+  if (modalLikesCount) modalLikesCount.textContent = formatCount(totalLikes);
+  if (modalViewsCount) modalViewsCount.textContent = formatCount(totalViews);
+  
+  if (modalLikeBtn && engagement.likes > 0) {
+    modalLikeBtn.classList.add('liked');
+  }
+  
   lucide.createIcons();
 }
 
@@ -2111,31 +2364,20 @@ function openModal(projectId) {
   contractorAvatar.src = profileImage;
   contractorAvatar.alt = project.contractor_name || 'Packdez Team';
   modalTitle.textContent = project.project_title;
+  
+  // Update engagement stats in header
+  updateModalEngagement();
 
   // Build modal content
   let content = '';
 
-  // Featured Media Section
+  // Featured Media Section with Vertical Gallery
   content += '<div class="featured-media-section">';
   
   const videoUrl = project.media?.video;
   const embedUrl = getYouTubeEmbedUrl(videoUrl);
   
-  if (embedUrl) {
-    content += `
-      <div class="featured-media-container" id="featured-media">
-        <iframe src="${embedUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    `;
-  } else {
-    content += `
-      <div class="featured-media-container" id="featured-media">
-        <img src="${project.thumbnail_image_url}" alt="${project.image_alt_text || project.project_title}" />
-      </div>
-    `;
-  }
-
-  // Media Thumbnails
+  // Media Thumbnails (Vertical)
   const mediaItems = [];
   if (project.thumbnail_image_url) {
     mediaItems.push({ type: 'image', url: project.thumbnail_image_url });
@@ -2150,7 +2392,7 @@ function openModal(projectId) {
   }
 
   if (mediaItems.length > 1) {
-    content += '<div class="media-thumbnails">';
+    content += '<div class="media-thumbnails-vertical">';
     mediaItems.forEach((media, index) => {
       const thumbUrl = media.type === 'image' ? media.url : project.thumbnail_image_url;
       content += `
@@ -2161,6 +2403,23 @@ function openModal(projectId) {
     });
     content += '</div>';
   }
+  
+  // Featured Media Container
+  content += '<div>';
+  if (embedUrl) {
+    content += `
+      <div class="featured-media-container" id="featured-media">
+        <iframe src="${embedUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    `;
+  } else {
+    content += `
+      <div class="featured-media-container" id="featured-media">
+        <img src="${project.thumbnail_image_url}" alt="${project.image_alt_text || project.project_title}" />
+      </div>
+    `;
+  }
+  content += '</div>';
   
   content += '</div>';
 
@@ -2310,14 +2569,31 @@ function openModal(projectId) {
   if (relatedProjects.length > 0) {
     content += `
       <div class="content-section">
-        <h3 class="section-title">More Projects by ${contractor.name || project.contractor_name || 'This Contractor'}</h3>
+        <div class="related-projects-header">
+          <h3 class="section-title" style="margin-bottom: 0;">More Projects by ${contractor.name || project.contractor_name || 'This Contractor'}</h3>
+          <a href="#" class="view-all-link" onclick="event.preventDefault(); alert('Contractor page coming soon!')">View All →</a>
+        </div>
         <div class="related-projects-grid">
-          ${relatedProjects.map(rp => `
+          ${relatedProjects.map(rp => {
+            const rpEngagement = getProjectEngagement(rp.project_id);
+            return `
             <div class="related-project-card" onclick="event.stopPropagation(); openModal('${rp.project_id}')">
               <img src="${rp.thumbnail_image_url}" alt="${rp.project_title}" class="related-project-image" />
-              <div class="related-project-title">${rp.project_title}</div>
+              <div class="related-project-overlay">
+                <div class="related-project-title">${rp.project_title}</div>
+                <div class="related-project-stats">
+                  <div class="related-project-stat">
+                    <i data-lucide="heart" style="width: 0.75rem; height: 0.75rem;"></i>
+                    <span>${formatCount(rpEngagement.likes)}</span>
+                  </div>
+                  <div class="related-project-stat">
+                    <i data-lucide="eye" style="width: 0.75rem; height: 0.75rem;"></i>
+                    <span>${formatCount(rpEngagement.views)}</span>
+                  </div>
+                </div>
+              </div>
             </div>
-          `).join('')}
+          `}).join('')}
         </div>
       </div>
     `;
@@ -2325,6 +2601,7 @@ function openModal(projectId) {
 
   modalBody.innerHTML = content;
   updateModalNavigation();
+  updateFeedbackBadge();
 
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
@@ -2387,8 +2664,8 @@ function navigateProject(direction) {
 // SIDE PANEL FUNCTIONS
 // ===================================================================
 function toggleSidePanel(panelName) {
-  const sideColumn = document.getElementById('modal-side-column');
-  const panels = ['feedback', 'share', 'analytics'];
+  const modalContent = document.getElementById('modal-content-wrapper');
+  const panels = ['feedback'];
   
   // Close if same panel is clicked
   if (activeSidePanel === panelName) {
@@ -2399,38 +2676,50 @@ function toggleSidePanel(panelName) {
   // Hide all panels
   panels.forEach(p => {
     document.getElementById(`${p}-panel`).classList.remove('active');
-    document.querySelector(`[data-panel="${p}"]`).classList.remove('active');
+    const btn = document.querySelector(`[data-panel="${p}"]`);
+    if (btn) btn.classList.remove('active');
   });
 
   // Show selected panel
   document.getElementById(`${panelName}-panel`).classList.add('active');
   document.querySelector(`[data-panel="${panelName}"]`).classList.add('active');
-  sideColumn.classList.add('expanded');
+  modalContent.classList.add('side-expanded');
   activeSidePanel = panelName;
 
   // Load panel content
   if (panelName === 'feedback') {
     loadFeedbackPanel();
-  } else if (panelName === 'share') {
-    loadSharePanel();
-  } else if (panelName === 'analytics') {
-    loadAnalyticsPanel();
   }
 
   lucide.createIcons();
 }
 
 function closeSidePanel() {
-  const sideColumn = document.getElementById('modal-side-column');
-  const panels = ['feedback', 'share', 'analytics'];
+  const modalContent = document.getElementById('modal-content-wrapper');
+  const panels = ['feedback'];
   
   panels.forEach(p => {
     document.getElementById(`${p}-panel`).classList.remove('active');
-    document.querySelector(`[data-panel="${p}"]`).classList.remove('active');
+    const btn = document.querySelector(`[data-panel="${p}"]`);
+    if (btn) btn.classList.remove('active');
   });
   
-  sideColumn.classList.remove('expanded');
+  modalContent.classList.remove('side-expanded');
   activeSidePanel = null;
+}
+
+function updateFeedbackBadge() {
+  if (!currentProject) return;
+  
+  const comments = currentProject.comments || [];
+  const badge = document.getElementById('feedback-badge');
+  
+  if (comments.length > 0) {
+    badge.textContent = comments.length;
+    badge.style.display = 'block';
+  } else {
+    badge.style.display = 'none';
+  }
 }
 
 function loadFeedbackPanel() {
@@ -2474,11 +2763,16 @@ function submitFeedback() {
   alert('Feedback submitted! (This would be saved to your sheet)');
   textarea.value = '';
   loadFeedbackPanel();
+  updateFeedbackBadge();
 }
 
-function loadSharePanel() {
+// ===================================================================
+// SHARE MODAL
+// ===================================================================
+function openShareModal() {
   if (!currentProject) return;
   
+  const shareModal = document.getElementById('share-modal');
   const shareContent = document.getElementById('share-content');
   const projectUrl = `${window.location.origin}${window.location.pathname}?project=${currentProject.project_id}`;
   
@@ -2503,7 +2797,18 @@ function loadSharePanel() {
   `;
   
   shareContent.innerHTML = html;
+  shareModal.classList.add('active');
   lucide.createIcons();
+}
+
+function closeShareModal() {
+  document.getElementById('share-modal').classList.remove('active');
+}
+
+function closeShareModalOnOverlay(event) {
+  if (event.target.id === 'share-modal') {
+    closeShareModal();
+  }
 }
 
 function shareToLinkedIn() {
@@ -2527,9 +2832,13 @@ function copyProjectLink() {
   });
 }
 
-function loadAnalyticsPanel() {
+// ===================================================================
+// ANALYTICS MODAL
+// ===================================================================
+function openAnalyticsModal() {
   if (!currentProject) return;
   
+  const analyticsModal = document.getElementById('analytics-modal');
   const analyticsContent = document.getElementById('analytics-content');
   const engagement = getProjectEngagement(currentProject.project_id);
   const analytics = currentProject.analytics || {};
@@ -2556,6 +2865,17 @@ function loadAnalyticsPanel() {
   `;
   
   analyticsContent.innerHTML = html;
+  analyticsModal.classList.add('active');
+}
+
+function closeAnalyticsModal() {
+  document.getElementById('analytics-modal').classList.remove('active');
+}
+
+function closeAnalyticsModalOnOverlay(event) {
+  if (event.target.id === 'analytics-modal') {
+    closeAnalyticsModal();
+  }
 }
 
 // ===================================================================
@@ -2624,10 +2944,16 @@ document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 document.addEventListener('keydown', (e) => {
   const modalOpen = document.getElementById('project-modal').classList.contains('active');
   const enquiryModalOpen = document.getElementById('enquiry-modal').classList.contains('active');
+  const shareModalOpen = document.getElementById('share-modal').classList.contains('active');
+  const analyticsModalOpen = document.getElementById('analytics-modal').classList.contains('active');
   
   if (e.key === 'Escape') {
     if (enquiryModalOpen) {
       closeEnquiryModal();
+    } else if (shareModalOpen) {
+      closeShareModal();
+    } else if (analyticsModalOpen) {
+      closeAnalyticsModal();
     } else if (activeSidePanel) {
       closeSidePanel();
     } else if (modalOpen) {
@@ -2635,7 +2961,7 @@ document.addEventListener('keydown', (e) => {
     }
   }
   
-  if (modalOpen && !enquiryModalOpen && !activeSidePanel) {
+  if (modalOpen && !enquiryModalOpen && !shareModalOpen && !analyticsModalOpen && !activeSidePanel) {
     if (e.key === 'ArrowLeft') {
       navigateProject(-1);
     } else if (e.key === 'ArrowRight') {
