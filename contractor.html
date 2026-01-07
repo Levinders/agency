@@ -17,13 +17,10 @@
             --background: 0 0% 100%;
             --foreground: 220 20% 10%;
             --primary: 146 55% 36%;
-            --primary-dark: 146 55% 28%;
-            --primary-light: 146 55% 95%;
-            --accent: 270 60% 60%;
+            --primary-foreground: 0 0% 100%;
             --muted: 220 14% 96%;
             --muted-foreground: 220 9% 46%;
             --border: 220 13% 91%;
-            --card: 0 0% 100%;
             --destructive: 0 84% 60%;
         }
         
@@ -35,406 +32,455 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, hsl(146 55% 98%) 0%, hsl(220 14% 98%) 100%);
+            background-color: hsl(var(--background));
             color: hsl(var(--foreground));
             scroll-behavior: smooth;
             line-height: 1.6;
             overflow-x: hidden;
         }
         
-        /* Glassmorphism Effect */
-        .glass {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
+        .bg-primary { background-color: hsl(146 55% 36%); }
+        .text-primary { color: hsl(146 55% 36%); }
+        .border-primary { border-color: hsl(146 55% 36%); }
+        .bg-muted { background-color: hsl(220 14% 96%); }
+        .text-muted-foreground { color: hsl(220 9% 46%); }
+        .border-border { border-color: hsl(220 13% 91%); }
         
-        /* Gradient Text */
-        .gradient-text {
-            background: linear-gradient(135deg, hsl(146 55% 36%) 0%, hsl(146 55% 50%) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        /* Modern Navigation */
-        .nav-modern {
+        .nav-fixed {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(146, 140, 78, 0.1);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            z-index: 50;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid hsl(220 13% 91%);
         }
-        
-        /* Hero Section - Bento Box Style */
-        .hero-bento {
+
+        /* Hero Section - Revamped */
+        .hero-section {
             padding: 8rem 1rem 4rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 1.5rem;
-            min-height: 600px;
-        }
-        
-        @media (max-width: 968px) {
-            .bento-grid {
-                grid-template-columns: 1fr;
-                min-height: auto;
-            }
-        }
-        
-        /* Bento Cards */
-        .bento-card {
             background: white;
-            border-radius: 2rem;
-            padding: 2.5rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
         }
-        
-        .bento-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, hsl(146 55% 36%), hsl(146 55% 50%));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: start;
         }
-        
-        .bento-card:hover::before {
-            transform: scaleX(1);
-        }
-        
-        .bento-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
-        }
-        
-        .bento-profile {
-            grid-column: span 7;
-            grid-row: span 2;
-        }
-        
-        .bento-stats {
-            grid-column: span 5;
-            background: linear-gradient(135deg, hsl(146 55% 36%) 0%, hsl(146 55% 45%) 100%);
-            color: white;
-        }
-        
-        .bento-media {
-            grid-column: span 5;
-            padding: 0;
-            overflow: hidden;
-        }
-        
-        .bento-actions {
-            grid-column: span 7;
-            background: linear-gradient(135deg, hsl(220 14% 98%) 0%, white 100%);
-        }
-        
+
         @media (max-width: 968px) {
-            .bento-profile,
-            .bento-stats,
-            .bento-media,
-            .bento-actions {
-                grid-column: span 1;
-                grid-row: span 1;
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
         }
-        
-        /* Profile Avatar with Gradient Ring */
-        .avatar-ring {
-            position: relative;
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            padding: 6px;
-            background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 55% 50%));
-            animation: rotate 8s linear infinite;
+
+        /* Profile Column - No box, clean layout */
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
-        
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
         }
-        
-        .avatar-ring img {
-            width: 100%;
-            height: 100%;
+
+        .profile-avatar {
+            width: 5rem;
+            height: 5rem;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid white;
+            border: 3px solid hsl(146 55% 36%);
+            flex-shrink: 0;
         }
-        
-        /* Stats Cards */
-        .stat-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 1.5rem;
-            padding: 1.75rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+
+        .profile-info {
+            flex: 1;
         }
-        
-        .stat-card:hover {
-            transform: scale(1.05);
-            background: rgba(255, 255, 255, 0.25);
+
+        .profile-name {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 0rem;
+            color: hsl(220 20% 10%);
         }
-        
+
+        /* Stats - Directly under name */
+        .profile-stats {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: baseline;
+            gap: 0.375rem;
+        }
+
         .stat-value {
-            font-size: 3rem;
-            font-weight: 900;
-            line-height: 1;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: hsl(146 55% 36%);
         }
-        
+
         .stat-label {
             font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            opacity: 0.9;
+            font-weight: 500;
+            color: hsl(220 9% 46%);
         }
-        
-        /* Action Buttons - Modern Pills */
-        .action-pill {
-            display: inline-flex;
-            align-items: center;
+
+        /* Career Statement - Bigger on desktop */
+        .career-statement {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            color: hsl(220 20% 20%);
+            font-weight: 500;
+        }
+
+        @media (min-width: 968px) {
+            .career-statement {
+                font-size: 1.5rem;
+                line-height: 1.6;
+            }
+        }
+
+        /* Actions - Pill buttons, not full width */
+        .profile-actions {
+            display: flex;
             gap: 0.75rem;
-            padding: 1rem 2rem;
+            align-items: center;
+        }
+
+        .action-btn {
+            padding: 0.75rem 1.75rem;
             background: hsl(146 55% 36%);
             color: white;
             border: none;
             border-radius: 9999px;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.9375rem;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 16px rgba(46, 140, 78, 0.3);
-        }
-        
-        .action-pill:hover {
-            background: hsl(146 55% 32%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(46, 140, 78, 0.4);
-        }
-        
-        .action-pill-outline {
-            background: white;
-            color: hsl(146 55% 36%);
-            border: 2px solid hsl(146 55% 36%);
-            box-shadow: none;
-        }
-        
-        .action-pill-outline:hover {
-            background: hsl(146 55% 36%);
-            color: white;
-        }
-        
-        /* Modern Tabs */
-        .tabs-modern {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem 1rem 4rem;
-        }
-        
-        .tabs-nav {
-            display: flex;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
             gap: 0.5rem;
-            background: white;
-            padding: 0.5rem;
-            border-radius: 1.5rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-            margin-bottom: 3rem;
-            overflow-x: auto;
         }
-        
-        .tab-item {
-            flex: 1;
-            padding: 1rem 2rem;
-            background: transparent;
+
+        .action-btn:hover {
+            background: hsl(146 55% 32%);
+            box-shadow: 0 4px 12px rgba(46, 140, 78, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .dropdown-trigger {
+            width: 2.75rem;
+            height: 2.75rem;
+            background: hsl(220 14% 96%);
             border: none;
-            border-radius: 1rem;
-            font-weight: 600;
-            font-size: 1rem;
-            color: hsl(220 9% 46%);
+            border-radius: 9999px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            position: relative;
         }
-        
-        .tab-item:hover {
-            color: hsl(146 55% 36%);
-            background: hsl(146 55% 98%);
+
+        .dropdown-trigger:hover {
+            background: hsl(220 13% 91%);
         }
-        
-        .tab-item.active {
-            background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 55% 45%));
-            color: white;
-            box-shadow: 0 4px 16px rgba(46, 140, 78, 0.3);
-        }
-        
-        .tab-content {
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.75rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            min-width: 180px;
             display: none;
-            animation: fadeIn 0.5s ease;
+            z-index: 100;
+            overflow: hidden;
         }
-        
-        .tab-content.active {
+
+        .dropdown-menu.active {
             display: block;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Works Grid - Masonry Style */
-        .works-masonry {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-        
-        @media (max-width: 640px) {
-            .works-masonry {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        /* Modern Project Card */
-        .project-card-modern {
-            position: relative;
-            border-radius: 1.5rem;
-            overflow: hidden;
+
+        .dropdown-item {
+            padding: 0.875rem 1rem;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            background: white;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            border-bottom: 1px solid hsl(220 13% 91%);
         }
-        
-        .project-card-modern:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+
+        .dropdown-item:last-child {
+            border-bottom: none;
         }
-        
-        .project-image-wrapper {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 4 / 3;
+
+        .dropdown-item:hover {
+            background: hsl(220 14% 98%);
+        }
+
+        /* Media Column */
+        .media-container {
+            background: hsl(220 14% 96%);
+            border-radius: 1rem;
             overflow: hidden;
-            background: linear-gradient(135deg, hsl(220 14% 96%), hsl(146 55% 98%));
+            aspect-ratio: 16 / 10;
         }
-        
-        .project-image {
+
+        .media-container img,
+        .media-container video {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
-        .project-card-modern:hover .project-image {
-            transform: scale(1.1);
+
+        .media-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
-        
-        .project-overlay {
+
+        /* Tabs Section - Clean pills with divider */
+        .tabs-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .tabs-header {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            border-bottom: none;
+        }
+
+        .tab-btn {
+            padding: 0.625rem 1.5rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            font-weight: 600;
+            font-size: 0.9375rem;
+            color: hsl(220 9% 46%);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 9999px;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            border-color: hsl(146 55% 36%);
+            color: hsl(146 55% 36%);
+        }
+
+        .tab-btn.active {
+            background: hsl(220 14% 96%);
+            border-color: hsl(220 13% 91%);
+            color: hsl(220 20% 10%);
+        }
+
+        /* Horizontal divider after tabs */
+        .tabs-divider {
+            width: 100%;
+            height: 1px;
+            background: hsl(220 13% 91%);
+            margin-bottom: 2.5rem;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Works Grid - Cards show info on hover only */
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 968px) {
+            .works-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .work-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .work-card-image-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            background: hsl(220 14% 96%);
+        }
+
+        .work-card:hover .work-card-image-wrapper {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .work-card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .work-card:hover .work-card-image {
+            transform: scale(1.04);
+        }
+
+        .work-card-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 50%, transparent 100%);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.3s ease;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 1.5rem;
+            padding: 1rem;
         }
-        
-        .project-card-modern:hover .project-overlay {
+
+        .work-card:hover .work-card-overlay {
             opacity: 1;
         }
-        
-        .like-button {
-            width: 3rem;
-            height: 3rem;
+
+        .overlay-top {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .like-btn {
+            width: 2.5rem;
+            height: 2.5rem;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.9);
             border: none;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            align-self: flex-end;
+            transition: all 0.2s;
         }
-        
-        .like-button:hover {
-            transform: scale(1.15);
+
+        .like-btn:hover {
             background: white;
+            transform: scale(1.1);
         }
-        
-        .like-button.liked {
-            background: hsl(310 77% 65%);
-            color: white;
+
+        .like-btn.liked {
+            color: hsl(310 77% 65%);
         }
-        
-        .like-button.liked svg {
+
+        .like-btn.liked svg {
             fill: currentColor;
         }
-        
-        @keyframes heartPulse {
+
+        @keyframes heartBeat {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.3); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1.1); }
         }
-        
-        .like-button.animating {
-            animation: heartPulse 0.5s ease;
+
+        .like-btn.animating {
+            animation: heartBeat 0.4s ease;
         }
-        
-        .project-info {
+
+        .overlay-bottom {
             color: white;
         }
-        
-        .project-title {
-            font-size: 1.25rem;
+
+        .overlay-title {
+            font-size: 1rem;
             font-weight: 700;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
-        
-        .project-stats {
+
+        .overlay-stats {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
             font-size: 0.875rem;
             font-weight: 600;
         }
-        
-        .project-stat {
+
+        .overlay-stat {
             display: flex;
             align-items: center;
+            gap: 0.375rem;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             gap: 0.5rem;
+            margin-top: 2rem;
         }
-        
-        /* Collections - Carousel Style */
-        .collection-section {
-            margin-bottom: 4rem;
+
+        .pagination-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
         }
-        
-        .collection-header {
+
+        .pagination-btn:hover:not(:disabled) {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .pagination-btn.active {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Collections - Horizontal scroll with arrows */
+        .collections-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -442,491 +488,909 @@
             flex-wrap: wrap;
             gap: 1rem;
         }
-        
-        .collection-title {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 55% 50%));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+
+        .collections-title-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
-        
-        .filter-pill {
-            padding: 0.75rem 1.5rem;
+
+        .collection-filter-wrapper {
+            position: relative;
+        }
+
+        .collection-filter-btn {
+            padding: 0.625rem 1.25rem;
             background: white;
-            border: 2px solid hsl(220 13% 91%);
-            border-radius: 9999px;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
             font-weight: 600;
             font-size: 0.875rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
-        
-        .filter-pill:hover {
+
+        .collection-filter-btn:hover {
             border-color: hsl(146 55% 36%);
-            background: hsl(146 55% 98%);
-            transform: translateY(-2px);
         }
-        
-        .collection-group {
+
+        .collection-filter-dropdown {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            left: 0;
             background: white;
-            border-radius: 2rem;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            min-width: 180px;
+            display: none;
+            z-index: 100;
+            overflow: hidden;
         }
-        
-        .collection-group-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+
+        .collection-filter-dropdown.active {
+            display: block;
         }
-        
-        .count-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 2.5rem;
-            height: 2.5rem;
-            padding: 0 0.75rem;
-            background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 55% 45%));
-            color: white;
-            border-radius: 9999px;
+
+        .collection-filter-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
             font-size: 0.875rem;
-            font-weight: 700;
+            font-weight: 500;
         }
-        
-        .carousel-nav {
+
+        .collection-filter-item:hover {
+            background: hsl(220 14% 98%);
+        }
+
+        .collection-filter-item.active {
+            background: hsl(146 55% 36% / 0.1);
+            color: hsl(146 55% 36%);
+            font-weight: 600;
+        }
+
+        .collection-group {
+            margin-bottom: 3rem;
+        }
+
+        .collection-group-header {
             display: flex;
-            gap: 0.75rem;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
         }
-        
-        .carousel-btn {
-            width: 3rem;
-            height: 3rem;
+
+        .collection-group-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: hsl(220 20% 10%);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .collection-count {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: hsl(220 9% 46%);
+            background: hsl(220 14% 96%);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+        }
+
+        .collection-nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .collection-nav-btn {
+            width: 2.5rem;
+            height: 2.5rem;
             border-radius: 50%;
-            background: hsl(146 55% 36%);
-            color: white;
-            border: none;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(46, 140, 78, 0.3);
+            transition: all 0.2s;
         }
-        
-        .carousel-btn:hover:not(:disabled) {
-            background: hsl(146 55% 32%);
-            transform: scale(1.1);
+
+        .collection-nav-btn:hover:not(:disabled) {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
         }
-        
-        .carousel-btn:disabled {
+
+        .collection-nav-btn:disabled {
             opacity: 0.3;
             cursor: not-allowed;
         }
-        
-        .carousel-wrapper {
+
+        .collection-carousel {
             position: relative;
             overflow: hidden;
         }
-        
-        .carousel-track {
+
+        .collection-track {
             display: flex;
             gap: 2rem;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.3s ease;
         }
-        
-        .carousel-item {
+
+        .collection-item {
             min-width: calc((100% - 4rem) / 3);
             flex-shrink: 0;
         }
-        
+
         @media (max-width: 968px) {
-            .carousel-item {
+            .collection-item {
                 min-width: calc((100% - 2rem) / 2);
             }
         }
-        
+
         @media (max-width: 640px) {
-            .carousel-item {
+            .collection-item {
                 min-width: 100%;
             }
         }
-        
-        /* About Section - Card Grid */
+
+        /* About Section - Revamped */
         .about-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: 1fr 300px;
+            gap: 3rem;
         }
-        
-        .about-card {
-            background: white;
-            border-radius: 2rem;
-            padding: 2.5rem;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-            transition: all 0.3s ease;
+
+        @media (max-width: 968px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
         }
-        
-        .about-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+
+        .about-section {
+            margin-bottom: 2.5rem;
         }
-        
-        .about-card-title {
-            font-size: 1.25rem;
+
+        .about-title {
+            font-size: 1.125rem;
             font-weight: 700;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: hsl(220 20% 10%);
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            color: hsl(146 55% 36%);
+            gap: 0.5rem;
         }
-        
-        .about-card-title i {
-            width: 2rem;
-            height: 2rem;
+
+        .about-content {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: hsl(220 9% 46%);
+        }
+
+        .skills-list {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            background: hsl(146 55% 95%);
-            border-radius: 0.75rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
-        
-        .skill-pill {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.75rem 1.25rem;
-            background: linear-gradient(135deg, hsl(146 55% 98%), hsl(220 14% 98%));
+
+        .skill-tag {
+            padding: 0.5rem 1rem;
+            background: hsl(220 14% 98%);
             border: 1px solid hsl(220 13% 91%);
             border-radius: 9999px;
             font-size: 0.875rem;
             font-weight: 600;
             color: hsl(220 20% 10%);
-            margin: 0.25rem;
-            transition: all 0.3s ease;
         }
-        
-        .skill-pill:hover {
-            background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 55% 45%));
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(46, 140, 78, 0.3);
+
+        /* Specialty - One background */
+        .specialty-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding: 1.5rem;
+            background: hsl(146 55% 36% / 0.05);
+            border: 1px solid hsl(146 55% 36% / 0.2);
+            border-radius: 0.75rem;
         }
-        
+
         .specialty-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.25rem;
-            background: linear-gradient(135deg, hsl(146 55% 98%), white);
-            border-radius: 1rem;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
+            gap: 1.5rem;
         }
-        
-        .specialty-item:hover {
-            transform: translateX(8px);
-            box-shadow: 0 4px 16px rgba(46, 140, 78, 0.15);
-        }
-        
+
         .specialty-name {
             font-size: 1rem;
             font-weight: 700;
             color: hsl(146 55% 36%);
+            flex: 1;
         }
-        
+
         .specialty-exp {
             font-size: 0.875rem;
             color: hsl(220 9% 46%);
             font-weight: 500;
+            text-align: right;
         }
-        
-        .location-card {
-            background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 55% 45%));
-            color: white;
+
+        /* Location - Fixed width */
+        .location-box {
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
             text-align: center;
-            padding: 3rem 2rem;
+            width: 100%;
         }
-        
+
         .location-icon {
-            width: 4rem;
-            height: 4rem;
-            background: rgba(255, 255, 255, 0.2);
+            width: 3rem;
+            height: 3rem;
+            background: hsl(146 55% 36% / 0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.5rem;
-            backdrop-filter: blur(10px);
+            margin: 0 auto 1rem;
+            color: hsl(146 55% 36%);
         }
-        
+
         .location-text {
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
-        
-        /* Modals - Modern Style */
-        .modal-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            z-index: 2000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-        }
-        
-        .modal-backdrop.active {
-            display: flex;
-        }
-        
-        .modal-container {
-            background: white;
-            width: 100%;
-            height: 100vh;
-            overflow-y: auto;
-            position: relative;
-        }
-        
-        .modal-header {
-            position: sticky;
-            top: 0;
-            background: white;
-            border-bottom: 1px solid hsl(220 13% 91%);
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 10;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-        }
-        
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .modal-avatar {
-            width: 3rem;
-            height: 3rem;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid hsl(146 55% 36%);
-        }
-        
-        .modal-close-btn {
-            width: 3rem;
-            height: 3rem;
-            border-radius: 50%;
-            background: hsl(220 14% 96%);
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .modal-close-btn:hover {
-            background: hsl(146 55% 36%);
-            color: white;
-            transform: rotate(90deg);
-        }
-        
-        .modal-body {
-            padding: 3rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        /* Center Modals */
-        .center-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            z-index: 2000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-        
-        .center-modal.active {
-            display: flex;
-        }
-        
-        .center-modal-content {
-            background: white;
-            border-radius: 2rem;
-            padding: 3rem;
-            max-width: 500px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: hsl(220 20% 10%);
-        }
-        
-        .form-input,
-        .form-textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid hsl(220 13% 91%);
-            border-radius: 1rem;
             font-size: 1rem;
-            font-family: inherit;
-            transition: all 0.3s ease;
+            font-weight: 600;
+            color: hsl(220 20% 10%);
+            word-wrap: break-word;
         }
-        
-        .form-input:focus,
-        .form-textarea:focus {
-            outline: none;
-            border-color: hsl(146 55% 36%);
-            box-shadow: 0 0 0 4px hsl(146 55% 95%);
-        }
-        
-        .form-textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-        
-        .form-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-        
+
         /* Loading & Empty States */
         .loading-state {
             text-align: center;
-            padding: 6rem 2rem;
+            padding: 4rem 2rem;
         }
-        
+
         .loading-spinner {
-            width: 4rem;
-            height: 4rem;
-            border: 4px solid hsl(220 13% 91%);
+            width: 3rem;
+            height: 3rem;
+            border: 3px solid hsl(220 13% 91%);
             border-top-color: hsl(146 55% 36%);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto 2rem;
+            margin: 0 auto 1rem;
         }
-        
+
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-        
+
         .empty-state {
             text-align: center;
-            padding: 6rem 2rem;
+            padding: 4rem 2rem;
             color: hsl(220 9% 46%);
         }
-        
-        /* Toast */
+
+        /* Toast Notifications */
         .toast {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
             background: white;
-            border-radius: 1rem;
-            padding: 1.25rem 1.75rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.75rem;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
             display: flex;
             align-items: center;
-            gap: 1rem;
-            z-index: 3000;
+            gap: 0.75rem;
+            z-index: 1000;
             transform: translateY(150%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
         .toast.show {
             transform: translateY(0);
         }
-        
+
         .toast.success {
             border-left: 4px solid hsl(146 55% 36%);
         }
-        
-        /* Pagination */
-        .pagination {
-            display: flex;
+
+        .toast.error {
+            border-left: 4px solid hsl(0 84% 60%);
+        }
+
+        /* PROJECT MODAL - From works.html */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            display: none;
+            align-items: center;
             justify-content: center;
+            padding: 0;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 40px;
+            overflow: hidden;
+            transition: grid-template-columns 0.3s ease;
+        }
+
+        .modal-content.side-expanded {
+            grid-template-columns: 1fr 380px;
+        }
+
+        @media (max-width: 968px) {
+            .modal-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .modal-main-column {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header-fixed {
+            position: sticky;
+            top: 0;
+            background: white;
+            border-bottom: 1px solid hsl(220 13% 91%);
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 20;
+            gap: 1rem;
+        }
+
+        .modal-header-left {
+            display: flex;
             align-items: center;
             gap: 0.75rem;
-            margin-top: 3rem;
+            flex: 1;
+            min-width: 0;
         }
-        
-        .page-btn {
-            min-width: 3rem;
-            height: 3rem;
-            padding: 0 1rem;
-            background: white;
+
+        .modal-contractor-avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            object-fit: cover;
             border: 2px solid hsl(220 13% 91%);
-            border-radius: 0.75rem;
-            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .modal-title-text {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: hsl(220 20% 10%);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+        }
+
+        .modal-engagement-stats {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-left: 1rem;
+            flex-shrink: 0;
+        }
+
+        .modal-engagement-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.875rem;
+            color: hsl(220 9% 46%);
+        }
+
+        .modal-like-btn {
+            background: none;
+            border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.875rem;
+            color: hsl(220 9% 46%);
+            transition: all 0.2s;
+            padding: 0;
         }
-        
-        .page-btn:hover:not(:disabled) {
+
+        .modal-like-btn:hover {
+            color: hsl(310 77% 65%);
+        }
+
+        .modal-like-btn.liked {
+            color: hsl(310 77% 65%);
+        }
+
+        .modal-like-btn.liked svg {
+            fill: currentColor;
+        }
+
+        @media (max-width: 768px) {
+            .modal-title-text {
+                font-size: 1rem;
+            }
+            .modal-engagement-stats {
+                display: none;
+            }
+        }
+
+        .modal-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .modal-nav-icon-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: hsl(220 14% 96%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-nav-icon-btn:hover:not(:disabled) {
             background: hsl(146 55% 36%);
-            border-color: hsl(146 55% 36%);
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        .page-btn.active {
-            background: hsl(146 55% 36%);
-            border-color: hsl(146 55% 36%);
             color: white;
         }
-        
-        .page-btn:disabled {
+
+        .modal-nav-icon-btn:disabled {
             opacity: 0.3;
             cursor: not-allowed;
         }
-        
-        /* Mobile Menu */
+
+        .modal-body-content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .modal-body-content {
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        .featured-media-section {
+            margin-bottom: 2.5rem;
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .featured-media-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .media-thumbnails-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .media-thumbnails-vertical {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+        }
+
+        .featured-media-container {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            background: hsl(220 14% 96%);
+            position: relative;
+        }
+
+        .featured-media-container img,
+        .featured-media-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-media-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .media-thumbnail {
+            aspect-ratio: 4 / 3;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            background: hsl(220 14% 96%);
+            flex-shrink: 0;
+        }
+
+        .media-thumbnail:hover {
+            border-color: hsl(146 55% 36%);
+            transform: scale(1.05);
+        }
+
+        .media-thumbnail.active {
+            border-color: hsl(146 55% 36%);
+        }
+
+        .media-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: hsl(220 14% 98%);
+            border-radius: 0.75rem;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.375rem;
+        }
+
+        .detail-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: hsl(220 9% 46%);
+        }
+
+        .detail-value {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: hsl(220 20% 10%);
+        }
+
+        .content-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: hsl(220 20% 10%);
+        }
+
+        .section-content {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: hsl(220 9% 46%);
+        }
+
+        .tool-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tool-tag {
+            padding: 0.375rem 0.75rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.375rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: hsl(220 20% 10%);
+        }
+
+        .outcome-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .outcome-metric {
+            background: hsl(220 14% 98%);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+        }
+
+        .outcome-metric-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: hsl(146 55% 36%);
+            margin-bottom: 0.5rem;
+        }
+
+        .outcome-metric-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: hsl(220 9% 46%);
+        }
+
+        .modal-side-column {
+            background: hsl(220 14% 98%);
+            border-left: 1px solid hsl(220 13% 91%);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (max-width: 968px) {
+            .modal-side-column {
+                display: none;
+            }
+        }
+
+        .side-column-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 2.5rem 0 1rem 0;
+            align-items: center;
+        }
+
+        .side-icon-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .side-icon-btn:hover {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .side-icon-btn.active {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        /* Simple modals */
+        .simple-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 110;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .simple-modal-overlay.active {
+            display: flex;
+        }
+
+        .simple-modal-content {
+            background: white;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 100%;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background: hsl(220 14% 96%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: hsl(220 13% 91%);
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-size: 0.9375rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: hsl(146 55% 36%);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .form-cancel {
+            flex: 1;
+            padding: 0.75rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .form-cancel:hover {
+            background: hsl(220 14% 96%);
+        }
+
+        .form-submit {
+            flex: 1;
+            padding: 0.75rem;
+            background: hsl(146 55% 36%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .form-submit:hover {
+            background: hsl(146 55% 32%);
+        }
+
+        .share-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .share-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1rem;
+            background: hsl(220 14% 98%);
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .share-btn:hover {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .share-link-group {
+            margin-top: 1rem;
+        }
+
+        .share-link-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            background: hsl(220 14% 98%);
+            margin-bottom: 0.5rem;
+        }
+
+        .desktop-only {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .desktop-only {
+                display: none !important;
+            }
+        }
+
         .mobile-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            z-index: 900;
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(6px);
+            z-index: 90;
             display: none;
         }
-        
+
         .mobile-overlay.active {
             display: block;
         }
-        
-        .mobile-menu {
+
+        .mobile-sidebar {
             position: fixed;
             top: 0;
             right: 0;
@@ -934,440 +1398,486 @@
             width: 85%;
             max-width: 320px;
             background: white;
-            z-index: 1000;
-            padding: 2rem;
+            z-index: 100;
+            padding: 24px;
             transform: translateX(100%);
             transition: transform 0.3s ease;
-            box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
         }
-        
-        .mobile-menu.active {
+
+        .mobile-sidebar.active {
             transform: translateX(0);
         }
-        
-        .mobile-menu a {
-            display: block;
-            padding: 1rem 0;
-            font-size: 1.125rem;
+
+        .mobile-sidebar a {
+            padding: 14px 0;
+            font-size: 16px;
             font-weight: 600;
-            color: hsl(220 20% 10%);
-            border-bottom: 1px solid hsl(220 13% 91%);
-            transition: all 0.3s ease;
-        }
-        
-        .mobile-menu a:hover {
-            color: hsl(146 55% 36%);
-            padding-left: 1rem;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-bento {
-                padding: 6rem 1rem 2rem;
-            }
-            
-            .bento-card {
-                padding: 1.75rem;
-            }
-            
-            .avatar-ring {
-                width: 100px;
-                height: 100px;
-            }
-            
-            .stat-value {
-                font-size: 2rem;
-            }
-            
-            .tabs-nav {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .modal-body {
-                padding: 2rem 1rem;
-            }
-        }
-        
-        /* Utility Classes */
-        .desktop-only {
-            display: block;
-        }
-        
-        @media (max-width: 768px) {
-            .desktop-only {
-                display: none !important;
-            }
+            border-bottom: 1px solid hsl(var(--border));
         }
     </style>
 </head>
 <body>
 
-<!-- Mobile Overlay -->
+<!-- Mobile overlay -->
 <div id="mobile-overlay" class="mobile-overlay" onclick="closeMobileMenu()"></div>
 
-<!-- Mobile Menu -->
-<aside id="mobile-menu" class="mobile-menu">
-    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
-        <a href="https://packdez.com" style="display: flex; align-items: center; gap: 0.5rem; border: none;">
-            <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez" style="width: 2rem; height: 2rem;" />
-            <span style="font-size: 1.25rem; font-weight: 700;">Packdez</span>
-        </a>
-        <button onclick="closeMobileMenu()" style="background: none; border: none; font-size: 2rem; cursor: pointer;">×</button>
-    </div>
-    <a href="https://packdez.com#work">Work</a>
-    <a href="https://packdez.com#pricing">Pricing</a>
-    <a href="https://packdez.com#reviews">Reviews</a>
-    <a href="about.html">About</a>
+<!-- Mobile sidebar -->
+<aside id="mobile-menu" class="mobile-sidebar">
+  <div class="flex items-center justify-between mb-6">
+    <a href="https://packdez.com" class="flex items-center gap-2" onclick="closeMobileMenu()">
+      <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez logo" class="h-8 w-8" />
+      <span class="text-xl font-bold">Packdez</span>
+    </a>
+    <button onclick="closeMobileMenu()" aria-label="Close menu" class="text-2xl font-bold">×</button>
+  </div>
+  <a href="https://packdez.com#work" onclick="closeMobileMenu()">Work</a>
+  <a href="https://packdez.com#pricing" onclick="closeMobileMenu()">Pricing</a>
+  <a href="https://packdez.com#reviews" onclick="closeMobileMenu()">Reviews</a>
+  <a href="about.html" onclick="closeMobileMenu()">About</a>
 </aside>
 
 <!-- Navigation -->
-<nav class="nav-modern">
-    <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
-        <div style="display: flex; align-items: center; justify-content: space-between; height: 5rem;">
-            <a href="https://packdez.com" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none;">
-                <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez" style="width: 2.5rem; height: 2.5rem;" />
-                <span style="font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 55% 50%)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Packdez</span>
-            </a>
-            
-            <div class="desktop-only" style="display: flex; align-items: center; gap: 2.5rem;">
-                <a href="https://packdez.com#work" style="font-weight: 600; color: hsl(220 9% 46%); transition: color 0.3s;">Work</a>
-                <a href="https://packdez.com#pricing" style="font-weight: 600; color: hsl(220 9% 46%); transition: color 0.3s;">Pricing</a>
-                <a href="https://packdez.com#reviews" style="font-weight: 600; color: hsl(220 9% 46%); transition: color 0.3s;">Reviews</a>
-                <a href="about.html" style="font-weight: 600; color: hsl(220 9% 46%); transition: color 0.3s;">About</a>
-            </div>
-            
-            <button class="desktop-only" style="display: none;">Menu</button>
-            <button onclick="toggleMobileMenu()" style="background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 0.25rem;">
-                <span style="width: 1.5rem; height: 2px; background: hsl(220 20% 10%);"></span>
-                <span style="width: 1.5rem; height: 2px; background: hsl(220 20% 10%);"></span>
-                <span style="width: 1.5rem; height: 2px; background: hsl(220 20% 10%);"></span>
-            </button>
-        </div>
+<nav class="nav-fixed">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex items-center justify-between h-16">
+      <a href="https://packdez.com" class="flex items-center gap-2">
+        <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez logo" class="h-8 w-8" />
+        <span class="text-xl font-bold">Packdez</span>
+      </a>
+      
+      <div class="desktop-only flex items-center gap-6">
+        <a href="https://packdez.com#work" class="text-sm font-medium text-muted-foreground hover:text-primary">Work</a>
+        <a href="https://packdez.com#pricing" class="text-sm font-medium text-muted-foreground hover:text-primary">Pricing</a>
+        <a href="https://packdez.com#reviews" class="text-sm font-medium text-muted-foreground hover:text-primary">Reviews</a>
+        <a href="about.html" class="text-sm font-medium text-muted-foreground hover:text-primary">About</a>
+      </div>
+      <button class="flex md:hidden" onclick="toggleMobileMenu()" aria-label="Open menu">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
     </div>
+  </div>
 </nav>
 
-<!-- Hero Section - Bento Box Style -->
-<section class="hero-bento">
+<!-- Hero Section -->
+<section class="hero-section">
     <div id="hero-loading" class="loading-state">
         <div class="loading-spinner"></div>
-        <p style="color: hsl(220 9% 46%); font-size: 1.125rem;">Loading contractor profile...</p>
+        <p class="text-muted-foreground">Loading contractor profile...</p>
     </div>
     
-    <div id="hero-content" class="bento-grid" style="display: none;">
-        <!-- Profile Card -->
-        <div class="bento-card bento-profile">
-            <div style="display: flex; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap;">
-                <div class="avatar-ring">
-                    <img id="profile-avatar" src="" alt="" />
+    <div id="hero-content" style="display: none;">
+        <div class="hero-grid">
+            <!-- Profile Column -->
+            <div class="profile-section">
+                <div class="profile-header">
+                    <img id="profile-avatar" src="" alt="" class="profile-avatar" />
+                    <div class="profile-info">
+                        <h1 id="profile-name" class="profile-name"></h1>
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <span id="total-projects" class="stat-value">0</span>
+                                <span class="stat-label">Projects</span>
+                            </div>
+                            <div class="stat-item">
+                                <span id="total-likes" class="stat-value">0</span>
+                                <span class="stat-label">Likes</span>
+                            </div>
+                            <div class="stat-item">
+                                <span id="total-views" class="stat-value">0</span>
+                                <span class="stat-label">Views</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div style="flex: 1; min-width: 200px;">
-                    <h1 id="profile-name" style="font-size: 2.5rem; font-weight: 900; margin-bottom: 0.5rem; line-height: 1.2;"></h1>
-                    <p id="career-statement" style="font-size: 1.125rem; color: hsl(220 9% 46%); line-height: 1.6;"></p>
+                
+                <p id="career-statement" class="career-statement"></p>
+                
+                <div class="profile-actions">
+                    <button class="action-btn" onclick="openEnquiryModal()">
+                        <i data-lucide="mail" style="width: 1rem; height: 1rem;"></i>
+                        Send Enquiry
+                    </button>
+                    <div style="position: relative;">
+                        <button class="dropdown-trigger" onclick="toggleDropdown()">
+                            <i data-lucide="more-vertical" style="width: 1.125rem; height: 1.125rem;"></i>
+                        </button>
+                        <div id="dropdown-menu" class="dropdown-menu">
+                            <div class="dropdown-item" onclick="openShareModal()">
+                                <i data-lucide="share-2" style="width: 1rem; height: 1rem;"></i>
+                                Share Profile
+                            </div>
+                            <div class="dropdown-item" onclick="openReportModal()">
+                                <i data-lucide="flag" style="width: 1rem; height: 1rem;"></i>
+                                Report
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Stats Card -->
-        <div class="bento-card bento-stats">
-            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 2rem; opacity: 0.9;">Performance</h3>
-            <div style="display: grid; gap: 1.5rem;">
-                <div class="stat-card">
-                    <div class="stat-value" id="total-projects">0</div>
-                    <div class="stat-label">Projects</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="total-likes">0</div>
-                    <div class="stat-label">Likes</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="total-views">0</div>
-                    <div class="stat-label">Views</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Media Card -->
-        <div class="bento-card bento-media" id="media-container">
-            <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Media" style="width: 100%; height: 100%; object-fit: cover;" />
-        </div>
-        
-        <!-- Actions Card -->
-        <div class="bento-card bento-actions">
-            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem;">Get in Touch</h3>
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <button class="action-pill" onclick="openEnquiryModal()">
-                    <i data-lucide="mail" style="width: 1.25rem; height: 1.25rem;"></i>
-                    Send Enquiry
-                </button>
-                <button class="action-pill action-pill-outline" onclick="openShareModal()">
-                    <i data-lucide="share-2" style="width: 1.25rem; height: 1.25rem;"></i>
-                    Share Profile
-                </button>
+            
+            <!-- Media Column -->
+            <div id="media-container" class="media-container">
+                <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Contractor media" />
             </div>
         </div>
     </div>
 </section>
 
 <!-- Tabs Section -->
-<section class="tabs-modern">
-    <nav class="tabs-nav">
-        <button class="tab-item active" onclick="switchTab('works')">
-            <i data-lucide="briefcase" style="width: 1.25rem; height: 1.25rem; display: inline-block; vertical-align: middle; margin-right: 0.5rem;"></i>
-            Works
-        </button>
-        <button class="tab-item" onclick="switchTab('collections')">
-            <i data-lucide="folder" style="width: 1.25rem; height: 1.25rem; display: inline-block; vertical-align: middle; margin-right: 0.5rem;"></i>
-            Collections
-        </button>
-        <button class="tab-item" onclick="switchTab('about')">
-            <i data-lucide="user" style="width: 1.25rem; height: 1.25rem; display: inline-block; vertical-align: middle; margin-right: 0.5rem;"></i>
-            About
-        </button>
-    </nav>
+<section class="tabs-section">
+    <div class="tabs-header">
+        <button class="tab-btn active" onclick="switchTab('works')">Works</button>
+        <button class="tab-btn" onclick="switchTab('collections')">Collections</button>
+        <button class="tab-btn" onclick="switchTab('about')">About</button>
+    </div>
+    
+    <!-- Horizontal divider -->
+    <div class="tabs-divider"></div>
     
     <!-- Works Tab -->
     <div id="works-tab" class="tab-content active">
         <div id="works-loading" class="loading-state">
             <div class="loading-spinner"></div>
-            <p style="color: hsl(220 9% 46%);">Loading projects...</p>
+            <p class="text-muted-foreground">Loading projects...</p>
         </div>
         
         <div id="works-container" style="display: none;">
-            <div id="works-grid" class="works-masonry"></div>
+            <div id="works-grid" class="works-grid"></div>
             <div id="works-pagination" class="pagination"></div>
         </div>
         
         <div id="works-empty" class="empty-state" style="display: none;">
-            <i data-lucide="folder" style="width: 4rem; height: 4rem; margin: 0 auto 1.5rem; opacity: 0.3;"></i>
-            <h3 style="font-weight: 700; font-size: 1.5rem; margin-bottom: 0.75rem;">No projects yet</h3>
+            <i data-lucide="folder" style="width: 3rem; height: 3rem; margin: 0 auto 1rem; opacity: 0.3;"></i>
+            <h3 style="font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem;">No projects yet</h3>
             <p>This contractor hasn't published any projects</p>
         </div>
     </div>
     
     <!-- Collections Tab -->
     <div id="collections-tab" class="tab-content">
-        <div class="collection-header">
-            <h2 class="collection-title">Collections</h2>
-            <div style="position: relative;">
-                <button class="filter-pill" onclick="toggleFilter()">
-                    <span id="current-filter">By Tools</span>
-                    <i data-lucide="chevron-down" style="width: 1rem; height: 1rem;"></i>
-                </button>
-                <div id="filter-dropdown" style="display: none; position: absolute; top: calc(100% + 0.5rem); right: 0; background: white; border-radius: 1rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15); min-width: 200px; overflow: hidden; z-index: 100;">
-                    <div onclick="switchFilter('tools_used', 'By Tools')" style="padding: 1rem 1.5rem; cursor: pointer; font-weight: 600; transition: all 0.3s;">By Tools</div>
-                    <div onclick="switchFilter('industry', 'By Industry')" style="padding: 1rem 1.5rem; cursor: pointer; font-weight: 600; transition: all 0.3s;">By Industry</div>
-                    <div onclick="switchFilter('primary_category', 'By Category')" style="padding: 1rem 1.5rem; cursor: pointer; font-weight: 600; transition: all 0.3s;">By Category</div>
+        <div class="collections-header">
+            <div class="collections-title-row">
+                <h2 style="font-size: 1.5rem; font-weight: 700;">Collections</h2>
+                <div class="collection-filter-wrapper">
+                    <button class="collection-filter-btn" onclick="toggleCollectionFilter()">
+                        <span id="current-filter-text">By Tools</span>
+                        <i data-lucide="chevron-down" style="width: 1rem; height: 1rem;"></i>
+                    </button>
+                    <div id="collection-filter-dropdown" class="collection-filter-dropdown">
+                        <div class="collection-filter-item active" onclick="switchCollectionFilter('tools_used', 'By Tools')">By Tools</div>
+                        <div class="collection-filter-item" onclick="switchCollectionFilter('industry', 'By Industry')">By Industry</div>
+                        <div class="collection-filter-item" onclick="switchCollectionFilter('primary_category', 'By Category')">By Category</div>
+                    </div>
                 </div>
             </div>
         </div>
+        
         <div id="collections-content"></div>
     </div>
     
     <!-- About Tab -->
     <div id="about-tab" class="tab-content">
         <div class="about-grid">
-            <div class="about-card">
-                <h3 class="about-card-title">
-                    <i data-lucide="user"></i>
-                    Bio
-                </h3>
-                <p id="about-bio" style="color: hsl(220 9% 46%); line-height: 1.7;"></p>
-            </div>
-            
-            <div class="about-card">
-                <h3 class="about-card-title">
-                    <i data-lucide="code"></i>
-                    Skills
-                </h3>
-                <div id="about-skills"></div>
-            </div>
-            
-            <div class="about-card">
-                <h3 class="about-card-title">
-                    <i data-lucide="star"></i>
-                    Top Specialties
-                </h3>
-                <div id="about-specialty"></div>
-            </div>
-            
-            <div class="about-card location-card">
-                <div class="location-icon">
-                    <i data-lucide="map-pin" style="width: 2rem; height: 2rem;"></i>
+            <div>
+                <div class="about-section">
+                    <h3 class="about-title">
+                        <i data-lucide="user" style="width: 1.125rem; height: 1.125rem;"></i>
+                        Bio
+                    </h3>
+                    <p id="about-bio" class="about-content"></p>
                 </div>
-                <div class="location-text" id="about-location"></div>
+                
+                <div class="about-section">
+                    <h3 class="about-title">
+                        <i data-lucide="code" style="width: 1.125rem; height: 1.125rem;"></i>
+                        Skills
+                    </h3>
+                    <div id="about-skills" class="skills-list"></div>
+                </div>
+                
+                <div class="about-section">
+                    <h3 class="about-title">
+                        <i data-lucide="star" style="width: 1.125rem; height: 1.125rem;"></i>
+                        Top Specialties
+                    </h3>
+                    <div id="about-specialty" class="specialty-list"></div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="location-box">
+                    <div class="location-icon">
+                        <i data-lucide="map-pin" style="width: 1.5rem; height: 1.5rem;"></i>
+                    </div>
+                    <div id="about-location" class="location-text"></div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Project Modal -->
-<div id="project-modal" class="modal-backdrop">
-    <div class="modal-container">
-        <div class="modal-header">
-            <div class="modal-title">
-                <img id="modal-avatar" src="" alt="" class="modal-avatar" />
-                <span id="modal-title-text"></span>
+<!-- PROJECT MODAL -->
+<div id="project-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+  <div id="modal-content-wrapper" class="modal-content">
+    <div class="modal-main-column">
+      <div class="modal-header-fixed">
+        <div class="modal-header-left">
+          <img id="modal-contractor-avatar" src="" alt="" class="modal-contractor-avatar" />
+          <h2 id="modal-title" class="modal-title-text"></h2>
+          <div class="modal-engagement-stats">
+            <button id="modal-like-btn" class="modal-like-btn" onclick="event.stopPropagation(); handleModalLike()">
+              <i data-lucide="heart" style="width: 1rem; height: 1rem;"></i>
+              <span id="modal-likes-count">0</span>
+            </button>
+            <div class="modal-engagement-stat">
+              <i data-lucide="eye" style="width: 1rem; height: 1rem;"></i>
+              <span id="modal-views-count">0</span>
             </div>
-            <div style="display: flex; align-items: center; gap: 1rem;">
-                <div style="display: flex; align-items: center; gap: 1.5rem; margin-right: 1rem;">
-                    <button id="modal-like-btn" onclick="handleModalLike()" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-weight: 600; color: hsl(220 9% 46%); transition: all 0.3s;">
-                        <i data-lucide="heart" style="width: 1.25rem; height: 1.25rem;"></i>
-                        <span id="modal-likes">0</span>
-                    </button>
-                    <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600; color: hsl(220 9% 46%);">
-                        <i data-lucide="eye" style="width: 1.25rem; height: 1.25rem;"></i>
-                        <span id="modal-views">0</span>
-                    </div>
-                </div>
-                <button class="modal-close-btn" onclick="closeProjectModal()">
-                    <i data-lucide="x" style="width: 1.5rem; height: 1.5rem;"></i>
-                </button>
-            </div>
+          </div>
         </div>
-        <div class="modal-body" id="modal-body"></div>
+        <div class="modal-header-actions">
+          <button id="modal-prev-btn" class="modal-nav-icon-btn" onclick="event.stopPropagation(); navigateProject(-1)" aria-label="Previous project">
+            <i data-lucide="chevron-left" style="width: 1.25rem; height: 1.25rem;"></i>
+          </button>
+          <button id="modal-next-btn" class="modal-nav-icon-btn" onclick="event.stopPropagation(); navigateProject(1)" aria-label="Next project">
+            <i data-lucide="chevron-right" style="width: 1.25rem; height: 1.25rem;"></i>
+          </button>
+          <button class="modal-nav-icon-btn" onclick="event.stopPropagation(); closeProjectModal()" aria-label="Close">
+            <i data-lucide="x" style="width: 1.25rem; height: 1.25rem;"></i>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body-content" id="modal-body"></div>
     </div>
+    <div id="modal-side-column" class="modal-side-column">
+      <div class="side-column-icons">
+        <button class="side-icon-btn" onclick="event.stopPropagation(); openShareModalFromProject()" title="Share">
+          <i data-lucide="share-2" style="width: 1.125rem; height: 1.125rem;"></i>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Enquiry Modal -->
-<div id="enquiry-modal" class="center-modal">
-    <div class="center-modal-content">
-        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem; background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 55% 50%)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Send Enquiry</h2>
+<div id="enquiry-modal" class="simple-modal-overlay" onclick="closeSimpleModalOnOverlay(event, 'enquiry-modal')">
+    <div class="simple-modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3 class="modal-title">Send Enquiry</h3>
+            <button class="modal-close" onclick="closeEnquiryModal()">
+                <i data-lucide="x" style="width: 1rem; height: 1rem;"></i>
+            </button>
+        </div>
         <form id="enquiry-form" onsubmit="submitEnquiry(event)">
             <div class="form-group">
-                <label class="form-label">Your Name *</label>
-                <input type="text" id="enquiry-name" class="form-input" required />
+                <label class="form-label" for="visitor-name">Your Name *</label>
+                <input type="text" id="visitor-name" class="form-input" required />
             </div>
             <div class="form-group">
-                <label class="form-label">Your Email *</label>
-                <input type="email" id="enquiry-email" class="form-input" required />
+                <label class="form-label" for="visitor-email">Your Email *</label>
+                <input type="email" id="visitor-email" class="form-input" required />
             </div>
             <div class="form-group">
-                <label class="form-label">Message *</label>
-                <textarea id="enquiry-message" class="form-textarea" required></textarea>
+                <label class="form-label" for="visitor-message">Message *</label>
+                <textarea id="visitor-message" class="form-textarea" required></textarea>
             </div>
             <div class="form-actions">
-                <button type="button" class="action-pill action-pill-outline" onclick="closeEnquiryModal()" style="flex: 1;">Cancel</button>
-                <button type="submit" class="action-pill" style="flex: 1;">Send</button>
+                <button type="button" class="form-cancel" onclick="closeEnquiryModal()">Cancel</button>
+                <button type="submit" class="form-submit">
+                    <span id="submit-text">Send Enquiry</span>
+                    <span id="submit-loading" style="display: none;">Sending...</span>
+                </button>
             </div>
         </form>
     </div>
 </div>
 
 <!-- Share Modal -->
-<div id="share-modal" class="center-modal">
-    <div class="center-modal-content">
-        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem; background: linear-gradient(135deg, hsl(146 55% 36%), hsl(146 55% 50%)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Share Profile</h2>
-        <div style="display: flex; flex-direction: column; gap: 1rem;">
-            <button class="action-pill" onclick="shareToLinkedIn()" style="width: 100%; justify-content: center;">
-                <i data-lucide="linkedin" style="width: 1.25rem; height: 1.25rem;"></i>
+<div id="share-modal" class="simple-modal-overlay" onclick="closeSimpleModalOnOverlay(event, 'share-modal')">
+    <div class="simple-modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3 class="modal-title">Share Profile</h3>
+            <button class="modal-close" onclick="closeShareModal()">
+                <i data-lucide="x" style="width: 1rem; height: 1rem;"></i>
+            </button>
+        </div>
+        <div class="share-options">
+            <button class="share-btn" onclick="shareToLinkedIn()">
+                <i data-lucide="linkedin" style="width: 1.125rem; height: 1.125rem;"></i>
                 Share on LinkedIn
             </button>
-            <button class="action-pill" onclick="shareToTwitter()" style="width: 100%; justify-content: center;">
-                <i data-lucide="twitter" style="width: 1.25rem; height: 1.25rem;"></i>
-                Share on X
+            <button class="share-btn" onclick="shareToTwitter()">
+                <i data-lucide="twitter" style="width: 1.125rem; height: 1.125rem;"></i>
+                Share on X (Twitter)
             </button>
-            <div style="margin-top: 1rem;">
+            <button class="share-btn" onclick="shareToFacebook()">
+                <i data-lucide="facebook" style="width: 1.125rem; height: 1.125rem;"></i>
+                Share on Facebook
+            </button>
+            <div class="share-link-group">
                 <label class="form-label">Profile Link</label>
-                <input type="text" id="share-link" class="form-input" readonly onclick="this.select()" />
-                <button class="action-pill" onclick="copyLink()" style="width: 100%; margin-top: 1rem; justify-content: center;">
-                    <i data-lucide="copy" style="width: 1.25rem; height: 1.25rem;"></i>
+                <input type="text" id="share-link-input" class="share-link-input" readonly onclick="this.select()" />
+                <button class="form-submit" style="width: 100%;" onclick="copyShareLink()">
                     Copy Link
                 </button>
             </div>
         </div>
-        <button class="action-pill action-pill-outline" onclick="closeShareModal()" style="width: 100%; margin-top: 2rem; justify-content: center;">Close</button>
     </div>
 </div>
 
-<!-- Toast -->
+<!-- Report Modal -->
+<div id="report-modal" class="simple-modal-overlay" onclick="closeSimpleModalOnOverlay(event, 'report-modal')">
+    <div class="simple-modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3 class="modal-title">Report Profile</h3>
+            <button class="modal-close" onclick="closeReportModal()">
+                <i data-lucide="x" style="width: 1rem; height: 1rem;"></i>
+            </button>
+        </div>
+        <form id="report-form" onsubmit="submitReport(event)">
+            <div class="form-group">
+                <label class="form-label" for="report-name">Your Name *</label>
+                <input type="text" id="report-name" class="form-input" required />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="report-email">Your Email *</label>
+                <input type="email" id="report-email" class="form-input" required />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="report-reason">Reason for Report *</label>
+                <textarea id="report-reason" class="form-textarea" placeholder="Please describe the issue..." required></textarea>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="form-cancel" onclick="closeReportModal()">Cancel</button>
+                <button type="submit" class="form-submit">
+                    <span id="report-text">Submit Report</span>
+                    <span id="report-loading" style="display: none;">Submitting...</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Toast Notification -->
 <div id="toast" class="toast">
-    <i id="toast-icon" data-lucide="check-circle" style="width: 1.5rem; height: 1.5rem; color: hsl(146 55% 36%);"></i>
+    <i id="toast-icon" data-lucide="check-circle" style="width: 1.25rem; height: 1.25rem;"></i>
     <span id="toast-message">Success!</span>
 </div>
 
 <!-- Footer -->
-<footer style="background: white; padding: 4rem 2rem; border-top: 1px solid hsl(220 13% 91%);">
+<footer style="padding: 4rem 2rem; border-top: 1px solid hsl(220 13% 91%);">
     <div style="max-width: 1400px; margin: 0 auto;">
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
             <div>
-                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-                    <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez" style="width: 2rem; height: 2rem;" />
-                    <span style="font-size: 1.25rem; font-weight: 800;">Packdez</span>
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                    <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez logo" style="height: 1.75rem; width: 1.75rem;" />
+                    <h3 style="font-size: 1.125rem; font-weight: 700;">Packdez</h3>
                 </div>
-                <p style="color: hsl(220 9% 46%); margin-bottom: 1.5rem;">Stay connected</p>
-                <div style="display: flex; gap: 1rem;">
-                    <a href="https://x.com/packdezHQ" target="_blank" style="width: 3rem; height: 3rem; background: hsl(220 14% 96%); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s;">
-                        <i data-lucide="twitter" style="width: 1.25rem; height: 1.25rem;"></i>
+                <p style="font-size: 0.875rem; color: hsl(220 9% 46%); margin-bottom: 1rem;">Stay connected</p>
+                <div style="display: flex; gap: 0.75rem;">
+                    <a href="https://x.com/packdezHQ" target="_blank" rel="noopener noreferrer" style="width: 2.5rem; height: 2.5rem; background: hsl(220 14% 96%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i data-lucide="twitter" style="width: 1rem; height: 1rem;"></i>
                     </a>
-                    <a href="https://www.linkedin.com/company/packdez/" target="_blank" style="width: 3rem; height: 3rem; background: hsl(220 14% 96%); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s;">
-                        <i data-lucide="linkedin" style="width: 1.25rem; height: 1.25rem;"></i>
+                    <a href="https://www.linkedin.com/company/packdez/" target="_blank" rel="noopener noreferrer" style="width: 2.5rem; height: 2.5rem; background: hsl(220 14% 96%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i data-lucide="linkedin" style="width: 1rem; height: 1rem;"></i>
                     </a>
-                    <a href="https://youtube.com/@packdezhqz?si=EXj27rVMq27WlWQp" target="_blank" style="width: 3rem; height: 3rem; background: hsl(220 14% 96%); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s;">
-                        <i data-lucide="youtube" style="width: 1.25rem; height: 1.25rem;"></i>
+                    <a href="https://youtube.com/@packdezhqz?si=EXj27rVMq27WlWQp" target="_blank" rel="noopener noreferrer" style="width: 2.5rem; height: 2.5rem; background: hsl(220 14% 96%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i data-lucide="youtube" style="width: 1rem; height: 1rem;"></i>
                     </a>
                 </div>
             </div>
             
             <div>
-                <h4 style="font-weight: 700; margin-bottom: 1rem;">What We Build</h4>
+                <h4 style="font-weight: 700; margin-bottom: 1rem; font-size: 0.875rem;">What We Build</h4>
                 <ul style="list-style: none;">
-                    <li style="margin-bottom: 0.5rem; color: hsl(220 9% 46%);">Automated reporting systems</li>
-                    <li style="margin-bottom: 0.5rem; color: hsl(220 9% 46%);">Operations automation</li>
-                    <li style="margin-bottom: 0.5rem; color: hsl(220 9% 46%);">Custom internal tools</li>
-                    <li style="margin-bottom: 0.5rem; color: hsl(220 9% 46%);">API integrations</li>
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Automated reporting systems</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Operations automation</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Custom internal tools</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">API integrations</span></li>
                 </ul>
             </div>
             
             <div>
-                <h4 style="font-weight: 700; margin-bottom: 1rem;">Contact</h4>
+                <h4 style="font-weight: 700; margin-bottom: 1rem; font-size: 0.875rem;">Contact</h4>
                 <ul style="list-style: none;">
-                    <li style="margin-bottom: 0.5rem; color: hsl(220 9% 46%);">packdez.com@gmail.com</li>
-                    <li style="margin-bottom: 0.5rem; color: hsl(220 9% 46%);">Response within 24 hours</li>
-                    <li style="margin-bottom: 0.5rem; color: hsl(220 9% 46%);">Delivery in 7-15 days</li>
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">packdez.com@gmail.com</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Response within 24 hours</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Delivery in 7-15 days</span></li>
                 </ul>
             </div>
         </div>
         
         <div style="padding-top: 2rem; border-top: 1px solid hsl(220 13% 91%); text-align: center;">
-            <p style="color: hsl(220 9% 46%);">© <span id="year"></span> Packdez</p>
+            <p style="font-size: 0.875rem; color: hsl(220 9% 46%);">© <span id="year"></span> Packdez</p>
         </div>
     </div>
 </footer>
 
 <script>
 // ===================================================================
-// CONFIGURATION & STATE
+// API & DATA MANAGEMENT
 // ===================================================================
 const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbx271i09tTrmNdXKofA4ExInWMPDDN-npO-GMOCKFL-j8M1h1CaD-bB0Qwk43Ey2T7Z/exec';
-const STORAGE_KEY = 'packdez_engagement';
 
 let contractorData = null;
 let contractorProjects = [];
-let currentProject = null;
-let currentFilter = 'tools_used';
-let currentPage = 1;
-const itemsPerPage = 9;
+let currentCollectionFilter = 'tools_used';
+let currentWorksPage = 1;
+const worksPerPage = 9;
+const STORAGE_KEY = 'packdez_project_engagement';
+let currentModalProject = null;
+let currentModalIndex = -1;
 
 // ===================================================================
 // UTILITY FUNCTIONS
 // ===================================================================
-function formatCount(num) {
-    if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
-    return num.toString();
+function formatCount(count) {
+    if (count >= 1000) {
+        return (count / 1000).toFixed(1) + 'k';
+    }
+    return count.toString();
 }
 
-function getYouTubeEmbed(url) {
+function getYouTubeEmbedUrl(url) {
     if (!url) return null;
-    const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-    return match ? `https://www.youtube.com/embed/${match[1]}` : null;
+    const videoIdMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+    return videoIdMatch ? `https://www.youtube.com/embed/${videoIdMatch[1]}` : null;
 }
 
-function getContractorId() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('contractor') || params.get('id');
+function getContractorIdFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('contractor') || urlParams.get('id');
 }
 
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toast-message');
+    const toastIcon = document.getElementById('toast-icon');
+    
+    toast.className = `toast ${type}`;
+    toastMessage.textContent = message;
+    
+    if (type === 'success') {
+        toastIcon.setAttribute('data-lucide', 'check-circle');
+    } else if (type === 'error') {
+        toastIcon.setAttribute('data-lucide', 'alert-circle');
+    }
+    
+    lucide.createIcons();
+    toast.classList.add('show');
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
+}
+
+// Engagement tracking
 function getEngagement() {
     const data = localStorage.getItem(STORAGE_KEY);
     return data ? JSON.parse(data) : {};
@@ -1384,14 +1894,19 @@ function getProjectEngagement(projectId) {
 
 function incrementViews(projectId) {
     const engagement = getEngagement();
-    if (!engagement[projectId]) engagement[projectId] = { views: 0, likes: 0, liked: false };
+    if (!engagement[projectId]) {
+        engagement[projectId] = { views: 0, likes: 0, liked: false };
+    }
     engagement[projectId].views++;
     saveEngagement(engagement);
+    return engagement[projectId].views;
 }
 
 function toggleLike(projectId) {
     const engagement = getEngagement();
-    if (!engagement[projectId]) engagement[projectId] = { views: 0, likes: 0, liked: false };
+    if (!engagement[projectId]) {
+        engagement[projectId] = { views: 0, likes: 0, liked: false };
+    }
     
     if (engagement[projectId].liked) {
         engagement[projectId].likes = Math.max(0, engagement[projectId].likes - 1);
@@ -1402,21 +1917,15 @@ function toggleLike(projectId) {
     }
     
     saveEngagement(engagement);
-    return engagement[projectId];
-}
-
-function showToast(message) {
-    const toast = document.getElementById('toast');
-    document.getElementById('toast-message').textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
+    return { likes: engagement[projectId].likes, liked: engagement[projectId].liked };
 }
 
 // ===================================================================
 // DATA FETCHING
 // ===================================================================
 async function fetchContractorData() {
-    const contractorId = getContractorId();
+    const contractorId = getContractorIdFromUrl();
+
     if (!contractorId) {
         showError('No contractor ID provided');
         return;
@@ -1425,45 +1934,53 @@ async function fetchContractorData() {
     try {
         const response = await fetch(API_ENDPOINT);
         const data = await response.json();
+
         const projects = data.projects || [];
 
-        const projectWithContractor = projects.find(p => p.contractor?.contractor_id === contractorId);
+        const projectWithContractor = projects.find(
+            p => p.contractor && p.contractor.contractor_id === contractorId
+        );
+
         if (!projectWithContractor) {
             showError('Contractor not found');
             return;
         }
 
         contractorData = projectWithContractor.contractor;
+
         contractorProjects = projects
-            .filter(p => p.contractor?.contractor_id === contractorId && p.status === 'published')
+            .filter(p => p.contractor && p.contractor.contractor_id === contractorId && p.status === 'published')
             .sort((a, b) => (a.display_order || 999) - (b.display_order || 999));
 
-        let totalViews = 0, totalLikes = 0;
+        let totalViews = 0;
+        let totalLikes = 0;
+
         contractorProjects.forEach(project => {
-            const eng = getProjectEngagement(project.project_id);
-            totalViews += (project.analytics?.total_views || 0) + eng.views;
-            totalLikes += (project.analytics?.total_likes || 0) + eng.likes;
+            const engagement = getProjectEngagement(project.project_id);
+            totalViews += (project.analytics?.total_views || 0) + engagement.views;
+            totalLikes += (project.analytics?.total_likes || 0) + engagement.likes;
         });
 
         contractorData.totalProjects = contractorProjects.length;
         contractorData.totalViews = totalViews;
         contractorData.totalLikes = totalLikes;
 
-        renderProfile();
+        renderContractorProfile();
         renderWorks();
         renderCollections();
         renderAbout();
+
     } catch (error) {
-        console.error('Error:', error);
-        showError('Failed to load data');
+        console.error('Error fetching data:', error);
+        showError('Failed to load contractor data');
     }
 }
 
 function showError(message) {
     document.getElementById('hero-loading').innerHTML = `
         <div class="empty-state">
-            <i data-lucide="alert-circle" style="width: 4rem; height: 4rem; margin: 0 auto 1.5rem; color: hsl(0 84% 60%);"></i>
-            <h3 style="font-weight: 700; font-size: 1.5rem; color: hsl(0 84% 60%);">${message}</h3>
+            <i data-lucide="alert-circle" style="width: 3rem; height: 3rem; margin: 0 auto 1rem; opacity: 0.3; color: hsl(0 84% 60%);"></i>
+            <h3 style="font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem; color: hsl(0 84% 60%);">${message}</h3>
             <p><a href="works.html" style="color: hsl(146 55% 36%); font-weight: 600;">← Back to Works</a></p>
         </div>
     `;
@@ -1471,93 +1988,113 @@ function showError(message) {
 }
 
 // ===================================================================
-// RENDER PROFILE
+// RENDER CONTRACTOR PROFILE
 // ===================================================================
-function renderProfile() {
-    document.getElementById('profile-avatar').src = contractorData.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png';
-    document.getElementById('profile-name').textContent = contractorData.contractor_name;
-    document.getElementById('career-statement').textContent = contractorData.career_statement || 'Automation specialist';
-    document.getElementById('total-projects').textContent = formatCount(contractorData.totalProjects);
-    document.getElementById('total-likes').textContent = formatCount(contractorData.totalLikes);
-    document.getElementById('total-views').textContent = formatCount(contractorData.totalViews);
-    
+function renderContractorProfile() {
+    const profileAvatar = document.getElementById('profile-avatar');
+    const profileName = document.getElementById('profile-name');
+    const careerStatement = document.getElementById('career-statement');
+    const totalProjects = document.getElementById('total-projects');
+    const totalLikes = document.getElementById('total-likes');
+    const totalViews = document.getElementById('total-views');
     const mediaContainer = document.getElementById('media-container');
+    
+    profileAvatar.src = contractorData.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png';
+    profileAvatar.alt = contractorData.contractor_name;
+    profileName.textContent = contractorData.contractor_name;
+    careerStatement.textContent = contractorData.career_statement || 'Automation specialist helping teams work smarter.';
+    
+    totalProjects.textContent = formatCount(contractorData.totalProjects);
+    totalLikes.textContent = formatCount(contractorData.totalLikes);
+    totalViews.textContent = formatCount(contractorData.totalViews);
+    
     if (contractorData.pitch_video) {
-        const embedUrl = getYouTubeEmbed(contractorData.pitch_video);
+        const embedUrl = getYouTubeEmbedUrl(contractorData.pitch_video);
         if (embedUrl) {
-            mediaContainer.innerHTML = `<iframe src="${embedUrl}" style="width: 100%; height: 100%; border: none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            mediaContainer.innerHTML = `<iframe src="${embedUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        } else {
+            mediaContainer.innerHTML = `<video src="${contractorData.pitch_video}" controls></video>`;
         }
     } else if (contractorData.profile_image) {
-        mediaContainer.innerHTML = `<img src="${contractorData.profile_image}" alt="${contractorData.contractor_name}" style="width: 100%; height: 100%; object-fit: cover;" />`;
+        mediaContainer.innerHTML = `<img src="${contractorData.profile_image}" alt="${contractorData.contractor_name}" />`;
     }
     
     document.getElementById('hero-loading').style.display = 'none';
-    document.getElementById('hero-content').style.display = 'grid';
+    document.getElementById('hero-content').style.display = 'block';
+    
     lucide.createIcons();
 }
 
 // ===================================================================
-// RENDER WORKS
+// RENDER WORKS TAB WITH PAGINATION
 // ===================================================================
 function renderWorks() {
-    const grid = document.getElementById('works-grid');
-    const loading = document.getElementById('works-loading');
-    const empty = document.getElementById('works-empty');
-    const container = document.getElementById('works-container');
+    const worksGrid = document.getElementById('works-grid');
+    const worksLoading = document.getElementById('works-loading');
+    const worksEmpty = document.getElementById('works-empty');
+    const worksContainer = document.getElementById('works-container');
+    const worksPagination = document.getElementById('works-pagination');
     
-    loading.style.display = 'none';
+    worksLoading.style.display = 'none';
     
     if (contractorProjects.length === 0) {
-        empty.style.display = 'block';
+        worksEmpty.style.display = 'block';
         lucide.createIcons();
         return;
     }
     
-    container.style.display = 'block';
+    worksContainer.style.display = 'block';
     
-    const start = (currentPage - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    const projectsToShow = contractorProjects.slice(start, end);
+    const startIndex = (currentWorksPage - 1) * worksPerPage;
+    const endIndex = startIndex + worksPerPage;
+    const projectsToShow = contractorProjects.slice(startIndex, endIndex);
     
-    grid.innerHTML = projectsToShow.map(project => {
-        const eng = getProjectEngagement(project.project_id);
-        const totalLikes = (project.analytics?.total_likes || 0) + eng.likes;
-        const totalViews = (project.analytics?.total_views || 0) + eng.views;
+    worksGrid.innerHTML = projectsToShow.map(project => {
+        const engagement = getProjectEngagement(project.project_id);
+        const totalLikes = (project.analytics?.total_likes || 0) + engagement.likes;
+        const totalViews = (project.analytics?.total_views || 0) + engagement.views;
         
         return `
-            <div class="project-card-modern" onclick="openProjectModal('${project.project_id}')">
-                <div class="project-image-wrapper">
-                    <img src="${project.thumbnail_image_url}" alt="${project.project_title}" class="project-image" />
-                    <div class="project-overlay">
-                        <button class="like-button ${eng.liked ? 'liked' : ''}" id="like-${project.project_id}" onclick="event.stopPropagation(); handleLike('${project.project_id}')">
-                            <i data-lucide="heart" style="width: 1.25rem; height: 1.25rem;"></i>
+        <div class="work-card" onclick="openProjectModal('${project.project_id}')">
+            <div class="work-card-image-wrapper">
+                <img 
+                    src="${project.thumbnail_image_url}" 
+                    alt="${project.image_alt_text || project.project_title}"
+                    class="work-card-image"
+                    loading="lazy"
+                />
+                
+                <div class="work-card-overlay">
+                    <div class="overlay-top">
+                        <button class="like-btn ${engagement.liked ? 'liked' : ''}" id="like-${project.project_id}" onclick="event.stopPropagation(); handleLike('${project.project_id}')">
+                            <i data-lucide="heart" style="width: 1rem; height: 1rem;"></i>
                         </button>
-                        <div class="project-info">
-                            <div class="project-title">${project.project_title}</div>
-                            <div class="project-stats">
-                                <div class="project-stat">
-                                    <i data-lucide="heart" style="width: 1rem; height: 1rem;"></i>
-                                    <span id="likes-${project.project_id}">${formatCount(totalLikes)}</span>
-                                </div>
-                                <div class="project-stat">
-                                    <i data-lucide="eye" style="width: 1rem; height: 1rem;"></i>
-                                    <span>${formatCount(totalViews)}</span>
-                                </div>
+                    </div>
+                    <div class="overlay-bottom">
+                        <div class="overlay-title">${project.project_title}</div>
+                        <div class="overlay-stats">
+                            <div class="overlay-stat">
+                                <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
+                                <span id="likes-${project.project_id}">${formatCount(totalLikes)}</span>
+                            </div>
+                            <div class="overlay-stat">
+                                <i data-lucide="eye" style="width: 0.875rem; height: 0.875rem;"></i>
+                                <span id="views-${project.project_id}">${formatCount(totalViews)}</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        `;
-    }).join('');
+        </div>
+    `}).join('');
     
-    renderPagination();
+    renderWorksPagination();
     lucide.createIcons();
 }
 
-function renderPagination() {
+function renderWorksPagination() {
     const pagination = document.getElementById('works-pagination');
-    const totalPages = Math.ceil(contractorProjects.length / itemsPerPage);
+    const totalPages = Math.ceil(contractorProjects.length / worksPerPage);
     
     if (totalPages <= 1) {
         pagination.style.display = 'none';
@@ -1566,70 +2103,95 @@ function renderPagination() {
     
     pagination.style.display = 'flex';
     
-    let html = `<button class="page-btn" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>Previous</button>`;
+    let html = `
+        <button class="pagination-btn" onclick="changeWorksPage(${currentWorksPage - 1})" ${currentWorksPage === 1 ? 'disabled' : ''}>
+            Previous
+        </button>
+    `;
     
     for (let i = 1; i <= totalPages; i++) {
-        if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
-            html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
-        } else if (i === currentPage - 2 || i === currentPage + 2) {
-            html += `<span style="padding: 0 0.5rem;">...</span>`;
+        if (i === 1 || i === totalPages || (i >= currentWorksPage - 1 && i <= currentWorksPage + 1)) {
+            html += `
+                <button class="pagination-btn ${i === currentWorksPage ? 'active' : ''}" onclick="changeWorksPage(${i})">
+                    ${i}
+                </button>
+            `;
+        } else if (i === currentWorksPage - 2 || i === currentWorksPage + 2) {
+            html += `<span style="padding: 0.5rem;">...</span>`;
         }
     }
     
-    html += `<button class="page-btn" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>Next</button>`;
+    html += `
+        <button class="pagination-btn" onclick="changeWorksPage(${currentWorksPage + 1})" ${currentWorksPage === totalPages ? 'disabled' : ''}>
+            Next
+        </button>
+    `;
     
     pagination.innerHTML = html;
 }
 
-function changePage(page) {
-    const totalPages = Math.ceil(contractorProjects.length / itemsPerPage);
+function changeWorksPage(page) {
+    const totalPages = Math.ceil(contractorProjects.length / worksPerPage);
     if (page < 1 || page > totalPages) return;
-    currentPage = page;
+    currentWorksPage = page;
     renderWorks();
-    document.getElementById('works-tab').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('works-tab').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function handleLike(projectId) {
-    const eng = toggleLike(projectId);
-    const btn = document.getElementById(`like-${projectId}`);
-    const count = document.getElementById(`likes-${projectId}`);
+    const result = toggleLike(projectId);
+    const likeBtn = document.getElementById(`like-${projectId}`);
+    const likesCount = document.getElementById(`likes-${projectId}`);
     
     const project = contractorProjects.find(p => p.project_id === projectId);
-    const totalLikes = (project.analytics?.total_likes || 0) + eng.likes;
+    const totalLikes = (project?.analytics?.total_likes || 0) + result.likes;
     
-    if (btn) {
-        btn.classList.toggle('liked', eng.liked);
-        btn.classList.add('animating');
-        setTimeout(() => btn.classList.remove('animating'), 500);
+    if (likeBtn) {
+        if (result.liked) {
+            likeBtn.classList.add('liked', 'animating');
+        } else {
+            likeBtn.classList.remove('liked');
+            likeBtn.classList.add('animating');
+        }
+        setTimeout(() => likeBtn.classList.remove('animating'), 400);
     }
     
-    if (count) count.textContent = formatCount(totalLikes);
+    if (likesCount) {
+        likesCount.textContent = formatCount(totalLikes);
+    }
     
-    if (currentProject?.project_id === projectId) updateModalEngagement();
+    // Update modal if open
+    if (currentModalProject && currentModalProject.project_id === projectId) {
+        updateModalEngagement();
+    }
     
     lucide.createIcons();
-    showToast(eng.liked ? 'Added to favorites!' : 'Removed from favorites');
+    showToast(result.liked ? 'Added to favorites!' : 'Removed from favorites');
 }
 
 // ===================================================================
-// RENDER COLLECTIONS
+// RENDER COLLECTIONS TAB
 // ===================================================================
 function renderCollections() {
-    const content = document.getElementById('collections-content');
+    const collectionsContent = document.getElementById('collections-content');
+    
     const grouped = {};
     
     contractorProjects.forEach(project => {
         let keys = [];
-        if (currentFilter === 'tools_used' && project.tools_used) {
+        
+        if (currentCollectionFilter === 'tools_used' && project.tools_used) {
             keys = project.tools_used.split(',').map(t => t.trim()).filter(Boolean);
-        } else if (currentFilter === 'industry' && project.industry) {
+        } else if (currentCollectionFilter === 'industry' && project.industry) {
             keys = [project.industry];
-        } else if (currentFilter === 'primary_category' && project.primary_category) {
+        } else if (currentCollectionFilter === 'primary_category' && project.primary_category) {
             keys = [project.primary_category];
         }
         
         keys.forEach(key => {
-            if (!grouped[key]) grouped[key] = [];
+            if (!grouped[key]) {
+                grouped[key] = [];
+            }
             grouped[key].push(project);
         });
     });
@@ -1637,71 +2199,79 @@ function renderCollections() {
     const sortedKeys = Object.keys(grouped).sort();
     
     if (sortedKeys.length === 0) {
-        content.innerHTML = `
+        collectionsContent.innerHTML = `
             <div class="empty-state">
-                <i data-lucide="folder" style="width: 4rem; height: 4rem; margin: 0 auto 1.5rem; opacity: 0.3;"></i>
-                <h3 style="font-weight: 700; font-size: 1.5rem;">No collections yet</h3>
+                <i data-lucide="folder" style="width: 3rem; height: 3rem; margin: 0 auto 1rem; opacity: 0.3;"></i>
+                <h3 style="font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem;">No collections yet</h3>
+                <p>Projects will be grouped here once available</p>
             </div>
         `;
         lucide.createIcons();
         return;
     }
     
-    content.innerHTML = sortedKeys.map((key, idx) => {
+    collectionsContent.innerHTML = sortedKeys.map((key, groupIndex) => {
         const projects = grouped[key];
         return `
             <div class="collection-group">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <div class="collection-group-header">
                     <h3 class="collection-group-title">
                         ${key}
-                        <span class="count-badge">${projects.length}</span>
+                        <span class="collection-count">${projects.length}</span>
                     </h3>
                     ${projects.length > 3 ? `
-                    <div class="carousel-nav">
-                        <button class="carousel-btn" onclick="scrollCarousel(${idx}, -1)" id="prev-${idx}">
-                            <i data-lucide="chevron-left" style="width: 1.25rem; height: 1.25rem;"></i>
+                    <div class="collection-nav">
+                        <button class="collection-nav-btn" onclick="scrollCollection(${groupIndex}, -1)" id="prev-${groupIndex}">
+                            <i data-lucide="chevron-left" style="width: 1rem; height: 1rem;"></i>
                         </button>
-                        <button class="carousel-btn" onclick="scrollCarousel(${idx}, 1)" id="next-${idx}">
-                            <i data-lucide="chevron-right" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <button class="collection-nav-btn" onclick="scrollCollection(${groupIndex}, 1)" id="next-${groupIndex}">
+                            <i data-lucide="chevron-right" style="width: 1rem; height: 1rem;"></i>
                         </button>
                     </div>
                     ` : ''}
                 </div>
-                <div class="carousel-wrapper">
-                    <div class="carousel-track" id="track-${idx}" data-pos="0">
+                <div class="collection-carousel">
+                    <div class="collection-track" id="track-${groupIndex}" data-position="0">
                         ${projects.map(project => {
-                            const eng = getProjectEngagement(project.project_id);
-                            const totalLikes = (project.analytics?.total_likes || 0) + eng.likes;
-                            const totalViews = (project.analytics?.total_views || 0) + eng.views;
+                            const engagement = getProjectEngagement(project.project_id);
+                            const totalLikes = (project.analytics?.total_likes || 0) + engagement.likes;
+                            const totalViews = (project.analytics?.total_views || 0) + engagement.views;
                             
                             return `
-                                <div class="carousel-item">
-                                    <div class="project-card-modern" onclick="openProjectModal('${project.project_id}')">
-                                        <div class="project-image-wrapper">
-                                            <img src="${project.thumbnail_image_url}" alt="${project.project_title}" class="project-image" />
-                                            <div class="project-overlay">
-                                                <button class="like-button ${eng.liked ? 'liked' : ''}" onclick="event.stopPropagation(); handleLike('${project.project_id}')">
-                                                    <i data-lucide="heart" style="width: 1.25rem; height: 1.25rem;"></i>
+                            <div class="collection-item">
+                                <div class="work-card" onclick="openProjectModal('${project.project_id}')">
+                                    <div class="work-card-image-wrapper">
+                                        <img 
+                                            src="${project.thumbnail_image_url}" 
+                                            alt="${project.image_alt_text || project.project_title}"
+                                            class="work-card-image"
+                                            loading="lazy"
+                                        />
+                                        
+                                        <div class="work-card-overlay">
+                                            <div class="overlay-top">
+                                                <button class="like-btn ${engagement.liked ? 'liked' : ''}" onclick="event.stopPropagation(); handleLike('${project.project_id}')">
+                                                    <i data-lucide="heart" style="width: 1rem; height: 1rem;"></i>
                                                 </button>
-                                                <div class="project-info">
-                                                    <div class="project-title">${project.project_title}</div>
-                                                    <div class="project-stats">
-                                                        <div class="project-stat">
-                                                            <i data-lucide="heart" style="width: 1rem; height: 1rem;"></i>
-                                                            <span>${formatCount(totalLikes)}</span>
-                                                        </div>
-                                                        <div class="project-stat">
-                                                            <i data-lucide="eye" style="width: 1rem; height: 1rem;"></i>
-                                                            <span>${formatCount(totalViews)}</span>
-                                                        </div>
+                                            </div>
+                                            <div class="overlay-bottom">
+                                                <div class="overlay-title">${project.project_title}</div>
+                                                <div class="overlay-stats">
+                                                    <div class="overlay-stat">
+                                                        <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
+                                                        <span>${formatCount(totalLikes)}</span>
+                                                    </div>
+                                                    <div class="overlay-stat">
+                                                        <i data-lucide="eye" style="width: 0.875rem; height: 0.875rem;"></i>
+                                                        <span>${formatCount(totalViews)}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            `;
-                        }).join('')}
+                            </div>
+                        `}).join('')}
                     </div>
                 </div>
             </div>
@@ -1711,58 +2281,63 @@ function renderCollections() {
     lucide.createIcons();
 }
 
-function scrollCarousel(idx, dir) {
-    const track = document.getElementById(`track-${idx}`);
-    const currentPos = parseInt(track.getAttribute('data-pos')) || 0;
-    const itemWidth = track.querySelector('.carousel-item').offsetWidth;
+function scrollCollection(groupIndex, direction) {
+    const track = document.getElementById(`track-${groupIndex}`);
+    const currentPosition = parseInt(track.getAttribute('data-position')) || 0;
+    const itemWidth = track.querySelector('.collection-item').offsetWidth;
     const gap = 32;
     const moveAmount = (itemWidth + gap) * 3;
     
-    const newPos = currentPos + (dir * moveAmount);
+    const newPosition = currentPosition + (direction * moveAmount);
     const maxScroll = -(track.scrollWidth - track.parentElement.offsetWidth);
-    const finalPos = Math.max(maxScroll, Math.min(0, newPos));
     
-    track.style.transform = `translateX(${finalPos}px)`;
-    track.setAttribute('data-pos', finalPos);
+    const finalPosition = Math.max(maxScroll, Math.min(0, newPosition));
     
-    const prevBtn = document.getElementById(`prev-${idx}`);
-    const nextBtn = document.getElementById(`next-${idx}`);
-    if (prevBtn) prevBtn.disabled = finalPos >= 0;
-    if (nextBtn) nextBtn.disabled = finalPos <= maxScroll;
+    track.style.transform = `translateX(${finalPosition}px)`;
+    track.setAttribute('data-position', finalPosition);
+    
+    const prevBtn = document.getElementById(`prev-${groupIndex}`);
+    const nextBtn = document.getElementById(`next-${groupIndex}`);
+    
+    if (prevBtn) prevBtn.disabled = finalPosition >= 0;
+    if (nextBtn) nextBtn.disabled = finalPosition <= maxScroll;
 }
 
 // ===================================================================
-// RENDER ABOUT
+// RENDER ABOUT TAB
 // ===================================================================
 function renderAbout() {
-    document.getElementById('about-bio').textContent = contractorData.bio || 'No bio available.';
+    const aboutBio = document.getElementById('about-bio');
+    const aboutSkills = document.getElementById('about-skills');
+    const aboutSpecialty = document.getElementById('about-specialty');
+    const aboutLocation = document.getElementById('about-location');
     
-    const skillsDiv = document.getElementById('about-skills');
+    aboutBio.textContent = contractorData.bio || 'No bio available.';
+    
     if (contractorData.skills) {
         const skills = contractorData.skills.split(',').map(s => s.trim()).filter(Boolean);
-        skillsDiv.innerHTML = skills.map(skill => `<span class="skill-pill">${skill}</span>`).join('');
+        aboutSkills.innerHTML = skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('');
     } else {
-        skillsDiv.innerHTML = '<p style="color: hsl(220 9% 46%);">No skills listed.</p>';
+        aboutSkills.innerHTML = '<p class="about-content">No skills listed.</p>';
     }
     
-    const specialtyDiv = document.getElementById('about-specialty');
     if (contractorData.top_specialty) {
         const specialties = contractorData.top_specialty.split(',').map(s => s.trim()).filter(Boolean);
         const experiences = contractorData.specialty_experience ? 
             contractorData.specialty_experience.split(',').map(s => s.trim()).filter(Boolean) : [];
         
-        specialtyDiv.innerHTML = specialties.map((specialty, i) => `
+        aboutSpecialty.innerHTML = specialties.map((specialty, index) => `
             <div class="specialty-item">
                 <div class="specialty-name">${specialty}</div>
-                <div class="specialty-exp">${experiences[i] || 'Expert'}</div>
+                <div class="specialty-exp">${experiences[index] || 'Expert level'}</div>
             </div>
         `).join('');
     } else {
-        specialtyDiv.innerHTML = '<p style="color: hsl(220 9% 46%);">No specialties listed.</p>';
+        aboutSpecialty.innerHTML = '<p class="about-content">No specialties listed.</p>';
     }
     
     const location = [contractorData.city, contractorData.country].filter(Boolean).join(', ');
-    document.getElementById('about-location').textContent = location || 'Location not specified';
+    aboutLocation.textContent = location || 'Location not specified';
     
     lucide.createIcons();
 }
@@ -1774,169 +2349,350 @@ function openProjectModal(projectId) {
     const project = contractorProjects.find(p => p.project_id === projectId);
     if (!project) return;
 
-    currentProject = project;
+    currentModalProject = project;
+    currentModalIndex = contractorProjects.findIndex(p => p.project_id === projectId);
+
+    // Increment view count
     incrementViews(projectId);
 
     const modal = document.getElementById('project-modal');
-    document.getElementById('modal-avatar').src = contractorData.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png';
-    document.getElementById('modal-title-text').textContent = project.project_title;
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+    const contractorAvatar = document.getElementById('modal-contractor-avatar');
+
+    const profileImage = contractorData.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png';
+    contractorAvatar.src = profileImage;
+    contractorAvatar.alt = contractorData.contractor_name;
+    modalTitle.textContent = project.project_title;
     
     updateModalEngagement();
 
-    let content = '<div style="max-width: 900px; margin: 0 auto;">';
+    let content = '';
+
+    // Featured Media Section
+    content += '<div class="featured-media-section">';
     
-    // Media
     const videoUrl = project.media?.video;
-    const embedUrl = getYouTubeEmbed(videoUrl);
+    const embedUrl = getYouTubeEmbedUrl(videoUrl);
     
-    content += '<div style="margin-bottom: 3rem; border-radius: 2rem; overflow: hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);">';
+    const mediaItems = [];
+    if (project.thumbnail_image_url) {
+        mediaItems.push({ type: 'image', url: project.thumbnail_image_url });
+    }
+    if (project.media?.images && Array.isArray(project.media.images)) {
+        project.media.images.forEach(img => {
+            if (img) mediaItems.push({ type: 'image', url: img });
+        });
+    }
+    if (videoUrl) {
+        mediaItems.push({ type: 'video', url: videoUrl });
+    }
+
+    if (mediaItems.length > 1) {
+        content += '<div class="media-thumbnails-vertical">';
+        mediaItems.forEach((media, index) => {
+            const thumbUrl = media.type === 'image' ? media.url : project.thumbnail_image_url;
+            content += `
+                <div class="media-thumbnail ${index === 0 ? 'active' : ''}" onclick="switchFeaturedMedia('${media.type}', '${media.url}', this)">
+                    <img src="${thumbUrl}" alt="Media ${index + 1}" />
+                </div>
+            `;
+        });
+        content += '</div>';
+    }
+    
+    content += '<div>';
     if (embedUrl) {
-        content += `<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="${embedUrl}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+        content += `
+            <div class="featured-media-container" id="featured-media">
+                <iframe src="${embedUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        `;
     } else {
-        content += `<img src="${project.thumbnail_image_url}" alt="${project.project_title}" style="width: 100%; display: block;" />`;
+        content += `
+            <div class="featured-media-container" id="featured-media">
+                <img src="${project.thumbnail_image_url}" alt="${project.image_alt_text || project.project_title}" />
+            </div>
+        `;
     }
     content += '</div>';
-    
-    // Details
+    content += '</div>';
+
+    // Project Details
+    content += '<div class="project-details-grid">';
+    if (project.primary_category) {
+        content += `
+            <div class="detail-item">
+                <div class="detail-label">Category</div>
+                <div class="detail-value">${project.primary_category}</div>
+            </div>
+        `;
+    }
+    if (project.industry) {
+        content += `
+            <div class="detail-item">
+                <div class="detail-label">Industry</div>
+                <div class="detail-value">${project.industry}</div>
+            </div>
+        `;
+    }
+    if (project.team_size_range) {
+        content += `
+            <div class="detail-item">
+                <div class="detail-label">Team Size</div>
+                <div class="detail-value">${project.team_size_range}</div>
+            </div>
+        `;
+    }
+    content += '</div>';
+
+    // Problem Section
     if (project.problem_details || project.problem_summary) {
         content += `
-            <div style="margin-bottom: 3rem;">
-                <h3 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1rem; color: hsl(146 55% 36%);">The Problem</h3>
-                <p style="font-size: 1.125rem; line-height: 1.7; color: hsl(220 9% 46%);">${project.problem_details || project.problem_summary}</p>
+            <div class="content-section">
+                <h3 class="section-title">The Problem</h3>
+                <p class="section-content">${project.problem_details || project.problem_summary}</p>
             </div>
         `;
     }
-    
+
+    // Solution Section
     if (project.system_overview) {
         content += `
-            <div style="margin-bottom: 3rem;">
-                <h3 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1rem; color: hsl(146 55% 36%);">The Solution</h3>
-                <p style="font-size: 1.125rem; line-height: 1.7; color: hsl(220 9% 46%);">${project.system_overview}</p>
+            <div class="content-section">
+                <h3 class="section-title">The Solution</h3>
+                <p class="section-content">${project.system_overview}</p>
             </div>
         `;
     }
-    
+
+    // Tools Section
     if (project.tools_used) {
         const tools = project.tools_used.split(',').map(t => t.trim()).filter(Boolean);
-        content += `
-            <div style="margin-bottom: 3rem;">
-                <h3 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1rem; color: hsl(146 55% 36%);">Tools Used</h3>
-                <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
-                    ${tools.map(tool => `<span class="skill-pill">${tool}</span>`).join('')}
+        if (tools.length > 0) {
+            content += `
+                <div class="content-section">
+                    <h3 class="section-title">Tools & Integrations</h3>
+                    <div class="tool-tags">
+                        ${tools.map(tool => `<span class="tool-tag">${tool}</span>`).join('')}
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
+        }
     }
-    
-    content += '</div>';
-    
-    document.getElementById('modal-body').innerHTML = content;
+
+    // Outcomes Section
+    if (project.primary_outcome || project.secondary_outcome) {
+        content += `
+            <div class="content-section">
+                <h3 class="section-title">Results</h3>
+                <div class="outcome-metrics">
+        `;
+        
+        if (project.primary_outcome) {
+            content += `
+                <div class="outcome-metric">
+                    <div class="outcome-metric-value">${project.primary_outcome}</div>
+                    <div class="outcome-metric-label">${project.metric_type || 'Primary outcome'}</div>
+                </div>
+            `;
+        }
+        
+        if (project.secondary_outcome) {
+            content += `
+                <div class="outcome-metric">
+                    <div class="outcome-metric-value">${project.secondary_outcome}</div>
+                    <div class="outcome-metric-label">Secondary outcome</div>
+                </div>
+            `;
+        }
+        
+        content += '</div></div>';
+    }
+
+    modalBody.innerHTML = content;
+    updateModalNavigation();
+
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+    
+    lucide.createIcons();
+}
+
+function switchFeaturedMedia(type, url, element) {
+    const featuredContainer = document.getElementById('featured-media');
+    
+    if (type === 'video') {
+        const embedUrl = getYouTubeEmbedUrl(url);
+        if (embedUrl) {
+            featuredContainer.innerHTML = `<iframe src="${embedUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        }
+    } else {
+        featuredContainer.innerHTML = `<img src="${url}" alt="Project media" />`;
+    }
+
+    document.querySelectorAll('.media-thumbnail').forEach(thumb => thumb.classList.remove('active'));
+    element.classList.add('active');
+}
+
+function updateModalEngagement() {
+    if (!currentModalProject) return;
+    
+    const engagement = getProjectEngagement(currentModalProject.project_id);
+    const analytics = currentModalProject.analytics || {};
+    
+    const totalViews = (analytics.total_views || 0) + engagement.views;
+    const totalLikes = (analytics.total_likes || 0) + engagement.likes;
+    
+    const modalLikesCount = document.getElementById('modal-likes-count');
+    const modalViewsCount = document.getElementById('modal-views-count');
+    const modalLikeBtn = document.getElementById('modal-like-btn');
+    
+    if (modalLikesCount) modalLikesCount.textContent = formatCount(totalLikes);
+    if (modalViewsCount) modalViewsCount.textContent = formatCount(totalViews);
+    
+    if (modalLikeBtn && engagement.liked) {
+        modalLikeBtn.classList.add('liked');
+    } else if (modalLikeBtn) {
+        modalLikeBtn.classList.remove('liked');
+    }
+    
     lucide.createIcons();
 }
 
 function handleModalLike() {
-    if (!currentProject) return;
-    handleLike(currentProject.project_id);
-}
-
-function updateModalEngagement() {
-    if (!currentProject) return;
+    if (!currentModalProject) return;
     
-    const eng = getProjectEngagement(currentProject.project_id);
-    const totalViews = (currentProject.analytics?.total_views || 0) + eng.views;
-    const totalLikes = (currentProject.analytics?.total_likes || 0) + eng.likes;
+    const result = toggleLike(currentModalProject.project_id);
+    updateModalEngagement();
     
-    document.getElementById('modal-likes').textContent = formatCount(totalLikes);
-    document.getElementById('modal-views').textContent = formatCount(totalViews);
+    // Update grid displays
+    const likeBtn = document.getElementById(`like-${currentModalProject.project_id}`);
+    const likesCount = document.getElementById(`likes-${currentModalProject.project_id}`);
     
-    const btn = document.getElementById('modal-like-btn');
-    if (btn) {
-        if (eng.liked) {
-            btn.style.color = 'hsl(310 77% 65%)';
+    const totalLikes = (currentModalProject.analytics?.total_likes || 0) + result.likes;
+    
+    if (likeBtn) {
+        if (result.liked) {
+            likeBtn.classList.add('liked');
         } else {
-            btn.style.color = 'hsl(220 9% 46%)';
+            likeBtn.classList.remove('liked');
         }
     }
     
+    if (likesCount) {
+        likesCount.textContent = formatCount(totalLikes);
+    }
+    
     lucide.createIcons();
+    showToast(result.liked ? 'Added to favorites!' : 'Removed from favorites');
 }
 
 function closeProjectModal() {
-    document.getElementById('project-modal').classList.remove('active');
+    const modal = document.getElementById('project-modal');
+    modal.classList.remove('active');
     document.body.style.overflow = '';
-    currentProject = null;
+    currentModalIndex = -1;
+    currentModalProject = null;
+}
+
+function closeModalOnOverlay(event) {
+    if (event.target.id === 'project-modal') {
+        closeProjectModal();
+    }
+}
+
+function updateModalNavigation() {
+    const prevBtn = document.getElementById('modal-prev-btn');
+    const nextBtn = document.getElementById('modal-next-btn');
+
+    prevBtn.disabled = currentModalIndex <= 0;
+    nextBtn.disabled = currentModalIndex >= contractorProjects.length - 1;
+}
+
+function navigateProject(direction) {
+    const newIndex = currentModalIndex + direction;
+    if (newIndex < 0 || newIndex >= contractorProjects.length) return;
+
+    const project = contractorProjects[newIndex];
+    openProjectModal(project.project_id);
+}
+
+function openShareModalFromProject() {
+    if (!currentModalProject) return;
+    const input = document.getElementById('share-link-input');
+    input.value = `${window.location.origin}${window.location.pathname.replace('contractor.html', 'works.html')}?project=${currentModalProject.project_id}`;
+    document.getElementById('share-modal').classList.add('active');
 }
 
 // ===================================================================
-// UI INTERACTIONS
+// TAB SWITCHING
 // ===================================================================
 function switchTab(tabName) {
-    document.querySelectorAll('.tab-item').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     event.target.classList.add('active');
     
     document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
     document.getElementById(`${tabName}-tab`).classList.add('active');
 }
 
-function toggleFilter() {
-    const dropdown = document.getElementById('filter-dropdown');
-    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+// ===================================================================
+// COLLECTION FILTER DROPDOWN
+// ===================================================================
+function toggleCollectionFilter() {
+    const dropdown = document.getElementById('collection-filter-dropdown');
+    dropdown.classList.toggle('active');
 }
 
-function switchFilter(filter, text) {
-    currentFilter = filter;
-    document.getElementById('current-filter').textContent = text;
-    toggleFilter();
+function switchCollectionFilter(filterType, filterText) {
+    currentCollectionFilter = filterType;
+    
+    document.getElementById('current-filter-text').textContent = filterText;
+    
+    document.querySelectorAll('.collection-filter-item').forEach(item => item.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    toggleCollectionFilter();
     renderCollections();
 }
 
-function toggleMobileMenu() {
-    document.getElementById('mobile-menu').classList.add('active');
-    document.getElementById('mobile-overlay').classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeMobileMenu() {
-    document.getElementById('mobile-menu').classList.remove('active');
-    document.getElementById('mobile-overlay').classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-function openEnquiryModal() {
-    document.getElementById('enquiry-modal').classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeEnquiryModal() {
-    document.getElementById('enquiry-modal').classList.remove('active');
-    document.getElementById('enquiry-form').reset();
-    document.body.style.overflow = '';
-}
-
-function submitEnquiry(e) {
-    e.preventDefault();
-    const name = document.getElementById('enquiry-name').value;
-    const email = document.getElementById('enquiry-email').value;
-    const message = document.getElementById('enquiry-message').value;
+// Close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+    const dropdown = document.getElementById('collection-filter-dropdown');
+    const filterBtn = document.querySelector('.collection-filter-btn');
+    const mainDropdown = document.getElementById('dropdown-menu');
+    const dropdownTrigger = document.querySelector('.dropdown-trigger');
     
-    const mailtoLink = `mailto:packdez.com@gmail.com?subject=Enquiry for ${encodeURIComponent(contractorData.contractor_name)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
-    window.location.href = mailtoLink;
+    if (dropdown && !dropdown.contains(e.target) && !filterBtn?.contains(e.target)) {
+        dropdown.classList.remove('active');
+    }
     
-    showToast('Opening email client...');
-    closeEnquiryModal();
+    if (mainDropdown && !mainDropdown.contains(e.target) && !dropdownTrigger?.contains(e.target)) {
+        mainDropdown.classList.remove('active');
+    }
+});
+
+// ===================================================================
+// DROPDOWN MENU
+// ===================================================================
+function toggleDropdown() {
+    const dropdown = document.getElementById('dropdown-menu');
+    dropdown.classList.toggle('active');
 }
 
+// ===================================================================
+// SHARE MODAL
+// ===================================================================
 function openShareModal() {
-    document.getElementById('share-link').value = window.location.href;
-    document.getElementById('share-modal').classList.add('active');
-    document.body.style.overflow = 'hidden';
+    const modal = document.getElementById('share-modal');
+    const input = document.getElementById('share-link-input');
+    input.value = window.location.href;
+    modal.classList.add('active');
+    toggleDropdown();
 }
 
 function closeShareModal() {
     document.getElementById('share-modal').classList.remove('active');
-    document.body.style.overflow = '';
 }
 
 function shareToLinkedIn() {
@@ -1950,22 +2706,137 @@ function shareToTwitter() {
     window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
 }
 
-function copyLink() {
-    const input = document.getElementById('share-link');
+function shareToFacebook() {
+    const url = encodeURIComponent(window.location.href);
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+}
+
+function copyShareLink() {
+    const input = document.getElementById('share-link-input');
     input.select();
     navigator.clipboard.writeText(input.value).then(() => {
         showToast('Link copied to clipboard!');
+    }).catch(() => {
+        showToast('Failed to copy link', 'error');
     });
 }
 
-// Close dropdowns when clicking outside
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.filter-pill') && !e.target.closest('#filter-dropdown')) {
-        document.getElementById('filter-dropdown').style.display = 'none';
-    }
-});
+// ===================================================================
+// REPORT MODAL
+// ===================================================================
+function openReportModal() {
+    document.getElementById('report-modal').classList.add('active');
+    toggleDropdown();
+}
 
-// Keyboard shortcuts
+function closeReportModal() {
+    document.getElementById('report-modal').classList.remove('active');
+    document.getElementById('report-form').reset();
+}
+
+function submitReport(event) {
+    event.preventDefault();
+    
+    const submitBtn = event.target.querySelector('.form-submit');
+    const submitText = document.getElementById('report-text');
+    const submitLoading = document.getElementById('report-loading');
+    
+    submitBtn.disabled = true;
+    submitText.style.display = 'none';
+    submitLoading.style.display = 'inline';
+    
+    setTimeout(() => {
+        showToast('Report submitted successfully. Thank you for your feedback.');
+        closeReportModal();
+        submitBtn.disabled = false;
+        submitText.style.display = 'inline';
+        submitLoading.style.display = 'none';
+    }, 1000);
+}
+
+// ===================================================================
+// ENQUIRY MODAL
+// ===================================================================
+function openEnquiryModal() {
+    document.getElementById('enquiry-modal').classList.add('active');
+}
+
+function closeEnquiryModal() {
+    document.getElementById('enquiry-modal').classList.remove('active');
+    document.getElementById('enquiry-form').reset();
+}
+
+function submitEnquiry(event) {
+    event.preventDefault();
+    
+    const submitBtn = event.target.querySelector('.form-submit');
+    const submitText = document.getElementById('submit-text');
+    const submitLoading = document.getElementById('submit-loading');
+    
+    submitBtn.disabled = true;
+    submitText.style.display = 'none';
+    submitLoading.style.display = 'inline';
+    
+    const visitorName = document.getElementById('visitor-name').value;
+    const visitorEmail = document.getElementById('visitor-email').value;
+    const visitorMessage = document.getElementById('visitor-message').value;
+    
+    const emailBody = `
+New Enquiry from Contractor Profile Page
+
+Visitor Details:
+Name: ${visitorName}
+Email: ${visitorEmail}
+
+Contractor Details:
+Name: ${contractorData.contractor_name}
+Email: ${contractorData.email || 'Not provided'}
+
+Message:
+${visitorMessage}
+
+---
+Sent from Packdez Contractor Profile: ${window.location.href}
+    `.trim();
+    
+    const mailtoLink = `mailto:packdez.com@gmail.com?subject=Enquiry for ${encodeURIComponent(contractorData.contractor_name)}&body=${encodeURIComponent(emailBody)}`;
+    window.location.href = mailtoLink;
+    
+    setTimeout(() => {
+        showToast('Enquiry form opened in your email client!');
+        closeEnquiryModal();
+        submitBtn.disabled = false;
+        submitText.style.display = 'inline';
+        submitLoading.style.display = 'none';
+    }, 500);
+}
+
+function closeSimpleModalOnOverlay(event, modalId) {
+    if (event.target.id === modalId) {
+        if (modalId === 'enquiry-modal') closeEnquiryModal();
+        if (modalId === 'share-modal') closeShareModal();
+        if (modalId === 'report-modal') closeReportModal();
+    }
+}
+
+// ===================================================================
+// MOBILE MENU
+// ===================================================================
+function toggleMobileMenu() {
+    document.getElementById('mobile-menu').classList.add('active');
+    document.getElementById('mobile-overlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeMobileMenu() {
+    document.getElementById('mobile-menu').classList.remove('active');
+    document.getElementById('mobile-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// ===================================================================
+// KEYBOARD SHORTCUTS
+// ===================================================================
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         if (document.getElementById('project-modal').classList.contains('active')) {
@@ -1974,6 +2845,17 @@ document.addEventListener('keydown', (e) => {
             closeEnquiryModal();
         } else if (document.getElementById('share-modal').classList.contains('active')) {
             closeShareModal();
+        } else if (document.getElementById('report-modal').classList.contains('active')) {
+            closeReportModal();
+        }
+    }
+    
+    const modalOpen = document.getElementById('project-modal').classList.contains('active');
+    if (modalOpen) {
+        if (e.key === 'ArrowLeft') {
+            navigateProject(-1);
+        } else if (e.key === 'ArrowRight') {
+            navigateProject(1);
         }
     }
 });
@@ -1983,10 +2865,11 @@ document.addEventListener('keydown', (e) => {
 // ===================================================================
 window.addEventListener('load', () => {
     window.scrollTo(0, 0);
-    document.getElementById('year').textContent = new Date().getFullYear();
-    fetchContractorData();
-    lucide.createIcons();
 });
+
+document.getElementById('year').textContent = new Date().getFullYear();
+fetchContractorData();
+lucide.createIcons();
 </script>
 
 </body>
