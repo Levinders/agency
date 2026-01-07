@@ -2551,15 +2551,17 @@ function openModal(projectId) {
   const contractor = project.contractor || {};
   content += `
     <div class="contractor-info-box">
-      <h3 class="contractor-name-large">
-          <a
-            href="contractor.html?contractor=${project.contractor_id}"
-            onclick="event.stopPropagation()"
-            style="text-decoration:none; color:inherit;"
-          >
-            ${contractor.name || project.contractor_name || 'Packdez Team'}
-          </a>
-        </h3>
+
+<h3 class="contractor-name-large">
+  <a
+    href="contractor.html?contractor=${project.contractor_id}"
+    onclick="event.stopPropagation()"
+    style="text-decoration:none; color:inherit;"
+  >
+    ${contractor.name || project.contractor_name || 'Packdez Team'}
+  </a>
+</h3>
+
       <p class="contractor-bio">${contractor.bio || 'Specialist in automation and workflow optimization'}</p>
       <button class="btn btn-primary" onclick="event.stopPropagation(); openEnquiryModal()">
         Send Enquiry
