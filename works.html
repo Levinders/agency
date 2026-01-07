@@ -2551,7 +2551,15 @@ function openModal(projectId) {
   const contractor = project.contractor || {};
   content += `
     <div class="contractor-info-box">
-      <h3 class="contractor-name-large">${contractor.name || project.contractor_name || 'Packdez Team'}</h3>
+      <h3 class="contractor-name-large">
+          <a
+            href="contractor.html?contractor=${project.contractor_id}"
+            onclick="event.stopPropagation()"
+            style="text-decoration:none; color:inherit;"
+          >
+            ${contractor.name || project.contractor_name || 'Packdez Team'}
+          </a>
+        </h3>
       <p class="contractor-bio">${contractor.bio || 'Specialist in automation and workflow optimization'}</p>
       <button class="btn btn-primary" onclick="event.stopPropagation(); openEnquiryModal()">
         Send Enquiry
@@ -2571,7 +2579,13 @@ function openModal(projectId) {
       <div class="content-section">
         <div class="related-projects-header">
           <h3 class="section-title" style="margin-bottom: 0;">More Projects by ${contractor.name || project.contractor_name || 'This Contractor'}</h3>
-          <a href="#" class="view-all-link" onclick="event.preventDefault(); alert('Contractor page coming soon!')">View All →</a>
+          <a
+              href="contractor.html?contractor=${project.contractor_id}"
+              class="view-all-link"
+              onclick="event.stopPropagation()"
+            >
+              View All →
+            </a>
         </div>
         <div class="related-projects-grid">
           ${relatedProjects.map(rp => {
