@@ -1171,84 +1171,66 @@ function showToast(message, type = 'success') {
 // ===================================================================
 async function fetchContractorData() {
     const contractorId = getContractorIdFromUrl();
-    
+
     if (!contractorId) {
         showError('No contractor ID provided');
         return;
     }
-    
+
     try {
         const response = await fetch(API_ENDPOINT);
         const data = await response.json();
-        
-        // Find contractor by ID
-const projects = data.projects || [];
 
-const projectWithContractor = projects.find(
-  p => p.contractor && p.contractor.contractor_id === contractorId
-);
+        const projects = data.projects || [];
 
-if (!projectWithContractor) {
-  showError('Contractor not found');
-  return;
-}
+        // Find contractor THROUGH projects
+        const projectWithContractor = projects.find(
+            p => p.contractor && p.contractor.contractor_id === contractorId
+        );
 
-contractorData = projectWithContractor.contractor;
+        if (!projectWithContractor) {
+            showError('Contractor not found');
+            return;
+        }
 
-        
+        contractorData = projectWithContractor.contractor;
+
         // Get all projects by this contractor
-        contractorProjects = (data.projects || [])
-            contractorProjects = projects.filter(
-                  p => p.contractor && p.contractor.contractor_id === contractorId
-                );
-
+        contractorProjects = projects
+            .filter(p => p.contractor && p.contractor.contractor_id === contractorId)
             .sort((a, b) => (a.display_order || 999) - (b.display_order || 999));
-        
-        // Calculate aggregated stats
-        let totalViews = 0;
-let totalLikes = 0;
-let totalComments = 0;
 
-contractorProjects.forEach(project => {
-  totalViews += project.analytics?.total_views || 0;
-  totalLikes += project.analytics?.total_likes || 0;
-  totalComments += project.comments?.length || 0;
-});
-
-        
+        // Aggregate stats from embedded analytics/comments
         let totalViews = 0;
         let totalLikes = 0;
         let totalComments = 0;
-        
+
         contractorProjects.forEach(project => {
-            const projectAnalytics = analytics.find(a => a.project_id === project.project_id);
-            if (projectAnalytics) {
-                totalViews += projectAnalytics.total_views || 0;
-                totalLikes += projectAnalytics.total_likes || 0;
-            }
-            
-            const projectFeedbacks = feedbacks.filter(f => f.project_id === project.project_id);
-            totalComments += projectFeedbacks.length;
+            totalViews += project.analytics?.total_views || 0;
+            totalLikes += project.analytics?.total_likes || 0;
+            totalComments += project.comments?.length || 0;
         });
-        
+
         contractorData.totalProjects = contractorProjects.length;
         contractorData.totalViews = totalViews;
         contractorData.totalLikes = totalLikes;
         contractorData.totalComments = totalComments;
-        
-        // Get industries covered
-        contractorData.industries = [...new Set(contractorProjects.map(p => p.industry).filter(Boolean))];
-        
+
+        contractorData.industries = [
+            ...new Set(contractorProjects.map(p => p.industry).filter(Boolean))
+        ];
+
         renderContractorProfile();
         renderWorks();
         renderCollections();
         renderAbout();
-        
+
     } catch (error) {
         console.error('Error fetching data:', error);
         showError('Failed to load contractor data');
     }
 }
+
 
 function showError(message) {
     document.getElementById('hero-loading').innerHTML = `
