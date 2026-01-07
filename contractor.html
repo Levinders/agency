@@ -1182,23 +1182,39 @@ async function fetchContractorData() {
         const data = await response.json();
         
         // Find contractor by ID
-        const contractor = (data.contractors || []).find(c => c.contractor_id === contractorId);
-        
-        if (!contractor) {
-            showError('Contractor not found');
-            return;
-        }
-        
-        contractorData = contractor;
+const projects = data.projects || [];
+
+const projectWithContractor = projects.find(
+  p => p.contractor && p.contractor.contractor_id === contractorId
+);
+
+if (!projectWithContractor) {
+  showError('Contractor not found');
+  return;
+}
+
+contractorData = projectWithContractor.contractor;
+
         
         // Get all projects by this contractor
         contractorProjects = (data.projects || [])
-            .filter(p => p.contractor_id === contractorId && p.status === 'published')
+            contractorProjects = projects.filter(
+                  p => p.contractor && p.contractor.contractor_id === contractorId
+                );
+
             .sort((a, b) => (a.display_order || 999) - (b.display_order || 999));
         
         // Calculate aggregated stats
-        const analytics = data.analytics || [];
-        const feedbacks = data.feedbacks || [];
+        let totalViews = 0;
+let totalLikes = 0;
+let totalComments = 0;
+
+contractorProjects.forEach(project => {
+  totalViews += project.analytics?.total_views || 0;
+  totalLikes += project.analytics?.total_likes || 0;
+  totalComments += project.comments?.length || 0;
+});
+
         
         let totalViews = 0;
         let totalLikes = 0;
