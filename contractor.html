@@ -59,16 +59,19 @@
 
         /* Hero Section - Revamped */
         .hero-section {
-            padding: 8rem 1rem 4rem;
+            padding: 8rem 1rem 3rem;
             background: white;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .hero-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
-            max-width: 1200px;
-            margin: 0 auto;
             align-items: start;
         }
 
@@ -79,11 +82,11 @@
             }
         }
 
-        /* Profile Column - No box, clean layout */
+        /* Profile Column */
         .profile-section {
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         .profile-header {
@@ -108,25 +111,15 @@
         .profile-name {
             font-size: 1.75rem;
             font-weight: 800;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
             color: hsl(220 20% 10%);
         }
 
-        /* Career Statement - Bigger and prominent */
-        .career-statement {
-            font-size: 1.375rem;
-            line-height: 1.7;
-            color: hsl(220 20% 20%);
-            font-weight: 500;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Stats - Smaller, inline */
+        /* Stats - Directly under name */
         .profile-stats {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             align-items: center;
-            margin-bottom: 1.5rem;
         }
 
         .stat-item {
@@ -136,18 +129,33 @@
         }
 
         .stat-value {
-            font-size: 1.125rem;
+            font-size: 1rem;
             font-weight: 700;
             color: hsl(146 55% 36%);
         }
 
         .stat-label {
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             font-weight: 500;
             color: hsl(220 9% 46%);
         }
 
-        /* Actions - Pill buttons, not full width */
+        /* Career Statement - Bigger on desktop */
+        .career-statement {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            color: hsl(220 20% 20%);
+            font-weight: 500;
+        }
+
+        @media (min-width: 969px) {
+            .career-statement {
+                font-size: 1.5rem;
+                line-height: 1.6;
+            }
+        }
+
+        /* Actions */
         .profile-actions {
             display: flex;
             gap: 0.75rem;
@@ -252,18 +260,19 @@
             border: none;
         }
 
-        /* Tabs Section - Clean pills */
+        /* Tabs Section */
         .tabs-section {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem 1rem;
+            padding: 0 1rem 2rem;
         }
 
         .tabs-header {
             display: flex;
             gap: 0.75rem;
-            margin-bottom: 2.5rem;
+            margin-bottom: 0;
             border-bottom: none;
+            padding-bottom: 1.5rem;
         }
 
         .tab-btn {
@@ -290,6 +299,13 @@
             color: hsl(220 20% 10%);
         }
 
+        /* Horizontal divider after tabs */
+        .tabs-divider {
+            height: 1px;
+            background: hsl(220 13% 91%);
+            margin-bottom: 2.5rem;
+        }
+
         .tab-content {
             display: none;
         }
@@ -298,7 +314,7 @@
             display: block;
         }
 
-        /* Works Grid - Cards show info on hover only */
+        /* Works Grid */
         .works-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -466,14 +482,20 @@
             cursor: not-allowed;
         }
 
-        /* Collections - Horizontal scroll with arrows */
+        /* Collections */
         .collections-header {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             margin-bottom: 2rem;
             flex-wrap: wrap;
             gap: 1rem;
+        }
+
+        .collections-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-right: 1rem;
         }
 
         .collection-filter-wrapper {
@@ -501,7 +523,7 @@
         .collection-filter-dropdown {
             position: absolute;
             top: calc(100% + 0.5rem);
-            right: 0;
+            left: 0;
             background: white;
             border: 1px solid hsl(220 13% 91%);
             border-radius: 0.5rem;
@@ -620,7 +642,7 @@
             }
         }
 
-        /* About Section - Revamped */
+        /* About Section */
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 300px;
@@ -669,7 +691,14 @@
             color: hsl(220 20% 10%);
         }
 
-        /* Specialty - Vertical list */
+        /* Specialty - Single background */
+        .specialty-container {
+            background: hsl(146 55% 36% / 0.05);
+            border: 1px solid hsl(146 55% 36% / 0.2);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+        }
+
         .specialty-list {
             display: flex;
             flex-direction: column;
@@ -680,10 +709,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem;
-            background: hsl(146 55% 36% / 0.05);
-            border: 1px solid hsl(146 55% 36% / 0.2);
-            border-radius: 0.5rem;
             gap: 1.5rem;
         }
 
@@ -701,7 +726,7 @@
             text-align: right;
         }
 
-        /* Location - Fixed width */
+        /* Location */
         .location-box {
             background: white;
             border: 1px solid hsl(220 13% 91%);
@@ -786,8 +811,496 @@
             border-left: 4px solid hsl(0 84% 60%);
         }
 
-        /* Modals */
+        /* Enhanced Project Modal - Full screen like works.html */
         .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .modal-main-column {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            position: relative;
+            flex: 1;
+        }
+
+        .modal-header-fixed {
+            position: sticky;
+            top: 0;
+            background: white;
+            border-bottom: 1px solid hsl(220 13% 91%);
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 20;
+            gap: 1rem;
+        }
+
+        .modal-header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .modal-contractor-avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid hsl(220 13% 91%);
+            flex-shrink: 0;
+        }
+
+        .modal-title-text {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: hsl(220 20% 10%);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+        }
+
+        .modal-engagement-stats {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-left: 1rem;
+            flex-shrink: 0;
+        }
+
+        .modal-engagement-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.875rem;
+            color: hsl(220 9% 46%);
+        }
+
+        .modal-like-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.875rem;
+            color: hsl(220 9% 46%);
+            transition: all 0.2s;
+            padding: 0;
+        }
+
+        .modal-like-btn:hover {
+            color: hsl(310 77% 65%);
+        }
+
+        .modal-like-btn.liked {
+            color: hsl(310 77% 65%);
+        }
+
+        .modal-like-btn.liked svg {
+            fill: currentColor;
+        }
+
+        @media (max-width: 768px) {
+            .modal-title-text {
+                font-size: 1rem;
+            }
+            .modal-engagement-stats {
+                display: none;
+            }
+        }
+
+        .modal-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .modal-nav-icon-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: hsl(220 14% 96%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-nav-icon-btn:hover:not(:disabled) {
+            background: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .modal-nav-icon-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .modal-body-content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .modal-body-content {
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        .featured-media-section {
+            margin-bottom: 2.5rem;
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .featured-media-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .media-thumbnails-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .media-thumbnails-vertical {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+        }
+
+        .featured-media-container {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            background: hsl(220 14% 96%);
+            position: relative;
+        }
+
+        .featured-media-container img,
+        .featured-media-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-media-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .media-thumbnail {
+            aspect-ratio: 4 / 3;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            background: hsl(220 14% 96%);
+            flex-shrink: 0;
+        }
+
+        .media-thumbnail:hover {
+            border-color: hsl(146 55% 36%);
+            transform: scale(1.05);
+        }
+
+        .media-thumbnail.active {
+            border-color: hsl(146 55% 36%);
+        }
+
+        .media-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: hsl(220 14% 98%);
+            border-radius: 0.75rem;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.375rem;
+        }
+
+        .detail-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: hsl(220 9% 46%);
+        }
+
+        .detail-value {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: hsl(220 20% 10%);
+        }
+
+        .content-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: hsl(220 20% 10%);
+        }
+
+        .section-content {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: hsl(220 9% 46%);
+        }
+
+        .tool-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tool-tag {
+            padding: 0.375rem 0.75rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.375rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: hsl(220 20% 10%);
+        }
+
+        .outcome-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .outcome-metric {
+            background: hsl(220 14% 98%);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+        }
+
+        .outcome-metric-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: hsl(146 55% 36%);
+            margin-bottom: 0.5rem;
+        }
+
+        .outcome-metric-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: hsl(220 9% 46%);
+        }
+
+        .testimonial-box {
+            background: hsl(220 14% 98%);
+            border-left: 4px solid hsl(146 55% 36%);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .contractor-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 3rem 0;
+            position: relative;
+        }
+
+        .contractor-divider::before,
+        .contractor-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: hsl(220 13% 91%);
+        }
+
+        .contractor-avatar-large {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 0 1.5rem;
+        }
+
+        .contractor-info-box {
+            background: hsl(220 14% 98%);
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .contractor-name-large {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: hsl(220 20% 10%);
+        }
+
+        .contractor-bio {
+            font-size: 1rem;
+            color: hsl(220 9% 46%);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .related-projects-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .view-all-link {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: hsl(146 55% 36%);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .view-all-link:hover {
+            color: hsl(146 55% 32%);
+            text-decoration: underline;
+        }
+
+        .related-projects-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 968px) {
+            .related-projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .related-projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .related-project-card {
+            cursor: pointer;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .related-project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .related-project-image {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            background: hsl(220 14% 96%);
+            border-radius: 0.5rem;
+        }
+
+        .related-project-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .related-project-card:hover .related-project-overlay {
+            opacity: 1;
+        }
+
+        .related-project-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .related-project-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: white;
+        }
+
+        .related-project-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* Other modals - centered */
+        .center-modal-overlay {
             position: fixed;
             inset: 0;
             background: rgba(15, 23, 42, 0.7);
@@ -799,11 +1312,11 @@
             padding: 1rem;
         }
 
-        .modal-overlay.active {
+        .center-modal-overlay.active {
             display: flex;
         }
 
-        .modal-content {
+        .center-modal-content {
             background: white;
             border-radius: 1rem;
             max-width: 500px;
@@ -913,7 +1426,6 @@
             background: hsl(146 55% 32%);
         }
 
-        /* Share Modal - Social buttons */
         .share-options {
             display: flex;
             flex-direction: column;
@@ -1029,12 +1541,12 @@
 <nav class="nav-fixed">
   <div class="max-w-6xl mx-auto px-4">
     <div class="flex items-center justify-between h-16">
-      <a href="https://packdez.com" class="flex items-center gap-2 md:-ml-12">
+      <a href="https://packdez.com" class="flex items-center gap-2">
         <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez logo" class="h-8 w-8" />
         <span class="text-xl font-bold">Packdez</span>
       </a>
       
-      <div class="desktop-only flex items-center gap-6" style="margin-right:-90px;">
+      <div class="desktop-only flex items-center gap-6">
         <a href="https://packdez.com#work" class="text-sm font-medium text-muted-foreground hover:text-primary">Work</a>
         <a href="https://packdez.com#pricing" class="text-sm font-medium text-muted-foreground hover:text-primary">Pricing</a>
         <a href="https://packdez.com#reviews" class="text-sm font-medium text-muted-foreground hover:text-primary">Reviews</a>
@@ -1058,7 +1570,7 @@
         <p class="text-muted-foreground">Loading contractor profile...</p>
     </div>
     
-    <div id="hero-content" style="display: none;">
+    <div id="hero-content" class="hero-container" style="display: none;">
         <div class="hero-grid">
             <!-- Profile Column -->
             <div class="profile-section">
@@ -1066,25 +1578,24 @@
                     <img id="profile-avatar" src="" alt="" class="profile-avatar" />
                     <div class="profile-info">
                         <h1 id="profile-name" class="profile-name"></h1>
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <span id="total-projects" class="stat-value">0</span>
+                                <span class="stat-label">Projects</span>
+                            </div>
+                            <div class="stat-item">
+                                <span id="total-likes" class="stat-value">0</span>
+                                <span class="stat-label">Likes</span>
+                            </div>
+                            <div class="stat-item">
+                                <span id="total-views" class="stat-value">0</span>
+                                <span class="stat-label">Views</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
                 <p id="career-statement" class="career-statement"></p>
-                
-                <div class="profile-stats">
-                    <div class="stat-item">
-                        <span id="total-projects" class="stat-value">0</span>
-                        <span class="stat-label">Projects</span>
-                    </div>
-                    <div class="stat-item">
-                        <span id="total-likes" class="stat-value">0</span>
-                        <span class="stat-label">Likes</span>
-                    </div>
-                    <div class="stat-item">
-                        <span id="total-views" class="stat-value">0</span>
-                        <span class="stat-label">Views</span>
-                    </div>
-                </div>
                 
                 <div class="profile-actions">
                     <button class="action-btn" onclick="openEnquiryModal()">
@@ -1125,6 +1636,8 @@
         <button class="tab-btn" onclick="switchTab('about')">About</button>
     </div>
     
+    <div class="tabs-divider"></div>
+    
     <!-- Works Tab -->
     <div id="works-tab" class="tab-content active">
         <div id="works-loading" class="loading-state">
@@ -1147,7 +1660,7 @@
     <!-- Collections Tab -->
     <div id="collections-tab" class="tab-content">
         <div class="collections-header">
-            <h2 style="font-size: 1.5rem; font-weight: 700;">Collections</h2>
+            <h2 class="collections-title">Collections</h2>
             <div class="collection-filter-wrapper">
                 <button class="collection-filter-btn" onclick="toggleCollectionFilter()">
                     <span id="current-filter-text">By Tools</span>
@@ -1189,7 +1702,9 @@
                         <i data-lucide="star" style="width: 1.125rem; height: 1.125rem;"></i>
                         Top Specialties
                     </h3>
-                    <div id="about-specialty" class="specialty-list"></div>
+                    <div class="specialty-container">
+                        <div id="about-specialty" class="specialty-list"></div>
+                    </div>
                 </div>
             </div>
             
@@ -1205,9 +1720,40 @@
     </div>
 </section>
 
+<!-- Project Modal (Full Screen like works.html) -->
+<div id="project-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+    <div class="modal-content">
+        <div class="modal-main-column">
+            <div class="modal-header-fixed">
+                <div class="modal-header-left">
+                    <img id="modal-contractor-avatar" src="" alt="" class="modal-contractor-avatar" />
+                    <h2 id="modal-title" class="modal-title-text"></h2>
+                    <div class="modal-engagement-stats">
+                        <button id="modal-like-btn" class="modal-like-btn" onclick="event.stopPropagation(); handleModalLike()">
+                            <i data-lucide="heart" style="width: 1rem; height: 1rem;"></i>
+                            <span id="modal-likes-count">0</span>
+                        </button>
+                        <div class="modal-engagement-stat">
+                            <i data-lucide="eye" style="width: 1rem; height: 1rem;"></i>
+                            <span id="modal-views-count">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-header-actions">
+                    <button class="modal-nav-icon-btn" onclick="event.stopPropagation(); closeProjectModal()">
+                        <i data-lucide="x" style="width: 1.25rem; height: 1.25rem;"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="modal-body-content" id="modal-body"></div>
+        </div>
+    </div>
+</div>
+
 <!-- Enquiry Modal -->
-<div id="enquiry-modal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'enquiry-modal')">
-    <div class="modal-content" onclick="event.stopPropagation()">
+<div id="enquiry-modal" class="center-modal-overlay" onclick="closeEnquiryModalOnOverlay(event)">
+    <div class="center-modal-content" onclick="event.stopPropagation()">
         <div class="modal-header">
             <h3 class="modal-title">Send Enquiry</h3>
             <button class="modal-close" onclick="closeEnquiryModal()">
@@ -1239,8 +1785,8 @@
 </div>
 
 <!-- Share Modal -->
-<div id="share-modal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'share-modal')">
-    <div class="modal-content" onclick="event.stopPropagation()">
+<div id="share-modal" class="center-modal-overlay" onclick="closeShareModalOnOverlay(event)">
+    <div class="center-modal-content" onclick="event.stopPropagation()">
         <div class="modal-header">
             <h3 class="modal-title">Share Profile</h3>
             <button class="modal-close" onclick="closeShareModal()">
@@ -1272,8 +1818,8 @@
 </div>
 
 <!-- Report Modal -->
-<div id="report-modal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'report-modal')">
-    <div class="modal-content" onclick="event.stopPropagation()">
+<div id="report-modal" class="center-modal-overlay" onclick="closeReportModalOnOverlay(event)">
+    <div class="center-modal-content" onclick="event.stopPropagation()">
         <div class="modal-header">
             <h3 class="modal-title">Report Profile</h3>
             <button class="modal-close" onclick="closeReportModal()">
@@ -1369,8 +1915,9 @@ let contractorData = null;
 let contractorProjects = [];
 let currentCollectionFilter = 'tools_used';
 let currentWorksPage = 1;
-const worksPerPage = 9; // 3 rows x 3 columns
-const STORAGE_KEY = 'packdez_project_likes';
+let currentProject = null;
+const worksPerPage = 9;
+const STORAGE_KEY = 'packdez_project_engagement';
 
 // ===================================================================
 // UTILITY FUNCTIONS
@@ -1415,26 +1962,46 @@ function showToast(message, type = 'success') {
     }, 3000);
 }
 
-// Local storage for likes
-function getLikes() {
+function getEngagement() {
     const data = localStorage.getItem(STORAGE_KEY);
     return data ? JSON.parse(data) : {};
 }
 
-function saveLikes(likes) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(likes));
+function saveEngagement(engagement) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(engagement));
 }
 
-function isLiked(projectId) {
-    const likes = getLikes();
-    return likes[projectId] === true;
+function getProjectEngagement(projectId) {
+    const engagement = getEngagement();
+    return engagement[projectId] || { views: 0, likes: 0, liked: false };
+}
+
+function incrementViews(projectId) {
+    const engagement = getEngagement();
+    if (!engagement[projectId]) {
+        engagement[projectId] = { views: 0, likes: 0, liked: false };
+    }
+    engagement[projectId].views++;
+    saveEngagement(engagement);
+    return engagement[projectId].views;
 }
 
 function toggleLike(projectId) {
-    const likes = getLikes();
-    likes[projectId] = !likes[projectId];
-    saveLikes(likes);
-    return likes[projectId];
+    const engagement = getEngagement();
+    if (!engagement[projectId]) {
+        engagement[projectId] = { views: 0, likes: 0, liked: false };
+    }
+    
+    if (engagement[projectId].liked) {
+        engagement[projectId].likes = Math.max(0, engagement[projectId].likes - 1);
+        engagement[projectId].liked = false;
+    } else {
+        engagement[projectId].likes++;
+        engagement[projectId].liked = true;
+    }
+    
+    saveEngagement(engagement);
+    return engagement[projectId];
 }
 
 // ===================================================================
@@ -1473,17 +2040,14 @@ async function fetchContractorData() {
         let totalLikes = 0;
 
         contractorProjects.forEach(project => {
-            totalViews += project.analytics?.total_views || 0;
-            totalLikes += project.analytics?.total_likes || 0;
+            const engagement = getProjectEngagement(project.project_id);
+            totalViews += (project.analytics?.total_views || 0) + engagement.views;
+            totalLikes += (project.analytics?.total_likes || 0) + engagement.likes;
         });
 
         contractorData.totalProjects = contractorProjects.length;
         contractorData.totalViews = totalViews;
         contractorData.totalLikes = totalLikes;
-
-        contractorData.industries = [
-            ...new Set(contractorProjects.map(p => p.industry).filter(Boolean))
-        ];
 
         renderContractorProfile();
         renderWorks();
@@ -1573,9 +2137,12 @@ function renderWorks() {
     const projectsToShow = contractorProjects.slice(startIndex, endIndex);
     
     worksGrid.innerHTML = projectsToShow.map(project => {
-        const liked = isLiked(project.project_id);
+        const engagement = getProjectEngagement(project.project_id);
+        const totalLikes = (project.analytics?.total_likes || 0) + engagement.likes;
+        const totalViews = (project.analytics?.total_views || 0) + engagement.views;
+        
         return `
-        <div class="work-card" onclick="openProject('${project.project_id}')">
+        <div class="work-card" onclick="openProjectModal('${project.project_id}')">
             <div class="work-card-image-wrapper">
                 <img 
                     src="${project.thumbnail_image_url}" 
@@ -1586,7 +2153,7 @@ function renderWorks() {
                 
                 <div class="work-card-overlay">
                     <div class="overlay-top">
-                        <button class="like-btn ${liked ? 'liked' : ''}" id="like-${project.project_id}" onclick="event.stopPropagation(); handleLike('${project.project_id}')">
+                        <button class="like-btn ${engagement.liked ? 'liked' : ''}" id="like-${project.project_id}" onclick="event.stopPropagation(); handleLike('${project.project_id}')">
                             <i data-lucide="heart" style="width: 1rem; height: 1rem;"></i>
                         </button>
                     </div>
@@ -1595,11 +2162,11 @@ function renderWorks() {
                         <div class="overlay-stats">
                             <div class="overlay-stat">
                                 <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
-                                <span id="likes-${project.project_id}">${formatCount(project.analytics?.total_likes || 0)}</span>
+                                <span id="likes-${project.project_id}">${formatCount(totalLikes)}</span>
                             </div>
                             <div class="overlay-stat">
                                 <i data-lucide="eye" style="width: 0.875rem; height: 0.875rem;"></i>
-                                <span>${formatCount(project.analytics?.total_views || 0)}</span>
+                                <span id="views-${project.project_id}">${formatCount(totalViews)}</span>
                             </div>
                         </div>
                     </div>
@@ -1659,12 +2226,15 @@ function changeWorksPage(page) {
 }
 
 function handleLike(projectId) {
-    const liked = toggleLike(projectId);
+    const engagement = toggleLike(projectId);
     const likeBtn = document.getElementById(`like-${projectId}`);
     const likesCount = document.getElementById(`likes-${projectId}`);
     
+    const project = contractorProjects.find(p => p.project_id === projectId);
+    const totalLikes = (project.analytics?.total_likes || 0) + engagement.likes;
+    
     if (likeBtn) {
-        if (liked) {
+        if (engagement.liked) {
             likeBtn.classList.add('liked', 'animating');
         } else {
             likeBtn.classList.remove('liked');
@@ -1673,16 +2243,355 @@ function handleLike(projectId) {
         setTimeout(() => likeBtn.classList.remove('animating'), 400);
     }
     
+    if (likesCount) {
+        likesCount.textContent = formatCount(totalLikes);
+    }
+    
+    if (currentProject && currentProject.project_id === projectId) {
+        updateModalEngagement();
+    }
+    
     lucide.createIcons();
-    showToast(liked ? 'Added to favorites!' : 'Removed from favorites');
-}
-
-function openProject(projectId) {
-    window.location.href = `works.html?project=${projectId}`;
+    showToast(engagement.liked ? 'Added to favorites!' : 'Removed from favorites');
 }
 
 // ===================================================================
-// RENDER COLLECTIONS TAB WITH HORIZONTAL SCROLL
+// PROJECT MODAL (Like works.html)
+// ===================================================================
+function openProjectModal(projectId) {
+    const project = contractorProjects.find(p => p.project_id === projectId);
+    if (!project) return;
+
+    currentProject = project;
+    incrementViews(projectId);
+
+    const modal = document.getElementById('project-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+    const contractorAvatar = document.getElementById('modal-contractor-avatar');
+
+    const profileImage = contractorData.profile_image || 'https://packdez.com/assets/logo/packdez-logo-512x512.png';
+    contractorAvatar.src = profileImage;
+    contractorAvatar.alt = contractorData.contractor_name;
+    modalTitle.textContent = project.project_title;
+    
+    updateModalEngagement();
+
+    let content = '';
+
+    // Featured Media Section
+    content += '<div class="featured-media-section">';
+    
+    const videoUrl = project.media?.video;
+    const embedUrl = getYouTubeEmbedUrl(videoUrl);
+    
+    const mediaItems = [];
+    if (project.thumbnail_image_url) {
+        mediaItems.push({ type: 'image', url: project.thumbnail_image_url });
+    }
+    if (project.media?.images && Array.isArray(project.media.images)) {
+        project.media.images.forEach(img => {
+            if (img) mediaItems.push({ type: 'image', url: img });
+        });
+    }
+    if (videoUrl) {
+        mediaItems.push({ type: 'video', url: videoUrl });
+    }
+
+    if (mediaItems.length > 1) {
+        content += '<div class="media-thumbnails-vertical">';
+        mediaItems.forEach((media, index) => {
+            const thumbUrl = media.type === 'image' ? media.url : project.thumbnail_image_url;
+            content += `
+                <div class="media-thumbnail ${index === 0 ? 'active' : ''}" onclick="switchFeaturedMedia('${media.type}', '${media.url}', this)">
+                    <img src="${thumbUrl}" alt="Media ${index + 1}" />
+                </div>
+            `;
+        });
+        content += '</div>';
+    }
+    
+    content += '<div>';
+    if (embedUrl) {
+        content += `
+            <div class="featured-media-container" id="featured-media">
+                <iframe src="${embedUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        `;
+    } else {
+        content += `
+            <div class="featured-media-container" id="featured-media">
+                <img src="${project.thumbnail_image_url}" alt="${project.image_alt_text || project.project_title}" />
+            </div>
+        `;
+    }
+    content += '</div>';
+    content += '</div>';
+
+    // Project Details Grid
+    content += '<div class="project-details-grid">';
+    if (project.primary_category) {
+        content += `
+            <div class="detail-item">
+                <div class="detail-label">Category</div>
+                <div class="detail-value">${project.primary_category}</div>
+            </div>
+        `;
+    }
+    if (project.industry) {
+        content += `
+            <div class="detail-item">
+                <div class="detail-label">Industry</div>
+                <div class="detail-value">${project.industry}</div>
+            </div>
+        `;
+    }
+    if (project.team_size_range) {
+        content += `
+            <div class="detail-item">
+                <div class="detail-label">Team Size</div>
+                <div class="detail-value">${project.team_size_range}</div>
+            </div>
+        `;
+    }
+    if (project.client_context) {
+        content += `
+            <div class="detail-item">
+                <div class="detail-label">Client</div>
+                <div class="detail-value">${project.client_context}</div>
+            </div>
+        `;
+    }
+    content += '</div>';
+
+    // Problem Section
+    if (project.problem_details || project.problem_summary) {
+        content += `
+            <div class="content-section">
+                <h3 class="section-title">The Problem</h3>
+                <p class="section-content">${project.problem_details || project.problem_summary}</p>
+            </div>
+        `;
+    }
+
+    // Solution Section
+    if (project.system_overview) {
+        content += `
+            <div class="content-section">
+                <h3 class="section-title">The Solution</h3>
+                <p class="section-content">${project.system_overview}</p>
+            </div>
+        `;
+    }
+
+    // Tools Section
+    if (project.tools_used) {
+        const tools = project.tools_used.split(',').map(t => t.trim()).filter(Boolean);
+        if (tools.length > 0) {
+            content += `
+                <div class="content-section">
+                    <h3 class="section-title">Tools & Integrations</h3>
+                    <div class="tool-tags">
+                        ${tools.map(tool => `<span class="tool-tag">${tool}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    // Outcomes Section
+    if (project.primary_outcome || project.secondary_outcome) {
+        content += `
+            <div class="content-section">
+                <h3 class="section-title">Results</h3>
+                <div class="outcome-metrics">
+        `;
+        
+        if (project.primary_outcome) {
+            content += `
+                <div class="outcome-metric">
+                    <div class="outcome-metric-value">${project.primary_outcome}</div>
+                    <div class="outcome-metric-label">${project.metric_type || 'Primary outcome'}</div>
+                </div>
+            `;
+        }
+        
+        if (project.secondary_outcome) {
+            content += `
+                <div class="outcome-metric">
+                    <div class="outcome-metric-value">${project.secondary_outcome}</div>
+                    <div class="outcome-metric-label">Secondary outcome</div>
+                </div>
+            `;
+        }
+        
+        content += '</div></div>';
+    }
+
+    // Testimonial
+    if (project.testimonial_quote) {
+        content += `
+            <div class="testimonial-box">
+                <p style="font-style: italic; line-height: 1.7; margin-bottom: 1rem; color: hsl(220 20% 20%); font-size: 1.125rem;">
+                    "${project.testimonial_quote}"
+                </p>
+                ${project.testimonial_author ? `
+                    <p style="font-weight: 700; font-size: 0.9375rem;">
+                        — ${project.testimonial_author}
+                        ${project.testimonial_source ? `<span style="font-weight: 400; color: hsl(220 9% 46%);">, ${project.testimonial_source}</span>` : ''}
+                    </p>
+                ` : ''}
+            </div>
+        `;
+    }
+
+    // Contractor Divider
+    content += `
+        <div class="contractor-divider">
+            <img src="${profileImage}" alt="${contractorData.contractor_name}" class="contractor-avatar-large" />
+        </div>
+    `;
+
+    // Contractor Info
+    content += `
+        <div class="contractor-info-box">
+            <h3 class="contractor-name-large">${contractorData.contractor_name}</h3>
+            <p class="contractor-bio">${contractorData.bio || 'Specialist in automation and workflow optimization'}</p>
+            <button class="action-btn" onclick="event.stopPropagation(); openEnquiryModal()" style="border-radius: 0.5rem;">
+                Send Enquiry
+            </button>
+        </div>
+    `;
+
+    // Related Projects
+    const relatedProjects = contractorProjects.filter(p => 
+        p.project_id !== project.project_id
+    ).slice(0, 4);
+
+    if (relatedProjects.length > 0) {
+        content += `
+            <div class="content-section">
+                <div class="related-projects-header">
+                    <h3 class="section-title" style="margin-bottom: 0;">More Projects by ${contractorData.contractor_name}</h3>
+                </div>
+                <div class="related-projects-grid">
+                    ${relatedProjects.map(rp => {
+                        const rpEngagement = getProjectEngagement(rp.project_id);
+                        const rpTotalLikes = (rp.analytics?.total_likes || 0) + rpEngagement.likes;
+                        const rpTotalViews = (rp.analytics?.total_views || 0) + rpEngagement.views;
+                        
+                        return `
+                        <div class="related-project-card" onclick="event.stopPropagation(); openProjectModal('${rp.project_id}')">
+                            <img src="${rp.thumbnail_image_url}" alt="${rp.project_title}" class="related-project-image" />
+                            <div class="related-project-overlay">
+                                <div class="related-project-title">${rp.project_title}</div>
+                                <div class="related-project-stats">
+                                    <div class="related-project-stat">
+                                        <i data-lucide="heart" style="width: 0.75rem; height: 0.75rem;"></i>
+                                        <span>${formatCount(rpTotalLikes)}</span>
+                                    </div>
+                                    <div class="related-project-stat">
+                                        <i data-lucide="eye" style="width: 0.75rem; height: 0.75rem;"></i>
+                                        <span>${formatCount(rpTotalViews)}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `}).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    modalBody.innerHTML = content;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    lucide.createIcons();
+}
+
+function switchFeaturedMedia(type, url, element) {
+    const featuredContainer = document.getElementById('featured-media');
+    
+    if (type === 'video') {
+        const embedUrl = getYouTubeEmbedUrl(url);
+        if (embedUrl) {
+            featuredContainer.innerHTML = `<iframe src="${embedUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        }
+    } else {
+        featuredContainer.innerHTML = `<img src="${url}" alt="Project media" />`;
+    }
+
+    document.querySelectorAll('.media-thumbnail').forEach(thumb => thumb.classList.remove('active'));
+    element.classList.add('active');
+}
+
+function handleModalLike() {
+    if (!currentProject) return;
+    
+    const engagement = toggleLike(currentProject.project_id);
+    updateModalEngagement();
+    
+    const likesElement = document.getElementById(`likes-${currentProject.project_id}`);
+    const likeBtn = document.getElementById(`like-${currentProject.project_id}`);
+    
+    const totalLikes = (currentProject.analytics?.total_likes || 0) + engagement.likes;
+    
+    if (likesElement) {
+        likesElement.textContent = formatCount(totalLikes);
+    }
+    
+    if (likeBtn) {
+        if (engagement.liked) {
+            likeBtn.classList.add('liked');
+        } else {
+            likeBtn.classList.remove('liked');
+        }
+    }
+    
+    lucide.createIcons();
+}
+
+function updateModalEngagement() {
+    if (!currentProject) return;
+    
+    const engagement = getProjectEngagement(currentProject.project_id);
+    const totalViews = (currentProject.analytics?.total_views || 0) + engagement.views;
+    const totalLikes = (currentProject.analytics?.total_likes || 0) + engagement.likes;
+    
+    const modalLikesCount = document.getElementById('modal-likes-count');
+    const modalViewsCount = document.getElementById('modal-views-count');
+    const modalLikeBtn = document.getElementById('modal-like-btn');
+    
+    if (modalLikesCount) modalLikesCount.textContent = formatCount(totalLikes);
+    if (modalViewsCount) modalViewsCount.textContent = formatCount(totalViews);
+    
+    if (modalLikeBtn) {
+        if (engagement.liked) {
+            modalLikeBtn.classList.add('liked');
+        } else {
+            modalLikeBtn.classList.remove('liked');
+        }
+    }
+    
+    lucide.createIcons();
+}
+
+function closeProjectModal() {
+    const modal = document.getElementById('project-modal');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    currentProject = null;
+}
+
+function closeModalOnOverlay(event) {
+    if (event.target.id === 'project-modal') {
+        closeProjectModal();
+    }
+}
+
+// ===================================================================
+// RENDER COLLECTIONS TAB
 // ===================================================================
 function renderCollections() {
     const collectionsContent = document.getElementById('collections-content');
@@ -1745,10 +2654,13 @@ function renderCollections() {
                 <div class="collection-carousel">
                     <div class="collection-track" id="track-${groupIndex}" data-position="0">
                         ${projects.map(project => {
-                            const liked = isLiked(project.project_id);
+                            const engagement = getProjectEngagement(project.project_id);
+                            const totalLikes = (project.analytics?.total_likes || 0) + engagement.likes;
+                            const totalViews = (project.analytics?.total_views || 0) + engagement.views;
+                            
                             return `
                             <div class="collection-item">
-                                <div class="work-card" onclick="openProject('${project.project_id}')">
+                                <div class="work-card" onclick="openProjectModal('${project.project_id}')">
                                     <div class="work-card-image-wrapper">
                                         <img 
                                             src="${project.thumbnail_image_url}" 
@@ -1759,7 +2671,7 @@ function renderCollections() {
                                         
                                         <div class="work-card-overlay">
                                             <div class="overlay-top">
-                                                <button class="like-btn ${liked ? 'liked' : ''}" onclick="event.stopPropagation(); handleLike('${project.project_id}')">
+                                                <button class="like-btn ${engagement.liked ? 'liked' : ''}" onclick="event.stopPropagation(); handleLike('${project.project_id}')">
                                                     <i data-lucide="heart" style="width: 1rem; height: 1rem;"></i>
                                                 </button>
                                             </div>
@@ -1768,11 +2680,11 @@ function renderCollections() {
                                                 <div class="overlay-stats">
                                                     <div class="overlay-stat">
                                                         <i data-lucide="heart" style="width: 0.875rem; height: 0.875rem;"></i>
-                                                        <span>${formatCount(project.analytics?.total_likes || 0)}</span>
+                                                        <span>${formatCount(totalLikes)}</span>
                                                     </div>
                                                     <div class="overlay-stat">
                                                         <i data-lucide="eye" style="width: 0.875rem; height: 0.875rem;"></i>
-                                                        <span>${formatCount(project.analytics?.total_views || 0)}</span>
+                                                        <span>${formatCount(totalViews)}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1794,8 +2706,8 @@ function scrollCollection(groupIndex, direction) {
     const track = document.getElementById(`track-${groupIndex}`);
     const currentPosition = parseInt(track.getAttribute('data-position')) || 0;
     const itemWidth = track.querySelector('.collection-item').offsetWidth;
-    const gap = 32; // 2rem gap
-    const moveAmount = (itemWidth + gap) * 3; // Move 3 items at a time
+    const gap = 32;
+    const moveAmount = (itemWidth + gap) * 3;
     
     const newPosition = currentPosition + (direction * moveAmount);
     const maxScroll = -(track.scrollWidth - track.parentElement.offsetWidth);
@@ -1805,7 +2717,6 @@ function scrollCollection(groupIndex, direction) {
     track.style.transform = `translateX(${finalPosition}px)`;
     track.setAttribute('data-position', finalPosition);
     
-    // Update button states
     const prevBtn = document.getElementById(`prev-${groupIndex}`);
     const nextBtn = document.getElementById(`next-${groupIndex}`);
     
@@ -1831,7 +2742,6 @@ function renderAbout() {
         aboutSkills.innerHTML = '<p class="about-content">No skills listed.</p>';
     }
     
-    // Specialty as vertical list
     if (contractorData.top_specialty) {
         const specialties = contractorData.top_specialty.split(',').map(s => s.trim()).filter(Boolean);
         const experiences = contractorData.specialty_experience ? 
@@ -1884,7 +2794,6 @@ function switchCollectionFilter(filterType, filterText) {
     renderCollections();
 }
 
-// Close dropdown when clicking outside
 document.addEventListener('click', (e) => {
     const dropdown = document.getElementById('collection-filter-dropdown');
     const filterBtn = document.querySelector('.collection-filter-btn');
@@ -1923,6 +2832,12 @@ function openShareModal() {
 function closeShareModal() {
     document.getElementById('share-modal').classList.remove('active');
     document.body.style.overflow = '';
+}
+
+function closeShareModalOnOverlay(event) {
+    if (event.target.id === 'share-modal') {
+        closeShareModal();
+    }
 }
 
 function shareToLinkedIn() {
@@ -1966,6 +2881,12 @@ function closeReportModal() {
     document.body.style.overflow = '';
 }
 
+function closeReportModalOnOverlay(event) {
+    if (event.target.id === 'report-modal') {
+        closeReportModal();
+    }
+}
+
 function submitReport(event) {
     event.preventDefault();
     
@@ -1976,25 +2897,6 @@ function submitReport(event) {
     submitBtn.disabled = true;
     submitText.style.display = 'none';
     submitLoading.style.display = 'inline';
-    
-    const reportName = document.getElementById('report-name').value;
-    const reportEmail = document.getElementById('report-email').value;
-    const reportReason = document.getElementById('report-reason').value;
-    
-    const emailBody = `
-New Profile Report
-
-Reporter Details:
-Name: ${reportName}
-Email: ${reportEmail}
-
-Reported Profile:
-Contractor: ${contractorData.contractor_name}
-Profile URL: ${window.location.href}
-
-Reason:
-${reportReason}
-    `.trim();
     
     setTimeout(() => {
         showToast('Report submitted successfully. Thank you for your feedback.');
@@ -2017,6 +2919,12 @@ function closeEnquiryModal() {
     document.getElementById('enquiry-modal').classList.remove('active');
     document.getElementById('enquiry-form').reset();
     document.body.style.overflow = '';
+}
+
+function closeEnquiryModalOnOverlay(event) {
+    if (event.target.id === 'enquiry-modal') {
+        closeEnquiryModal();
+    }
 }
 
 function submitEnquiry(event) {
@@ -2064,14 +2972,6 @@ Sent from Packdez Contractor Profile: ${window.location.href}
     }, 500);
 }
 
-function closeModalOnOverlay(event, modalId) {
-    if (event.target.id === modalId) {
-        if (modalId === 'enquiry-modal') closeEnquiryModal();
-        if (modalId === 'share-modal') closeShareModal();
-        if (modalId === 'report-modal') closeReportModal();
-    }
-}
-
 // ===================================================================
 // MOBILE MENU
 // ===================================================================
@@ -2092,7 +2992,9 @@ function closeMobileMenu() {
 // ===================================================================
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        if (document.getElementById('enquiry-modal').classList.contains('active')) {
+        if (document.getElementById('project-modal').classList.contains('active')) {
+            closeProjectModal();
+        } else if (document.getElementById('enquiry-modal').classList.contains('active')) {
             closeEnquiryModal();
         } else if (document.getElementById('share-modal').classList.contains('active')) {
             closeShareModal();
