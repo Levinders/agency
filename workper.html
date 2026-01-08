@@ -413,8 +413,17 @@
     let userFingerprint = '';
 
 
+    function updateStatValue(type, value) {
+  const el = document.getElementById(type);
+  if (el) {
+    el.textContent = Number(value).toLocaleString();
+  }
+}
+
     
-    async function refreshCounts() {
+async function refreshCounts() {
+  if (!projects.length) return;
+
   const res = await fetch(GOOGLE_SCRIPT_URL);
   const data = await res.json();
 
