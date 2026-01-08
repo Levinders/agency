@@ -36,7 +36,7 @@
     .modal-container {
       background: #ffffff;
       width: 100%;
-      max-width: 1000px;
+      max-width: 1100px;
       height: 85vh;
       border-radius: 16px;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
@@ -68,8 +68,8 @@
     }
 
     .modal-title {
-      font-size: 22px;
-      font-weight: 800;
+      font-size: 20px;
+      font-weight: 700;
       color: #111827;
       letter-spacing: -0.5px;
     }
@@ -80,18 +80,17 @@
       gap: 10px;
     }
 
-    .btn {
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
-      background: #ffffff;
-      border: 1.5px solid #e5e7eb;
+      .btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s;
     }
 
     .btn:hover:not(:disabled) {
@@ -137,7 +136,7 @@
 
     .video-container {
       width: 100%;
-      max-width: 750px;
+      max-width: 800px;
       position: relative;
       padding-bottom: 56.25%;
       border-radius: 12px;
@@ -205,36 +204,29 @@
     }
 
     .project-title {
-      font-size: 26px;
-      font-weight: 800;
+      font-size: 24px;
+      font-weight: 700;
       color: #111827;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       line-height: 1.25;
       letter-spacing: -0.5px;
     }
 
     .stats-container {
-      background: #ffffff;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 24px;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
 
     .stats-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 12px;
+      margin-bottom: 24px;
     }
 
     .stat-card {
-      text-align: center;
+     background: #f9fafb;
       padding: 16px;
-      background: linear-gradient(to bottom, #fafafa, #f5f5f5);
-      border-radius: 10px;
+      border-radius: 8px;
       border: 1px solid #e5e7eb;
-      transition: all 0.3s ease;
     }
 
     .stat-card:hover {
@@ -246,8 +238,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       margin: 0 auto 12px;
       border-radius: 10px;
       background: linear-gradient(135deg, #298e55, #1a5d38);
@@ -261,20 +253,20 @@
     }
 
     .stat-label {
-      font-size: 11px;
-      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
       color: #6b7280;
       margin-bottom: 8px;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
     }
 
     .stat-value {
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 900;
       color: #111827;
-      letter-spacing: -1px;
-      transition: all 0.3s ease;
     }
 
     .stat-value.updating {
