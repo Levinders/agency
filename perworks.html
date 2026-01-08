@@ -501,31 +501,26 @@
         showError('Failed to load projects');
       }
     }
+async function sendEvent(action, projectId) {
+  try {
+    const payload = {
+      action: action, // "view" or "like"
+      project_id: projectId,
+      user_fingerprint: userFingerprint,
+      user_agent: navigator.userAgent
+    };
 
-    // Log event to Google Sheets with timestamp
-    async function logEvent(projectId, eventType) {
-      try {
-        const eventData = {
-          action: 'log_event',
-          timestamp: new Date().toISOString(),
-          project_id: projectId,
-          event_type: eventType,
-          user_fingerprint: userFingerprint,
-          user_agent: navigator.userAgent
-        };
+    const res = await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
 
-        await fetch(GOOGLE_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(eventData)
-        });
-      } catch (error) {
-        console.error('Error logging event:', error);
-      }
-    }
+    return await res.json();
+  } catch (err) {
+    console.error('Event error:', err);
+  }
+}
 
     // Update stat value with animation
     function updateStatValue(elementId, newValue) {
@@ -614,9 +609,13 @@
       `;
 
       // Log view event and update UI immediately
-      logEvent(project.id, 'view');
-      projects[currentIndex].views = (project.views || 0) + 1;
-      updateStatValue('views', projects[currentIndex].views);
+sendEvent('view', project.id).then(res => {
+  if (res?.views !== undefined) {
+    projects[currentIndex].views = res.views;
+    updateStatValue('views', res.views);
+  }
+});
+
 
       updateNavigationButtons();
     }
@@ -632,8 +631,13 @@
       if (checkIfLiked(project.id)) return;
 
       // Update UI immediately with animation
-      projects[currentIndex].likes = (project.likes || 0) + 1;
-      updateStatValue('likes', projects[currentIndex].likes);
+sendEvent('like', project.id).then(res => {
+  if (res?.likes !== undefined) {
+    projects[currentIndex].likes = res.likes;
+    updateStatValue('likes', res.likes);
+  }
+});
+
       
       const likeBtn = document.getElementById('likeBtn');
       likeBtn.disabled = true;
