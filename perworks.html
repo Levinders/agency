@@ -1,0 +1,1999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Systems Delivered | Packdez - Custom Automation for Operations Teams</title>
+    <meta name="description" content="Real automation systems built for operational teams. See how Packdez designs custom Google Sheets workflows that eliminate manual work and scale with your business.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 220 20% 10%;
+            --primary: 146 55% 36%;
+            --primary-foreground: 0 0% 100%;
+            --muted: 220 14% 96%;
+            --muted-foreground: 220 9% 46%;
+            --border: 220 13% 91%;
+            --accent: 146 55% 42%;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+            scroll-behavior: smooth;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .bg-primary { background-color: hsl(146 55% 36%); }
+        .text-primary { color: hsl(146 55% 36%); }
+        .border-primary { border-color: hsl(146 55% 36%); }
+        .bg-muted { background-color: hsl(220 14% 96%); }
+        .text-muted-foreground { color: hsl(220 9% 46%); }
+        .border-border { border-color: hsl(220 13% 91%); }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background-color: hsl(146 55% 36%);
+            color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary:hover {
+            background-color: hsl(146 55% 32%);
+            box-shadow: 0 4px 12px rgba(46, 140, 78, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .nav-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid hsl(220 13% 91%);
+        }
+
+        /* Hero Slider - Agency Style */
+        .hero-slider {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 1rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+        }
+
+        .slider-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slider-slide {
+            min-width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            padding: 3rem;
+            align-items: center;
+        }
+
+        .agency-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.375rem 0.875rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            background: hsl(146 55% 36% / 0.1);
+            color: hsl(146 55% 36%);
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 968px) {
+            .slider-slide {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 2rem;
+            }
+        }
+
+        .slider-image {
+            width: 100%;
+            height: auto;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid hsl(220 13% 91%);
+        }
+
+        .slider-controls {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 0.75rem;
+            z-index: 10;
+        }
+
+        .slider-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .slider-btn:hover {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .slider-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            background: hsl(220 13% 91%);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .slider-dot.active {
+            background: hsl(146 55% 36%);
+            width: 1.5rem;
+            border-radius: 0.25rem;
+        }
+
+        /* Filters */
+        .filters-section {
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .filter-input {
+            padding: 0.75rem 1rem;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-size: 0.9375rem;
+            width: 100%;
+            transition: border-color 0.2s;
+        }
+
+        .filter-input:focus {
+            outline: none;
+            border-color: hsl(146 55% 36%);
+        }
+
+        .filter-select {
+            padding: 0.75rem 1rem;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-size: 0.9375rem;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: hsl(146 55% 36%);
+        }
+
+        /* Project Grid - Clean Agency Style */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Agency-style Card */
+        .project-card {
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            transform: translateY(-4px);
+            border-color: hsl(146 55% 36% / 0.3);
+        }
+
+        .project-card-image-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            background: hsl(220 14% 96%);
+        }
+
+        .project-card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover .project-card-image {
+            transform: scale(1.03);
+        }
+
+        .project-card-content {
+            padding: 1.5rem;
+        }
+
+        .project-category {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: hsl(146 55% 36%);
+            margin-bottom: 0.75rem;
+        }
+
+        .project-card-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: hsl(220 20% 10%);
+            line-height: 1.3;
+        }
+
+        .project-card-description {
+            font-size: 0.9375rem;
+            color: hsl(220 9% 46%);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .project-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid hsl(220 13% 91%);
+        }
+
+        .project-metrics {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8125rem;
+            color: hsl(220 9% 46%);
+        }
+
+        .project-metric {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .project-metric svg {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .packdez-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: hsl(220 20% 10%);
+        }
+
+        .packdez-logo {
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 0.25rem;
+        }
+
+        /* Scroll to Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: hsl(146 55% 36%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(46, 140, 78, 0.3);
+            z-index: 40;
+            opacity: 0;
+            transform: translateY(100px);
+            pointer-events: none;
+            border: none;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .scroll-to-top:hover {
+            background: hsl(146 55% 32%);
+            box-shadow: 0 6px 16px rgba(46, 140, 78, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Enhanced Modal - Agency Deep Dive */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        /* Fixed Header */
+        .modal-header-fixed {
+            position: sticky;
+            top: 0;
+            background: white;
+            border-bottom: 1px solid hsl(220 13% 91%);
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 20;
+            gap: 1rem;
+        }
+
+        .modal-header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .modal-logo {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.375rem;
+            flex-shrink: 0;
+        }
+
+        .modal-title-text {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: hsl(220 20% 10%);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .modal-title-text {
+                font-size: 1rem;
+            }
+        }
+
+        .modal-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .modal-nav-icon-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: hsl(220 14% 96%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-nav-icon-btn:hover:not(:disabled) {
+            background: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .modal-nav-icon-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .modal-cta-btn {
+            padding: 0.625rem 1.5rem;
+            background: hsl(146 55% 36%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .modal-cta-btn:hover {
+            background: hsl(146 55% 32%);
+            box-shadow: 0 4px 12px rgba(46, 140, 78, 0.3);
+        }
+
+        /* Modal Body */
+        .modal-body-content {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .modal-body-content {
+                padding: 2rem 1rem;
+            }
+        }
+
+        /* Featured Media */
+        .featured-media-section {
+            margin-bottom: 3rem;
+        }
+
+        .featured-media-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            background: hsl(220 14% 96%);
+            border: 1px solid hsl(220 13% 91%);
+            margin-bottom: 1rem;
+        }
+
+        .featured-media-container img,
+        .featured-media-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-media-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .media-thumbnails {
+            display: flex;
+            gap: 0.75rem;
+            overflow-x: auto;
+        }
+
+        .media-thumbnail {
+            aspect-ratio: 16 / 10;
+            width: 120px;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            background: hsl(220 14% 96%);
+            flex-shrink: 0;
+        }
+
+        .media-thumbnail:hover {
+            border-color: hsl(146 55% 36%);
+        }
+
+        .media-thumbnail.active {
+            border-color: hsl(146 55% 36%);
+        }
+
+        .media-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* System Details Grid */
+        .system-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: hsl(220 14% 98%);
+            border-radius: 0.75rem;
+            border: 1px solid hsl(220 13% 91%);
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .detail-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: hsl(220 9% 46%);
+        }
+
+        .detail-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: hsl(220 20% 10%);
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: hsl(220 20% 10%);
+        }
+
+        .section-content {
+            font-size: 1.0625rem;
+            line-height: 1.8;
+            color: hsl(220 9% 46%);
+        }
+
+        /* Outcome Metrics */
+        .outcome-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .outcome-metric {
+            background: hsl(220 14% 98%);
+            padding: 2rem 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            border: 1px solid hsl(220 13% 91%);
+        }
+
+        .outcome-metric-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: hsl(146 55% 36%);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .outcome-metric-label {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: hsl(220 9% 46%);
+        }
+
+        /* Testimonial */
+        .testimonial-box {
+            background: hsl(220 14% 98%);
+            border-left: 4px solid hsl(146 55% 36%);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .testimonial-quote {
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: hsl(220 20% 20%);
+            font-size: 1.125rem;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        /* Tools Section */
+        .tool-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .tool-tag {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: hsl(220 20% 10%);
+        }
+
+        /* Agency Footer Section */
+        .agency-footer-section {
+            background: hsl(146 55% 36% / 0.05);
+            border: 1px solid hsl(146 55% 36% / 0.2);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .agency-footer-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: hsl(220 20% 10%);
+        }
+
+        .agency-footer-text {
+            font-size: 1rem;
+            color: hsl(220 9% 46%);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Related Projects */
+        .related-projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 640px) {
+            .related-projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .related-project-card {
+            cursor: pointer;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .related-project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            border-color: hsl(146 55% 36% / 0.3);
+        }
+
+        .related-project-image {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            object-fit: cover;
+            background: hsl(220 14% 96%);
+        }
+
+        .related-project-content {
+            padding: 1rem;
+        }
+
+        .related-project-title {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: hsl(220 20% 10%);
+            margin-bottom: 0.5rem;
+        }
+
+        .related-project-category {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: hsl(146 55% 36%);
+        }
+
+        /* CTA Modal */
+        .cta-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 110;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .cta-modal-overlay.active {
+            display: flex;
+        }
+
+        .cta-modal-content {
+            background: white;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 100%;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta-modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .cta-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-input,
+        .cta-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-size: 0.9375rem;
+            font-family: inherit;
+        }
+
+        .cta-input:focus,
+        .cta-textarea:focus {
+            outline: none;
+            border-color: hsl(146 55% 36%);
+        }
+
+        .cta-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .cta-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .cta-cancel-btn {
+            flex: 1;
+            padding: 0.75rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .cta-submit-btn {
+            flex: 1;
+            padding: 0.75rem;
+            background: hsl(146 55% 36%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .cta-submit-btn:hover {
+            background: hsl(146 55% 32%);
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(6px);
+            z-index: 90;
+            display: none;
+        }
+
+        .mobile-overlay.active {
+            display: block;
+        }
+
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 85%;
+            max-width: 320px;
+            background: white;
+            z-index: 100;
+            padding: 24px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-sidebar.active {
+            transform: translateX(0);
+        }
+
+        .mobile-sidebar a {
+            padding: 14px 0;
+            font-size: 16px;
+            font-weight: 600;
+            border-bottom: 1px solid hsl(var(--border));
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-padding {
+            padding: 5rem 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .section-padding {
+                padding: 3rem 1rem;
+            }
+            .desktop-only {
+                display: none !important;
+            }
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        .pagination-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .pagination-btn.active {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .loading-spinner {
+            width: 3rem;
+            height: 3rem;
+            border: 3px solid hsl(220 13% 91%);
+            border-top-color: hsl(146 55% 36%);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: hsl(220 9% 46%);
+        }
+    </style>
+</head>
+<body>
+    
+<!-- Mobile overlay -->
+<div id="mobile-overlay" class="mobile-overlay" onclick="closeMobileMenu()"></div>
+
+<!-- Mobile sidebar -->
+<aside id="mobile-menu" class="mobile-sidebar">
+  <div class="flex items-center justify-between mb-6">
+    <a href="https://packdez.com" class="flex items-center gap-2" onclick="closeMobileMenu()">
+      <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez logo" class="h-8 w-8" />
+      <span class="text-xl font-bold">Packdez</span>
+    </a>
+    <button onclick="closeMobileMenu()" aria-label="Close menu" class="text-2xl font-bold">×</button>
+  </div>
+  <a href="https://packdez.com#work" onclick="closeMobileMenu()">Work</a>
+  <a href="https://packdez.com#pricing" onclick="closeMobileMenu()">Pricing</a>
+  <a href="https://packdez.com#reviews" onclick="closeMobileMenu()">Reviews</a>
+  <a href="about.html" onclick="closeMobileMenu()">About</a>
+  <a href="https://packdez.com#audit" onclick="closeMobileMenu()" class="mt-6 btn btn-primary">
+    Get Automation Plan
+  </a>
+</aside>
+
+<!-- Navigation -->
+<nav class="nav-fixed">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex items-center justify-between h-16">
+      <a href="https://packdez.com" class="flex items-center gap-2 md:-ml-12">
+        <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez logo" class="h-8 w-8" />
+        <span class="text-xl font-bold">Packdez</span>
+      </a>
+      
+      <div class="desktop-only flex items-center gap-6" style="margin-right:-90px;">
+        <a href="https://packdez.com#work" class="text-sm font-medium text-primary">Work</a>
+        <a href="https://packdez.com#pricing" class="text-sm font-medium text-muted-foreground hover:text-primary">Pricing</a>
+        <a href="https://packdez.com#reviews" class="text-sm font-medium text-muted-foreground hover:text-primary">Reviews</a>
+        <a href="about.html" class="text-sm font-medium text-muted-foreground hover:text-primary">About</a>
+        <a href="https://packdez.com#audit" class="btn btn-primary ml-auto mr-10" style="padding: 0.5rem 1.25rem;">Get Free Audit</a>
+      </div>
+      <button class="flex md:hidden" onclick="toggleMobileMenu()" aria-label="Open menu">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Scroll to Top Button -->
+<button id="scroll-to-top" class="scroll-to-top" onclick="scrollToTop()" aria-label="Scroll to top">
+  <i data-lucide="chevron-up" style="width: 1.25rem; height: 1.25rem;"></i>
+</button>
+
+<!-- Hero Section with Featured Systems -->
+<section class="section-padding" style="padding-top: 8rem; padding-bottom: 4rem;">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-8 fade-up">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight tracking-[-0.02em]">
+        Systems That Replaced Manual Work
+      </h1>
+      <p class="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+        Real automation delivered by Packdez. Custom Google Sheets systems that connect your tools, eliminate repetitive tasks, and scale with your operations.
+      </p>
+    </div>
+
+    <!-- Featured Systems Slider -->
+    <div id="featured-slider" class="hero-slider fade-up" style="display: none;">
+      <div class="slider-track" id="slider-track"></div>
+      <div class="slider-controls">
+        <button class="slider-btn" onclick="previousSlide()" aria-label="Previous">
+          <i data-lucide="chevron-left" style="width: 1.25rem; height: 1.25rem;"></i>
+        </button>
+        <button class="slider-btn" onclick="nextSlide()" aria-label="Next">
+          <i data-lucide="chevron-right" style="width: 1.25rem; height: 1.25rem;"></i>
+        </button>
+      </div>
+      <div class="slider-dots" id="slider-dots"></div>
+    </div>
+
+    <!-- Loading state for slider -->
+    <div id="slider-loading" class="loading-state">
+      <div class="loading-spinner"></div>
+      <p class="text-muted-foreground">Loading featured systems...</p>
+    </div>
+  </div>
+</section>
+
+<!-- Filters Section -->
+<section id="filters-section" style="background: hsl(220 14% 98%); padding: 3rem 0;">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="filters-section fade-up">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; align-items: end;">
+        <div>
+          <label for="search-input" style="display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Search Systems</label>
+          <input 
+            type="text" 
+            id="search-input" 
+            class="filter-input" 
+            placeholder="Search by name or industry..."
+            onkeyup="applyFilters()"
+          />
+        </div>
+        <div>
+          <label for="category-filter" style="display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Category</label>
+          <select id="category-filter" class="filter-select" onchange="applyFilters()">
+            <option value="">All categories</option>
+          </select>
+        </div>
+        <div>
+          <label for="industry-filter" style="display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Industry</label>
+          <select id="industry-filter" class="filter-select" onchange="applyFilters()">
+            <option value="">All industries</option>
+          </select>
+        </div>
+        <div>
+          <button onclick="clearFilters()" class="filter-input" style="cursor: pointer; background: white; font-weight: 600; color: hsl(146 55% 36%);">
+            Clear filters
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projects Grid -->
+    <div id="projects-container">
+      <!-- Loading state -->
+      <div id="projects-loading" class="loading-state">
+        <div class="loading-spinner"></div>
+        <p class="text-muted-foreground">Loading systems...</p>
+      </div>
+
+      <!-- Projects will be rendered here -->
+      <div id="projects-grid" class="projects-grid" style="display: none;"></div>
+
+      <!-- Empty state -->
+      <div id="empty-state" class="empty-state" style="display: none;">
+        <i data-lucide="search" style="width: 3rem; height: 3rem; margin: 0 auto 1rem; opacity: 0.3;"></i>
+        <h3 style="font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem;">No systems found</h3>
+        <p>Try adjusting your filters or search terms</p>
+      </div>
+
+      <!-- Pagination -->
+      <div id="pagination" class="pagination" style="display: none;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section style="background: white; padding: 5rem 1rem; text-align: center;">
+  <div style="max-width: 900px; margin: 0 auto;">
+    <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Build Your System?</h2>
+    <p style="font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;" class="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+      Get a custom automation plan designed for your operations. Free audit, delivered in 24 hours.
+    </p>
+    <a href="https://packdez.com#audit" style="display: inline-block; background: #298E55; color: white; padding: 1rem 2rem; border-radius: 0.5rem; font-weight: 600; text-decoration: none; font-size: 1.125rem; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
+      Get Your Free Automation Audit
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer style="padding: 4rem 2rem; border-top: 1px solid hsl(220 13% 91%);">
+    <div style="max-width: 1400px; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+            <div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                    <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez logo" style="height: 1.75rem; width: 1.75rem;" />
+                    <h3 style="font-size: 1.125rem; font-weight: 700;">Packdez</h3>
+                </div>
+                <p style="font-size: 0.875rem; color: hsl(220 9% 46%); margin-bottom: 1rem;">Automation systems for operations teams</p>
+                <div style="display: flex; gap: 0.75rem;">
+                    <a href="https://x.com/packdezHQ" target="_blank" rel="noopener noreferrer" style="width: 2.5rem; height: 2.5rem; background: hsl(220 14% 96%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i data-lucide="twitter" style="width: 1rem; height: 1rem;"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/company/packdez/" target="_blank" rel="noopener noreferrer" style="width: 2.5rem; height: 2.5rem; background: hsl(220 14% 96%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i data-lucide="linkedin" style="width: 1rem; height: 1rem;"></i>
+                    </a>
+                    <a href="https://youtube.com/@packdezhqz?si=EXj27rVMq27WlWQp" target="_blank" rel="noopener noreferrer" style="width: 2.5rem; height: 2.5rem; background: hsl(220 14% 96%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i data-lucide="youtube" style="width: 1rem; height: 1rem;"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 style="font-weight: 700; margin-bottom: 1rem; font-size: 0.875rem;">What We Build</h4>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Automated reporting systems</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Operations automation</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Custom internal tools</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">API integrations</span></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 style="font-weight: 700; margin-bottom: 1rem; font-size: 0.875rem;">Contact</h4>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">packdez.com@gmail.com</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Response within 24 hours</span></li>
+                    <li style="margin-bottom: 0.5rem;"><span style="font-size: 0.875rem; color: hsl(220 9% 46%);">Delivery in 7-15 days</span></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div style="padding-top: 2rem; border-top: 1px solid hsl(220 13% 91%); text-align: center;">
+            <p style="font-size: 0.875rem; color: hsl(220 9% 46%);">© <span id="year"></span> Packdez. Systems-first automation for operational teams.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- System Deep Dive Modal -->
+<div id="project-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+  <div class="modal-content">
+    <!-- Fixed Header -->
+    <div class="modal-header-fixed">
+      <div class="modal-header-left">
+        <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez" class="modal-logo" />
+        <h2 id="modal-title" class="modal-title-text"></h2>
+      </div>
+      <div class="modal-header-actions">
+        <button id="modal-prev-btn" class="modal-nav-icon-btn" onclick="event.stopPropagation(); navigateProject(-1)" aria-label="Previous project">
+          <i data-lucide="chevron-left" style="width: 1.25rem; height: 1.25rem;"></i>
+        </button>
+        <button id="modal-next-btn" class="modal-nav-icon-btn" onclick="event.stopPropagation(); navigateProject(1)" aria-label="Next project">
+          <i data-lucide="chevron-right" style="width: 1.25rem; height: 1.25rem;"></i>
+        </button>
+        <button class="modal-cta-btn" onclick="event.stopPropagation(); openCTAModal()">
+          Get Similar System
+        </button>
+        <button class="modal-nav-icon-btn" onclick="event.stopPropagation(); closeModal()" aria-label="Close">
+          <i data-lucide="x" style="width: 1.25rem; height: 1.25rem;"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body-content" id="modal-body"></div>
+  </div>
+</div>
+
+<!-- CTA Modal -->
+<div id="cta-modal" class="cta-modal-overlay" onclick="closeCTAModalOnOverlay(event)">
+  <div class="cta-modal-content">
+    <h3 class="cta-modal-title">Request a Similar System</h3>
+    <p style="color: hsl(220 9% 46%); margin-bottom: 1.5rem;">Tell us about your automation needs. We'll send you a custom plan within 24 hours.</p>
+    <form id="cta-form" onsubmit="submitCTA(event)">
+      <div class="cta-form-group">
+        <label class="cta-label" for="cta-name">Your Name *</label>
+        <input type="text" id="cta-name" class="cta-input" required />
+      </div>
+      <div class="cta-form-group">
+        <label class="cta-label" for="cta-email">Your Email *</label>
+        <input type="email" id="cta-email" class="cta-input" required />
+      </div>
+      <div class="cta-form-group">
+        <label class="cta-label" for="cta-message">What do you want to automate? *</label>
+        <textarea id="cta-message" class="cta-textarea" required placeholder="Describe your current manual process..."></textarea>
+      </div>
+      <div class="cta-actions">
+        <button type="button" class="cta-cancel-btn" onclick="closeCTAModal()">Cancel</button>
+        <button type="submit" class="cta-submit-btn">Send Request</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+// ===================================================================
+// STATE MANAGEMENT
+// ===================================================================
+let allProjects = [];
+let filteredProjects = [];
+let currentPage = 1;
+const projectsPerPage = 9;
+let currentSlide = 0;
+let sliderInterval = null;
+let currentModalIndex = -1;
+let currentProject = null;
+
+// ===================================================================
+// UTILITY FUNCTIONS
+// ===================================================================
+function formatCount(count) {
+  if (count >= 1000) {
+    return (count / 1000).toFixed(1) + 'k';
+  }
+  return count.toString();
+}
+
+function getYouTubeEmbedUrl(url) {
+  if (!url) return null;
+  const videoIdMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+  return videoIdMatch ? `https://www.youtube.com/embed/${videoIdMatch[1]}` : null;
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleScrollToTopButton() {
+  const button = document.getElementById('scroll-to-top');
+  if (window.pageYOffset > 400) {
+    button.classList.add('visible');
+  } else {
+    button.classList.remove('visible');
+  }
+}
+
+window.addEventListener('scroll', toggleScrollToTopButton);
+
+// ===================================================================
+// API DATA FETCHING
+// ===================================================================
+const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbx271i09tTrmNdXKofA4ExInWMPDDN-npO-GMOCKFL-j8M1h1CaD-bB0Qwk43Ey2T7Z/exec';
+
+async function fetchProjects() {
+  try {
+    const response = await fetch(API_ENDPOINT);
+    const responseData = await response.json();
+
+    allProjects = (responseData.projects || [])
+      .filter(project => project.status === 'published')
+      .sort((a, b) => (a.display_order || 999) - (b.display_order || 999));
+    
+    filteredProjects = [...allProjects];
+    
+    populateFilters();
+    renderFeaturedSlider();
+    renderProjects();
+    
+  } catch (error) {
+    console.error('Error fetching projects:', error);
+    document.getElementById('projects-loading').innerHTML = `
+      <div class="empty-state">
+        <p style="color: hsl(0 84% 60%);">Failed to load systems. Please try again later.</p>
+      </div>
+    `;
+    document.getElementById('slider-loading').innerHTML = `
+      <div class="empty-state">
+        <p style="color: hsl(0 84% 60%);">Failed to load featured systems.</p>
+      </div>
+    `;
+  }
+}
+
+// ===================================================================
+// FEATURED SLIDER
+// ===================================================================
+function renderFeaturedSlider() {
+  const featuredProjects = allProjects
+    .filter(p => String(p.show_on_homepage).toLowerCase() === 'true')
+    .slice(0, 5);
+  
+  if (featuredProjects.length === 0) {
+    document.getElementById('slider-loading').style.display = 'none';
+    return;
+  }
+
+  const sliderTrack = document.getElementById('slider-track');
+  const sliderDots = document.getElementById('slider-dots');
+  
+  sliderTrack.innerHTML = featuredProjects.map(project => {
+    return `
+    <div class="slider-slide">
+      <div>
+        <div class="agency-badge">
+          <i data-lucide="check-circle" style="width: 1rem; height: 1rem;"></i>
+          <span>Delivered by Packdez</span>
+        </div>
+        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2;">
+          ${project.project_title}
+        </h2>
+        <p style="font-size: 1.125rem; color: hsl(220 9% 46%); margin-bottom: 1.5rem; line-height: 1.7;">
+          ${project.short_highlight || project.problem_summary || ''}
+        </p>
+        
+        ${project.industry ? `<p style="font-size: 0.9375rem; color: hsl(220 9% 46%); margin-bottom: 0.5rem;"><strong>Industry:</strong> ${project.industry}</p>` : ''}
+        ${project.primary_category ? `<p style="font-size: 0.9375rem; color: hsl(220 9% 46%); margin-bottom: 1rem;"><strong>System Type:</strong> ${project.primary_category}</p>` : ''}
+        
+        <button onclick="openModal('${project.project_id}')" class="btn btn-primary" style="margin-top: 1.5rem;">
+          View Case Study
+        </button>
+      </div>
+      <div>
+        <img 
+          src="${project.thumbnail_image_url}" 
+          alt="${project.image_alt_text || project.project_title}"
+          class="slider-image"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  `}).join('');
+
+  sliderDots.innerHTML = featuredProjects.map((_, index) => `
+    <div class="slider-dot ${index === 0 ? 'active' : ''}" onclick="goToSlide(${index})"></div>
+  `).join('');
+
+  document.getElementById('slider-loading').style.display = 'none';
+  document.getElementById('featured-slider').style.display = 'block';
+
+  startSlider(featuredProjects.length);
+  lucide.createIcons();
+}
+
+function startSlider(totalSlides) {
+  if (sliderInterval) clearInterval(sliderInterval);
+  sliderInterval = setInterval(() => {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    updateSlider();
+  }, 6000);
+}
+
+function updateSlider() {
+  const sliderTrack = document.getElementById('slider-track');
+  sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+  
+  document.querySelectorAll('.slider-dot').forEach((dot, index) => {
+    dot.classList.toggle('active', index === currentSlide);
+  });
+}
+
+function goToSlide(index) {
+  currentSlide = index;
+  updateSlider();
+  if (sliderInterval) clearInterval(sliderInterval);
+  startSlider(document.querySelectorAll('.slider-slide').length);
+}
+
+function nextSlide() {
+  const totalSlides = document.querySelectorAll('.slider-slide').length;
+  currentSlide = (currentSlide + 1) % totalSlides;
+  updateSlider();
+  if (sliderInterval) clearInterval(sliderInterval);
+  startSlider(totalSlides);
+}
+
+function previousSlide() {
+  const totalSlides = document.querySelectorAll('.slider-slide').length;
+  currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+  updateSlider();
+  if (sliderInterval) clearInterval(sliderInterval);
+  startSlider(totalSlides);
+}
+
+// ===================================================================
+// FILTERS
+// ===================================================================
+function populateFilters() {
+  const categories = [...new Set(allProjects.map(p => p.primary_category).filter(Boolean))];
+  const industries = [...new Set(allProjects.map(p => p.industry).filter(Boolean))];
+
+  const categoryFilter = document.getElementById('category-filter');
+  const industryFilter = document.getElementById('industry-filter');
+
+  categories.forEach(cat => {
+    const option = document.createElement('option');
+    option.value = cat;
+    option.textContent = cat;
+    categoryFilter.appendChild(option);
+  });
+
+  industries.forEach(ind => {
+    const option = document.createElement('option');
+    option.value = ind;
+    option.textContent = ind;
+    industryFilter.appendChild(option);
+  });
+}
+
+function applyFilters() {
+  const searchTerm = document.getElementById('search-input').value.toLowerCase();
+  const category = document.getElementById('category-filter').value;
+  const industry = document.getElementById('industry-filter').value;
+
+  filteredProjects = allProjects.filter(project => {
+    const matchesSearch = !searchTerm || 
+      project.project_title.toLowerCase().includes(searchTerm) ||
+      (project.problem_summary && project.problem_summary.toLowerCase().includes(searchTerm)) ||
+      (project.short_highlight && project.short_highlight.toLowerCase().includes(searchTerm)) ||
+      (project.industry && project.industry.toLowerCase().includes(searchTerm));
+    
+    const matchesCategory = !category || project.primary_category === category;
+    const matchesIndustry = !industry || project.industry === industry;
+
+    return matchesSearch && matchesCategory && matchesIndustry;
+  });
+
+  currentPage = 1;
+  renderProjects();
+}
+
+function clearFilters() {
+  document.getElementById('search-input').value = '';
+  document.getElementById('category-filter').value = '';
+  document.getElementById('industry-filter').value = '';
+  applyFilters();
+}
+
+// ===================================================================
+// PROJECT GRID RENDERING
+// ===================================================================
+function renderProjects() {
+  const grid = document.getElementById('projects-grid');
+  const loading = document.getElementById('projects-loading');
+  const emptyState = document.getElementById('empty-state');
+  const pagination = document.getElementById('pagination');
+
+  loading.style.display = 'none';
+
+  if (filteredProjects.length === 0) {
+    grid.style.display = 'none';
+    emptyState.style.display = 'block';
+    pagination.style.display = 'none';
+    lucide.createIcons();
+    return;
+  }
+
+  emptyState.style.display = 'none';
+  grid.style.display = 'grid';
+
+  const startIndex = (currentPage - 1) * projectsPerPage;
+  const endIndex = startIndex + projectsPerPage;
+  const projectsToShow = filteredProjects.slice(startIndex, endIndex);
+
+  grid.innerHTML = projectsToShow.map(project => {
+    return `
+    <div class="project-card" onclick="openModal('${project.project_id}')">
+      <div class="project-card-image-wrapper">
+        <img 
+          src="${project.thumbnail_image_url}" 
+          alt="${project.image_alt_text || project.project_title}"
+          class="project-card-image"
+          loading="lazy"
+        />
+      </div>
+      
+      <div class="project-card-content">
+        <div class="project-category">${project.primary_category || 'Automation System'}</div>
+        <h3 class="project-card-title">${project.project_title}</h3>
+        <p class="project-card-description">${project.short_highlight || project.problem_summary || 'Custom automation system built for operational efficiency'}</p>
+        
+        <div class="project-card-footer">
+          <div class="packdez-badge">
+            <img src="https://packdez.com/assets/logo/packdez-logo-512x512.png" alt="Packdez" class="packdez-logo" />
+            <span>Packdez Team</span>
+          </div>
+          <div class="project-metrics">
+            ${project.industry ? `
+            <div class="project-metric" title="${project.industry}">
+              <i data-lucide="building-2"></i>
+            </div>
+            ` : ''}
+          </div>
+        </div>
+      </div>
+    </div>
+  `}).join('');
+
+  renderPagination();
+  lucide.createIcons();
+}
+
+function renderPagination() {
+  const pagination = document.getElementById('pagination');
+  const totalPages = Math.ceil(filteredProjects.length / projectsPerPage);
+
+  if (totalPages <= 1) {
+    pagination.style.display = 'none';
+    return;
+  }
+
+  pagination.style.display = 'flex';
+
+  let paginationHTML = `
+    <button class="pagination-btn" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+      Previous
+    </button>
+  `;
+
+  for (let i = 1; i <= totalPages; i++) {
+    if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+      paginationHTML += `
+        <button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">
+          ${i}
+        </button>
+      `;
+    } else if (i === currentPage - 2 || i === currentPage + 2) {
+      paginationHTML += `<span style="padding: 0.5rem;">...</span>`;
+    }
+  }
+
+  paginationHTML += `
+    <button class="pagination-btn" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+      Next
+    </button>
+  `;
+
+  pagination.innerHTML = paginationHTML;
+}
+
+function changePage(page) {
+  const totalPages = Math.ceil(filteredProjects.length / projectsPerPage);
+  if (page < 1 || page > totalPages) return;
+  currentPage = page;
+  renderProjects();
+  
+  const filtersSection = document.getElementById('filters-section');
+  if (filtersSection) {
+    const yOffset = -80;
+    const y = filtersSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }
+}
+
+// ===================================================================
+// MODAL - AGENCY DEEP DIVE
+// ===================================================================
+function openModal(projectId) {
+  const project = allProjects.find(p => p.project_id === projectId);
+  if (!project) return;
+
+  currentProject = project;
+  currentModalIndex = filteredProjects.findIndex(p => p.project_id === projectId);
+
+  const modal = document.getElementById('project-modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalBody = document.getElementById('modal-body');
+
+  modalTitle.textContent = project.project_title;
+
+  // Build modal content
+  let content = '';
+
+  // Featured Media Section
+  content += '<div class="featured-media-section">';
+  
+  const videoUrl = project.media?.video;
+  const embedUrl = getYouTubeEmbedUrl(videoUrl);
+  
+  if (embedUrl) {
+    content += `
+      <div class="featured-media-container" id="featured-media">
+        <iframe src="${embedUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    `;
+  } else {
+    content += `
+      <div class="featured-media-container" id="featured-media">
+        <img src="${project.thumbnail_image_url}" alt="${project.image_alt_text || project.project_title}" />
+      </div>
+    `;
+  }
+
+  // Media Thumbnails
+  const mediaItems = [];
+  if (project.thumbnail_image_url) {
+    mediaItems.push({ type: 'image', url: project.thumbnail_image_url });
+  }
+  if (project.media?.images && Array.isArray(project.media.images)) {
+    project.media.images.forEach(img => {
+      if (img) mediaItems.push({ type: 'image', url: img });
+    });
+  }
+  if (videoUrl) {
+    mediaItems.push({ type: 'video', url: videoUrl });
+  }
+
+  if (mediaItems.length > 1) {
+    content += '<div class="media-thumbnails">';
+    mediaItems.forEach((media, index) => {
+      const thumbUrl = media.type === 'image' ? media.url : project.thumbnail_image_url;
+      content += `
+        <div class="media-thumbnail ${index === 0 ? 'active' : ''}" onclick="switchFeaturedMedia('${media.type}', '${media.url}', this)">
+          <img src="${thumbUrl}" alt="Media ${index + 1}" />
+        </div>
+      `;
+    });
+    content += '</div>';
+  }
+  
+  content += '</div>';
+
+  // System Details Grid
+  content += '<div class="system-details-grid">';
+  if (project.primary_category) {
+    content += `
+      <div class="detail-item">
+        <div class="detail-label">System Type</div>
+        <div class="detail-value">${project.primary_category}</div>
+      </div>
+    `;
+  }
+  if (project.industry) {
+    content += `
+      <div class="detail-item">
+        <div class="detail-label">Industry</div>
+        <div class="detail-value">${project.industry}</div>
+      </div>
+    `;
+  }
+  if (project.team_size_range) {
+    content += `
+      <div class="detail-item">
+        <div class="detail-label">Team Size</div>
+        <div class="detail-value">${project.team_size_range}</div>
+      </div>
+    `;
+  }
+  if (project.client_context) {
+    content += `
+      <div class="detail-item">
+        <div class="detail-label">Client Type</div>
+        <div class="detail-value">${project.client_context}</div>
+      </div>
+    `;
+  }
+  content += '</div>';
+
+  // The Challenge
+  if (project.problem_details || project.problem_summary) {
+    content += `
+      <div class="content-section">
+        <h3 class="section-title">The Challenge</h3>
+        <p class="section-content">${project.problem_details || project.problem_summary}</p>
+      </div>
+    `;
+  }
+
+  // The System
+  if (project.system_overview) {
+    content += `
+      <div class="content-section">
+        <h3 class="section-title">The System We Built</h3>
+        <p class="section-content">${project.system_overview}</p>
+      </div>
+    `;
+  }
+
+  // Architecture & Tools
+  if (project.tools_used) {
+    const tools = project.tools_used.split(',').map(t => t.trim()).filter(Boolean);
+    if (tools.length > 0) {
+      content += `
+        <div class="content-section">
+          <h3 class="section-title">Architecture & Integrations</h3>
+          <div class="tool-tags">
+            ${tools.map(tool => `<span class="tool-tag">${tool}</span>`).join('')}
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  // Business Impact
+  if (project.primary_outcome || project.secondary_outcome) {
+    content += `
+      <div class="content-section">
+        <h3 class="section-title">Business Impact</h3>
+        <div class="outcome-metrics">
+    `;
+    
+    if (project.primary_outcome) {
+      content += `
+        <div class="outcome-metric">
+          <div class="outcome-metric-value">${project.primary_outcome}</div>
+          <div class="outcome-metric-label">${project.metric_type || 'Time saved'}</div>
+        </div>
+      `;
+    }
+    
+    if (project.secondary_outcome) {
+      content += `
+        <div class="outcome-metric">
+          <div class="outcome-metric-value">${project.secondary_outcome}</div>
+          <div class="outcome-metric-label">Additional impact</div>
+        </div>
+      `;
+    }
+    
+    content += '</div></div>';
+  }
+
+  // Client Testimonial
+  if (project.testimonial_quote) {
+    content += `
+      <div class="testimonial-box">
+        <p class="testimonial-quote">
+          "${project.testimonial_quote}"
+        </p>
+        ${project.testimonial_author ? `
+          <p class="testimonial-author">
+            — ${project.testimonial_author}
+            ${project.testimonial_source ? `<span style="font-weight: 400; color: hsl(220 9% 46%);">, ${project.testimonial_source}</span>` : ''}
+          </p>
+        ` : ''}
+      </div>
+    `;
+  }
+
+  // Agency CTA Section
+  content += `
+    <div class="agency-footer-section">
+      <div class="agency-footer-title">Need a similar system for your team?</div>
+      <p class="agency-footer-text">We'll design a custom automation plan for your operations. Free audit delivered in 24 hours.</p>
+      <button class="btn btn-primary" onclick="event.stopPropagation(); openCTAModal()">
+        Get Your Free Automation Audit
+      </button>
+    </div>
+  `;
+
+  // Related Systems
+  const relatedProjects = allProjects.filter(p => 
+    (p.primary_category === project.primary_category || p.industry === project.industry) &&
+    p.project_id !== project.project_id &&
+    p.status === 'published'
+  ).slice(0, 4);
+
+  if (relatedProjects.length > 0) {
+    content += `
+      <div class="content-section">
+        <h3 class="section-title">Similar Systems Delivered</h3>
+        <div class="related-projects-grid">
+          ${relatedProjects.map(rp => `
+            <div class="related-project-card" onclick="event.stopPropagation(); openModal('${rp.project_id}')">
+              <img src="${rp.thumbnail_image_url}" alt="${rp.project_title}" class="related-project-image" />
+              <div class="related-project-content">
+                <div class="related-project-category">${rp.primary_category || 'Automation'}</div>
+                <div class="related-project-title">${rp.project_title}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  modalBody.innerHTML = content;
+  updateModalNavigation();
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  
+  lucide.createIcons();
+}
+
+function switchFeaturedMedia(type, url, element) {
+  const featuredContainer = document.getElementById('featured-media');
+  
+  if (type === 'video') {
+    const embedUrl = getYouTubeEmbedUrl(url);
+    if (embedUrl) {
+      featuredContainer.innerHTML = `<iframe src="${embedUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    }
+  } else {
+    featuredContainer.innerHTML = `<img src="${url}" alt="System media" />`;
+  }
+
+  document.querySelectorAll('.media-thumbnail').forEach(thumb => thumb.classList.remove('active'));
+  element.classList.add('active');
+}
+
+function closeModal() {
+  const modal = document.getElementById('project-modal');
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+  currentModalIndex = -1;
+  currentProject = null;
+}
+
+function closeModalOnOverlay(event) {
+  if (event.target.id === 'project-modal') {
+    closeModal();
+  }
+}
+
+function updateModalNavigation() {
+  const prevBtn = document.getElementById('modal-prev-btn');
+  const nextBtn = document.getElementById('modal-next-btn');
+
+  prevBtn.disabled = currentModalIndex <= 0;
+  nextBtn.disabled = currentModalIndex >= filteredProjects.length - 1;
+}
+
+function navigateProject(direction) {
+  const newIndex = currentModalIndex + direction;
+  if (newIndex < 0 || newIndex >= filteredProjects.length) return;
+
+  const project = filteredProjects[newIndex];
+  openModal(project.project_id);
+}
+
+// ===================================================================
+// CTA MODAL
+// ===================================================================
+function openCTAModal() {
+  document.getElementById('cta-modal').classList.add('active');
+}
+
+function closeCTAModal() {
+  document.getElementById('cta-modal').classList.remove('active');
+  document.getElementById('cta-form').reset();
+}
+
+function closeCTAModalOnOverlay(event) {
+  if (event.target.id === 'cta-modal') {
+    closeCTAModal();
+  }
+}
+
+function submitCTA(event) {
+  event.preventDefault();
+  
+  const name = document.getElementById('cta-name').value;
+  const email = document.getElementById('cta-email').value;
+  const message = document.getElementById('cta-message').value;
+  
+  console.log('CTA submitted:', { name, email, message, project: currentProject?.project_id });
+  
+  alert('Thank you! We\'ll send your custom automation plan within 24 hours.');
+  closeCTAModal();
+}
+
+// ===================================================================
+// MOBILE MENU
+// ===================================================================
+function toggleMobileMenu() {
+  document.getElementById('mobile-menu').classList.add('active');
+  document.getElementById('mobile-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMobileMenu() {
+  document.getElementById('mobile-menu').classList.remove('active');
+  document.getElementById('mobile-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// ===================================================================
+// FADE-UP ANIMATIONS
+// ===================================================================
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// ===================================================================
+// KEYBOARD SHORTCUTS
+// ===================================================================
+document.addEventListener('keydown', (e) => {
+  const modalOpen = document.getElementById('project-modal').classList.contains('active');
+  const ctaModalOpen = document.getElementById('cta-modal').classList.contains('active');
+  
+  if (e.key === 'Escape') {
+    if (ctaModalOpen) {
+      closeCTAModal();
+    } else if (modalOpen) {
+      closeModal();
+    }
+  }
+  
+  if (modalOpen && !ctaModalOpen) {
+    if (e.key === 'ArrowLeft') {
+      navigateProject(-1);
+    } else if (e.key === 'ArrowRight') {
+      navigateProject(1);
+    }
+  }
+});
+
+// ===================================================================
+// URL PARAMETERS
+// ===================================================================
+function checkUrlParams() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const projectId = urlParams.get('project');
+  if (projectId) {
+    setTimeout(() => openModal(projectId), 500);
+  }
+}
+
+// ===================================================================
+// INITIALIZATION
+// ===================================================================
+window.addEventListener('load', () => {
+  window.scrollTo(0, 0);
+  checkUrlParams();
+});
+
+document.getElementById('year').textContent = new Date().getFullYear();
+fetchProjects();
+lucide.createIcons();
+</script>
+
+</body>
+</html>
