@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Packdez - YouTube Channel</title>
+    <title>Packdez Projects - Automation Systems</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -33,158 +33,114 @@
             background-color: hsl(var(--background));
             color: hsl(var(--foreground));
             line-height: 1.6;
-            padding: 2rem;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Header */
+        .header {
             text-align: center;
+            margin-bottom: 2rem;
         }
 
-        .view-more-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            background-color: hsl(146 55% 36%);
-            color: white;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .view-more-link:hover {
-            background-color: hsl(146 55% 32%);
-            box-shadow: 0 4px 12px rgba(46, 140, 78, 0.3);
-            transform: translateY(-1px);
-        }
-
-        /* Modal Overlay */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(8px);
-            z-index: 100;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            animation: fadeIn 0.2s ease-out;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Modal Content */
-        .modal-content {
-            background: white;
-            border-radius: 1rem;
-            width: 100%;
-            max-width: 1200px;
-            max-height: 90vh;
-            position: relative;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.3s ease-out;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px) scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        /* Modal Header */
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem;
-            border-bottom: 1px solid hsl(220 13% 91%);
-            background: white;
-        }
-
-        .modal-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: hsl(220 20% 10%);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .youtube-icon {
-            width: 2rem;
-            height: 2rem;
-            color: #FF0000;
-        }
-
-        .close-btn {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 50%;
-            background: hsl(220 14% 96%);
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            flex-shrink: 0;
-        }
-
-        .close-btn:hover {
-            background: hsl(220 13% 91%);
-            transform: rotate(90deg);
-        }
-
-        .close-btn svg {
-            width: 1.25rem;
-            height: 1.25rem;
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
             color: hsl(220 20% 10%);
         }
 
-        /* Modal Body */
-        .modal-body {
+        .header p {
+            font-size: 1.125rem;
+            color: hsl(220 9% 46%);
+        }
+
+        /* Filters */
+        .filters {
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-input {
             flex: 1;
-            overflow: hidden;
-            background: white;
-            position: relative;
+            min-width: 200px;
+            padding: 0.625rem 1rem;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-size: 0.9375rem;
+            transition: border-color 0.2s;
         }
 
-        /* YouTube Channel Container */
-        .youtube-channel-container {
+        .filter-input:focus {
+            outline: none;
+            border-color: hsl(146 55% 36%);
+        }
+
+        .filter-select {
+            padding: 0.625rem 1rem;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-size: 0.9375rem;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            min-width: 150px;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: hsl(146 55% 36%);
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 968px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Project Card */
+        .project-card {
+            background: white;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+            border-color: hsl(146 55% 36% / 0.3);
+        }
+
+        /* Video Container */
+        .video-container {
             position: relative;
             width: 100%;
-            height: 100%;
-            min-height: 600px;
-            background: white;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            background: black;
         }
 
-        .youtube-channel-container iframe {
+        .video-container iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -193,229 +149,461 @@
             border: none;
         }
 
-        /* Modal Footer */
-        .modal-footer {
-            padding: 1.5rem;
-            border-top: 1px solid hsl(220 13% 91%);
-            background: white;
-            text-align: center;
+        /* Project Content */
+        .project-content {
+            padding: 1.25rem;
         }
 
-        .visit-channel-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.875rem 1.75rem;
-            background: #FF0000;
-            color: white;
-            border-radius: 0.5rem;
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: hsl(220 20% 10%);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .project-category {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: hsl(146 55% 36% / 0.1);
+            color: hsl(146 55% 36%);
+            border-radius: 9999px;
+            font-size: 0.75rem;
             font-weight: 600;
-            font-size: 0.9375rem;
-            text-decoration: none;
-            transition: all 0.2s;
-            box-shadow: 0 2px 8px rgba(255, 0, 0, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        .visit-channel-btn:hover {
-            background: #CC0000;
-            box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
-            transform: translateY(-1px);
+        /* Stats */
+        .project-stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.875rem;
+            color: hsl(220 9% 46%);
+        }
+
+        .stat-item svg {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: hsl(220 20% 10%);
+        }
+
+        /* Collapsible Details */
+        .collapsible-trigger {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: hsl(220 14% 98%);
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: hsl(146 55% 36%);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .collapsible-trigger:hover {
+            background: hsl(146 55% 36% / 0.05);
+            border-color: hsl(146 55% 36%);
+        }
+
+        .collapsible-trigger svg {
+            width: 1rem;
+            height: 1rem;
+            transition: transform 0.2s;
+        }
+
+        .collapsible-trigger.active svg {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .collapsible-content.active {
+            max-height: 500px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .collapsible-inner {
+            padding: 1rem;
+            background: hsl(220 14% 98%);
+            border: 1px solid hsl(220 13% 91%);
+            border-top: none;
+            border-radius: 0 0 0.5rem 0.5rem;
+            margin-top: -0.5rem;
+        }
+
+        .detail-section {
+            margin-bottom: 1rem;
+        }
+
+        .detail-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: hsl(220 9% 46%);
+            margin-bottom: 0.375rem;
+        }
+
+        .detail-value {
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            color: hsl(220 20% 10%);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: hsl(220 9% 46%);
+        }
+
+        .empty-state svg {
+            width: 3rem;
+            height: 3rem;
+            margin: 0 auto 1rem;
+            opacity: 0.3;
         }
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            body {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .filters {
                 padding: 1rem;
             }
 
-            .modal-content {
-                max-height: 95vh;
-                border-radius: 0.75rem;
+            .filter-input,
+            .filter-select {
+                min-width: 100%;
             }
 
-            .modal-header {
-                padding: 1rem;
-            }
-
-            .modal-title {
-                font-size: 1.125rem;
-            }
-
-            .youtube-icon {
-                width: 1.5rem;
-                height: 1.5rem;
-            }
-
-            .youtube-channel-container {
-                min-height: 500px;
-            }
-
-            .modal-footer {
-                padding: 1rem;
-            }
-
-            .visit-channel-btn {
-                padding: 0.75rem 1.5rem;
-                font-size: 0.875rem;
+            .project-stats {
+                gap: 1rem;
             }
         }
 
         @media (max-width: 480px) {
-            .modal-overlay {
-                padding: 0.5rem;
+            .header h1 {
+                font-size: 1.75rem;
             }
 
-            .modal-content {
-                border-radius: 0.5rem;
-            }
-
-            .modal-header {
-                padding: 0.875rem;
-            }
-
-            .modal-title {
+            .project-title {
                 font-size: 1rem;
             }
 
-            .close-btn {
-                width: 2rem;
-                height: 2rem;
-            }
-
-            .close-btn svg {
-                width: 1rem;
-                height: 1rem;
-            }
-
-            .youtube-channel-container {
-                min-height: 400px;
+            .project-stats {
+                flex-direction: column;
+                gap: 0.5rem;
             }
         }
 
-        /* Prevent body scroll when modal is open */
-        body.modal-open {
-            overflow: hidden;
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: hsl(220 14% 96%);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: hsl(220 13% 91%);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: hsl(220 9% 46%);
         }
     </style>
 </head>
 <body>
     
     <div class="container">
-        <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; color: hsl(220 20% 10%);">
-            Welcome to Packdez
-        </h1>
-        <p style="font-size: 1.125rem; color: hsl(220 9% 46%); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-            Discover our automation systems and workflow solutions. Check out our YouTube channel for tutorials and case studies.
-        </p>
-        
-        <!-- View More Link -->
-        <a href="#" class="view-more-link" id="viewMoreBtn" onclick="openModal(event)">
-            <span>View More</span>
-            <i data-lucide="external-link" style="width: 1.125rem; height: 1.125rem;"></i>
-        </a>
-    </div>
+        <!-- Header -->
+        <div class="header">
+            <h1>Packdez Projects</h1>
+            <p>Automation systems built for operational teams</p>
+        </div>
 
-    <!-- Modal -->
-    <div id="youtubeModal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <div class="modal-title">
-                    <svg class="youtube-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                    </svg>
-                    <span>Packdez YouTube Channel</span>
-                </div>
-                <button class="close-btn" onclick="closeModal()" aria-label="Close modal">
-                    <i data-lucide="x"></i>
-                </button>
-            </div>
+        <!-- Filters -->
+        <div class="filters">
+            <input 
+                type="text" 
+                id="searchInput" 
+                class="filter-input" 
+                placeholder="Search projects..."
+                onkeyup="filterProjects()"
+            />
+            <select id="categoryFilter" class="filter-select" onchange="filterProjects()">
+                <option value="">All Categories</option>
+            </select>
+        </div>
 
-            <!-- Modal Body with YouTube Channel Embed -->
-            <div class="modal-body">
-                <div class="youtube-channel-container">
-                    <iframe
-                        id="youtubeEmbed"
-                        src=""
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                        title="Packdez YouTube Channel"
-                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                    ></iframe>
-                </div>
-            </div>
+        <!-- Projects Grid -->
+        <div id="projectsGrid" class="projects-grid"></div>
 
-            <!-- Modal Footer -->
-            <div class="modal-footer">
-                <a 
-                    href="https://www.youtube.com/@packdezhq?sub_confirmation=1" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    class="visit-channel-btn"
-                    onclick="event.stopPropagation()"
-                >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                    </svg>
-                    <span>Visit Channel on YouTube</span>
-                </a>
-                <p style="margin-top: 0.75rem; font-size: 0.875rem; color: hsl(220 9% 46%);">
-                    Opens in a new tab • No redirect from this page
-                </p>
-            </div>
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <i data-lucide="search"></i>
+            <h3 style="font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem;">No projects found</h3>
+            <p>Try adjusting your search or filters</p>
         </div>
     </div>
 
     <script>
-        // Modal functionality
-        function openModal(event) {
-            event.preventDefault();
-            const modal = document.getElementById('youtubeModal');
-            const iframe = document.getElementById('youtubeEmbed');
-            
-            // Embed the YouTube channel using the embed format
-            // This shows the channel's latest videos without redirecting
-            iframe.src = 'https://www.youtube.com/embed/videoseries?list=UU' + 'packdezhq'.substring(1);
-            
-            // Alternative: Use channel embed (shows channel page in iframe)
-            // Note: YouTube may restrict full channel page embedding, so we use the playlist approach
-            // iframe.src = 'https://www.youtube.com/embed?listType=user_uploads&list=packdezhq';
-            
-            // Show modal
-            modal.classList.add('active');
-            document.body.classList.add('modal-open');
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('youtubeModal');
-            const iframe = document.getElementById('youtubeEmbed');
-            
-            // Remove modal
-            modal.classList.remove('active');
-            document.body.classList.remove('modal-open');
-            
-            // Stop any playing video by clearing iframe src
-            iframe.src = '';
-        }
-
-        function closeModalOnOverlay(event) {
-            if (event.target.id === 'youtubeModal') {
-                closeModal();
+        // Projects Data - Easy to add more projects!
+        const projects = [
+            {
+                id: 1,
+                title: "Looker Studio Healthcare Dashboard",
+                category: "Dashboard",
+                videoUrl: "https://www.youtube.com/embed/-svuBj0WpkE",
+                views: 9,
+                likes: 2,
+                description: "A comprehensive healthcare dashboard built with Looker Studio for tracking patient metrics and operational KPIs.",
+                tools: "Looker Studio, Google Sheets, Healthcare APIs",
+                outcome: "Reduced reporting time by 75% and improved data visibility across departments."
+            },
+            {
+                id: 2,
+                title: "Google Sheet Invoice/Payslip Auto Generator",
+                category: "Automation",
+                videoUrl: "https://www.youtube.com/embed/4fjE3eJ01T4",
+                views: 10,
+                likes: 3,
+                description: "Automated invoice and payslip generation system that creates professional documents from Google Sheets data.",
+                tools: "Google Sheets, Apps Script, PDF Generation",
+                outcome: "Eliminated manual invoice creation, saving 10+ hours per week."
+            },
+            {
+                id: 3,
+                title: "Custom Login Page with Looker Studio",
+                category: "Authentication",
+                videoUrl: "https://www.youtube.com/embed/AaMAOE3BrUM",
+                views: 18,
+                likes: 5,
+                description: "Secure custom login page integrated with Looker Studio for controlled dashboard access.",
+                tools: "Looker Studio, Google Apps Script, Authentication APIs",
+                outcome: "Enhanced security and provided branded user experience for clients."
+            },
+            {
+                id: 4,
+                title: "Custom Survey Form with Google Sheets",
+                category: "Forms",
+                videoUrl: "https://www.youtube.com/embed/1Oa7EgHFoLs",
+                views: 6,
+                likes: 1,
+                description: "Custom-branded survey form that automatically populates responses into organized Google Sheets.",
+                tools: "Google Forms, Google Sheets, Custom HTML/CSS",
+                outcome: "Increased survey completion rate by 40% with improved UX."
+            },
+            {
+                id: 5,
+                title: "Automated Workflow System",
+                category: "Automation",
+                videoUrl: "https://www.youtube.com/embed/ykFwXvWZ6lc",
+                views: 15,
+                likes: 4,
+                description: "End-to-end workflow automation that connects multiple tools and eliminates manual data entry.",
+                tools: "Google Sheets, Zapier, Multiple APIs",
+                outcome: "Automated 90% of manual tasks, freeing up team for strategic work."
+            },
+            {
+                id: 6,
+                title: "Real-time Data Integration",
+                category: "Integration",
+                videoUrl: "https://www.youtube.com/embed/HsMaIpEOlF4",
+                views: 12,
+                likes: 3,
+                description: "Real-time data synchronization between multiple platforms for unified reporting.",
+                tools: "Google Sheets, APIs, Real-time Sync",
+                outcome: "Achieved real-time data accuracy across all business systems."
             }
+        ];
+
+        // Get unique categories
+        function getCategories() {
+            return [...new Set(projects.map(p => p.category))];
         }
 
-        // Close modal on Escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                const modal = document.getElementById('youtubeModal');
-                if (modal.classList.contains('active')) {
-                    closeModal();
-                }
+        // Populate category filter
+        function populateCategoryFilter() {
+            const categoryFilter = document.getElementById('categoryFilter');
+            const categories = getCategories();
+            
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category;
+                categoryFilter.appendChild(option);
+            });
+        }
+
+        // Format number with commas
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // Render projects
+        function renderProjects(projectsToRender) {
+            const grid = document.getElementById('projectsGrid');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (projectsToRender.length === 0) {
+                grid.style.display = 'none';
+                emptyState.style.display = 'block';
+                lucide.createIcons();
+                return;
             }
+            
+            grid.style.display = 'grid';
+            emptyState.style.display = 'none';
+            
+            grid.innerHTML = projectsToRender.map(project => `
+                <div class="project-card" data-category="${project.category}">
+                    <!-- Video -->
+                    <div class="video-container">
+                        <iframe
+                            src="${project.videoUrl}"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            title="${project.title}"
+                        ></iframe>
+                    </div>
+                    
+                    <!-- Content -->
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div style="flex: 1;">
+                                <h3 class="project-title">${project.title}</h3>
+                                <span class="project-category">${project.category}</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Stats -->
+                        <div class="project-stats">
+                            <div class="stat-item">
+                                <i data-lucide="eye"></i>
+                                <span class="stat-value">${formatNumber(project.views)}</span>
+                                <span>views</span>
+                            </div>
+                            <div class="stat-item">
+                                <i data-lucide="heart"></i>
+                                <span class="stat-value">${formatNumber(project.likes)}</span>
+                                <span>likes</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Collapsible Details -->
+                        <button class="collapsible-trigger" onclick="toggleCollapsible(this)">
+                            <span>View Details</span>
+                            <i data-lucide="chevron-down"></i>
+                        </button>
+                        <div class="collapsible-content">
+                            <div class="collapsible-inner">
+                                <div class="detail-section">
+                                    <div class="detail-label">Description</div>
+                                    <div class="detail-value">${project.description}</div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-label">Tools & Technologies</div>
+                                    <div class="detail-value">${project.tools}</div>
+                                </div>
+                                <div class="detail-section">
+                                    <div class="detail-label">Outcome</div>
+                                    <div class="detail-value">${project.outcome}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            lucide.createIcons();
+        }
+
+        // Toggle collapsible
+        function toggleCollapsible(button) {
+            const content = button.nextElementSibling;
+            const isActive = button.classList.contains('active');
+            
+            if (isActive) {
+                button.classList.remove('active');
+                content.classList.remove('active');
+            } else {
+                button.classList.add('active');
+                content.classList.add('active');
+            }
+            
+            lucide.createIcons();
+        }
+
+        // Filter projects
+        function filterProjects() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            
+            const filtered = projects.filter(project => {
+                const matchesSearch = !searchTerm || 
+                    project.title.toLowerCase().includes(searchTerm) ||
+                    project.description.toLowerCase().includes(searchTerm) ||
+                    project.category.toLowerCase().includes(searchTerm);
+                
+                const matchesCategory = !categoryFilter || project.category === categoryFilter;
+                
+                return matchesSearch && matchesCategory;
+            });
+            
+            renderProjects(filtered);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            populateCategoryFilter();
+            renderProjects(projects);
+            lucide.createIcons();
         });
-
-        // Initialize Lucide icons
-        lucide.createIcons();
     </script>
 
 </body>
