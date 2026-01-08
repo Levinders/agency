@@ -96,7 +96,7 @@
             background: white;
             border-radius: 1rem;
             width: 100%;
-            max-width: 1000px;
+            max-width: 1200px;
             max-height: 90vh;
             position: relative;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -170,19 +170,21 @@
         /* Modal Body */
         .modal-body {
             flex: 1;
-            overflow-y: auto;
-            background: hsl(220 14% 98%);
+            overflow: hidden;
+            background: white;
+            position: relative;
         }
 
-        /* YouTube Embed Container */
-        .youtube-embed-container {
+        /* YouTube Channel Container */
+        .youtube-channel-container {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            background: black;
+            height: 100%;
+            min-height: 600px;
+            background: white;
         }
 
-        .youtube-embed-container iframe {
+        .youtube-channel-container iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -199,7 +201,7 @@
             text-align: center;
         }
 
-        .subscribe-btn {
+        .visit-channel-btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
@@ -214,7 +216,7 @@
             box-shadow: 0 2px 8px rgba(255, 0, 0, 0.2);
         }
 
-        .subscribe-btn:hover {
+        .visit-channel-btn:hover {
             background: #CC0000;
             box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
             transform: translateY(-1px);
@@ -244,11 +246,15 @@
                 height: 1.5rem;
             }
 
+            .youtube-channel-container {
+                min-height: 500px;
+            }
+
             .modal-footer {
                 padding: 1rem;
             }
 
-            .subscribe-btn {
+            .visit-channel-btn {
                 padding: 0.75rem 1.5rem;
                 font-size: 0.875rem;
             }
@@ -280,24 +286,10 @@
                 width: 1rem;
                 height: 1rem;
             }
-        }
 
-        /* Smooth scrollbar for modal body */
-        .modal-body::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .modal-body::-webkit-scrollbar-track {
-            background: hsl(220 14% 96%);
-        }
-
-        .modal-body::-webkit-scrollbar-thumb {
-            background: hsl(220 13% 91%);
-            border-radius: 4px;
-        }
-
-        .modal-body::-webkit-scrollbar-thumb:hover {
-            background: hsl(220 9% 46%);
+            .youtube-channel-container {
+                min-height: 400px;
+            }
         }
 
         /* Prevent body scroll when modal is open */
@@ -339,15 +331,16 @@
                 </button>
             </div>
 
-            <!-- Modal Body with YouTube Embed -->
+            <!-- Modal Body with YouTube Channel Embed -->
             <div class="modal-body">
-                <div class="youtube-embed-container">
+                <div class="youtube-channel-container">
                     <iframe
                         id="youtubeEmbed"
                         src=""
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen
                         title="Packdez YouTube Channel"
+                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                     ></iframe>
                 </div>
             </div>
@@ -358,13 +351,17 @@
                     href="https://www.youtube.com/@packdezhq?sub_confirmation=1" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    class="subscribe-btn"
+                    class="visit-channel-btn"
+                    onclick="event.stopPropagation()"
                 >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                     </svg>
-                    <span>Subscribe on YouTube</span>
+                    <span>Visit Channel on YouTube</span>
                 </a>
+                <p style="margin-top: 0.75rem; font-size: 0.875rem; color: hsl(220 9% 46%);">
+                    Opens in a new tab • No redirect from this page
+                </p>
             </div>
         </div>
     </div>
@@ -376,8 +373,13 @@
             const modal = document.getElementById('youtubeModal');
             const iframe = document.getElementById('youtubeEmbed');
             
-            // Set the YouTube embed URL when opening
-            iframe.src = 'https://www.youtube.com/embed?listType=user_uploads&list=packdezhq';
+            // Embed the YouTube channel using the embed format
+            // This shows the channel's latest videos without redirecting
+            iframe.src = 'https://www.youtube.com/embed/videoseries?list=UU' + 'packdezhq'.substring(1);
+            
+            // Alternative: Use channel embed (shows channel page in iframe)
+            // Note: YouTube may restrict full channel page embedding, so we use the playlist approach
+            // iframe.src = 'https://www.youtube.com/embed?listType=user_uploads&list=packdezhq';
             
             // Show modal
             modal.classList.add('active');
@@ -392,7 +394,7 @@
             modal.classList.remove('active');
             document.body.classList.remove('modal-open');
             
-            // Stop video by clearing iframe src
+            // Stop any playing video by clearing iframe src
             iframe.src = '';
         }
 
