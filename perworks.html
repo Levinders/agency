@@ -122,16 +122,73 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem;
+            padding: 1.25rem 1.5rem;
             border-bottom: 1px solid hsl(220 13% 91%);
             background: white;
             flex-shrink: 0;
         }
 
+        .modal-title-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
         .modal-title {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 700;
             color: hsl(220 20% 10%);
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: hsl(220 14% 96%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .nav-btn svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .category-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid hsl(220 13% 91%);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            font-weight: 500;
+        }
+
+        .category-select:focus {
+            outline: none;
+            border-color: hsl(146 55% 36%);
         }
 
         .close-btn {
@@ -146,6 +203,7 @@
             justify-content: center;
             transition: all 0.2s;
             flex-shrink: 0;
+            margin-left: 0.75rem;
         }
 
         .close-btn:hover {
@@ -159,98 +217,36 @@
             color: hsl(220 20% 10%);
         }
 
-        /* Modal Body */
+        /* Modal Body - Split Layout */
         .modal-body {
             flex: 1;
-            overflow-y: auto;
-            background: hsl(220 14% 98%);
-            padding: 1.5rem;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* Filters */
-        .filters {
+            overflow: hidden;
             background: white;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .filter-input {
-            flex: 1;
-            min-width: 200px;
-            padding: 0.625rem 1rem;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.5rem;
-            font-size: 0.9375rem;
-            transition: border-color 0.2s;
-        }
-
-        .filter-input:focus {
-            outline: none;
-            border-color: hsl(146 55% 36%);
-        }
-
-        .filter-select {
-            padding: 0.625rem 1rem;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.5rem;
-            font-size: 0.9375rem;
-            background: white;
-            cursor: pointer;
-            transition: border-color 0.2s;
-            min-width: 150px;
-        }
-
-        .filter-select:focus {
-            outline: none;
-            border-color: hsl(146 55% 36%);
-        }
-
-        /* Projects Grid */
-        .projects-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
         }
 
         @media (max-width: 968px) {
-            .projects-grid {
+            .modal-body {
                 grid-template-columns: 1fr;
+                overflow-y: auto;
             }
         }
 
-        /* Project Card */
-        .project-card {
-            background: white;
-            border: 1px solid hsl(220 13% 91%);
-            border-radius: 0.75rem;
-            overflow: hidden;
-            transition: all 0.3s ease;
+        /* Left Side - Video */
+        .video-section {
+            background: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
 
-        .project-card:hover {
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-            transform: translateY(-2px);
-            border-color: hsl(146 55% 36% / 0.3);
-        }
-
-        /* Video Container */
         .video-container {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            background: black;
+            height: 100%;
         }
 
         .video-container iframe {
@@ -262,156 +258,175 @@
             border: none;
         }
 
-        /* Project Content */
-        .project-content {
-            padding: 1.25rem;
+        @media (max-width: 968px) {
+            .video-section {
+                aspect-ratio: 16 / 9;
+            }
+
+            .video-container {
+                position: static;
+                height: 100%;
+            }
+
+            .video-container iframe {
+                position: static;
+                height: 100%;
+            }
         }
 
-        .project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
+        /* Right Side - Details */
+        .details-section {
+            padding: 2rem;
+            overflow-y: auto;
+            background: white;
         }
 
-        .project-title {
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: hsl(220 20% 10%);
-            margin-bottom: 0.5rem;
-            line-height: 1.3;
+        @media (max-width: 968px) {
+            .details-section {
+                padding: 1.5rem;
+            }
         }
 
         .project-category {
             display: inline-block;
-            padding: 0.25rem 0.75rem;
+            padding: 0.375rem 0.875rem;
             background: hsl(146 55% 36% / 0.1);
             color: hsl(146 55% 36%);
             border-radius: 9999px;
-            font-size: 0.75rem;
+            font-size: 0.8125rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: hsl(220 20% 10%);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        @media (max-width: 768px) {
+            .project-title {
+                font-size: 1.5rem;
+            }
         }
 
         /* Stats */
         .project-stats {
             display: flex;
-            gap: 1.5rem;
-            margin-bottom: 1rem;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid hsl(220 13% 91%);
         }
 
         .stat-item {
             display: flex;
-            align-items: center;
-            gap: 0.375rem;
-            font-size: 0.875rem;
-            color: hsl(220 9% 46%);
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
-        .stat-item svg {
-            width: 1rem;
-            height: 1rem;
+        .stat-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: hsl(220 9% 46%);
+            font-weight: 500;
+        }
+
+        .stat-label svg {
+            width: 1.125rem;
+            height: 1.125rem;
         }
 
         .stat-value {
-            font-weight: 600;
+            font-size: 1.75rem;
+            font-weight: 800;
             color: hsl(220 20% 10%);
         }
 
-        /* Collapsible Details */
-        .collapsible-trigger {
-            width: 100%;
-            display: flex;
+        .like-btn {
+            display: inline-flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 0.75rem 1rem;
-            background: hsl(220 14% 98%);
+            gap: 0.5rem;
+            padding: 0.625rem 1.25rem;
+            background: white;
             border: 1px solid hsl(220 13% 91%);
             border-radius: 0.5rem;
             font-size: 0.875rem;
             font-weight: 600;
-            color: hsl(146 55% 36%);
+            color: hsl(220 20% 10%);
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        .collapsible-trigger:hover {
+        .like-btn:hover {
             background: hsl(146 55% 36% / 0.05);
             border-color: hsl(146 55% 36%);
+            color: hsl(146 55% 36%);
         }
 
-        .collapsible-trigger svg {
+        .like-btn.liked {
+            background: hsl(146 55% 36%);
+            border-color: hsl(146 55% 36%);
+            color: white;
+        }
+
+        .like-btn svg {
             width: 1rem;
             height: 1rem;
-            transition: transform 0.2s;
         }
 
-        .collapsible-trigger.active svg {
-            transform: rotate(180deg);
+        .like-btn.liked svg {
+            fill: currentColor;
         }
 
-        .collapsible-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-        }
-
-        .collapsible-content.active {
-            max-height: 500px;
-            transition: max-height 0.5s ease-in;
-        }
-
-        .collapsible-inner {
-            padding: 1rem;
-            background: hsl(220 14% 98%);
-            border: 1px solid hsl(220 13% 91%);
-            border-top: none;
-            border-radius: 0 0 0.5rem 0.5rem;
-            margin-top: -0.5rem;
-        }
-
+        /* Detail Sections */
         .detail-section {
-            margin-bottom: 1rem;
-        }
-
-        .detail-section:last-child {
-            margin-bottom: 0;
+            margin-bottom: 2rem;
         }
 
         .detail-label {
-            font-size: 0.75rem;
+            font-size: 0.8125rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: hsl(220 9% 46%);
-            margin-bottom: 0.375rem;
+            margin-bottom: 0.75rem;
         }
 
         .detail-value {
-            font-size: 0.9375rem;
-            line-height: 1.6;
+            font-size: 1rem;
+            line-height: 1.7;
             color: hsl(220 20% 10%);
         }
 
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: hsl(220 9% 46%);
+        /* Scrollbar Styling */
+        .details-section::-webkit-scrollbar {
+            width: 8px;
         }
 
-        .empty-state svg {
-            width: 3rem;
-            height: 3rem;
-            margin: 0 auto 1rem;
-            opacity: 0.3;
+        .details-section::-webkit-scrollbar-track {
+            background: hsl(220 14% 96%);
+        }
+
+        .details-section::-webkit-scrollbar-thumb {
+            background: hsl(220 13% 91%);
+            border-radius: 4px;
+        }
+
+        .details-section::-webkit-scrollbar-thumb:hover {
+            background: hsl(220 9% 46%);
         }
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
             body {
-                padding: 1rem;
+                padding: 0.5rem;
             }
 
             .modal-content {
@@ -421,37 +436,41 @@
 
             .modal-header {
                 padding: 1rem;
+                flex-wrap: wrap;
+                gap: 0.75rem;
             }
 
             .modal-title {
-                font-size: 1.25rem;
+                font-size: 1.125rem;
             }
 
-            .modal-body {
-                padding: 1rem;
+            .nav-controls {
+                order: 3;
+                width: 100%;
+                justify-content: space-between;
             }
 
-            .filters {
-                padding: 1rem;
-            }
-
-            .filter-input,
-            .filter-select {
-                min-width: 100%;
+            .category-select {
+                flex: 1;
             }
 
             .project-stats {
-                gap: 1rem;
+                gap: 1.5rem;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
             }
         }
 
         @media (max-width: 480px) {
             .modal-overlay {
-                padding: 0.5rem;
+                padding: 0;
             }
 
             .modal-content {
-                border-radius: 0.5rem;
+                border-radius: 0;
+                max-height: 100vh;
             }
 
             .modal-header {
@@ -459,50 +478,44 @@
             }
 
             .modal-title {
-                font-size: 1.125rem;
+                font-size: 1rem;
             }
 
-            .close-btn {
+            .close-btn,
+            .nav-btn {
                 width: 2rem;
                 height: 2rem;
             }
 
-            .close-btn svg {
+            .close-btn svg,
+            .nav-btn svg {
                 width: 1rem;
                 height: 1rem;
             }
 
+            .details-section {
+                padding: 1rem;
+            }
+
             .project-title {
-                font-size: 1rem;
+                font-size: 1.25rem;
             }
 
             .project-stats {
                 flex-direction: column;
-                gap: 0.5rem;
+                gap: 1rem;
             }
-        }
-
-        /* Scrollbar Styling */
-        .modal-body::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        .modal-body::-webkit-scrollbar-track {
-            background: hsl(220 14% 96%);
-        }
-
-        .modal-body::-webkit-scrollbar-thumb {
-            background: hsl(220 13% 91%);
-            border-radius: 5px;
-        }
-
-        .modal-body::-webkit-scrollbar-thumb:hover {
-            background: hsl(220 9% 46%);
         }
 
         /* Prevent body scroll when modal is open */
         body.modal-open {
             overflow: hidden;
+        }
+
+        /* Loading State */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -520,7 +533,7 @@
         <!-- View More Link -->
         <a href="#" class="view-more-link" onclick="openModal(event)">
             <span>View More</span>
-            <i data-lucide="external-link" style="width: 1.125rem; height: 1.125rem;"></i>
+            <i data-lucide="play-circle" style="width: 1.125rem; height: 1.125rem;"></i>
         </a>
     </div>
 
@@ -529,53 +542,53 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <!-- Modal Header -->
             <div class="modal-header">
-                <h2 class="modal-title">Packdez Projects</h2>
+                <div class="modal-title-section">
+                    <h2 class="modal-title">Packdez Projects</h2>
+                </div>
+                
+                <div class="nav-controls">
+                    <button class="nav-btn" id="prevBtn" onclick="previousProject()" aria-label="Previous project">
+                        <i data-lucide="chevron-left"></i>
+                    </button>
+                    
+                    <select id="categoryFilter" class="category-select" onchange="filterByCategory()">
+                        <option value="">All Categories</option>
+                    </select>
+                    
+                    <button class="nav-btn" id="nextBtn" onclick="nextProject()" aria-label="Next project">
+                        <i data-lucide="chevron-right"></i>
+                    </button>
+                </div>
+                
                 <button class="close-btn" onclick="closeModal()" aria-label="Close modal">
                     <i data-lucide="x"></i>
                 </button>
             </div>
 
-            <!-- Modal Body -->
+            <!-- Modal Body - Split Layout -->
             <div class="modal-body">
-                <div class="container">
-                    <!-- Filters -->
-                    <div class="filters">
-                        <input 
-                            type="text" 
-                            id="searchInput" 
-                            class="filter-input" 
-                            placeholder="Search projects..."
-                            onkeyup="filterProjects()"
-                        />
-                        <select id="categoryFilter" class="filter-select" onchange="filterProjects()">
-                            <option value="">All Categories</option>
-                        </select>
-                    </div>
-
-                    <!-- Projects Grid -->
-                    <div id="projectsGrid" class="projects-grid"></div>
-
-                    <!-- Empty State -->
-                    <div id="emptyState" class="empty-state" style="display: none;">
-                        <i data-lucide="search"></i>
-                        <h3 style="font-weight: 700; font-size: 1.25rem; margin-bottom: 0.5rem;">No projects found</h3>
-                        <p>Try adjusting your search or filters</p>
-                    </div>
+                <!-- Left Side - Video -->
+                <div class="video-section">
+                    <div class="video-container" id="videoContainer"></div>
                 </div>
+                
+                <!-- Right Side - Details -->
+                <div class="details-section" id="detailsSection"></div>
             </div>
         </div>
     </div>
 
     <script>
-        // Projects Data - Easy to add more projects!
+        // Firebase Realtime Database Configuration
+        const FIREBASE_URL = 'https://packdez-projects-default-rtdb.firebaseio.com';
+        
+        // Projects Data
         const projects = [
             {
                 id: 1,
                 title: "Looker Studio Healthcare Dashboard",
                 category: "Dashboard",
-                videoUrl: "https://www.youtube.com/embed/-svuBj0WpkE",
-                views: 9,
-                likes: 2,
+                videoId: "-svuBj0WpkE",
                 description: "A comprehensive healthcare dashboard built with Looker Studio for tracking patient metrics and operational KPIs.",
                 tools: "Looker Studio, Google Sheets, Healthcare APIs",
                 outcome: "Reduced reporting time by 75% and improved data visibility across departments."
@@ -584,9 +597,7 @@
                 id: 2,
                 title: "Google Sheet Invoice/Payslip Auto Generator",
                 category: "Automation",
-                videoUrl: "https://www.youtube.com/embed/4fjE3eJ01T4",
-                views: 10,
-                likes: 3,
+                videoId: "4fjE3eJ01T4",
                 description: "Automated invoice and payslip generation system that creates professional documents from Google Sheets data.",
                 tools: "Google Sheets, Apps Script, PDF Generation",
                 outcome: "Eliminated manual invoice creation, saving 10+ hours per week."
@@ -595,9 +606,7 @@
                 id: 3,
                 title: "Custom Login Page with Looker Studio",
                 category: "Authentication",
-                videoUrl: "https://www.youtube.com/embed/AaMAOE3BrUM",
-                views: 18,
-                likes: 5,
+                videoId: "AaMAOE3BrUM",
                 description: "Secure custom login page integrated with Looker Studio for controlled dashboard access.",
                 tools: "Looker Studio, Google Apps Script, Authentication APIs",
                 outcome: "Enhanced security and provided branded user experience for clients."
@@ -606,9 +615,7 @@
                 id: 4,
                 title: "Custom Survey Form with Google Sheets",
                 category: "Forms",
-                videoUrl: "https://www.youtube.com/embed/1Oa7EgHFoLs",
-                views: 6,
-                likes: 1,
+                videoId: "1Oa7EgHFoLs",
                 description: "Custom-branded survey form that automatically populates responses into organized Google Sheets.",
                 tools: "Google Forms, Google Sheets, Custom HTML/CSS",
                 outcome: "Increased survey completion rate by 40% with improved UX."
@@ -617,9 +624,7 @@
                 id: 5,
                 title: "Automated Workflow System",
                 category: "Automation",
-                videoUrl: "https://www.youtube.com/embed/ykFwXvWZ6lc",
-                views: 15,
-                likes: 4,
+                videoId: "ykFwXvWZ6lc",
                 description: "End-to-end workflow automation that connects multiple tools and eliminates manual data entry.",
                 tools: "Google Sheets, Zapier, Multiple APIs",
                 outcome: "Automated 90% of manual tasks, freeing up team for strategic work."
@@ -628,14 +633,17 @@
                 id: 6,
                 title: "Real-time Data Integration",
                 category: "Integration",
-                videoUrl: "https://www.youtube.com/embed/HsMaIpEOlF4",
-                views: 12,
-                likes: 3,
+                videoId: "HsMaIpEOlF4",
                 description: "Real-time data synchronization between multiple platforms for unified reporting.",
                 tools: "Google Sheets, APIs, Real-time Sync",
                 outcome: "Achieved real-time data accuracy across all business systems."
             }
         ];
+
+        let currentProjectIndex = 0;
+        let filteredProjects = [...projects];
+        let projectStats = {};
+        let hasLiked = {};
 
         // Get unique categories
         function getCategories() {
@@ -660,117 +668,193 @@
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
-        // Render projects
-        function renderProjects(projectsToRender) {
-            const grid = document.getElementById('projectsGrid');
-            const emptyState = document.getElementById('emptyState');
-            
-            if (projectsToRender.length === 0) {
-                grid.style.display = 'none';
-                emptyState.style.display = 'block';
-                lucide.createIcons();
-                return;
+        // Fetch project stats from Firebase
+        async function fetchProjectStats(projectId) {
+            try {
+                const response = await fetch(`${FIREBASE_URL}/projects/${projectId}.json`);
+                const data = await response.json();
+                return data || { views: 0, likes: 0 };
+            } catch (error) {
+                console.error('Error fetching stats:', error);
+                return { views: 0, likes: 0 };
+            }
+        }
+
+        // Update project stats in Firebase
+        async function updateProjectStats(projectId, field, value) {
+            try {
+                await fetch(`${FIREBASE_URL}/projects/${projectId}/${field}.json`, {
+                    method: 'PUT',
+                    body: JSON.stringify(value)
+                });
+            } catch (error) {
+                console.error('Error updating stats:', error);
+            }
+        }
+
+        // Increment views
+        async function incrementViews(projectId) {
+            const stats = await fetchProjectStats(projectId);
+            const newViews = (stats.views || 0) + 1;
+            await updateProjectStats(projectId, 'views', newViews);
+            return newViews;
+        }
+
+        // Toggle like
+        async function toggleLike(projectId) {
+            if (hasLiked[projectId]) {
+                return projectStats[projectId]?.likes || 0;
             }
             
-            grid.style.display = 'grid';
-            emptyState.style.display = 'none';
+            const stats = await fetchProjectStats(projectId);
+            const newLikes = (stats.likes || 0) + 1;
+            await updateProjectStats(projectId, 'likes', newLikes);
+            hasLiked[projectId] = true;
             
-            grid.innerHTML = projectsToRender.map(project => `
-                <div class="project-card" data-category="${project.category}">
-                    <!-- Video -->
-                    <div class="video-container">
-                        <iframe
-                            src="${project.videoUrl}"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen
-                            title="${project.title}"
-                        ></iframe>
+            // Store in localStorage
+            localStorage.setItem(`liked_${projectId}`, 'true');
+            
+            return newLikes;
+        }
+
+        // Check if already liked
+        function checkIfLiked(projectId) {
+            return localStorage.getItem(`liked_${projectId}`) === 'true';
+        }
+
+        // Render current project
+        async function renderCurrentProject() {
+            const project = filteredProjects[currentProjectIndex];
+            if (!project) return;
+
+            const videoContainer = document.getElementById('videoContainer');
+            const detailsSection = document.getElementById('detailsSection');
+
+            // Load stats
+            const stats = await fetchProjectStats(project.id);
+            projectStats[project.id] = stats;
+            
+            // Check if already liked
+            const alreadyLiked = checkIfLiked(project.id);
+            hasLiked[project.id] = alreadyLiked;
+
+            // Increment views
+            const newViews = await incrementViews(project.id);
+            projectStats[project.id].views = newViews;
+
+            // Render video
+            videoContainer.innerHTML = `
+                <iframe
+                    src="https://www.youtube.com/embed/${project.videoId}"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    title="${project.title}"
+                ></iframe>
+            `;
+
+            // Render details
+            detailsSection.innerHTML = `
+                <span class="project-category">${project.category}</span>
+                <h3 class="project-title">${project.title}</h3>
+                
+                <div class="project-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">
+                            <i data-lucide="eye"></i>
+                            <span>Views</span>
+                        </div>
+                        <div class="stat-value" id="viewsCount">${formatNumber(stats.views)}</div>
                     </div>
-                    
-                    <!-- Content -->
-                    <div class="project-content">
-                        <div class="project-header">
-                            <div style="flex: 1;">
-                                <h3 class="project-title">${project.title}</h3>
-                                <span class="project-category">${project.category}</span>
-                            </div>
+                    <div class="stat-item">
+                        <div class="stat-label">
+                            <i data-lucide="heart"></i>
+                            <span>Likes</span>
                         </div>
-                        
-                        <!-- Stats -->
-                        <div class="project-stats">
-                            <div class="stat-item">
-                                <i data-lucide="eye"></i>
-                                <span class="stat-value">${formatNumber(project.views)}</span>
-                                <span>views</span>
-                            </div>
-                            <div class="stat-item">
-                                <i data-lucide="heart"></i>
-                                <span class="stat-value">${formatNumber(project.likes)}</span>
-                                <span>likes</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Collapsible Details -->
-                        <button class="collapsible-trigger" onclick="toggleCollapsible(this)">
-                            <span>View Details</span>
-                            <i data-lucide="chevron-down"></i>
-                        </button>
-                        <div class="collapsible-content">
-                            <div class="collapsible-inner">
-                                <div class="detail-section">
-                                    <div class="detail-label">Description</div>
-                                    <div class="detail-value">${project.description}</div>
-                                </div>
-                                <div class="detail-section">
-                                    <div class="detail-label">Tools & Technologies</div>
-                                    <div class="detail-value">${project.tools}</div>
-                                </div>
-                                <div class="detail-section">
-                                    <div class="detail-label">Outcome</div>
-                                    <div class="detail-value">${project.outcome}</div>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="stat-value" id="likesCount">${formatNumber(stats.likes)}</div>
                     </div>
                 </div>
-            `).join('');
+                
+                <button class="like-btn ${alreadyLiked ? 'liked' : ''}" id="likeBtn" onclick="handleLike(${project.id})">
+                    <i data-lucide="heart"></i>
+                    <span>${alreadyLiked ? 'Liked' : 'Like this project'}</span>
+                </button>
+                
+                <div class="detail-section" style="margin-top: 2rem;">
+                    <div class="detail-label">Description</div>
+                    <div class="detail-value">${project.description}</div>
+                </div>
+                
+                <div class="detail-section">
+                    <div class="detail-label">Tools & Technologies</div>
+                    <div class="detail-value">${project.tools}</div>
+                </div>
+                
+                <div class="detail-section">
+                    <div class="detail-label">Business Impact</div>
+                    <div class="detail-value">${project.outcome}</div>
+                </div>
+            `;
+
+            updateNavigationButtons();
+            lucide.createIcons();
+        }
+
+        // Handle like button click
+        async function handleLike(projectId) {
+            const likeBtn = document.getElementById('likeBtn');
+            const likesCount = document.getElementById('likesCount');
+            
+            if (hasLiked[projectId]) return;
+            
+            likeBtn.classList.add('loading');
+            
+            const newLikes = await toggleLike(projectId);
+            projectStats[projectId].likes = newLikes;
+            
+            likesCount.textContent = formatNumber(newLikes);
+            likeBtn.classList.remove('loading');
+            likeBtn.classList.add('liked');
+            likeBtn.querySelector('span').textContent = 'Liked';
             
             lucide.createIcons();
         }
 
-        // Toggle collapsible
-        function toggleCollapsible(button) {
-            const content = button.nextElementSibling;
-            const isActive = button.classList.contains('active');
+        // Navigation
+        function previousProject() {
+            if (currentProjectIndex > 0) {
+                currentProjectIndex--;
+                renderCurrentProject();
+            }
+        }
+
+        function nextProject() {
+            if (currentProjectIndex < filteredProjects.length - 1) {
+                currentProjectIndex++;
+                renderCurrentProject();
+            }
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
             
-            if (isActive) {
-                button.classList.remove('active');
-                content.classList.remove('active');
+            prevBtn.disabled = currentProjectIndex === 0;
+            nextBtn.disabled = currentProjectIndex === filteredProjects.length - 1;
+        }
+
+        // Filter by category
+        function filterByCategory() {
+            const categoryFilter = document.getElementById('categoryFilter');
+            const selectedCategory = categoryFilter.value;
+            
+            if (selectedCategory) {
+                filteredProjects = projects.filter(p => p.category === selectedCategory);
             } else {
-                button.classList.add('active');
-                content.classList.add('active');
+                filteredProjects = [...projects];
             }
             
-            lucide.createIcons();
-        }
-
-        // Filter projects
-        function filterProjects() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const categoryFilter = document.getElementById('categoryFilter').value;
-            
-            const filtered = projects.filter(project => {
-                const matchesSearch = !searchTerm || 
-                    project.title.toLowerCase().includes(searchTerm) ||
-                    project.description.toLowerCase().includes(searchTerm) ||
-                    project.category.toLowerCase().includes(searchTerm);
-                
-                const matchesCategory = !categoryFilter || project.category === categoryFilter;
-                
-                return matchesSearch && matchesCategory;
-            });
-            
-            renderProjects(filtered);
+            currentProjectIndex = 0;
+            renderCurrentProject();
         }
 
         // Modal functions
@@ -780,10 +864,9 @@
             modal.classList.add('active');
             document.body.classList.add('modal-open');
             
-            // Initialize projects on first open
             if (!modal.dataset.initialized) {
                 populateCategoryFilter();
-                renderProjects(projects);
+                renderCurrentProject();
                 modal.dataset.initialized = 'true';
             }
             
@@ -802,13 +885,17 @@
             }
         }
 
-        // Close modal on Escape key
+        // Keyboard navigation
         document.addEventListener('keydown', function(event) {
+            const modal = document.getElementById('projectsModal');
+            if (!modal.classList.contains('active')) return;
+            
             if (event.key === 'Escape') {
-                const modal = document.getElementById('projectsModal');
-                if (modal.classList.contains('active')) {
-                    closeModal();
-                }
+                closeModal();
+            } else if (event.key === 'ArrowLeft') {
+                previousProject();
+            } else if (event.key === 'ArrowRight') {
+                nextProject();
             }
         });
 
