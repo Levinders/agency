@@ -13,7 +13,7 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #298e55 0%, #1a5d38 100%);
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -24,8 +24,8 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -36,24 +36,24 @@
     .modal-container {
       background: #ffffff;
       width: 100%;
-      max-width: 1100px;
-      height: 85vh;
-      border-radius: 12px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      max-width: 1200px;
+      height: 90vh;
+      border-radius: 16px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      animation: slideIn 0.3s ease-out;
+      animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     @keyframes slideIn {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px) scale(0.95);
       }
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
       }
     }
 
@@ -61,77 +61,93 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 24px;
+      padding: 20px 28px;
       border-bottom: 1px solid #e5e7eb;
       flex-shrink: 0;
+      background: linear-gradient(to bottom, #ffffff, #fafafa);
     }
 
     .modal-title {
-      font-size: 20px;
-      font-weight: 700;
+      font-size: 22px;
+      font-weight: 800;
       color: #111827;
+      letter-spacing: -0.5px;
     }
 
     .header-controls {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      background: #f3f4f6;
-      border: 1px solid #e5e7eb;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: #ffffff;
+      border: 1.5px solid #e5e7eb;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     }
 
     .btn:hover:not(:disabled) {
-      background: #667eea;
+      background: #298e55;
       color: white;
-      border-color: #667eea;
+      border-color: #298e55;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(41, 142, 85, 0.3);
+    }
+
+    .btn:active:not(:disabled) {
+      transform: translateY(0);
     }
 
     .btn:disabled {
-      opacity: 0.3;
+      opacity: 0.25;
       cursor: not-allowed;
     }
 
     .btn-close:hover {
-      background: #ef4444;
+      background: #dc2626;
       color: white;
-      border-color: #ef4444;
-      transform: rotate(90deg);
+      border-color: #dc2626;
+      transform: rotate(90deg) scale(1.05);
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
     }
 
     .modal-body {
       flex: 1;
       display: grid;
-      grid-template-columns: 1.2fr 380px;
+      grid-template-columns: 1.3fr 420px;
       overflow: hidden;
     }
 
     .video-section {
-      background: #000;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      padding: 32px;
+      position: relative;
     }
 
     .video-container {
       width: 100%;
-      max-width: 700px;
+      max-width: 750px;
       position: relative;
       padding-bottom: 56.25%;
-      border-radius: 8px;
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease;
+    }
+
+    .video-container:hover {
+      transform: scale(1.02);
     }
 
     .video-container iframe {
@@ -143,62 +159,131 @@
     }
 
     .details-section {
-      background: #ffffff;
-      padding: 24px;
+      background: #fafafa;
+      padding: 0;
       overflow-y: auto;
       border-left: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .details-section::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .details-section::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    .details-section::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    .details-section::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    .details-content {
+      padding: 28px;
     }
 
     .category-badge {
-      display: inline-block;
-      padding: 6px 12px;
-      background: rgba(102, 126, 234, 0.1);
-      color: #667eea;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: linear-gradient(135deg, rgba(41, 142, 85, 0.12), rgba(41, 142, 85, 0.08));
+      color: #298e55;
       border-radius: 9999px;
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 11px;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 12px;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+      border: 1px solid rgba(41, 142, 85, 0.2);
     }
 
     .project-title {
-      font-size: 24px;
-      font-weight: 700;
+      font-size: 26px;
+      font-weight: 800;
       color: #111827;
+      margin-bottom: 28px;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+    }
+
+    .stats-container {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 20px;
       margin-bottom: 24px;
-      line-height: 1.3;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
 
     .stats-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 24px;
+      gap: 16px;
     }
 
     .stat-card {
-      background: #f9fafb;
+      text-align: center;
       padding: 16px;
-      border-radius: 8px;
+      background: linear-gradient(to bottom, #fafafa, #f5f5f5);
+      border-radius: 10px;
       border: 1px solid #e5e7eb;
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .stat-icon-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 12px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #298e55, #1a5d38);
+      box-shadow: 0 4px 12px rgba(41, 142, 85, 0.25);
+    }
+
+    .stat-icon {
+      width: 20px;
+      height: 20px;
+      color: white;
     }
 
     .stat-label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 11px;
+      font-weight: 700;
       color: #6b7280;
       margin-bottom: 8px;
       text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     .stat-value {
-      font-size: 24px;
+      font-size: 28px;
       font-weight: 900;
       color: #111827;
+      letter-spacing: -1px;
+      transition: all 0.3s ease;
+    }
+
+    .stat-value.updating {
+      animation: pulse 0.5s ease;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); color: #298e55; }
     }
 
     .like-btn {
@@ -206,37 +291,89 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-weight: 600;
+      gap: 10px;
+      padding: 16px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 15px;
       cursor: pointer;
-      transition: all 0.2s;
-      margin-bottom: 24px;
-      border: 2px solid #e5e7eb;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-bottom: 28px;
+      border: 2px solid #298e55;
       background: #ffffff;
-      color: #111827;
+      color: #298e55;
+      box-shadow: 0 2px 8px rgba(41, 142, 85, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .like-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .like-btn:hover:not(:disabled)::before {
+      left: 100%;
     }
 
     .like-btn:hover:not(:disabled) {
-      border-color: #667eea;
-      background: rgba(102, 126, 234, 0.05);
-      color: #667eea;
+      background: #298e55;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(41, 142, 85, 0.35);
+    }
+
+    .like-btn:active:not(:disabled) {
+      transform: translateY(-1px);
     }
 
     .like-btn:disabled {
-      background: #667eea;
+      background: linear-gradient(135deg, #298e55, #1a5d38);
       color: white;
-      border-color: #667eea;
+      border-color: #298e55;
       cursor: not-allowed;
+      opacity: 0.9;
+    }
+
+    .like-btn svg {
+      transition: all 0.3s ease;
+    }
+
+    .like-btn:hover:not(:disabled) svg {
+      transform: scale(1.2);
     }
 
     .like-btn svg.filled {
       fill: currentColor;
+      animation: heartbeat 0.6s ease;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.3); }
+      50% { transform: scale(1.1); }
+      75% { transform: scale(1.2); }
     }
 
     .info-section {
-      margin-bottom: 24px;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .info-section:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
     }
 
     .info-section:last-child {
@@ -244,18 +381,26 @@
     }
 
     .info-label {
-      font-size: 12px;
-      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #6b7280;
-      margin-bottom: 8px;
+      letter-spacing: 0.08em;
+      color: #298e55;
+      margin-bottom: 12px;
+    }
+
+    .info-label-icon {
+      width: 16px;
+      height: 16px;
     }
 
     .info-text {
       font-size: 14px;
-      line-height: 1.6;
-      color: #111827;
+      line-height: 1.7;
+      color: #374151;
     }
 
     .icon {
@@ -268,6 +413,30 @@
       height: 16px;
     }
 
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      color: #6b7280;
+      font-weight: 600;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 3px solid #e5e7eb;
+      border-top-color: #298e55;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 12px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
     @media (max-width: 1024px) {
       .modal-body {
         grid-template-columns: 1fr;
@@ -277,11 +446,56 @@
         border-left: none;
         border-top: 1px solid #e5e7eb;
       }
+
+      .video-section {
+        padding: 24px;
+      }
     }
 
     @media (max-width: 768px) {
       .modal-container {
-        height: 90vh;
+        height: 95vh;
+        border-radius: 12px;
+      }
+
+      .modal-title {
+        font-size: 18px;
+      }
+
+      .project-title {
+        font-size: 22px;
+      }
+
+      .modal-header {
+        padding: 16px 20px;
+      }
+
+      .details-content {
+        padding: 20px;
+      }
+
+      .btn {
+        width: 38px;
+        height: 38px;
+      }
+
+      .stat-value {
+        font-size: 24px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+
+      .modal-overlay {
+        padding: 10px;
+      }
+
+      .modal-container {
+        height: 98vh;
+        border-radius: 8px;
       }
 
       .modal-title {
@@ -290,6 +504,28 @@
 
       .project-title {
         font-size: 20px;
+        margin-bottom: 20px;
+      }
+
+      .stats-grid {
+        gap: 12px;
+      }
+
+      .stat-card {
+        padding: 12px;
+      }
+
+      .stat-value {
+        font-size: 22px;
+      }
+
+      .info-section {
+        margin-bottom: 12px;
+        padding: 16px;
+      }
+
+      .details-content {
+        padding: 16px;
       }
     }
   </style>
@@ -301,17 +537,17 @@
       <div class="modal-header">
         <h2 class="modal-title">Works | Packdez</h2>
         <div class="header-controls">
-          <button class="btn" id="prevBtn" onclick="previousProject()">
+          <button class="btn" id="prevBtn" onclick="previousProject()" title="Previous Project">
             <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
             </svg>
           </button>
-          <button class="btn" id="nextBtn" onclick="nextProject()">
+          <button class="btn" id="nextBtn" onclick="nextProject()" title="Next Project">
             <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
             </svg>
           </button>
-          <button class="btn btn-close" onclick="closeModal()">
+          <button class="btn btn-close" onclick="closeModal()" title="Close">
             <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
@@ -323,69 +559,21 @@
       <div class="modal-body">
         <!-- Video Section -->
         <div class="video-section">
-          <div class="video-container">
-            <iframe
-              id="videoFrame"
-              src=""
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
+          <div class="video-container" id="videoWrapper">
+            <div class="loading">
+              <span class="spinner"></span>
+              Loading projects...
+            </div>
           </div>
         </div>
 
         <!-- Details Section -->
         <div class="details-section">
-          <span class="category-badge" id="category"></span>
-          <h3 class="project-title" id="title"></h3>
-
-          <!-- Stats -->
-          <div class="stats-grid">
-            <div class="stat-card">
-              <div class="stat-label">
-                <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                </svg>
-                <span>Views</span>
-              </div>
-              <div class="stat-value" id="views">0</div>
+          <div class="details-content" id="detailsSection">
+            <div class="loading">
+              <span class="spinner"></span>
+              Loading...
             </div>
-
-            <div class="stat-card">
-              <div class="stat-label">
-                <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                </svg>
-                <span>Likes</span>
-              </div>
-              <div class="stat-value" id="likes">0</div>
-            </div>
-          </div>
-
-          <!-- Like Button -->
-          <button class="like-btn" id="likeBtn" onclick="likeProject()">
-            <svg class="icon" id="heartIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-            </svg>
-            <span id="likeText">Like this project</span>
-          </button>
-
-          <!-- Description -->
-          <div class="info-section">
-            <div class="info-label">Description</div>
-            <p class="info-text" id="description"></p>
-          </div>
-
-          <!-- Tools -->
-          <div class="info-section">
-            <div class="info-label">Tools & Technologies</div>
-            <p class="info-text" id="tools"></p>
-          </div>
-
-          <!-- Outcome -->
-          <div class="info-section">
-            <div class="info-label">Business Impact</div>
-            <p class="info-text" id="outcome"></p>
           </div>
         </div>
       </div>
@@ -393,154 +581,220 @@
   </div>
 
   <script>
-    const FIREBASE_URL = 'https://packdez-projects-default-rtdb.firebaseio.com';
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwhnvFEbtgvgXfV7hUr_WKtHRTtfR8RI9PZcUL-DhW9WCngld9N4HwQIxtZol4IY3eV/exec';
     
-    const projects = [
-      {
-        id: 1,
-        title: "Looker Studio Healthcare Dashboard",
-        category: "Dashboard",
-        videoId: "-svuBj0WpkE",
-        description: "A comprehensive healthcare dashboard built with Looker Studio for tracking patient metrics and operational KPIs.",
-        tools: "Looker Studio, Google Sheets, Healthcare APIs",
-        outcome: "Reduced reporting time by 75% and improved data visibility across departments."
-      },
-      {
-        id: 2,
-        title: "Google Sheet Invoice/Payslip Auto Generator",
-        category: "Automation",
-        videoId: "4fjE3eJ01T4",
-        description: "Automated invoice and payslip generation system that creates professional documents from Google Sheets data.",
-        tools: "Google Sheets, Apps Script, PDF Generation",
-        outcome: "Eliminated manual invoice creation, saving 10+ hours per week."
-      },
-      {
-        id: 3,
-        title: "Custom Login Page with Looker Studio",
-        category: "Authentication",
-        videoId: "AaMAOE3BrUM",
-        description: "Secure custom login page integrated with Looker Studio for controlled dashboard access.",
-        tools: "Looker Studio, Google Apps Script, Authentication APIs",
-        outcome: "Enhanced security and provided branded user experience for clients."
-      },
-      {
-        id: 4,
-        title: "Custom Survey Form with Google Sheets",
-        category: "Forms",
-        videoId: "1Oa7EgHFoLs",
-        description: "Custom-branded survey form that automatically populates responses into organized Google Sheets.",
-        tools: "Google Forms, Google Sheets, Custom HTML/CSS",
-        outcome: "Increased survey completion rate by 40% with improved UX."
-      },
-      {
-        id: 5,
-        title: "Automated Workflow System",
-        category: "Automation",
-        videoId: "ykFwXvWZ6lc",
-        description: "End-to-end workflow automation that connects multiple tools and eliminates manual data entry.",
-        tools: "Google Sheets, Zapier, Multiple APIs",
-        outcome: "Automated 90% of manual tasks, freeing up team for strategic work."
-      },
-      {
-        id: 6,
-        title: "Real-time Data Integration",
-        category: "Integration",
-        videoId: "HsMaIpEOlF4",
-        description: "Real-time data synchronization between multiple platforms for unified reporting.",
-        tools: "Google Sheets, APIs, Real-time Sync",
-        outcome: "Achieved real-time data accuracy across all business systems."
-      }
-    ];
-
+    let projects = [];
     let currentIndex = 0;
-    let stats = {};
-    let liked = {};
+    let userFingerprint = '';
 
-    function loadProjectStats(projectId) {
-      fetch(`${FIREBASE_URL}/projects/${projectId}.json`)
-        .then(response => response.json())
-        .then(data => {
-          const projectStats = data || { views: 0, likes: 0 };
-          stats[projectId] = projectStats;
-          
-          // Increment views
-          const newViews = projectStats.views + 1;
-          fetch(`${FIREBASE_URL}/projects/${projectId}/views.json`, {
-            method: 'PUT',
-            body: JSON.stringify(newViews)
-          });
-          
-          stats[projectId].views = newViews;
-          updateDisplay();
-        })
-        .catch(error => {
-          console.error('Error loading stats:', error);
-          stats[projectId] = { views: 0, likes: 0 };
-          updateDisplay();
+    // Generate user fingerprint
+    function generateFingerprint() {
+      const nav = navigator;
+      const screen = window.screen;
+      const guid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+      
+      const fingerprint = `${nav.userAgent}-${screen.width}x${screen.height}-${nav.language}-${guid}`;
+      return btoa(fingerprint).substring(0, 32);
+    }
+
+    // Load projects from Google Sheets
+    async function loadProjects() {
+      try {
+        const response = await fetch(GOOGLE_SCRIPT_URL);
+        const data = await response.json();
+        projects = data;
+        
+        if (projects.length > 0) {
+          loadProject();
+        } else {
+          showError('No projects found');
+        }
+      } catch (error) {
+        console.error('Error loading projects:', error);
+        showError('Failed to load projects');
+      }
+    }
+
+    // Log event to Google Sheets (events_log sheet) and update project stats
+    async function logEvent(projectId, eventType) {
+      try {
+        const eventData = {
+          action: 'log_event',
+          timestamp: new Date().toISOString(),
+          project_id: projectId,
+          event_type: eventType,
+          user_fingerprint: userFingerprint,
+          user_agent: navigator.userAgent
+        };
+
+        // Send event log - using no-cors mode for cross-origin requests
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(eventData)
         });
+
+        console.log(`Event logged: ${eventType} for project ${projectId}`);
+      } catch (error) {
+        console.error('Error logging event:', error);
+      }
     }
 
-    function checkIfLiked(projectId) {
-      const hasLiked = localStorage.getItem(`liked_${projectId}`) === 'true';
-      liked[projectId] = hasLiked;
-      updateLikeButton();
+    // Update stat with animation
+    function updateStatValue(elementId, newValue) {
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.classList.add('updating');
+        element.textContent = newValue.toLocaleString();
+        setTimeout(() => {
+          element.classList.remove('updating');
+        }, 500);
+      }
     }
 
-    function likeProject() {
+    // Load and display current project
+    function loadProject() {
       const project = projects[currentIndex];
-      if (liked[project.id]) return;
+      if (!project) return;
 
-      const currentStats = stats[project.id] || { views: 0, likes: 0 };
-      const newLikes = currentStats.likes + 1;
-      
-      fetch(`${FIREBASE_URL}/projects/${project.id}/likes.json`, {
-        method: 'PUT',
-        body: JSON.stringify(newLikes)
-      })
-      .then(() => {
-        stats[project.id].likes = newLikes;
-        liked[project.id] = true;
-        localStorage.setItem(`liked_${project.id}`, 'true');
-        updateDisplay();
-      })
-      .catch(error => console.error('Error liking project:', error));
-    }
+      // Update video
+      const videoWrapper = document.getElementById('videoWrapper');
+      videoWrapper.innerHTML = `
+        <iframe
+          src="https://www.youtube.com/embed/${project.videoId}"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      `;
 
-    function updateDisplay() {
-      const project = projects[currentIndex];
-      const projectStats = stats[project.id] || { views: 0, likes: 0 };
+      // Update details
+      const detailsSection = document.getElementById('detailsSection');
+      const isLiked = checkIfLiked(project.id);
       
-      document.getElementById('videoFrame').src = `https://www.youtube.com/embed/${project.videoId}`;
-      document.getElementById('category').textContent = project.category;
-      document.getElementById('title').textContent = project.title;
-      document.getElementById('description').textContent = project.description;
-      document.getElementById('tools').textContent = project.tools;
-      document.getElementById('outcome').textContent = project.outcome;
-      document.getElementById('views').textContent = (projectStats.views || 0).toLocaleString();
-      document.getElementById('likes').textContent = (projectStats.likes || 0).toLocaleString();
-      
-      updateLikeButton();
+      detailsSection.innerHTML = `
+        <span class="category-badge">
+          <svg class="icon-sm" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+          </svg>
+          ${project.category}
+        </span>
+        <h3 class="project-title">${project.title}</h3>
+
+        <!-- Stats Container -->
+        <div class="stats-container">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon-wrapper">
+                <svg class="stat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                </svg>
+              </div>
+              <div class="stat-label">Views</div>
+              <div class="stat-value" id="views">${(project.views || 0).toLocaleString()}</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper">
+                <svg class="stat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                </svg>
+              </div>
+              <div class="stat-label">Likes</div>
+              <div class="stat-value" id="likes">${(project.likes || 0).toLocaleString()}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Like Button -->
+        <button class="like-btn" id="likeBtn" onclick="likeProject()" ${isLiked ? 'disabled' : ''}>
+          <svg class="icon ${isLiked ? 'filled' : ''}" fill="${isLiked ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+          </svg>
+          <span>${isLiked ? 'Already Liked' : 'Like This Project'}</span>
+        </button>
+
+        <!-- Description -->
+        <div class="info-section">
+          <div class="info-label">
+            <svg class="info-label-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/>
+            </svg>
+            Description
+          </div>
+          <p class="info-text">${project.description}</p>
+        </div>
+
+        <!-- Tools -->
+        <div class="info-section">
+          <div class="info-label">
+            <svg class="info-label-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            Tools & Technologies
+          </div>
+          <p class="info-text">${project.tools}</p>
+        </div>
+
+        <!-- Outcome -->
+        <div class="info-section">
+          <div class="info-label">
+            <svg class="info-label-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+            </svg>
+            Business Impact
+          </div>
+          <p class="info-text">${project.outcome}</p>
+        </div>
+      `;
+
+      // Log view event and update UI immediately
+      logEvent(project.id, 'view');
+      projects[currentIndex].views = (project.views || 0) + 1;
+      updateStatValue('views', projects[currentIndex].views);
+
       updateNavigationButtons();
     }
 
-    function updateLikeButton() {
-      const project = projects[currentIndex];
-      const isLiked = liked[project.id];
-      const likeBtn = document.getElementById('likeBtn');
-      const likeText = document.getElementById('likeText');
-      const heartIcon = document.getElementById('heartIcon');
-      
-      if (isLiked) {
-        likeBtn.disabled = true;
-        likeText.textContent = 'Liked';
-        heartIcon.classList.add('filled');
-      } else {
-        likeBtn.disabled = false;
-        likeText.textContent = 'Like this project';
-        heartIcon.classList.remove('filled');
-      }
+    // Check if user has liked this project
+    function checkIfLiked(projectId) {
+      return localStorage.getItem(`liked_${projectId}`) === 'true';
     }
 
+    // Like project with real-time update
+    function likeProject() {
+      const project = projects[currentIndex];
+      if (checkIfLiked(project.id)) return;
+
+      // Update UI immediately with animation
+      projects[currentIndex].likes = (project.likes || 0) + 1;
+      updateStatValue('likes', projects[currentIndex].likes);
+      
+      const likeBtn = document.getElementById('likeBtn');
+      const icon = likeBtn.querySelector('svg');
+      const text = likeBtn.querySelector('span');
+      
+      likeBtn.disabled = true;
+      icon.classList.add('filled');
+      icon.setAttribute('fill', 'currentColor');
+      text.textContent = 'Already Liked';
+
+      // Store in localStorage
+      localStorage.setItem(`liked_${project.id}`, 'true');
+
+      // Log like event to backend
+      logEvent(project.id, 'like');
+    }
+
+    // Navigation
     function updateNavigationButtons() {
       document.getElementById('prevBtn').disabled = currentIndex === 0;
       document.getElementById('nextBtn').disabled = currentIndex === projects.length - 1;
@@ -560,15 +814,26 @@
       }
     }
 
-    function loadProject() {
-      const project = projects[currentIndex];
-      loadProjectStats(project.id);
-      checkIfLiked(project.id);
+    function closeModal() {
+      if (confirm('Are you sure you want to close?')) {
+        window.close();
+      }
     }
 
-    function closeModal() {
-      // For standalone page, you might want to redirect or just hide
-      alert('Modal close requested');
+    function showError(message) {
+      document.getElementById('videoWrapper').innerHTML = `
+        <div class="loading">
+          <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #dc2626; width: 32px; height: 32px; margin-right: 12px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          ${message}
+        </div>
+      `;
+      document.getElementById('detailsSection').innerHTML = `
+        <div class="loading" style="color: #dc2626;">
+          ${message}
+        </div>
+      `;
     }
 
     // Keyboard navigation
@@ -576,10 +841,15 @@
       if (e.key === 'Escape') closeModal();
       if (e.key === 'ArrowLeft') previousProject();
       if (e.key === 'ArrowRight') nextProject();
+      if (e.key === 'l' || e.key === 'L') {
+        const likeBtn = document.getElementById('likeBtn');
+        if (likeBtn && !likeBtn.disabled) likeProject();
+      }
     });
 
     // Initialize
-    loadProject();
+    userFingerprint = generateFingerprint();
+    loadProjects();
   </script>
 </body>
 </html>
