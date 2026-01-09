@@ -143,16 +143,33 @@
     }
 
     .details-section {
-      background: #ffffff;
+      background: #fafafa;
       padding: 24px;
       overflow-y: auto;
       border-left: 1px solid #e5e7eb;
     }
 
+    .details-section::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .details-section::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .details-section::-webkit-scrollbar-thumb {
+      background: #d1d5db;
+      border-radius: 3px;
+    }
+
+    .details-section::-webkit-scrollbar-thumb:hover {
+      background: #9ca3af;
+    }
+
     .category-badge {
       display: inline-block;
       padding: 6px 12px;
-      background: rgba(41, 142, 85, 0.1);
+      background: linear-gradient(135deg, rgba(41, 142, 85, 0.15), rgba(41, 142, 85, 0.08));
       color: #298e55;
       border-radius: 9999px;
       font-size: 12px;
@@ -160,6 +177,7 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       margin-bottom: 12px;
+      border: 1px solid rgba(41, 142, 85, 0.2);
     }
 
     .project-title {
@@ -178,10 +196,17 @@
     }
 
     .stat-card {
-      background: #f9fafb;
+      background: #ffffff;
       padding: 16px;
-      border-radius: 8px;
+      border-radius: 10px;
       border: 1px solid #e5e7eb;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+    }
+
+    .stat-card:hover {
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+      transform: translateY(-2px);
     }
 
     .stat-label {
@@ -199,6 +224,16 @@
       font-size: 24px;
       font-weight: 900;
       color: #111827;
+      transition: all 0.3s ease;
+    }
+
+    .stat-value.updating {
+      animation: pulse 0.4s ease;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); color: #298e55; }
     }
 
     .like-btn {
@@ -236,7 +271,18 @@
     }
 
     .info-section {
-      margin-bottom: 24px;
+      background: #ffffff;
+      padding: 18px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+    }
+
+    .info-section:hover {
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+      transform: translateY(-1px);
     }
 
     .info-section:last-child {
@@ -248,14 +294,25 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: #6b7280;
-      margin-bottom: 8px;
+      color: #298e55;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .info-label::before {
+      content: '';
+      width: 3px;
+      height: 12px;
+      background: #298e55;
+      border-radius: 2px;
     }
 
     .info-text {
       font-size: 14px;
       line-height: 1.6;
-      color: #111827;
+      color: #374151;
     }
 
     .icon {
@@ -358,7 +415,8 @@
       }
 
       .info-section {
-        margin-bottom: 16px;
+        margin-bottom: 12px;
+        padding: 14px;
       }
     }
   </style>
@@ -408,35 +466,10 @@
   <script>
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwhnvFEbtgvgXfV7hUr_WKtHRTtfR8RI9PZcUL-DhW9WCngld9N4HwQIxtZol4IY3eV/exec';
     
-    let projects = [];
+    let projects = [];  
     let currentIndex = 0;
     let userFingerprint = '';
 
-
-    function updateStatValue(type, value) {
-  const el = document.getElementById(type);
-  if (el) {
-    el.textContent = Number(value).toLocaleString();
-  }
-}
-
-    
-async function refreshCounts() {
-  if (!projects.length) return;
-
-  const res = await fetch(GOOGLE_SCRIPT_URL);
-  const data = await res.json();
-
-  const live = data.find(p => p.id === projects[currentIndex].id);
-  if (!live) return;
-
-  projects[currentIndex].views = live.views;
-  projects[currentIndex].likes = live.likes;
-
-  updateStatValue('views', live.views);
-  updateStatValue('likes', live.likes);
-}
-    
     // Generate user fingerprint
     function generateFingerprint() {
       const nav = navigator;
@@ -468,25 +501,38 @@ async function refreshCounts() {
         showError('Failed to load projects');
       }
     }
+async function sendEvent(action, projectId) {
+  try {
+    const payload = {
+      action: action, // "view" or "like"
+      project_id: projectId,
+      user_fingerprint: userFingerprint,
+      user_agent: navigator.userAgent
+    };
 
-    // Log event to Google Sheets
-    async function sendEvent(action, projectId) {
-  const payload = {
-    action,
-    project_id: projectId,
-    user_fingerprint: userFingerprint,
-    user_agent: navigator.userAgent
-  };
+    const res = await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
 
-  const res = await fetch(GOOGLE_SCRIPT_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
-
-  return res.json(); // IMPORTANT
+    return await res.json();
+  } catch (err) {
+    console.error('Event error:', err);
+  }
 }
 
+    // Update stat value with animation
+    function updateStatValue(elementId, newValue) {
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.classList.add('updating');
+        element.textContent = newValue.toLocaleString();
+        setTimeout(() => {
+          element.classList.remove('updating');
+        }, 400);
+      }
+    }
 
     // Load and display current project
     function loadProject() {
@@ -562,15 +608,16 @@ async function refreshCounts() {
         </div>
       `;
 
-     
-      // Update views count immediately in UI
+      // Log view event and update UI immediately
 sendEvent('view', project.id).then(res => {
-  if (res.views !== undefined) {
+  if (res?.views !== undefined) {
     projects[currentIndex].views = res.views;
     updateStatValue('views', res.views);
   }
 });
 
+
+      updateNavigationButtons();
     }
 
     // Check if user has liked this project
@@ -578,14 +625,14 @@ sendEvent('view', project.id).then(res => {
       return localStorage.getItem(`liked_${projectId}`) === 'true';
     }
 
-    // Like project
+    // Like project with real-time UI update
     function likeProject() {
       const project = projects[currentIndex];
       if (checkIfLiked(project.id)) return;
 
-      // Update UI immediately
+      // Update UI immediately with animation
 sendEvent('like', project.id).then(res => {
-  if (res.likes !== undefined) {
+  if (res?.likes !== undefined) {
     projects[currentIndex].likes = res.likes;
     updateStatValue('likes', res.likes);
   }
@@ -606,7 +653,6 @@ sendEvent('like', project.id).then(res => {
 
     }
 
-    
     // Navigation
     function updateNavigationButtons() {
       document.getElementById('prevBtn').disabled = currentIndex === 0;
@@ -648,7 +694,6 @@ sendEvent('like', project.id).then(res => {
     // Initialize
     userFingerprint = generateFingerprint();
     loadProjects();
-    setInterval(refreshCounts, 3000);
   </script>
 </body>
 </html>
