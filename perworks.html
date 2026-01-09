@@ -419,6 +419,37 @@
         padding: 14px;
       }
     }
+
+    .project-link-wrapper {
+  margin-top: 8px;
+}
+
+.project-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  color: #ffffff;
+  background: linear-gradient(135deg, #298e55, #1a5d38);
+  box-shadow: 0 4px 10px rgba(41, 142, 85, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.project-link-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(41, 142, 85, 0.35);
+  opacity: 0.95;
+}
+
+.project-link-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(41, 142, 85, 0.25);
+}
+
   </style>
 </head>
 <body>
@@ -635,21 +666,19 @@ async function sendEvent(type, projectId) {
           <div class="info-label">Business Impact</div>
           <p class="info-text">${project.outcome}</p>
 
-          <p class="info-text">
-            <a href="${project.projectLink}" target="_blank" rel="noopener noreferrer">
-              Live link →
-            </a>
-          </p>
-        </div>
-
-        ${project.projectLink ? `
-<div class="info-section">
-  <div class="info-label">Project Link</div>
-  
+<div class="project-link-wrapper">
+  <a
+    href="${project.projectLink}"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="project-link-btn"
+  >
+    Visit project →
+  </a>
 </div>
-` : ''}
 
-
+          
+        </div>
       `;
 
       sendEvent('view', project.id);
