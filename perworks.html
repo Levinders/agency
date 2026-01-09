@@ -64,18 +64,29 @@
       padding: 16px 24px;
       border-bottom: 1px solid #e5e7eb;
       flex-shrink: 0;
+      gap: 12px;
     }
 
     .modal-title {
       font-size: 20px;
       font-weight: 700;
       color: #111827;
+      flex-shrink: 0;
+    }
+
+    .header-center {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      justify-content: center;
     }
 
     .header-controls {
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-shrink: 0;
     }
 
     .btn {
@@ -89,6 +100,7 @@
       justify-content: center;
       cursor: pointer;
       transition: all 0.2s;
+      position: relative;
     }
 
     .btn:hover:not(:disabled) {
@@ -107,6 +119,219 @@
       color: white;
       border-color: #dc2626;
       transform: rotate(90deg);
+    }
+
+    /* Project Dropdown */
+    .project-dropdown {
+      position: relative;
+    }
+
+    .dropdown-btn {
+      min-width: 200px;
+      height: 40px;
+      padding: 0 12px;
+      border-radius: 8px;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+      font-weight: 500;
+      color: #111827;
+    }
+
+    .dropdown-btn:hover {
+      background: #e5e7eb;
+      border-color: #d1d5db;
+    }
+
+    .dropdown-btn.active {
+      background: #298e55;
+      color: white;
+      border-color: #298e55;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      max-height: 400px;
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+    }
+
+    .dropdown-menu.show {
+      display: flex;
+    }
+
+    .dropdown-search {
+      padding: 12px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .dropdown-search input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .dropdown-search input:focus {
+      border-color: #298e55;
+    }
+
+    .dropdown-list {
+      overflow-y: auto;
+      max-height: 320px;
+    }
+
+    .dropdown-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .dropdown-list::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .dropdown-list::-webkit-scrollbar-thumb {
+      background: #d1d5db;
+      border-radius: 3px;
+    }
+
+    .dropdown-item {
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: background 0.15s;
+      border-bottom: 1px solid #f3f4f6;
+      font-size: 14px;
+      color: #374151;
+    }
+
+    .dropdown-item:hover {
+      background: #f9fafb;
+    }
+
+    .dropdown-item.active {
+      background: rgba(41, 142, 85, 0.1);
+      color: #298e55;
+      font-weight: 600;
+    }
+
+    .dropdown-item:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-item-title {
+      font-weight: 500;
+      color: #111827;
+      margin-bottom: 2px;
+    }
+
+    .dropdown-item.active .dropdown-item-title {
+      color: #298e55;
+    }
+
+    .dropdown-item-category {
+      font-size: 12px;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .no-results {
+      padding: 20px;
+      text-align: center;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    /* Share Menu */
+    .share-menu {
+      position: relative;
+    }
+
+    .share-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      min-width: 220px;
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+    }
+
+    .share-dropdown.show {
+      display: flex;
+    }
+
+    .share-item {
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: background 0.15s;
+      border-bottom: 1px solid #f3f4f6;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: #374151;
+      text-decoration: none;
+    }
+
+    .share-item:hover {
+      background: #f9fafb;
+    }
+
+    .share-item:last-child {
+      border-bottom: none;
+    }
+
+    .share-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .share-item.linkedin:hover {
+      background: rgba(0, 119, 181, 0.1);
+      color: #0077b5;
+    }
+
+    .share-item.twitter:hover {
+      background: rgba(0, 0, 0, 0.05);
+      color: #000000;
+    }
+
+    .share-item.facebook:hover {
+      background: rgba(24, 119, 242, 0.1);
+      color: #1877f2;
+    }
+
+    .share-item.copy:hover {
+      background: rgba(41, 142, 85, 0.1);
+      color: #298e55;
+    }
+
+    .share-item.copied {
+      background: rgba(41, 142, 85, 0.1);
+      color: #298e55;
     }
 
     .modal-body {
@@ -333,6 +558,36 @@
       color: #6b7280;
     }
 
+    .project-link-wrapper {
+      margin-top: 20px;
+    }
+
+    .project-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      color: #ffffff;
+      background: linear-gradient(135deg, #298e55, #1a5d38);
+      box-shadow: 0 4px 10px rgba(41, 142, 85, 0.25);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+    }
+
+    .project-link-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(41, 142, 85, 0.35);
+      opacity: 0.95;
+    }
+
+    .project-link-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 8px rgba(41, 142, 85, 0.25);
+    }
+
     @media (max-width: 1024px) {
       .modal-body {
         grid-template-columns: 1fr;
@@ -345,6 +600,16 @@
 
       .video-section {
         padding: 16px;
+      }
+
+      .header-center {
+        order: 3;
+        flex-basis: 100%;
+        margin-top: 8px;
+      }
+
+      .modal-header {
+        flex-wrap: wrap;
       }
     }
 
@@ -376,6 +641,11 @@
 
       .stat-value {
         font-size: 20px;
+      }
+
+      .dropdown-btn {
+        min-width: 160px;
+        font-size: 13px;
       }
     }
 
@@ -418,38 +688,18 @@
         margin-bottom: 12px;
         padding: 14px;
       }
+
+      .dropdown-btn {
+        min-width: 140px;
+        font-size: 12px;
+        padding: 0 8px;
+      }
+
+      .btn {
+        width: 32px;
+        height: 32px;
+      }
     }
-
-    .project-link-wrapper {
-  margin-top: 20px;
-}
-
-.project-link-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  text-decoration: none;
-  color: #ffffff;
-  background: linear-gradient(135deg, #298e55, #1a5d38);
-  box-shadow: 0 4px 10px rgba(41, 142, 85, 0.25);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
-}
-
-.project-link-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(41, 142, 85, 0.35);
-  opacity: 0.95;
-}
-
-.project-link-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 3px 8px rgba(41, 142, 85, 0.25);
-}
-
   </style>
 </head>
 <body>
@@ -458,7 +708,69 @@
       <!-- Header -->
       <div class="modal-header">
         <h2 class="modal-title">Works | Packdez</h2>
+        
+        <!-- Center: Project Dropdown -->
+        <div class="header-center">
+          <div class="project-dropdown">
+            <button class="dropdown-btn" id="dropdownBtn" onclick="toggleDropdown()">
+              <span id="dropdownLabel">All Projects</span>
+              <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="dropdown-menu" id="dropdownMenu">
+              <div class="dropdown-search">
+                <input 
+                  type="text" 
+                  id="searchInput" 
+                  placeholder="Search projects..."
+                  onkeyup="filterProjects()"
+                />
+              </div>
+              <div class="dropdown-list" id="dropdownList">
+                <!-- Projects will be populated here -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Controls -->
         <div class="header-controls">
+          <!-- Share Button -->
+          <div class="share-menu">
+            <button class="btn" id="shareBtn" onclick="toggleShare()" title="Share Project">
+              <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+              </svg>
+            </button>
+            <div class="share-dropdown" id="shareDropdown">
+              <a href="#" class="share-item linkedin" onclick="shareToLinkedIn(event)">
+                <svg class="share-icon" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+                <span>Share on LinkedIn</span>
+              </a>
+              <a href="#" class="share-item twitter" onclick="shareToTwitter(event)">
+                <svg class="share-icon" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+                <span>Share on X</span>
+              </a>
+              <a href="#" class="share-item facebook" onclick="shareToFacebook(event)">
+                <svg class="share-icon" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+                <span>Share on Facebook</span>
+              </a>
+              <button class="share-item copy" onclick="copyProjectLink(event)">
+                <svg class="share-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                </svg>
+                <span id="copyText">Copy Link</span>
+              </button>
+            </div>
+          </div>
+
           <button class="btn" id="prevBtn" onclick="previousProject()">
             <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -496,29 +808,29 @@
 
   <script>
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwhnvFEbtgvgXfV7hUr_WKtHRTtfR8RI9PZcUL-DhW9WCngld9N4HwQIxtZol4IY3eV/exec';
+    const BASE_URL = window.location.origin + window.location.pathname;
     
     let projects = [];  
     let currentIndex = 0;
     let userFingerprint = '';
 
     // ===== EVENT BUFFER =====
-const EVENT_BUFFER_KEY = 'event_buffer';
+    const EVENT_BUFFER_KEY = 'event_buffer';
 
-function getEventBuffer() {
-  return JSON.parse(localStorage.getItem(EVENT_BUFFER_KEY) || '[]');
-}
+    function getEventBuffer() {
+      return JSON.parse(localStorage.getItem(EVENT_BUFFER_KEY) || '[]');
+    }
 
-function addToBuffer(event) {
-  const buffer = getEventBuffer();
-  buffer.push(event);
-  localStorage.setItem(EVENT_BUFFER_KEY, JSON.stringify(buffer));
-}
+    function addToBuffer(event) {
+      const buffer = getEventBuffer();
+      buffer.push(event);
+      localStorage.setItem(EVENT_BUFFER_KEY, JSON.stringify(buffer));
+    }
 
-function clearBuffer() {
-  localStorage.removeItem(EVENT_BUFFER_KEY);
-}
+    function clearBuffer() {
+      localStorage.removeItem(EVENT_BUFFER_KEY);
+    }
 
-    
     // Generate user fingerprint
     function generateFingerprint() {
       const nav = navigator;
@@ -541,6 +853,18 @@ function clearBuffer() {
         projects = data;
         
         if (projects.length > 0) {
+          // Check URL for project ID
+          const urlParams = new URLSearchParams(window.location.search);
+          const projectId = urlParams.get('project');
+          
+          if (projectId) {
+            const index = projects.findIndex(p => p.id === projectId);
+            if (index !== -1) {
+              currentIndex = index;
+            }
+          }
+          
+          populateDropdown();
           loadProject();
         } else {
           showError('No projects found');
@@ -550,37 +874,33 @@ function clearBuffer() {
         showError('Failed to load projects');
       }
     }
-async function sendEvent(type, projectId) {
-  // Buffer event locally
-  addToBuffer({
-    project_id: projectId,
-    type: type,
-    ts: Date.now()
-  });
 
-  // Optimistic UI update handled elsewhere
-}
-
+    async function sendEvent(type, projectId) {
+      addToBuffer({
+        project_id: projectId,
+        type: type,
+        ts: Date.now()
+      });
+    }
 
     function syncBufferedEvents() {
-  const events = getEventBuffer();
-  if (!events.length) return;
+      const events = getEventBuffer();
+      if (!events.length) return;
 
-  const payload = {
-    action: 'sync',
-    events: events,
-    user_fingerprint: userFingerprint,
-    user_agent: navigator.userAgent
-  };
+      const payload = {
+        action: 'sync',
+        events: events,
+        user_fingerprint: userFingerprint,
+        user_agent: navigator.userAgent
+      };
 
-  // Use sendBeacon so it works even when tab closes
-  navigator.sendBeacon(
-    GOOGLE_SCRIPT_URL,
-    JSON.stringify(payload)
-  );
+      navigator.sendBeacon(
+        GOOGLE_SCRIPT_URL,
+        JSON.stringify(payload)
+      );
 
-  clearBuffer();
-}
+      clearBuffer();
+    }
 
     // Update stat value with animation
     function updateStatValue(elementId, newValue) {
@@ -593,6 +913,175 @@ async function sendEvent(type, projectId) {
         }, 400);
       }
     }
+
+    // Get current project URL
+    function getCurrentProjectUrl() {
+      const project = projects[currentIndex];
+      if (!project) return BASE_URL;
+      return `${BASE_URL}?project=${encodeURIComponent(project.id)}`;
+    }
+
+    // Populate dropdown with projects
+    function populateDropdown() {
+      const dropdownList = document.getElementById('dropdownList');
+      dropdownList.innerHTML = projects.map((project, index) => `
+        <div class="dropdown-item ${index === currentIndex ? 'active' : ''}" 
+             data-index="${index}"
+             onclick="selectProject(${index})">
+          <div class="dropdown-item-title">${project.title}</div>
+          <div class="dropdown-item-category">${project.category}</div>
+        </div>
+      `).join('');
+    }
+
+    // Toggle dropdown
+    function toggleDropdown() {
+      const dropdown = document.getElementById('dropdownMenu');
+      const btn = document.getElementById('dropdownBtn');
+      const isOpen = dropdown.classList.contains('show');
+      
+      // Close share if open
+      document.getElementById('shareDropdown').classList.remove('show');
+      
+      if (isOpen) {
+        dropdown.classList.remove('show');
+        btn.classList.remove('active');
+      } else {
+        dropdown.classList.add('show');
+        btn.classList.add('active');
+        document.getElementById('searchInput').focus();
+      }
+    }
+
+    // Filter projects in dropdown
+    function filterProjects() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const items = document.querySelectorAll('.dropdown-item');
+      let hasResults = false;
+
+      items.forEach(item => {
+        const title = item.querySelector('.dropdown-item-title').textContent.toLowerCase();
+        const category = item.querySelector('.dropdown-item-category').textContent.toLowerCase();
+        
+        if (title.includes(searchTerm) || category.includes(searchTerm)) {
+          item.style.display = 'block';
+          hasResults = true;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      const dropdownList = document.getElementById('dropdownList');
+      const existingNoResults = dropdownList.querySelector('.no-results');
+      
+      if (!hasResults && !existingNoResults) {
+        const noResults = document.createElement('div');
+        noResults.className = 'no-results';
+        noResults.textContent = 'No projects found';
+        dropdownList.appendChild(noResults);
+      } else if (hasResults && existingNoResults) {
+        existingNoResults.remove();
+      }
+    }
+
+    // Select project from dropdown
+    function selectProject(index) {
+      currentIndex = index;
+      loadProject();
+      toggleDropdown();
+      
+      // Update URL without reload
+      const project = projects[currentIndex];
+      const newUrl = `${BASE_URL}?project=${encodeURIComponent(project.id)}`;
+      window.history.pushState({}, '', newUrl);
+    }
+
+    // Toggle share menu
+    function toggleShare() {
+      const shareDropdown = document.getElementById('shareDropdown');
+      const isOpen = shareDropdown.classList.contains('show');
+      
+      // Close dropdown if open
+      document.getElementById('dropdownMenu').classList.remove('show');
+      document.getElementById('dropdownBtn').classList.remove('active');
+      
+      if (isOpen) {
+        shareDropdown.classList.remove('show');
+      } else {
+        shareDropdown.classList.add('show');
+        // Reset copy button text
+        document.getElementById('copyText').textContent = 'Copy Link';
+        document.querySelector('.share-item.copy').classList.remove('copied');
+      }
+    }
+
+    // Share to LinkedIn
+    function shareToLinkedIn(e) {
+      e.preventDefault();
+      const project = projects[currentIndex];
+      const url = getCurrentProjectUrl();
+      const text = `Check out this project: ${project.title}`;
+      const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+      window.open(shareUrl, '_blank', 'width=600,height=400');
+      toggleShare();
+    }
+
+    // Share to Twitter/X
+    function shareToTwitter(e) {
+      e.preventDefault();
+      const project = projects[currentIndex];
+      const url = getCurrentProjectUrl();
+      const text = `Check out this project: ${project.title}`;
+      const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+      window.open(shareUrl, '_blank', 'width=600,height=400');
+      toggleShare();
+    }
+
+    // Share to Facebook
+    function shareToFacebook(e) {
+      e.preventDefault();
+      const url = getCurrentProjectUrl();
+      const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+      window.open(shareUrl, '_blank', 'width=600,height=400');
+      toggleShare();
+    }
+
+    // Copy project link
+    function copyProjectLink(e) {
+      e.preventDefault();
+      const url = getCurrentProjectUrl();
+      
+      navigator.clipboard.writeText(url).then(() => {
+        const copyText = document.getElementById('copyText');
+        const copyBtn = document.querySelector('.share-item.copy');
+        copyText.textContent = 'Copied!';
+        copyBtn.classList.add('copied');
+        
+        setTimeout(() => {
+          toggleShare();
+        }, 1000);
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+        alert('Failed to copy link');
+      });
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      const dropdown = document.getElementById('dropdownMenu');
+      const dropdownBtn = document.getElementById('dropdownBtn');
+      const shareDropdown = document.getElementById('shareDropdown');
+      const shareBtn = document.getElementById('shareBtn');
+      
+      if (!dropdown.contains(e.target) && !dropdownBtn.contains(e.target)) {
+        dropdown.classList.remove('show');
+        dropdownBtn.classList.remove('active');
+      }
+      
+      if (!shareDropdown.contains(e.target) && !shareBtn.contains(e.target)) {
+        shareDropdown.classList.remove('show');
+      }
+    });
 
     // Load and display current project
     function loadProject() {
@@ -666,18 +1155,16 @@ async function sendEvent(type, projectId) {
           <div class="info-label">Business Impact</div>
           <p class="info-text">${project.outcome}</p>
 
-<div class="project-link-wrapper">
-  <a
-    href="${project.projectLink}"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="project-link-btn"
-  >
-    Live URL →
-  </a>
-</div>
-
-          
+          <div class="project-link-wrapper">
+            <a
+              href="${project.projectLink}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="project-link-btn"
+            >
+              Live URL →
+            </a>
+          </div>
         </div>
       `;
 
@@ -686,6 +1173,8 @@ async function sendEvent(type, projectId) {
       projects[currentIndex].views = (projects[currentIndex].views || 0) + 1;
       updateStatValue('views', projects[currentIndex].views);
 
+      // Update dropdown active state
+      populateDropdown();
       
       updateNavigationButtons();
     }
@@ -696,35 +1185,30 @@ async function sendEvent(type, projectId) {
     }      
 
     function likeProject() {
-  const project = projects[currentIndex];
-  if (checkIfLiked(project.id)) return;
+      const project = projects[currentIndex];
+      if (checkIfLiked(project.id)) return;
 
-  // Buffer like event
-  sendEvent('like', project.id);
+      sendEvent('like', project.id);
 
-  // Optimistic UI update
-  project.likes = (project.likes || 0) + 1;
-  updateStatValue('likes', project.likes);
+      project.likes = (project.likes || 0) + 1;
+      updateStatValue('likes', project.likes);
 
-  // Prevent re-like on this browser
-  localStorage.setItem(`liked_${project.id}`, 'true');
+      localStorage.setItem(`liked_${project.id}`, 'true');
 
-  // Update button UI
-  const likeBtn = document.getElementById('likeBtn');
-  likeBtn.disabled = true;
-  likeBtn.innerHTML = `
-    <svg class="icon filled" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M12 21l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
-               2 5.42 4.42 3 7.5 3
-               9.24 3 10.91 3.81 12 5.08
-               13.09 3.81 14.76 3 16.5 3
-               19.58 3 22 5.42 22 8.5
-               22 12.28 18.6 15.36 13.45 19.68L12 21z"/>
-    </svg>
-    <span>Liked</span>
-  `;
-}
-
+      const likeBtn = document.getElementById('likeBtn');
+      likeBtn.disabled = true;
+      likeBtn.innerHTML = `
+        <svg class="icon filled" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 21l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                   2 5.42 4.42 3 7.5 3
+                   9.24 3 10.91 3.81 12 5.08
+                   13.09 3.81 14.76 3 16.5 3
+                   19.58 3 22 5.42 22 8.5
+                   22 12.28 18.6 15.36 13.45 19.68L12 21z"/>
+        </svg>
+        <span>Liked</span>
+      `;
+    }
 
     // Navigation
     function updateNavigationButtons() {
@@ -736,6 +1220,11 @@ async function sendEvent(type, projectId) {
       if (currentIndex > 0) {
         currentIndex--;
         loadProject();
+        
+        // Update URL
+        const project = projects[currentIndex];
+        const newUrl = `${BASE_URL}?project=${encodeURIComponent(project.id)}`;
+        window.history.pushState({}, '', newUrl);
       }
     }
 
@@ -743,6 +1232,11 @@ async function sendEvent(type, projectId) {
       if (currentIndex < projects.length - 1) {
         currentIndex++;
         loadProject();
+        
+        // Update URL
+        const project = projects[currentIndex];
+        const newUrl = `${BASE_URL}?project=${encodeURIComponent(project.id)}`;
+        window.history.pushState({}, '', newUrl);
       }
     }
 
@@ -759,19 +1253,29 @@ async function sendEvent(type, projectId) {
 
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeModal();
+      if (e.key === 'Escape') {
+        const dropdown = document.getElementById('dropdownMenu');
+        const share = document.getElementById('shareDropdown');
+        
+        if (dropdown.classList.contains('show')) {
+          toggleDropdown();
+        } else if (share.classList.contains('show')) {
+          toggleShare();
+        } else {
+          closeModal();
+        }
+      }
       if (e.key === 'ArrowLeft') previousProject();
       if (e.key === 'ArrowRight') nextProject();
     });
 
-
     document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'hidden') {
-    syncBufferedEvents();
+      if (document.visibilityState === 'hidden') {
+        syncBufferedEvents();
       }
     });
 
-window.addEventListener('pagehide', syncBufferedEvents);
+    window.addEventListener('pagehide', syncBufferedEvents);
 
     // Initialize
     userFingerprint = generateFingerprint();
