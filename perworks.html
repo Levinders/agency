@@ -477,13 +477,14 @@ function getEventBuffer() {
   return JSON.parse(localStorage.getItem(EVENT_BUFFER_KEY) || '[]');
 }
 
-function hasViewed(projectId) {
-  return sessionStorage.getItem(`viewed_${projectId}`) === 'true';
-}
+//this is to prevent always counting views and likes
+//function hasViewed(projectId) {
+//  return sessionStorage.getItem(`viewed_${projectId}`) === 'true';
+//}
 
-function markViewed(projectId) {
-  sessionStorage.setItem(`viewed_${projectId}`, 'true');
-}
+//function markViewed(projectId) {
+//  sessionStorage.setItem(`viewed_${projectId}`, 'true');
+//}
 
 function addToBuffer(event) {
   const buffer = getEventBuffer();
