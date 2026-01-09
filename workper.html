@@ -470,6 +470,32 @@
     let currentIndex = 0;
     let userFingerprint = '';
 
+    // ===== EVENT BUFFER =====
+const EVENT_BUFFER_KEY = 'event_buffer';
+
+function getEventBuffer() {
+  return JSON.parse(localStorage.getItem(EVENT_BUFFER_KEY) || '[]');
+}
+
+function hasViewed(projectId) {
+  return sessionStorage.getItem(`viewed_${projectId}`) === 'true';
+}
+
+function markViewed(projectId) {
+  sessionStorage.setItem(`viewed_${projectId}`, 'true');
+}
+
+function addToBuffer(event) {
+  const buffer = getEventBuffer();
+  buffer.push(event);
+  localStorage.setItem(EVENT_BUFFER_KEY, JSON.stringify(buffer));
+}
+
+function clearBuffer() {
+  localStorage.removeItem(EVENT_BUFFER_KEY);
+}
+
+    
     // Generate user fingerprint
     function generateFingerprint() {
       const nav = navigator;
@@ -501,25 +527,36 @@
         showError('Failed to load projects');
       }
     }
-async function sendEvent(action, projectId) {
-  try {
-    const payload = {
-      action: action, // "view" or "like"
-      project_id: projectId,
-      user_fingerprint: userFingerprint,
-      user_agent: navigator.userAgent
-    };
+async function sendEvent(type, projectId) {
+  // Buffer event locally
+  addToBuffer({
+    project_id: projectId,
+    type: type,
+    ts: Date.now()
+  });
 
-    const res = await fetch(GOOGLE_SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
+  // Optimistic UI update handled elsewhere
+}
 
-    return await res.json();
-  } catch (err) {
-    console.error('Event error:', err);
-  }
+
+    function syncBufferedEvents() {
+  const events = getEventBuffer();
+  if (!events.length) return;
+
+  const payload = {
+    action: 'sync',
+    events: events,
+    user_fingerprint: userFingerprint,
+    user_agent: navigator.userAgent
+  };
+
+  // Use sendBeacon so it works even when tab closes
+  navigator.sendBeacon(
+    GOOGLE_SCRIPT_URL,
+    JSON.stringify(payload)
+  );
+
+  clearBuffer();
 }
 
     // Update stat value with animation
@@ -609,12 +646,16 @@ async function sendEvent(action, projectId) {
       `;
 
       // Log view event and update UI immediately
-sendEvent('view', project.id).then(res => {
-  if (res?.views !== undefined) {
-    projects[currentIndex].views = res.views;
-    updateStatValue('views', res.views);
-  }
-});
+if (!hasViewed(project.id)) {
+  sendEvent('view', project.id);
+
+  projects[currentIndex].views = (projects[currentIndex].views || 0) + 1;
+  updateStatValue('views', projects[currentIndex].views);
+
+  markViewed(project.id);
+}
+
+
 
 
       updateNavigationButtons();
@@ -623,35 +664,38 @@ sendEvent('view', project.id).then(res => {
     // Check if user has liked this project
     function checkIfLiked(projectId) {
       return localStorage.getItem(`liked_${projectId}`) === 'true';
-    }
+    }      
 
-    // Like project with real-time UI update
     function likeProject() {
-      const project = projects[currentIndex];
-      if (checkIfLiked(project.id)) return;
+  const project = projects[currentIndex];
+  if (checkIfLiked(project.id)) return;
 
-      // Update UI immediately with animation
-sendEvent('like', project.id).then(res => {
-  if (res?.likes !== undefined) {
-    projects[currentIndex].likes = res.likes;
-    updateStatValue('likes', res.likes);
-  }
-});
+  // Buffer like event
+  sendEvent('like', project.id);
 
-      
-      const likeBtn = document.getElementById('likeBtn');
-      likeBtn.disabled = true;
-      likeBtn.innerHTML = `
-        <svg class="icon filled" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-        </svg>
-        <span>Liked</span>
-      `;
+  // Optimistic UI update
+  project.likes = (project.likes || 0) + 1;
+  updateStatValue('likes', project.likes);
 
-      // Store in localStorage
-      localStorage.setItem(`liked_${project.id}`, 'true');
+  // Prevent re-like on this browser
+  localStorage.setItem(`liked_${project.id}`, 'true');
 
-    }
+  // Update button UI
+  const likeBtn = document.getElementById('likeBtn');
+  likeBtn.disabled = true;
+  likeBtn.innerHTML = `
+    <svg class="icon filled" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 21l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+               2 5.42 4.42 3 7.5 3
+               9.24 3 10.91 3.81 12 5.08
+               13.09 3.81 14.76 3 16.5 3
+               19.58 3 22 5.42 22 8.5
+               22 12.28 18.6 15.36 13.45 19.68L12 21z"/>
+    </svg>
+    <span>Liked</span>
+  `;
+}
+
 
     // Navigation
     function updateNavigationButtons() {
@@ -690,6 +734,15 @@ sendEvent('like', project.id).then(res => {
       if (e.key === 'ArrowLeft') previousProject();
       if (e.key === 'ArrowRight') nextProject();
     });
+
+
+    document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') {
+    syncBufferedEvents();
+      }
+    });
+
+window.addEventListener('pagehide', syncBufferedEvents);
 
     // Initialize
     userFingerprint = generateFingerprint();
