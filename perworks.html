@@ -477,6 +477,14 @@ function getEventBuffer() {
   return JSON.parse(localStorage.getItem(EVENT_BUFFER_KEY) || '[]');
 }
 
+function hasViewed(projectId) {
+  return sessionStorage.getItem(`viewed_${projectId}`) === 'true';
+}
+
+function markViewed(projectId) {
+  sessionStorage.setItem(`viewed_${projectId}`, 'true');
+}
+
 function addToBuffer(event) {
   const buffer = getEventBuffer();
   buffer.push(event);
@@ -638,11 +646,15 @@ async function sendEvent(type, projectId) {
       `;
 
       // Log view event and update UI immediately
-sendEvent('view', project.id);
+if (!hasViewed(project.id)) {
+  sendEvent('view', project.id);
 
-// Optimistically update UI
-projects[currentIndex].views = (projects[currentIndex].views || 0) + 1;
-updateStatValue('views', projects[currentIndex].views);
+  projects[currentIndex].views = (projects[currentIndex].views || 0) + 1;
+  updateStatValue('views', projects[currentIndex].views);
+
+  markViewed(project.id);
+}
+
 
 
 
