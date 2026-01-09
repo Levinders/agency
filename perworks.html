@@ -259,79 +259,282 @@
       font-size: 14px;
     }
 
-    /* Share Menu */
-    .share-menu {
-      position: relative;
-    }
-
-    .share-dropdown {
-      position: absolute;
-      top: calc(100% + 8px);
-      right: 0;
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-      min-width: 220px;
+    /* Share Modal */
+    .share-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
       display: none;
-      flex-direction: column;
-      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 2000;
+      animation: fadeIn 0.2s ease-out;
     }
 
-    .share-dropdown.show {
+    .share-modal-overlay.show {
       display: flex;
     }
 
-    .share-item {
-      padding: 12px 16px;
-      cursor: pointer;
-      transition: background 0.15s;
-      border-bottom: 1px solid #f3f4f6;
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes zoomIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .share-modal {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 448px;
+      overflow: hidden;
+      animation: zoomIn 0.2s ease-out;
+    }
+
+    .share-modal-header {
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-size: 14px;
-      color: #374151;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .share-modal-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .share-close-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: #f3f4f6;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .share-close-btn:hover {
+      background: #dc2626;
+      color: white;
+      transform: rotate(90deg);
+    }
+
+    .share-project-info {
+      padding: 16px 24px;
+      background: linear-gradient(to right, rgba(41, 142, 85, 0.1), rgba(26, 93, 56, 0.1));
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .share-project-category {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #298e55;
+      margin-bottom: 4px;
+    }
+
+    .share-project-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #111827;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .share-options {
+      padding: 16px;
+    }
+
+    .share-option {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      margin-bottom: 8px;
+      border-radius: 12px;
+      border: 2px solid #e5e7eb;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
       text-decoration: none;
     }
 
-    .share-item:hover {
-      background: #f9fafb;
+    .share-option:last-child {
+      margin-bottom: 0;
     }
 
-    .share-item:last-child {
-      border-bottom: none;
+    .share-option:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .share-option.linkedin:hover {
+      border-color: #0077b5;
+      background: rgba(0, 119, 181, 0.05);
+    }
+
+    .share-option.twitter:hover {
+      border-color: #000000;
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .share-option.facebook:hover {
+      border-color: #1877f2;
+      background: rgba(24, 119, 242, 0.05);
+    }
+
+    .share-option.copy:hover {
+      border-color: #298e55;
+      background: rgba(41, 142, 85, 0.05);
+    }
+
+    .share-option.copied {
+      border-color: #298e55;
+      background: rgba(41, 142, 85, 0.05);
+    }
+
+    .share-icon-wrapper {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .share-option.linkedin .share-icon-wrapper {
+      background: rgba(0, 119, 181, 0.1);
+    }
+
+    .share-option.linkedin:hover .share-icon-wrapper {
+      background: #0077b5;
+    }
+
+    .share-option.twitter .share-icon-wrapper {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .share-option.twitter:hover .share-icon-wrapper {
+      background: #000000;
+    }
+
+    .share-option.facebook .share-icon-wrapper {
+      background: rgba(24, 119, 242, 0.1);
+    }
+
+    .share-option.facebook:hover .share-icon-wrapper {
+      background: #1877f2;
+    }
+
+    .share-option.copy .share-icon-wrapper {
+      background: rgba(41, 142, 85, 0.1);
+    }
+
+    .share-option.copy:hover .share-icon-wrapper,
+    .share-option.copied .share-icon-wrapper {
+      background: #298e55;
     }
 
     .share-icon {
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      transition: all 0.2s;
     }
 
-    .share-item.linkedin:hover {
-      background: rgba(0, 119, 181, 0.1);
+    .share-option.linkedin .share-icon {
       color: #0077b5;
     }
 
-    .share-item.twitter:hover {
-      background: rgba(0, 0, 0, 0.05);
+    .share-option.linkedin:hover .share-icon {
+      color: white;
+    }
+
+    .share-option.twitter .share-icon {
       color: #000000;
     }
 
-    .share-item.facebook:hover {
-      background: rgba(24, 119, 242, 0.1);
+    .share-option.twitter:hover .share-icon {
+      color: white;
+    }
+
+    .share-option.facebook .share-icon {
       color: #1877f2;
     }
 
-    .share-item.copy:hover {
-      background: rgba(41, 142, 85, 0.1);
+    .share-option.facebook:hover .share-icon {
+      color: white;
+    }
+
+    .share-option.copy .share-icon {
       color: #298e55;
     }
 
-    .share-item.copied {
-      background: rgba(41, 142, 85, 0.1);
+    .share-option.copy:hover .share-icon,
+    .share-option.copied .share-icon {
+      color: white;
+    }
+
+    .share-option-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .share-option-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .share-option.linkedin:hover .share-option-title {
+      color: #0077b5;
+    }
+
+    .share-option.twitter:hover .share-option-title {
+      color: #000000;
+    }
+
+    .share-option.facebook:hover .share-option-title {
+      color: #1877f2;
+    }
+
+    .share-option.copy:hover .share-option-title,
+    .share-option.copied .share-option-title {
       color: #298e55;
+    }
+
+    .share-option-subtitle {
+      font-size: 14px;
+      color: #6b7280;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .modal-body {
@@ -647,6 +850,50 @@
         min-width: 160px;
         font-size: 13px;
       }
+
+      .share-modal-header {
+        padding: 16px 20px;
+      }
+
+      .share-modal-title {
+        font-size: 18px;
+      }
+
+      .share-close-btn {
+        width: 36px;
+        height: 36px;
+      }
+
+      .share-project-info {
+        padding: 12px 20px;
+      }
+
+      .share-options {
+        padding: 12px;
+      }
+
+      .share-option {
+        padding: 12px;
+        gap: 12px;
+      }
+
+      .share-icon-wrapper {
+        width: 40px;
+        height: 40px;
+      }
+
+      .share-icon {
+        width: 20px;
+        height: 20px;
+      }
+
+      .share-option-title {
+        font-size: 14px;
+      }
+
+      .share-option-subtitle {
+        font-size: 12px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -699,6 +946,10 @@
         width: 32px;
         height: 32px;
       }
+
+      .share-modal-overlay {
+        padding: 12px;
+      }
     }
   </style>
 </head>
@@ -737,39 +988,11 @@
         <!-- Right: Controls -->
         <div class="header-controls">
           <!-- Share Button -->
-          <div class="share-menu">
-            <button class="btn" id="shareBtn" onclick="toggleShare()" title="Share Project">
-              <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
-              </svg>
-            </button>
-            <div class="share-dropdown" id="shareDropdown">
-              <a href="#" class="share-item linkedin" onclick="shareToLinkedIn(event)">
-                <svg class="share-icon" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-                <span>Share on LinkedIn</span>
-              </a>
-              <a href="#" class="share-item twitter" onclick="shareToTwitter(event)">
-                <svg class="share-icon" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                </svg>
-                <span>Share on X</span>
-              </a>
-              <a href="#" class="share-item facebook" onclick="shareToFacebook(event)">
-                <svg class="share-icon" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-                <span>Share on Facebook</span>
-              </a>
-              <button class="share-item copy" onclick="copyProjectLink(event)">
-                <svg class="share-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                </svg>
-                <span id="copyText">Copy Link</span>
-              </button>
-            </div>
-          </div>
+          <button class="btn" id="shareBtn" onclick="toggleShareModal()" title="Share Project">
+            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+            </svg>
+          </button>
 
           <button class="btn" id="prevBtn" onclick="previousProject()">
             <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -802,6 +1025,75 @@
         <div class="details-section" id="detailsSection">
           <div class="loading">Loading...</div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Share Modal -->
+  <div class="share-modal-overlay" id="shareModalOverlay" onclick="closeShareModalOnOverlay(event)">
+    <div class="share-modal" onclick="event.stopPropagation()">
+      <div class="share-modal-header">
+        <h3 class="share-modal-title">Share Project</h3>
+        <button class="share-close-btn" onclick="toggleShareModal()">
+          <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="share-project-info">
+        <div class="share-project-category" id="shareCategory">Category</div>
+        <div class="share-project-title" id="shareTitle">Project Title</div>
+      </div>
+
+      <div class="share-options">
+        <button class="share-option linkedin" onclick="shareToLinkedIn()">
+          <div class="share-icon-wrapper">
+            <svg class="share-icon" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </div>
+          <div class="share-option-content">
+            <div class="share-option-title">Share on LinkedIn</div>
+            <div class="share-option-subtitle">Share with your professional network</div>
+          </div>
+        </button>
+
+        <button class="share-option twitter" onclick="shareToTwitter()">
+          <div class="share-icon-wrapper">
+            <svg class="share-icon" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </div>
+          <div class="share-option-content">
+            <div class="share-option-title">Share on X</div>
+            <div class="share-option-subtitle">Post to your followers</div>
+          </div>
+        </button>
+
+        <button class="share-option facebook" onclick="shareToFacebook()">
+          <div class="share-icon-wrapper">
+            <svg class="share-icon" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </div>
+          <div class="share-option-content">
+            <div class="share-option-title">Share on Facebook</div>
+            <div class="share-option-subtitle">Share with friends and family</div>
+          </div>
+        </button>
+
+        <button class="share-option copy" id="copyLinkBtn" onclick="copyProjectLink()">
+          <div class="share-icon-wrapper">
+            <svg class="share-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <div class="share-option-content">
+            <div class="share-option-title" id="copyLinkText">Copy Link</div>
+            <div class="share-option-subtitle" id="copyLinkSubtitle">Copy URL to clipboard</div>
+          </div>
+        </button>
       </div>
     </div>
   </div>
@@ -921,6 +1213,77 @@
       return `${BASE_URL}?project=${encodeURIComponent(project.id)}`;
     }
 
+    // Generate platform-specific share content
+    function generateLinkedInPost() {
+      const project = projects[currentIndex];
+      const url = getCurrentProjectUrl();
+      
+      const post = `${project.title}
+
+${project.description}
+
+Tools Used: ${project.tools}
+
+${project.outcome}
+
+Watch the full case study: ${url}
+
+Live Project: ${project.projectLink}
+
+#${project.category.replace(/\s+/g, '')} #WebDevelopment #CaseStudy`;
+
+      return post;
+    }
+
+    function generateTwitterPost() {
+      const project = projects[currentIndex];
+      const url = getCurrentProjectUrl();
+      const shortDesc = project.description.length > 120 
+        ? project.description.substring(0, 117) + '...' 
+        : project.description;
+      
+      let post = `${project.title}
+
+${shortDesc}
+
+Case study: ${url}
+
+#${project.category.replace(/\s+/g, '')}`;
+
+      // Ensure under 280 characters
+      if (post.length > 280) {
+        const evenShorterDesc = project.description.substring(0, 80) + '...';
+        post = `${project.title}
+
+${evenShorterDesc}
+
+${url}
+
+#${project.category.replace(/\s+/g, '')}`;
+      }
+
+      return post;
+    }
+
+    function generateFacebookPost() {
+      const project = projects[currentIndex];
+      const url = getCurrentProjectUrl();
+      
+      const post = `${project.title}
+
+${project.description}
+
+${project.outcome}
+
+🔗 Watch the full case study: ${url}
+
+🚀 Live Project: ${project.projectLink}
+
+#${project.category.replace(/\s+/g, '')} #WebDevelopment`;
+
+      return post;
+    }
+
     // Populate dropdown with projects
     function populateDropdown() {
       const dropdownList = document.getElementById('dropdownList');
@@ -940,8 +1303,8 @@
       const btn = document.getElementById('dropdownBtn');
       const isOpen = dropdown.classList.contains('show');
       
-      // Close share if open
-      document.getElementById('shareDropdown').classList.remove('show');
+      // Close share modal if open
+      closeShareModal();
       
       if (isOpen) {
         dropdown.classList.remove('show');
@@ -996,70 +1359,88 @@
       window.history.pushState({}, '', newUrl);
     }
 
-    // Toggle share menu
-    function toggleShare() {
-      const shareDropdown = document.getElementById('shareDropdown');
-      const isOpen = shareDropdown.classList.contains('show');
+    // Toggle share modal
+    function toggleShareModal() {
+      const overlay = document.getElementById('shareModalOverlay');
+      const isOpen = overlay.classList.contains('show');
       
       // Close dropdown if open
-      document.getElementById('dropdownMenu').classList.remove('show');
-      document.getElementById('dropdownBtn').classList.remove('active');
+      const dropdown = document.getElementById('dropdownMenu');
+      const btn = document.getElementById('dropdownBtn');
+      dropdown.classList.remove('show');
+      btn.classList.remove('active');
       
       if (isOpen) {
-        shareDropdown.classList.remove('show');
+        closeShareModal();
       } else {
-        shareDropdown.classList.add('show');
-        // Reset copy button text
-        document.getElementById('copyText').textContent = 'Copy Link';
-        document.querySelector('.share-item.copy').classList.remove('copied');
+        openShareModal();
+      }
+    }
+
+    function openShareModal() {
+      const project = projects[currentIndex];
+      const overlay = document.getElementById('shareModalOverlay');
+      
+      // Update modal content
+      document.getElementById('shareCategory').textContent = project.category;
+      document.getElementById('shareTitle').textContent = project.title;
+      
+      // Reset copy button
+      const copyBtn = document.getElementById('copyLinkBtn');
+      copyBtn.classList.remove('copied');
+      document.getElementById('copyLinkText').textContent = 'Copy Link';
+      document.getElementById('copyLinkSubtitle').textContent = 'Copy URL to clipboard';
+      
+      overlay.classList.add('show');
+    }
+
+    function closeShareModal() {
+      const overlay = document.getElementById('shareModalOverlay');
+      overlay.classList.remove('show');
+    }
+
+    function closeShareModalOnOverlay(event) {
+      if (event.target === event.currentTarget) {
+        closeShareModal();
       }
     }
 
     // Share to LinkedIn
-    function shareToLinkedIn(e) {
-      e.preventDefault();
-      const project = projects[currentIndex];
+    function shareToLinkedIn() {
       const url = getCurrentProjectUrl();
-      const text = `Check out this project: ${project.title}`;
-      const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
-      window.open(shareUrl, '_blank', 'width=600,height=400');
-      toggleShare();
+      const text = generateLinkedInPost();
+      const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&summary=${encodeURIComponent(text)}`;
+      window.open(shareUrl, '_blank', 'noopener,noreferrer');
     }
 
     // Share to Twitter/X
-    function shareToTwitter(e) {
-      e.preventDefault();
-      const project = projects[currentIndex];
-      const url = getCurrentProjectUrl();
-      const text = `Check out this project: ${project.title}`;
-      const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-      window.open(shareUrl, '_blank', 'width=600,height=400');
-      toggleShare();
+    function shareToTwitter() {
+      const text = generateTwitterPost();
+      const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+      window.open(shareUrl, '_blank', 'noopener,noreferrer');
     }
 
     // Share to Facebook
-    function shareToFacebook(e) {
-      e.preventDefault();
+    function shareToFacebook() {
       const url = getCurrentProjectUrl();
-      const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-      window.open(shareUrl, '_blank', 'width=600,height=400');
-      toggleShare();
+      const quote = generateFacebookPost();
+      const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(quote)}`;
+      window.open(shareUrl, '_blank', 'noopener,noreferrer');
     }
 
     // Copy project link
-    function copyProjectLink(e) {
-      e.preventDefault();
+    function copyProjectLink() {
       const url = getCurrentProjectUrl();
       
       navigator.clipboard.writeText(url).then(() => {
-        const copyText = document.getElementById('copyText');
-        const copyBtn = document.querySelector('.share-item.copy');
-        copyText.textContent = 'Copied!';
+        const copyBtn = document.getElementById('copyLinkBtn');
         copyBtn.classList.add('copied');
+        document.getElementById('copyLinkText').textContent = 'Link Copied!';
+        document.getElementById('copyLinkSubtitle').textContent = 'Ready to paste anywhere';
         
         setTimeout(() => {
-          toggleShare();
-        }, 1000);
+          closeShareModal();
+        }, 1500);
       }).catch(err => {
         console.error('Failed to copy:', err);
         alert('Failed to copy link');
@@ -1070,16 +1451,10 @@
     document.addEventListener('click', function(e) {
       const dropdown = document.getElementById('dropdownMenu');
       const dropdownBtn = document.getElementById('dropdownBtn');
-      const shareDropdown = document.getElementById('shareDropdown');
-      const shareBtn = document.getElementById('shareBtn');
       
       if (!dropdown.contains(e.target) && !dropdownBtn.contains(e.target)) {
         dropdown.classList.remove('show');
         dropdownBtn.classList.remove('active');
-      }
-      
-      if (!shareDropdown.contains(e.target) && !shareBtn.contains(e.target)) {
-        shareDropdown.classList.remove('show');
       }
     });
 
@@ -1255,12 +1630,12 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         const dropdown = document.getElementById('dropdownMenu');
-        const share = document.getElementById('shareDropdown');
+        const shareModal = document.getElementById('shareModalOverlay');
         
         if (dropdown.classList.contains('show')) {
           toggleDropdown();
-        } else if (share.classList.contains('show')) {
-          toggleShare();
+        } else if (shareModal.classList.contains('show')) {
+          closeShareModal();
         } else {
           closeModal();
         }
