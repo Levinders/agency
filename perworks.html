@@ -651,8 +651,6 @@ sendEvent('like', project.id).then(res => {
       // Store in localStorage
       localStorage.setItem(`liked_${project.id}`, 'true');
 
-      // Log like event to backend
-      logEvent(project.id, 'like');
     }
 
     // Navigation
