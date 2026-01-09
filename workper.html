@@ -117,7 +117,7 @@
     }
 
     .video-section {
-      background: #000;
+      background: #eeeeee;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -419,6 +419,37 @@
         padding: 14px;
       }
     }
+
+    .project-link-wrapper {
+  margin-top: 20px;
+}
+
+.project-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  color: #ffffff;
+  background: linear-gradient(135deg, #298e55, #1a5d38);
+  box-shadow: 0 4px 10px rgba(41, 142, 85, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.project-link-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(41, 142, 85, 0.35);
+  opacity: 0.95;
+}
+
+.project-link-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(41, 142, 85, 0.25);
+}
+
   </style>
 </head>
 <body>
@@ -475,14 +506,6 @@ const EVENT_BUFFER_KEY = 'event_buffer';
 
 function getEventBuffer() {
   return JSON.parse(localStorage.getItem(EVENT_BUFFER_KEY) || '[]');
-}
-
-function hasViewed(projectId) {
-  return sessionStorage.getItem(`viewed_${projectId}`) === 'true';
-}
-
-function markViewed(projectId) {
-  sessionStorage.setItem(`viewed_${projectId}`, 'true');
 }
 
 function addToBuffer(event) {
@@ -642,22 +665,28 @@ async function sendEvent(type, projectId) {
         <div class="info-section">
           <div class="info-label">Business Impact</div>
           <p class="info-text">${project.outcome}</p>
+
+<div class="project-link-wrapper">
+  <a
+    href="${project.projectLink}"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="project-link-btn"
+  >
+    Live URL →
+  </a>
+</div>
+
+          
         </div>
       `;
 
-      // Log view event and update UI immediately
-if (!hasViewed(project.id)) {
-  sendEvent('view', project.id);
+      sendEvent('view', project.id);
+      
+      projects[currentIndex].views = (projects[currentIndex].views || 0) + 1;
+      updateStatValue('views', projects[currentIndex].views);
 
-  projects[currentIndex].views = (projects[currentIndex].views || 0) + 1;
-  updateStatValue('views', projects[currentIndex].views);
-
-  markViewed(project.id);
-}
-
-
-
-
+      
       updateNavigationButtons();
     }
 
