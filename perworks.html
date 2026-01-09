@@ -635,6 +635,19 @@ async function sendEvent(type, projectId) {
           <div class="info-label">Business Impact</div>
           <p class="info-text">${project.outcome}</p>
         </div>
+
+        ${project.projectLink ? `
+<div class="info-section">
+  <div class="info-label">Project Link</div>
+  <p class="info-text">
+    <a href="${project.projectLink}" target="_blank" rel="noopener noreferrer">
+      Visit project →
+    </a>
+  </p>
+</div>
+` : ''}
+
+
       `;
 
       sendEvent('view', project.id);
