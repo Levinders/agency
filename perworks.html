@@ -634,16 +634,18 @@ async function sendEvent(type, projectId) {
         <div class="info-section">
           <div class="info-label">Business Impact</div>
           <p class="info-text">${project.outcome}</p>
+
+          <p class="info-text">
+            <a href="${project.projectLink}" target="_blank" rel="noopener noreferrer">
+              Live link →
+            </a>
+          </p>
         </div>
 
         ${project.projectLink ? `
 <div class="info-section">
   <div class="info-label">Project Link</div>
-  <p class="info-text">
-    <a href="${project.projectLink}" target="_blank" rel="noopener noreferrer">
-      Live link →
-    </a>
-  </p>
+  
 </div>
 ` : ''}
 
