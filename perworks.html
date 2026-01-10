@@ -1091,6 +1091,16 @@
     // ===== EVENT BUFFER =====
     const EVENT_BUFFER_KEY = 'event_buffer';
 
+    function getDeepLinkContext() {
+     const params = new URLSearchParams(window.location.search);
+
+      return {
+        project: params.get('project'),
+        ref: params.get('ref') || 'direct'
+      };
+    }
+
+    
     function getEventBuffer() {
       return JSON.parse(localStorage.getItem(EVENT_BUFFER_KEY) || '[]');
     }
@@ -1149,13 +1159,15 @@
       }
     }
 
-    async function sendEvent(type, projectId) {
-      addToBuffer({
-        project_id: projectId,
-        type: type,
-        ts: Date.now()
-      });
-    }
+function sendEvent(type, projectId, meta = {}) {
+  addToBuffer({
+    project_id: projectId,
+    type: type,
+    ts: Date.now(),
+    meta: meta
+  });
+}
+
 
     function syncBufferedEvents() {
       const events = getEventBuffer();
@@ -1525,7 +1537,13 @@ ${project.outcome}
         </div>
       `;
 
-      sendEvent('view', project.id);
+      const deepLink = getDeepLinkContext();
+
+        sendEvent('view', project.id, {
+          ref: deepLink.ref,
+          is_deep_link: Boolean(deepLink.project)
+        });
+
       
       projects[currentIndex].views = (projects[currentIndex].views || 0) + 1;
       updateStatValue('views', projects[currentIndex].views);
