@@ -1712,27 +1712,27 @@ h1 {
   <div class="roi-modal">
     <button class="roi-close" onclick="closeROI()">×</button>
 
-    <h3 class="font-bold text-lg pr-4">Is automation worth it for this workflow?</h3>
+    <h3 class="font-bold text-lg pr-4">Is automation worth it?</h3>
     <p style="color:#475569;font-size:14px;margin-bottom:22px">
-      Adjust the sliders to sanity check whether automation makes sense for this process.
+      Adjust values to pressure test the numbers.
     </p>
 
     <div class="roi-fields">
       <label>
         Hours spent on this task per week
-        <strong><span id="hVal">6</span> hrs</strong>
+        <strong><span id="hVal">12</span> hrs</strong>
         <input type="range" id="hours" min="1" max="50" value="6" oninput="updateROI()" />
       </label>
 
       <label>
         How many people are involved in this process
-        <strong><span id="pVal">3</span></strong>
+        <strong><span id="pVal">5</span></strong>
         <input type="range" id="people" min="1" max="20" value="3" oninput="updateROI()" />
       </label>
 
       <label>
         Average hourly cost per person
-        <strong>$<span id="rVal">45</span></strong>
+        <strong>$<span id="rVal">10</span></strong>
         <input type="range" id="rate" min="5" max="120" value="45" oninput="updateROI()" />
       </label>
     </div>
@@ -1740,28 +1740,27 @@ h1 {
     <div class="roi-values">
       <div class="roi-box">
         <strong id="hrsSaved">18 hrs</strong>
-        <span style="font-size: 16px;">Estimated time freed per week</span>
+        <span style="font-size: 16px;">Hours freed / week</span>
       </div>
       <div class="roi-box">
         <strong id="monSaved">$3,240</strong>
-        <span style="font-size: 16px;">Estimated cost impact per month</span>
+        <span style="font-size: 16px;">Cost impact / month</span>
       </div>
       <div class="roi-box">
         <strong id="yrSaved">$42,120</strong>
-        <span style="font-size: 16px;">Estimated cost impact per year</span>
+        <span style="font-size: 16px;">Cost impact / year</span>
       </div>
     </div>
 
         <div class="roi-cta-wrap">
           <a href="#audit" class="roi-calc" onclick="closeROI()">
             Review this workflow together
+            <br>
+            <p style="color:#475569;font-size:14px;margin-bottom:22px">
+              Estimates are directional and depend on workflow complexity.
+            </p>
           </a>
         </div>
-        <p style="color:#475569;font-size:14px;margin-bottom:22px">
-      Estimates are directional and depend on workflow complexity.
-    </p>
-
-
   </div>
 </div>
 
